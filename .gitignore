@@ -1,0 +1,19 @@
+# Ignore Everything
+*
+
+# But not .cpp
+!*.cpp
+!*.h
+!*.sln
+!*.vcxproj
+!*.vcxproj.filters
+!*.vcxproj.user
+# Or directories
+!*/
+!.gitignore
+!README.md
+!.editorconfig
+!*.bmp
+!*.png
+!*.mp3
+!*.wav

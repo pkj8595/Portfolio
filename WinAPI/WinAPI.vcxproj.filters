@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="API FrameWork">
+      <UniqueIdentifier>{4ce297d4-dceb-456e-ad89-8857825fe90f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\Stdafx">
+      <UniqueIdentifier>{1ddf1c51-d47b-496f-91f9-c5474c5fcc74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\Utility">
+      <UniqueIdentifier>{a05a144f-e9ca-4e65-825f-cf967f0d1b40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\DesignPattern">
+      <UniqueIdentifier>{f4c53993-5407-45bd-a029-b764a0d2b664}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\DesignPattern\Singleton">
+      <UniqueIdentifier>{673fe5a0-f839-42fe-a930-6bd2d13d7193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame">
+      <UniqueIdentifier>{dbc0e035-362d-493d-8421-ec6bab66ed4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\GameNode">
+      <UniqueIdentifier>{cc613e17-ed7c-467c-9aa0-7a139bdc07f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\Manager">
+      <UniqueIdentifier>{81c1d898-4ea9-4cec-8d31-ab087375cc39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameClass">
+      <UniqueIdentifier>{4afa747c-b86f-46f9-a1bf-21e77a7b9951}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\Image">
+      <UniqueIdentifier>{8ecdd767-053c-4108-8f75-9ed679a52eab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\ExampleClasses">
+      <UniqueIdentifier>{b4430109-f1bc-406f-ae8a-c2c92daec737}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\ExampleClasses\ShootingGame">
+      <UniqueIdentifier>{9edc4438-24ee-4fc6-b5ea-21f190d8ce57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodingInterview">
+      <UniqueIdentifier>{893419de-c5d9-4dc1-8867-a9183c8575ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameClass\port">
+      <UniqueIdentifier>{704ed228-884a-4fce-8293-5bb9b4ec572c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\ExampleClasses\ShootingGame\Enemy">
+      <UniqueIdentifier>{c4de4360-dec2-49a3-ad9c-a5383c648ba1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\ExampleClasses\ShootingGame\Bullets">
+      <UniqueIdentifier>{fc024b1e-7ddf-4f4f-bbf5-896c4a065d9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameClass\HomeworkClass">
+      <UniqueIdentifier>{c2cd7251-33f9-4ea7-80b6-264052853fdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\Manager\TimeManager">
+      <UniqueIdentifier>{1307e192-e6f6-4d8d-98a7-509b0dfe1d28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\Utility\ToolClass">
+      <UniqueIdentifier>{d65f76cb-0ed2-40d4-89ac-de7f519c499a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\Animation">
+      <UniqueIdentifier>{0bc4185d-54c2-4c9e-914d-b1e332e4f589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\Manager\Sound">
+      <UniqueIdentifier>{8557f922-f806-4efa-a4c3-6c068006ad66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CodingInterview\TMF">
+      <UniqueIdentifier>{4c560383-eaf4-4bdd-abe5-c714ecc240e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\ExampleClasses\ShootingGame\Effect">
+      <UniqueIdentifier>{2db59144-654f-4257-87cd-a782466b4b58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameClass\Observer">
+      <UniqueIdentifier>{9db6fb26-f3e7-48b7-89f7-6145c88250c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API FrameWork\ExampleClasses\ShootingGame\Player">
+      <UniqueIdentifier>{41da0ea2-9d2d-480a-b594-27c5d959d77f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="WinMain.cpp">
+      <Filter>API FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="Stdafx.cpp">
+      <Filter>API FrameWork\Stdafx</Filter>
+    </ClCompile>
+    <ClCompile Include="GameNode.cpp">
+      <Filter>API FrameWork\GameNode</Filter>
+    </ClCompile>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>API FrameWork\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>API FrameWork\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>API FrameWork\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>API FrameWork\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TempSoundManager.cpp">
+      <Filter>API FrameWork\Manager\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="TempSoundTest.cpp">
+      <Filter>API FrameWork\Manager\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="CShapePlayer.cpp">
+      <Filter>GameClass\port</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleTranslate.cpp">
+      <Filter>GameClass\port</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlock.cpp">
+      <Filter>GameClass\port</Filter>
+    </ClCompile>
+    <ClCompile Include="GDIplusTest.cpp">
+      <Filter>GameClass\port</Filter>
+    </ClCompile>
+    <ClCompile Include="mGpImage.cpp">
+      <Filter>API FrameWork\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="MapPatternController.cpp">
+      <Filter>GameClass\port</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>API FrameWork\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Minion.cpp">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullets.cpp">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame\Bullets</Filter>
+    </ClCompile>
+    <ClCompile Include="Tilemap.cpp">
+      <Filter>GameClass\HomeworkClass</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapObject.cpp">
+      <Filter>GameClass\HomeworkClass</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>API FrameWork\Manager\TimeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>API FrameWork\Manager\TimeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HpImgBar.cpp">
+      <Filter>API FrameWork\Utility\ToolClass</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressBar.cpp">
+      <Filter>API FrameWork\Utility\ToolClass</Filter>
+    </ClCompile>
+    <ClCompile Include="CRectObserverManager.cpp">
+      <Filter>GameClass\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>API FrameWork\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffect.cpp">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CProjectPlayer.cpp">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>API FrameWork\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TextDataManager.cpp">
+      <Filter>API FrameWork\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ShootingScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CommonMacroFunction.h">
+      <Filter>API FrameWork\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Stdafx.h">
+      <Filter>API FrameWork\Stdafx</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomFunction.h">
+      <Filter>API FrameWork\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="GameNode.h">
+      <Filter>API FrameWork\GameNode</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>API FrameWork\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SingletonBase.h">
+      <Filter>API FrameWork\DesignPattern\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>API FrameWork\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>API FrameWork\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>API FrameWork\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TempSoundManager.h">
+      <Filter>API FrameWork\Manager\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="TempSoundTest.h">
+      <Filter>API FrameWork\Manager\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="CShapePlayer.h">
+      <Filter>GameClass\port</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleTranslate.h">
+      <Filter>GameClass\port</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlock.h">
+      <Filter>GameClass\port</Filter>
+    </ClInclude>
+    <ClInclude Include="GDIplusTest.h">
+      <Filter>GameClass\port</Filter>
+    </ClInclude>
+    <ClInclude Include="mGpImage.h">
+      <Filter>API FrameWork\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="MapPatternController.h">
+      <Filter>GameClass\port</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>API FrameWork\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Minion.h">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullets.h">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="Tilemap.h">
+      <Filter>GameClass\HomeworkClass</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMapObject.h">
+      <Filter>GameClass\HomeworkClass</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>API FrameWork\Manager\TimeManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>API FrameWork\Manager\TimeManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HpImgBar.h">
+      <Filter>API FrameWork\Utility\ToolClass</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressBar.h">
+      <Filter>API FrameWork\Utility\ToolClass</Filter>
+    </ClInclude>
+    <ClInclude Include="CRectObserverManager.h">
+      <Filter>GameClass\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="IRectObserved.h">
+      <Filter>GameClass\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="ISubject.h">
+      <Filter>GameClass\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>API FrameWork\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="CEffect.h">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CProjectPlayer.h">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="TextDataManager.h">
+      <Filter>API FrameWork\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>API FrameWork\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ShootingScene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Question.txt">
+      <Filter>CodingInterview</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Filter>CodingInterview</Filter>
+    </None>
+  </ItemGroup>
+</Project>
