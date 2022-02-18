@@ -49,9 +49,6 @@
     <Filter Include="API FrameWork\ExampleClasses\ShootingGame\Bullets">
       <UniqueIdentifier>{fc024b1e-7ddf-4f4f-bbf5-896c4a065d9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameClass\HomeworkClass">
-      <UniqueIdentifier>{c2cd7251-33f9-4ea7-80b6-264052853fdf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="API FrameWork\Manager\TimeManager">
       <UniqueIdentifier>{1307e192-e6f6-4d8d-98a7-509b0dfe1d28}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,9 @@
     </Filter>
     <Filter Include="API FrameWork\ExampleClasses\ShootingGame\Player">
       <UniqueIdentifier>{41da0ea2-9d2d-480a-b594-27c5d959d77f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameClass\Tilemap">
+      <UniqueIdentifier>{c2cd7251-33f9-4ea7-80b6-264052853fdf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -142,10 +142,10 @@
       <Filter>API FrameWork\ExampleClasses\ShootingGame\Bullets</Filter>
     </ClCompile>
     <ClCompile Include="Tilemap.cpp">
-      <Filter>GameClass\HomeworkClass</Filter>
+      <Filter>GameClass\Tilemap</Filter>
     </ClCompile>
     <ClCompile Include="TileMapObject.cpp">
-      <Filter>GameClass\HomeworkClass</Filter>
+      <Filter>GameClass\Tilemap</Filter>
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
       <Filter>API FrameWork\Manager\TimeManager</Filter>
@@ -253,10 +253,10 @@
       <Filter>API FrameWork\ExampleClasses\ShootingGame\Bullets</Filter>
     </ClInclude>
     <ClInclude Include="Tilemap.h">
-      <Filter>GameClass\HomeworkClass</Filter>
+      <Filter>GameClass\Tilemap</Filter>
     </ClInclude>
     <ClInclude Include="TileMapObject.h">
-      <Filter>GameClass\HomeworkClass</Filter>
+      <Filter>GameClass\Tilemap</Filter>
     </ClInclude>
     <ClInclude Include="TimeManager.h">
       <Filter>API FrameWork\Manager\TimeManager</Filter>
