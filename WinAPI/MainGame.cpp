@@ -6,7 +6,7 @@ HRESULT MainGame::init(void)
 {
 	GameNode::init(TRUE);
 
-	SCENEMANAGER->addScene("½´ÆÃ", new ShootingScene);
+	//SCENEMANAGER->addScene("½´ÆÃ", new ShootingScene);
 	SCENEMANAGER->changeScene("½´ÆÃ");
 
 	return S_OK;

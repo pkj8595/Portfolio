@@ -165,6 +165,7 @@
     <ClCompile Include="CProjectPlayer.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShootingScene.cpp" />
+    <ClCompile Include="ShopScene.cpp" />
     <ClCompile Include="SimpleTranslate.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -219,6 +220,7 @@
     <ClInclude Include="CProjectPlayer.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShootingScene.h" />
+    <ClInclude Include="ShopScene.h" />
     <ClInclude Include="SimpleTranslate.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>

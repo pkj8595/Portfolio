@@ -14,6 +14,7 @@ typedef struct tagObservedInfo
 	ObservedType* typeKey;
 	RECT* rc;
 	bool* isActive;	//적이 충졸했을때 
+
 }STObservedData;
 
 class IRectObserved 

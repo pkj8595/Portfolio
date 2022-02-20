@@ -32,6 +32,7 @@ HRESULT CProjectPlayer::init(void)
 	_arrAMissile[1]->init(20, 500);
 	setAMissile(0);
 
+	STObservedData data;
 	_type = ObservedType::ROCKET;
 	_pState = EPPlayer_State::Idle;
 	_previousState = EPPlayer_State::Left;

@@ -180,7 +180,10 @@
     <ClCompile Include="TextDataManager.cpp">
       <Filter>API FrameWork\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="ShootingScene.cpp" />
+    <ClCompile Include="ShootingScene.cpp">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -297,7 +300,10 @@
     <ClInclude Include="SceneManager.h">
       <Filter>API FrameWork\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="ShootingScene.h" />
+    <ClInclude Include="ShootingScene.h">
+      <Filter>API FrameWork\ExampleClasses\ShootingGame</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">
