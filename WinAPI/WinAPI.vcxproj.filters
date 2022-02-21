@@ -81,6 +81,7 @@
     </Filter>
     <Filter Include="MainGame\Map\MapType">
       <UniqueIdentifier>{92d78c0a-56c1-44e0-824e-8f0def7cc963}</UniqueIdentifier>
+    </Filter>
     <Filter Include="PKJ">
       <UniqueIdentifier>{a1134bdf-b905-4b02-a048-ba775e56f202}</UniqueIdentifier>
     </Filter>
@@ -179,7 +180,7 @@
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="PlayScene.cpp" />
-<<<<<<< HEAD
+
     <ClCompile Include="MapManager.cpp">
       <Filter>MainGame\Map</Filter>
     </ClCompile>
@@ -201,7 +202,7 @@
     <ClCompile Include="ChestMap.cpp">
       <Filter>MainGame\Map\MapType</Filter>
     </ClCompile>
-=======
+
     <ClCompile Include="Inventory.cpp">
       <Filter>PKJ</Filter>
     </ClCompile>
@@ -211,14 +212,10 @@
     <ClCompile Include="ShopScene.cpp">
       <Filter>PKJ</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="ItemManager.cpp">
       <Filter>PKJ</Filter>
     </ClCompile>
-=======
     <ClCompile Include="ItemManager.cpp" />
->>>>>>> 5d868467329fb1fe23a58ac0d3e23d5ed85904c0
->>>>>>> c82f6d2471f66967cd79e8233b484dd4379eb415
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -326,7 +323,6 @@
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="PlayScene.h" />
-<<<<<<< HEAD
     <ClInclude Include="MapManager.h">
       <Filter>MainGame\Map</Filter>
     </ClInclude>
@@ -348,7 +344,6 @@
     <ClInclude Include="BossMap.h">
       <Filter>MainGame\Map\MapType</Filter>
     </ClInclude>
-=======
     <ClInclude Include="Inventory.h">
       <Filter>PKJ</Filter>
     </ClInclude>
@@ -358,14 +353,10 @@
     <ClInclude Include="ShopScene.h">
       <Filter>PKJ</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="ItemManager.h">
       <Filter>PKJ</Filter>
     </ClInclude>
-=======
     <ClInclude Include="ItemManager.h" />
->>>>>>> 5d868467329fb1fe23a58ac0d3e23d5ed85904c0
->>>>>>> c82f6d2471f66967cd79e8233b484dd4379eb415
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">
