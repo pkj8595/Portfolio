@@ -216,14 +216,11 @@
     <ClInclude Include="ItemClass.h" />
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="LobbyScene.h" />
-<<<<<<< HEAD
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="MapPatternController.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
-=======
->>>>>>> 5d868467329fb1fe23a58ac0d3e23d5ed85904c0
     <ClInclude Include="mGpImage.h" />
     <ClInclude Include="Minion.h" />
     <ClInclude Include="Player.h" />
