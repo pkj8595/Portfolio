@@ -180,7 +180,9 @@
     <ClCompile Include="ShopScene.cpp">
       <Filter>PKJ</Filter>
     </ClCompile>
-    <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>PKJ</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -297,7 +299,9 @@
     <ClInclude Include="ShopScene.h">
       <Filter>PKJ</Filter>
     </ClInclude>
-    <ClInclude Include="ItemManager.h" />
+    <ClInclude Include="ItemManager.h">
+      <Filter>PKJ</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">

@@ -3,8 +3,9 @@
 
 HRESULT ItemManager::init(void)
 {
-	_index = 0;
+	IMAGEMANAGER->addFrameImage("ItemImage", "Resource/Images/Lucie/CompleteImg/item/Item_Image.bmp", 320, 256, 10, 8, true, RGB(255, 0, 255));
 
+	_index = 0;
 	return S_OK;
 }
 
