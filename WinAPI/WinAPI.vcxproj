@@ -159,6 +159,7 @@
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="ItemClass.cpp" />
     <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="KgyScene.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapManager.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="Slime.cpp" />
     <ClCompile Include="StartMap.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -212,6 +214,7 @@
     <ClInclude Include="ISubject.h" />
     <ClInclude Include="ItemClass.h" />
     <ClInclude Include="ItemManager.h" />
+    <ClInclude Include="KgyScene.h" />
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapManager.h" />
@@ -232,6 +235,7 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="SingletonBase.h" />
+    <ClInclude Include="Slime.h" />
     <ClInclude Include="StartMap.h" />
     <ClInclude Include="Stdafx.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
