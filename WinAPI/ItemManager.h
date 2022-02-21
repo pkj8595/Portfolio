@@ -11,10 +11,12 @@ private:
 
 public:
 	HRESULT init(void);
-	void setItemList();
 	void release(void);
 	void update(void);
 	void render(void);
+
+
+	void setItemList();
 
 	ItemManager() {}
 	~ItemManager() {}
