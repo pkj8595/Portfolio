@@ -85,6 +85,9 @@
     <Filter Include="PKJ">
       <UniqueIdentifier>{a1134bdf-b905-4b02-a048-ba775e56f202}</UniqueIdentifier>
     </Filter>
+    <Filter Include="KGY">
+      <UniqueIdentifier>{3969682f-08ec-4009-864e-80830d80781d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -214,6 +217,12 @@
       <Filter>PKJ</Filter>
     </ClCompile>
     <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="KgyScene.cpp">
+      <Filter>KGY</Filter>
+    </ClCompile>
+    <ClCompile Include="Slime.cpp">
+      <Filter>KGY</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -355,6 +364,12 @@
       <Filter>PKJ</Filter>
     </ClInclude>
     <ClInclude Include="ItemManager.h" />
+    <ClInclude Include="KgyScene.h">
+      <Filter>KGY</Filter>
+    </ClInclude>
+    <ClInclude Include="Slime.h">
+      <Filter>KGY</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">
