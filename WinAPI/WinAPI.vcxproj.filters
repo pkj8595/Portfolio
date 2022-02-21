@@ -76,6 +76,15 @@
     <Filter Include="GameClass\Tilemap">
       <UniqueIdentifier>{c2cd7251-33f9-4ea7-80b6-264052853fdf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Map">
+      <UniqueIdentifier>{c483dc4f-bec1-4669-b67b-24839a8bdf83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Player">
+      <UniqueIdentifier>{638216ce-a769-4bd9-885c-ec4c909362f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Map\MapType">
+      <UniqueIdentifier>{92d78c0a-56c1-44e0-824e-8f0def7cc963}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -187,6 +196,27 @@
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="MapManager.cpp">
+      <Filter>MainGame\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>MainGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClCompile>
+    <ClCompile Include="StartMap.cpp">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultMap.cpp">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClCompile>
+    <ClCompile Include="BossMap.cpp">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClCompile>
+    <ClCompile Include="ChestMap.cpp">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -310,6 +340,27 @@
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="MapManager.h">
+      <Filter>MainGame\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>MainGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClInclude>
+    <ClInclude Include="StartMap.h">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultMap.h">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClInclude>
+    <ClInclude Include="ChestMap.h">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClInclude>
+    <ClInclude Include="BossMap.h">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">

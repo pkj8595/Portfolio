@@ -14,7 +14,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("LobbyScene", new LobbyScene);
 	SCENEMANAGER->addScene("PlayScene", new PlayScene);
 
-	SCENEMANAGER->changeScene("TitleScene");
+	SCENEMANAGER->changeScene("PlayScene");
 
 	return S_OK;
 }
@@ -34,6 +34,7 @@ void MainGame::render(void)
 	PatBlt(getMemDC(), 0, 0, WINSIZE_X, WINSIZE_Y, BLACKNESS);
 
 	SCENEMANAGER->render();
+
 	TIMEMANAGER->render(getMemDC());
 
 	this->getBackBuffer()->render(getHDC());

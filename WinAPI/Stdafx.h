@@ -114,10 +114,10 @@ using namespace MY_UTIL;
 
 #else
 
-#define WINSTART_X		350
+#define WINSTART_X		550
 #define WINSTART_Y		0
-#define WINSIZE_X		1000
-#define WINSIZE_Y		1000
+#define WINSIZE_X		1104
+#define WINSIZE_Y		960
 //#define WINSIZE_Y		700
 //WS SYSMENU >> 오른쪽 상단 컨트롤 박스 
 //WINSTYLE WS_CAPTION ? 
