@@ -146,9 +146,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="BossMap.cpp" />
     <ClCompile Include="Bullets.cpp" />
     <ClCompile Include="CEffect.cpp" />
+    <ClCompile Include="ChestMap.cpp" />
     <ClCompile Include="CRectObserverManager.cpp" />
+    <ClCompile Include="DefaultMap.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
@@ -157,8 +160,17 @@
     <ClCompile Include="ItemClass.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
+<<<<<<< HEAD
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapManager.cpp" />
+    <ClCompile Include="MapPatternController.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+=======
+>>>>>>> 5d868467329fb1fe23a58ac0d3e23d5ed85904c0
     <ClCompile Include="mGpImage.cpp" />
     <ClCompile Include="Minion.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="CProjectPlayer.cpp" />
@@ -171,6 +183,7 @@
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="StartMap.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
@@ -189,10 +202,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="BossMap.h" />
     <ClInclude Include="Bullets.h" />
     <ClInclude Include="CEffect.h" />
+    <ClInclude Include="ChestMap.h" />
     <ClInclude Include="CommonMacroFunction.h" />
     <ClInclude Include="CRectObserverManager.h" />
+    <ClInclude Include="DefaultMap.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
@@ -203,8 +219,17 @@
     <ClInclude Include="ItemClass.h" />
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="LobbyScene.h" />
+<<<<<<< HEAD
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="MapManager.h" />
+    <ClInclude Include="MapPatternController.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+=======
+>>>>>>> 5d868467329fb1fe23a58ac0d3e23d5ed85904c0
     <ClInclude Include="mGpImage.h" />
     <ClInclude Include="Minion.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="CProjectPlayer.h" />
@@ -219,6 +244,7 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="SingletonBase.h" />
+    <ClInclude Include="StartMap.h" />
     <ClInclude Include="Stdafx.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>

@@ -1,9 +1,11 @@
 #include "Stdafx.h"
 #include "CRectObserverManager.h"
 #include "EffectManager.h"
+#include "PlayScene.h"
 
 HRESULT CRectObserverManager::init()
 {
+	SCENEMANAGER->addScene("Play", new PlayScene);
 	return S_OK;
 }
 
