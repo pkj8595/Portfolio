@@ -6,6 +6,18 @@ HRESULT ItemManager::init(void)
 	IMAGEMANAGER->addFrameImage("ItemImage", "Resource/Images/Lucie/CompleteImg/item/Item_Image.bmp", 320, 256, 10, 8, true, RGB(255, 0, 255));
 
 	_index = 0;
+
+
+	std::ifstream in("Resource/Text/ITEM_DATA.csv", ios::in);
+	if (in.is_open())
+	{
+		char line[256] = { 0 };
+		while (in.getline(line, 256))
+		{
+			cout << line << endl;
+		}
+	}
+	in.close();
 	return S_OK;
 }
 

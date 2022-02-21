@@ -55,6 +55,7 @@ using namespace Gdiplus;
 
 //void 포인터를 변수처럼 던지는 라이브러리
 #include <functional> 
+#include <fstream>
 
 using namespace std;
 
