@@ -147,19 +147,16 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Bullets.cpp" />
-    <ClCompile Include="CBlock.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="CRectObserverManager.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="HpImgBar.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="ItemClass.cpp" />
+    <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
-    <ClCompile Include="MapPatternController.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="mGpImage.cpp" />
     <ClCompile Include="Minion.cpp" />
     <ClCompile Include="PlayScene.cpp" />
@@ -168,17 +165,8 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShootingScene.cpp" />
     <ClCompile Include="ShopScene.cpp" />
-    <ClCompile Include="SimpleTranslate.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="CShapePlayer.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameNode.cpp" />
-    <ClCompile Include="GDIplusTest.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
@@ -202,9 +190,6 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Bullets.h" />
-    <ClInclude Include="CBlock.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="CEffect.h" />
     <ClInclude Include="CommonMacroFunction.h" />
     <ClInclude Include="CRectObserverManager.h" />
@@ -212,12 +197,12 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="HpImgBar.h" />
+    <ClInclude Include="Inventory.h" />
     <ClInclude Include="IRectObserved.h" />
     <ClInclude Include="ISubject.h" />
+    <ClInclude Include="ItemClass.h" />
+    <ClInclude Include="ItemManager.h" />
     <ClInclude Include="LobbyScene.h" />
-    <ClInclude Include="MapPatternController.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="mGpImage.h" />
     <ClInclude Include="Minion.h" />
     <ClInclude Include="PlayScene.h" />
@@ -226,17 +211,8 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShootingScene.h" />
     <ClInclude Include="ShopScene.h" />
-    <ClInclude Include="SimpleTranslate.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="CShapePlayer.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameNode.h" />
-    <ClInclude Include="GDIplusTest.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="KeyManager.h" />
