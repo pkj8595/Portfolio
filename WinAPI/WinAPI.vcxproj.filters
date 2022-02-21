@@ -184,6 +184,9 @@
       <Filter>API FrameWork\ExampleClasses\ShootingGame</Filter>
     </ClCompile>
     <ClCompile Include="ShopScene.cpp" />
+    <ClCompile Include="LobbyScene.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="PlayScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -304,6 +307,9 @@
       <Filter>API FrameWork\ExampleClasses\ShootingGame</Filter>
     </ClInclude>
     <ClInclude Include="ShopScene.h" />
+    <ClInclude Include="LobbyScene.h" />
+    <ClInclude Include="TitleScene.h" />
+    <ClInclude Include="PlayScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">

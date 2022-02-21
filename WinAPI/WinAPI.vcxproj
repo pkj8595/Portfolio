@@ -156,11 +156,13 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="HpImgBar.cpp" />
+    <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="MapPatternController.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="mGpImage.cpp" />
     <ClCompile Include="Minion.cpp" />
+    <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="CProjectPlayer.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -191,6 +193,7 @@
     <ClCompile Include="TileMapObject.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WinMain.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -211,11 +214,13 @@
     <ClInclude Include="HpImgBar.h" />
     <ClInclude Include="IRectObserved.h" />
     <ClInclude Include="ISubject.h" />
+    <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="MapPatternController.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="mGpImage.h" />
     <ClInclude Include="Minion.h" />
+    <ClInclude Include="PlayScene.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="CProjectPlayer.h" />
     <ClInclude Include="SceneManager.h" />
@@ -248,6 +253,7 @@
     <ClInclude Include="TileMapObject.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>

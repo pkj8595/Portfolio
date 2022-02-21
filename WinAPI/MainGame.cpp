@@ -1,14 +1,20 @@
 #include "Stdafx.h" 
 #include "MainGame.h"
 #include "ShootingScene.h"
-#include "GDIplusTest.h"
+#include "TitleScene.h"
+#include "LobbyScene.h"
+#include "PlayScene.h"
 
 HRESULT MainGame::init(void)
 {
 	GameNode::init(TRUE);
 
 	SCENEMANAGER->addScene("½´ÆÃ", new ShootingScene);
-	SCENEMANAGER->changeScene("½´ÆÃ");
+	SCENEMANAGER->addScene("TitleScene", new TitleScene);
+	SCENEMANAGER->addScene("LobbyScene", new LobbyScene);
+	SCENEMANAGER->addScene("PlayScene", new PlayScene);
+
+	SCENEMANAGER->changeScene("TitleScene");
 
 	return S_OK;
 }

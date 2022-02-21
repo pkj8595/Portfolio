@@ -24,7 +24,6 @@ public:
 	void release(void);
 	virtual STObservedData getRectUpdate();
 	virtual void collideObject();
-
 };
 
 //추상 미사일

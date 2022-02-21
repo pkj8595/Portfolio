@@ -1,9 +1,15 @@
 #pragma once
 #include "ISubject.h"
 #include "SingletonBase.h" 
+/*
+IRectObserved를 상속받는 클래스를 등록한다.
+등록한 클래스 삭제한다.
+내가 원하는 시점에 IRectObserved 상속받은 객체의 함수를 호출시킨다.
 
+IRectObserved >> 플레이어 , 플미, 적미사일, 적
+*/
 class EffectManager;
-class CRectObserverManager : public SingletonBase< CRectObserverManager>
+class CRectObserverManager : public SingletonBase<CRectObserverManager>
 {
 private:
 	//map를 쓰는게 좋지않을까?
