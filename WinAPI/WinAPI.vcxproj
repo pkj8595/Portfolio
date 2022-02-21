@@ -160,14 +160,11 @@
     <ClCompile Include="ItemClass.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="MapPatternController.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-=======
->>>>>>> 5d868467329fb1fe23a58ac0d3e23d5ed85904c0
     <ClCompile Include="mGpImage.cpp" />
     <ClCompile Include="Minion.cpp" />
     <ClCompile Include="Player.cpp" />
