@@ -76,6 +76,9 @@
     <Filter Include="GameClass\Tilemap">
       <UniqueIdentifier>{c2cd7251-33f9-4ea7-80b6-264052853fdf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OJH">
+      <UniqueIdentifier>{c97959c3-a0de-4ea5-a870-7caa1bf8b583}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -187,6 +190,15 @@
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="OJHScene.cpp">
+      <Filter>OJH</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>OJH</Filter>
+    </ClCompile>
+    <ClCompile Include="TextSystemManager.cpp">
+      <Filter>OJH</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -310,6 +322,15 @@
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="OJHScene.h">
+      <Filter>OJH</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>OJH</Filter>
+    </ClInclude>
+    <ClInclude Include="TextSystemManager.h">
+      <Filter>OJH</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">

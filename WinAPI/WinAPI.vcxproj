@@ -162,6 +162,7 @@
     </ClCompile>
     <ClCompile Include="mGpImage.cpp" />
     <ClCompile Include="Minion.cpp" />
+    <ClCompile Include="OJHScene.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="CProjectPlayer.cpp" />
@@ -188,7 +189,9 @@
     </ClCompile>
     <ClCompile Include="TempSoundManager.cpp" />
     <ClCompile Include="TempSoundTest.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextDataManager.cpp" />
+    <ClCompile Include="TextSystemManager.cpp" />
     <ClCompile Include="Tilemap.cpp" />
     <ClCompile Include="TileMapObject.cpp" />
     <ClCompile Include="TimeManager.cpp" />
@@ -220,6 +223,7 @@
     </ClInclude>
     <ClInclude Include="mGpImage.h" />
     <ClInclude Include="Minion.h" />
+    <ClInclude Include="OJHScene.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="CProjectPlayer.h" />
@@ -248,7 +252,9 @@
     </ClInclude>
     <ClInclude Include="TempSoundManager.h" />
     <ClInclude Include="TempSoundTest.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="TextDataManager.h" />
+    <ClInclude Include="TextSystemManager.h" />
     <ClInclude Include="Tilemap.h" />
     <ClInclude Include="TileMapObject.h" />
     <ClInclude Include="TimeManager.h" />
