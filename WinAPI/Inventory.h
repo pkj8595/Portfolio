@@ -1,10 +1,9 @@
 #pragma once
 #include "GameNode.h"
-class ShopScene : public GameNode
+class Inventory : GameNode
 {
-private:
 
-public :
+public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);

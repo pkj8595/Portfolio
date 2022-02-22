@@ -1,13 +1,20 @@
 #pragma once
 #include "GameNode.h"
-class ShopScene : public GameNode
+#include "EnemyManager.h"
+
+class KgyScene:public GameNode
 {
 private:
+	EnemyManager* _em;
 
-public :
+public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
+
+public:
+	KgyScene();
+	virtual ~KgyScene();
 };
 

@@ -125,3 +125,20 @@ public:
 	virtual void move(void);
 	virtual void fire(float x, float y);
 };
+
+
+class SlimeMissile : public AMissile
+{
+private:
+	int _bulletCount;
+	float _firstAngle;
+	const float _offsetAngle = 0.1f;
+
+public:
+	virtual HRESULT init(int bulletMax, float range);
+	virtual void move(void);
+	virtual void fire(float x, float y);
+	virtual void draw(void);
+	SlimeMissile() {}
+	~SlimeMissile() {}
+};

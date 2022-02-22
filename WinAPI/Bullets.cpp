@@ -361,3 +361,60 @@ void tagCBullet::collideObject()
 {
 	fire = false;
 }
+
+
+//==================================
+// ### SlimeMissile ###
+//==================================
+HRESULT SlimeMissile::init(int bulletMax, float range)
+{
+	AMissile::init(bulletMax, range);
+	_bulletCount = 0;
+	_firstAngle = (PI / 2) + (static_cast<float>(bulletMax / 2)*_offsetAngle);
+	return S_OK;
+}
+
+void SlimeMissile::move(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	{
+		(*_viBullet)->x += cosf((*_viBullet)->angle)*(*_viBullet)->speed;
+		(*_viBullet)->y += -sinf((*_viBullet)->angle)*(*_viBullet)->speed;
+		(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
+			(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
+	}
+}
+
+void SlimeMissile::fire(float x, float y)
+{
+	if (_bulletMax <= _vBullet.size())return;
+
+	for (int i = 0; i < _bulletMax; i++)
+	{
+		tagCBullet* bullet = new tagCBullet;
+		bullet->img = new my::Image;
+		//
+		bullet->img->init("Resource/Images/Project/playerBullet1.bmp", 14, 15, true, RGB(255, 0, 255));
+		bullet->type = ObservedType::MINION_MISSILE;
+		bullet->speed = 5.0f;
+		bullet->x = bullet->fireX = x;
+		bullet->y = bullet->fireY = y;
+		bullet->angle = _firstAngle - (_bulletCount*_offsetAngle);
+		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
+		bullet->fire = true;
+		bullet->init();
+		_vBullet.push_back(bullet);
+
+		_bulletCount++;
+	}
+	_bulletCount = 0;
+}
+
+void SlimeMissile::draw(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	{
+		(*_viBullet)->img->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
+
+	}
+}

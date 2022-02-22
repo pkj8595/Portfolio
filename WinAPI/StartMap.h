@@ -1,11 +1,11 @@
 #pragma once
-#include "GameNode.h"
-class ShopScene : public GameNode
+#include "Map.h"
+class StartMap : public Map
 {
 private:
 
-public :
-	HRESULT init(void);
+public:
+	HRESULT init(POINT location);
 	void release(void);
 	void update(void);
 	void render(void);

@@ -40,9 +40,6 @@
     <Filter Include="CodingInterview">
       <UniqueIdentifier>{893419de-c5d9-4dc1-8867-a9183c8575ad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameClass\port">
-      <UniqueIdentifier>{704ed228-884a-4fce-8293-5bb9b4ec572c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="API FrameWork\ExampleClasses\ShootingGame\Enemy">
       <UniqueIdentifier>{c4de4360-dec2-49a3-ad9c-a5383c648ba1}</UniqueIdentifier>
     </Filter>
@@ -79,6 +76,21 @@
     <Filter Include="OJH">
       <UniqueIdentifier>{c97959c3-a0de-4ea5-a870-7caa1bf8b583}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Map">
+      <UniqueIdentifier>{c483dc4f-bec1-4669-b67b-24839a8bdf83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Player">
+      <UniqueIdentifier>{638216ce-a769-4bd9-885c-ec4c909362f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Map\MapType">
+      <UniqueIdentifier>{92d78c0a-56c1-44e0-824e-8f0def7cc963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PKJ">
+      <UniqueIdentifier>{a1134bdf-b905-4b02-a048-ba775e56f202}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KGY">
+      <UniqueIdentifier>{3969682f-08ec-4009-864e-80830d80781d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -111,23 +123,8 @@
     <ClCompile Include="TempSoundTest.cpp">
       <Filter>API FrameWork\Manager\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="CShapePlayer.cpp">
-      <Filter>GameClass\port</Filter>
-    </ClCompile>
-    <ClCompile Include="SimpleTranslate.cpp">
-      <Filter>GameClass\port</Filter>
-    </ClCompile>
-    <ClCompile Include="CBlock.cpp">
-      <Filter>GameClass\port</Filter>
-    </ClCompile>
-    <ClCompile Include="GDIplusTest.cpp">
-      <Filter>GameClass\port</Filter>
-    </ClCompile>
     <ClCompile Include="mGpImage.cpp">
       <Filter>API FrameWork\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="MapPatternController.cpp">
-      <Filter>GameClass\port</Filter>
     </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>API FrameWork\Utility</Filter>
@@ -186,7 +183,6 @@
     <ClCompile Include="ShootingScene.cpp">
       <Filter>API FrameWork\ExampleClasses\ShootingGame</Filter>
     </ClCompile>
-    <ClCompile Include="ShopScene.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="PlayScene.cpp" />
@@ -198,6 +194,46 @@
     </ClCompile>
     <ClCompile Include="TextSystemManager.cpp">
       <Filter>OJH</Filter>
+    </ClCompile>
+    <ClCompile Include="MapManager.cpp">
+      <Filter>MainGame\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>MainGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClCompile>
+    <ClCompile Include="StartMap.cpp">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultMap.cpp">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClCompile>
+    <ClCompile Include="BossMap.cpp">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClCompile>
+    <ClCompile Include="ChestMap.cpp">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>PKJ</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemClass.cpp">
+      <Filter>PKJ</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopScene.cpp">
+      <Filter>PKJ</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>PKJ</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="KgyScene.cpp">
+      <Filter>KGY</Filter>
+    </ClCompile>
+    <ClCompile Include="Slime.cpp">
+      <Filter>KGY</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -237,23 +273,8 @@
     <ClInclude Include="TempSoundTest.h">
       <Filter>API FrameWork\Manager\Sound</Filter>
     </ClInclude>
-    <ClInclude Include="CShapePlayer.h">
-      <Filter>GameClass\port</Filter>
-    </ClInclude>
-    <ClInclude Include="SimpleTranslate.h">
-      <Filter>GameClass\port</Filter>
-    </ClInclude>
-    <ClInclude Include="CBlock.h">
-      <Filter>GameClass\port</Filter>
-    </ClInclude>
-    <ClInclude Include="GDIplusTest.h">
-      <Filter>GameClass\port</Filter>
-    </ClInclude>
     <ClInclude Include="mGpImage.h">
       <Filter>API FrameWork\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="MapPatternController.h">
-      <Filter>GameClass\port</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>API FrameWork\Utility</Filter>
@@ -318,7 +339,6 @@
     <ClInclude Include="ShootingScene.h">
       <Filter>API FrameWork\ExampleClasses\ShootingGame</Filter>
     </ClInclude>
-    <ClInclude Include="ShopScene.h" />
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="PlayScene.h" />
@@ -330,6 +350,46 @@
     </ClInclude>
     <ClInclude Include="TextSystemManager.h">
       <Filter>OJH</Filter>
+    </ClInclude>
+    <ClInclude Include="MapManager.h">
+      <Filter>MainGame\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>MainGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClInclude>
+    <ClInclude Include="StartMap.h">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultMap.h">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClInclude>
+    <ClInclude Include="ChestMap.h">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClInclude>
+    <ClInclude Include="BossMap.h">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>PKJ</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemClass.h">
+      <Filter>PKJ</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopScene.h">
+      <Filter>PKJ</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>PKJ</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h" />
+    <ClInclude Include="KgyScene.h">
+      <Filter>KGY</Filter>
+    </ClInclude>
+    <ClInclude Include="Slime.h">
+      <Filter>KGY</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
