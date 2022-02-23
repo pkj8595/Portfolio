@@ -54,6 +54,6 @@ void Lobby::render(void)
 	Rectangle(getMemDC(), _Boxrc.left, _Boxrc.top, _Boxrc.right, _Boxrc.bottom);
 	Rectangle(getMemDC(), _p_rc.left, _p_rc.top, _p_rc.right, _p_rc.bottom);
 
-	if (collBox) _tsm->EventLog(0);
+	if (collBox) _tsm->shopLog(0, L"·Îºê", L"250");
 
 }

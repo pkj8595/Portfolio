@@ -9,11 +9,15 @@ HRESULT TextSystemManager::init(void)
 
 	_textBufferCnt = 0;
 	_count = 0;
-	_arrtext = 0;
+	int _eventArrText = 0;
+	int _chatArrText = 0;
 
 	_text[0] = { L"", L"기본 무기 중 하나를 가져갈 수 있다. 어느걸 가져갈까?" };
 	_text[1] = { L"", L"옷장" };
 	_text[2] = { L"", L"거울" };
+
+	_text2[0] = { L"이건", _itemName, _price, L"골드야." };
+	_text2[1] = { L"살래?" };
 
 	_chatRc = RectMake(WINSIZE_X*0.08, WINSIZE_Y*0.75, _Chatimage->getWidth(), _Chatimage->getHeight());
 	_nameRc = RectMake(WINSIZE_X*0.06, WINSIZE_Y*0.68, _Nameimage->getWidth(), _Nameimage->getHeight());
@@ -36,14 +40,15 @@ void TextSystemManager::update(void)
 
 void TextSystemManager::render(void)
 {
-	shopLog(_itemName, _price);
-	EventLog(_arrtext);
+	shopLog(_chatArrText, _itemName, _price);
+	EventLog(_eventArrText);
 }
 
-void TextSystemManager::shopLog(LPCWSTR itemName, LPCWSTR price)
+void TextSystemManager::shopLog(int arrText, LPCWSTR itemName, LPCWSTR price)
 {
 	_itemName = itemName;
 	_price = price;
+	_chatArrText = arrText;
 
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
 	IMAGEMANAGER->alphaRender("Namebox", getMemDC(), _nameRc.left, _nameRc.top, _textAlpha);
@@ -51,21 +56,12 @@ void TextSystemManager::shopLog(LPCWSTR itemName, LPCWSTR price)
 		L"마리", wcslen(L"마리"), RGB(0, 0, 255));
 
 	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.78, "맑은 고딕", 27, 15,
-		L"그건", ((_textBufferCnt / 4) > wcslen(L"그건") ? wcslen(L"그건") : (_textBufferCnt / 4)), RGB(255, 255, 255));
-
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.15, WINSIZE_Y*0.78, "맑은 고딕", 27, 15,
-		itemName, ((_textBufferCnt / 8) > wcslen(itemName) ? wcslen(itemName) : (_textBufferCnt / 8)), RGB(255, 0, 255));
-
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.80, "맑은 고딕", 27, 15,
-		L"가격은", ((_textBufferCnt / 12) > wcslen(L"가격은") ? wcslen(L"가격은") : (_textBufferCnt / 12)), RGB(255, 0, 255));
-
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.165, WINSIZE_Y*0.80, "맑은 고딕", 27, 15,
-		price, ((_textBufferCnt / 16) > wcslen(price) ? wcslen(price) : (_textBufferCnt / 16)), RGB(255, 0, 255));
+		_text2[arrText].script, ((_textBufferCnt / 4) > wcslen(_text2[arrText].script) ? wcslen(_text2[arrText].script) : (_textBufferCnt / 4)), RGB(255, 255, 255));
 }
 
 void TextSystemManager::EventLog(int arrText)
 {
-	_arrtext = arrText;
+	_eventArrText = arrText;
 
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
 	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "맑은 고딕", 27, 15,
