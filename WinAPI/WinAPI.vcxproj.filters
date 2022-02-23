@@ -189,9 +189,6 @@
     <ClCompile Include="OJHScene.cpp">
       <Filter>OJH</Filter>
     </ClCompile>
-    <ClCompile Include="Text.cpp">
-      <Filter>OJH</Filter>
-    </ClCompile>
     <ClCompile Include="TextSystemManager.cpp">
       <Filter>OJH</Filter>
     </ClCompile>
@@ -234,6 +231,12 @@
     </ClCompile>
     <ClCompile Include="Slime.cpp">
       <Filter>KGY</Filter>
+    </ClCompile>
+    <ClCompile Include="Lobby.cpp">
+      <Filter>OJH</Filter>
+    </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>OJH</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -345,9 +348,6 @@
     <ClInclude Include="OJHScene.h">
       <Filter>OJH</Filter>
     </ClInclude>
-    <ClInclude Include="Text.h">
-      <Filter>OJH</Filter>
-    </ClInclude>
     <ClInclude Include="TextSystemManager.h">
       <Filter>OJH</Filter>
     </ClInclude>
@@ -390,6 +390,9 @@
     </ClInclude>
     <ClInclude Include="Slime.h">
       <Filter>KGY</Filter>
+    </ClInclude>
+    <ClInclude Include="Lobby.h">
+      <Filter>OJH</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
