@@ -236,6 +236,12 @@
       <Filter>KGY</Filter>
     </ClCompile>
     <ClCompile Include="mButton.cpp" />
+    <ClCompile Include="PixelCollision.cpp">
+      <Filter>API FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWeapon.cpp">
+      <Filter>MainGame\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -393,6 +399,9 @@
       <Filter>KGY</Filter>
     </ClInclude>
     <ClInclude Include="mButton.h" />
+    <ClInclude Include="PlayerWeapon.h">
+      <Filter>MainGame\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">

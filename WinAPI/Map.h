@@ -43,5 +43,7 @@ public:
 	{
 		_connectedMap[arrayNum] = connected;
 	}
+
+	my::Image* getPixelCollisionImage() { return _pixelCollisionImage; }
 };
 
