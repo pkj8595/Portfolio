@@ -4,8 +4,10 @@
 #include "TitleScene.h"
 #include "LobbyScene.h"
 #include "PlayScene.h"
+#include "KgyScene.h"
 #include "OJHScene.h"
 #include "Lobby.h"
+#include "ShopScene.h"
 
 HRESULT MainGame::init(void)
 {
@@ -15,13 +17,13 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("TitleScene", new TitleScene);
 	SCENEMANAGER->addScene("LobbyScene", new LobbyScene);
 	SCENEMANAGER->addScene("PlayScene", new PlayScene);
+	SCENEMANAGER->addScene("kgy", new KgyScene);
 	SCENEMANAGER->addScene("TextTest", new OJHScene);
 	SCENEMANAGER->addScene("Lobby", new Lobby);
+	SCENEMANAGER->addScene("ShopScene", new ShopScene);
 
-
-	SCENEMANAGER->changeScene("Lobby");
-	//SCENEMANAGER->changeScene("PlayScene");
-
+	//SCENEMANAGER->changeScene("TextTest");
+	SCENEMANAGER->changeScene("PlayScene");
 
 	return S_OK;
 }

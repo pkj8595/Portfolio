@@ -127,18 +127,50 @@ public:
 };
 
 
-class SlimeMissile : public AMissile
+class ThreeDirectionMissile : public AMissile
 {
 private:
 	int _bulletCount;
 	float _firstAngle;
-	const float _offsetAngle = 0.1f;
+	const float _offsetAngle = 0.3f;
+
+public:
+	virtual HRESULT init(int bulletMax, float range);
+	virtual void move(void);
+	virtual void fire(float x, float y, float angle);
+	virtual void draw(void);
+	ThreeDirectionMissile() {}
+	~ThreeDirectionMissile() {}
+};
+
+class TwoDirectionMissile : public AMissile
+{
+private:
+	int _bulletCount;
+	float _firstAngle;
+	const float _offsetAngle = 0.3f;
+
+public:
+	virtual HRESULT init(int bulletMax, float range);
+	virtual void move(void);
+	virtual void fire(float x, float y, float angle);
+	virtual void draw(void);
+	TwoDirectionMissile() {}
+	~TwoDirectionMissile() {}
+};
+
+class CircleMissile :public AMissile
+{
+private:
+	int _bulletCount;
+	float _firstAngle;
+	const float _offsetAngle = 36.f;
 
 public:
 	virtual HRESULT init(int bulletMax, float range);
 	virtual void move(void);
 	virtual void fire(float x, float y);
 	virtual void draw(void);
-	SlimeMissile() {}
-	~SlimeMissile() {}
+	CircleMissile() {}
+	~CircleMissile() {}
 };

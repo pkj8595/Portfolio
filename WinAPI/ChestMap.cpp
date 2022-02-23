@@ -7,6 +7,7 @@ HRESULT ChestMap::init(POINT location)
 	_clear = true;
 	_image = IMAGEMANAGER->addImage("ChestGround", "Resource/Images/Lucie/CompleteImg/ground/map/Ground215.bmp", 1008, 768, false, RGB(255, 0, 255));
 	_minimapImage = IMAGEMANAGER->addImage("Minimap_Chest", "Resource/Images/Lucie/CompleteImg/miniMap/minimap_cellIcon_chest.bmp", 30, 30, true, RGB(255, 0, 255));
+	_pixelCollisionImage = IMAGEMANAGER->addImage("ChestPixel", "Resource/Images/Lucie/CompleteImg/ground/pixelmap/!m215.bmp",1008, 768, false, RGB(255, 0, 255));
 	_location = location;
 	return S_OK;
 }

@@ -165,10 +165,13 @@
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapManager.cpp" />
+    <ClCompile Include="mButton.cpp" />
     <ClCompile Include="mGpImage.cpp" />
     <ClCompile Include="Minion.cpp" />
+    <ClCompile Include="PixelCollision.cpp" />
     <ClCompile Include="OJHScene.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerWeapon.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="CProjectPlayer.cpp" />
@@ -182,6 +185,7 @@
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Slime.cpp" />
+    <ClCompile Include="Snake.cpp" />
     <ClCompile Include="StartMap.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -223,10 +227,12 @@
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapManager.h" />
+    <ClInclude Include="mButton.h" />
     <ClInclude Include="mGpImage.h" />
     <ClInclude Include="Minion.h" />
     <ClInclude Include="OJHScene.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerWeapon.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="CProjectPlayer.h" />
@@ -242,6 +248,7 @@
     <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="Slime.h" />
+    <ClInclude Include="Snake.h" />
     <ClInclude Include="StartMap.h" />
     <ClInclude Include="Stdafx.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

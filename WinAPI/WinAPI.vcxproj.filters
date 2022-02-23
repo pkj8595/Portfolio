@@ -238,6 +238,16 @@
     <ClCompile Include="collision.cpp">
       <Filter>OJH</Filter>
     </ClCompile>
+    <ClCompile Include="Snake.cpp">
+      <Filter>KGY</Filter>
+    </ClCompile>
+    <ClCompile Include="mButton.cpp" />
+    <ClCompile Include="PixelCollision.cpp">
+      <Filter>API FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWeapon.cpp">
+      <Filter>MainGame\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -393,6 +403,13 @@
     </ClInclude>
     <ClInclude Include="Lobby.h">
       <Filter>OJH</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake.h">
+      <Filter>KGY</Filter>
+      </ClInclude>
+    <ClInclude Include="mButton.h" />
+    <ClInclude Include="PlayerWeapon.h">
+      <Filter>MainGame\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

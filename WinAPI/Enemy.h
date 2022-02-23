@@ -2,6 +2,7 @@
 #include "GameNode.h"
 #include "IRectObserved.h"
 
+class CProjectPlayer;
 
 //Enemy (기반클래스) : 이 클래스를 기반으로 일반 몬스터들을 만든다고 했을때 문제가 없는지 생각
 /*
@@ -27,6 +28,10 @@ protected:
 
 	ObservedType _type;
 	bool _isActive;
+
+	POINT _playerPos;
+	CProjectPlayer* _player;
+
 public:
 	virtual HRESULT init(void);
 	virtual HRESULT init(const char* imageName, POINT position);
@@ -45,6 +50,10 @@ public:
 
 	virtual STObservedData getRectUpdate();
 	virtual void collideObject();
+
+public:
+	void setPlayerPos(POINT playerPos) { _playerPos = playerPos; }
+	void setPlayer(CProjectPlayer* player) { _player = player; }
 
 	Enemy(void);
 	virtual ~Enemy(void) {}

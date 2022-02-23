@@ -33,6 +33,7 @@ public:
 
 	Bullet* getBullet(void) { return _bullet; }
 	void setRoketMemoryAddress(CProjectPlayer* rk) { _pPlayer = rk; }
+	vEnemy getEnemy() { return _vMinion; }
 
 	EnemyManager();
 	~EnemyManager();
