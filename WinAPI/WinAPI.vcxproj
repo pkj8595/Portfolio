@@ -165,7 +165,9 @@
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="mGpImage.cpp" />
     <ClCompile Include="Minion.cpp" />
+    <ClCompile Include="PixelCollision.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerWeapon.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="CProjectPlayer.cpp" />
@@ -221,6 +223,7 @@
     <ClInclude Include="mGpImage.h" />
     <ClInclude Include="Minion.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerWeapon.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="CProjectPlayer.h" />

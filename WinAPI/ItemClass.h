@@ -3,7 +3,7 @@
 
 enum class EITEM_TYPE
 {
-	ENPTY=0,
+	EMPTY=0,
 	MATERIAL,
 	SCROLL,
 	ABILITY,
@@ -135,9 +135,9 @@ public:
 
 	Item()
 	{
-		_type = EITEM_TYPE::ENPTY;
-		_name = "ENPTY";
-		_description = "ENPTY";
+		_type = EITEM_TYPE::EMPTY;
+		_name = "EMPTY";
+		_description = "EMPTY";
 		_imgNum = 0;
 		_equip_level = 0;
 		_price = 0;
