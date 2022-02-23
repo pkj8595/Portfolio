@@ -14,7 +14,7 @@ void TextDataManager::release(void)
 
 // 한줄짜리 데이터를 담아둘것
 // 모든 데이터를 한줄 단위로 짤라서 지정
-void TextDataManager::save(const char * fileName, vector<string> vStr)
+void TextDataManager::save(const char* fileName, vector<string> vStr)
 {
 	HANDLE file;
 	char str[SAVE_BUFFER];
@@ -77,7 +77,7 @@ char* TextDataManager::vectorArrayCombine(vector<string> vArray)
 	return str;
 }
 
-vector<string> TextDataManager::load(const char * fileName)
+vector<string> TextDataManager::load(const char* fileName)
 {
 	//1. 플레이어 스테이터스 
 	//2. 맵에 대한 정보
@@ -101,11 +101,8 @@ vector<string> TextDataManager::charArraySeparation(char charArray[])
 	vector<string> vArray;
 	char* temp;
 	char* separator = ",";
-	//token : 컴파일러가 인식할 수 있는 기본요소
-	//연산자,식별, 문장 부호 등등 공백문자도 토큰으로 인식된다.
 	char* tokenA;
 	char* tokenB;
-
 	/*
 		strtok() : 문자열을 토큰으로 분리한다. 
 		strtok
@@ -123,6 +120,62 @@ vector<string> TextDataManager::charArraySeparation(char charArray[])
 	{
 		vArray.push_back(tokenA);
 	}
+
+	return vArray;
+}
+
+
+vector<string> TextDataManager::loadFstream(const char* fileName)
+{
+	std::ifstream in(fileName, ios::in);
+	string str;
+	string token;
+	int size;
+
+	if (in.is_open())
+	{
+		/*char line[256] = { 0 };
+		while (in.getline(line, 256))
+		{
+			cout << line << endl;
+		}
+		in.close();*/
+		//위치 지정자를 파일 끝으로 옮긴다.
+		in.seekg(0, ios::end);
+		//파일 끝 위치를 읽는다.
+		size = in.tellg();
+		//그 크기의 문자열을 할당한다.
+		str.resize(size);
+		//위치 지정자를 다시 파일 맨 앞으로 옳긴다.
+		in.seekg(0, ios::beg);
+		//파일 전체 내용을 읽어서 문자열에 저장한다.
+		in.read(&str[0], size);
+	}
+	else
+	{
+		cout << "파일 로드 실패" << endl;
+	}
+	str.erase(remove(str.begin(), str.end(), '\n'), str.end());
+
+	char* cstr = new char[size + 1];
+	copy(str.begin(), str.end(), cstr);
+
+	vector<string> vArray;
+	char* temp;
+	char* separator = ",";
+	char* separator2 = "\n";
+	char* tokenA;
+	char* tokenB;
+
+	tokenA = strtok_s(cstr, separator, &tokenB);
+	vArray.push_back(tokenA);
+
+	while (NULL != (tokenA = strtok_s(NULL, separator, &tokenB)))
+	{
+		vArray.push_back(tokenA);
+	}
+
+	delete[] cstr;
 
 	return vArray;
 }

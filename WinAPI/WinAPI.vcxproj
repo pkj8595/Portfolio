@@ -150,6 +150,7 @@
     <ClCompile Include="Bullets.cpp" />
     <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="ChestMap.cpp" />
+    <ClCompile Include="collision.cpp" />
     <ClCompile Include="CRectObserverManager.cpp" />
     <ClCompile Include="DefaultMap.cpp" />
     <ClCompile Include="EffectManager.cpp" />
@@ -160,9 +161,11 @@
     <ClCompile Include="ItemClass.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="KgyScene.cpp" />
+    <ClCompile Include="Lobby.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapManager.cpp" />
+    <ClCompile Include="mButton.cpp" />
     <ClCompile Include="mGpImage.cpp" />
     <ClCompile Include="Minion.cpp" />
     <ClCompile Include="PixelCollision.cpp" />
@@ -182,13 +185,13 @@
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Slime.cpp" />
+    <ClCompile Include="Snake.cpp" />
     <ClCompile Include="StartMap.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TempSoundManager.cpp" />
     <ClCompile Include="TempSoundTest.cpp" />
-    <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextDataManager.cpp" />
     <ClCompile Include="TextSystemManager.cpp" />
     <ClCompile Include="Tilemap.cpp" />
@@ -220,9 +223,11 @@
     <ClInclude Include="ItemClass.h" />
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="KgyScene.h" />
+    <ClInclude Include="Lobby.h" />
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapManager.h" />
+    <ClInclude Include="mButton.h" />
     <ClInclude Include="mGpImage.h" />
     <ClInclude Include="Minion.h" />
     <ClInclude Include="OJHScene.h" />
@@ -243,13 +248,13 @@
     <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="SingletonBase.h" />
     <ClInclude Include="Slime.h" />
+    <ClInclude Include="Snake.h" />
     <ClInclude Include="StartMap.h" />
     <ClInclude Include="Stdafx.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="TempSoundManager.h" />
     <ClInclude Include="TempSoundTest.h" />
-    <ClInclude Include="Text.h" />
     <ClInclude Include="TextDataManager.h" />
     <ClInclude Include="TextSystemManager.h" />
     <ClInclude Include="Tilemap.h" />

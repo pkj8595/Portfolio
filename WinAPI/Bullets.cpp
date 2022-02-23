@@ -78,7 +78,6 @@ void AMissile::isRange()
 		}
 		else ++_viBullet;
 	}
-
 }
 
 void AMissile::CheckFire()
@@ -364,17 +363,18 @@ void tagCBullet::collideObject()
 
 
 //==================================
-// ### SlimeMissile ###
+// ### ThreeDirectionMissile ###
 //==================================
-HRESULT SlimeMissile::init(int bulletMax, float range)
+HRESULT ThreeDirectionMissile::init(int bulletMax, float range)
 {
 	AMissile::init(bulletMax, range);
 	_bulletCount = 0;
-	_firstAngle = (PI / 2) + (static_cast<float>(bulletMax / 2)*_offsetAngle);
+	//_firstAngle = (PI / 2) + (static_cast<float>(bulletMax / 2)*_offsetAngle);
+
 	return S_OK;
 }
 
-void SlimeMissile::move(void)
+void ThreeDirectionMissile::move(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
@@ -385,16 +385,17 @@ void SlimeMissile::move(void)
 	}
 }
 
-void SlimeMissile::fire(float x, float y)
+void ThreeDirectionMissile::fire(float x, float y, float angle)
 {
 	if (_bulletMax <= _vBullet.size())return;
 
 	for (int i = 0; i < _bulletMax; i++)
 	{
+		_firstAngle = angle + (static_cast<float>(_bulletMax / 2)*_offsetAngle);
 		tagCBullet* bullet = new tagCBullet;
 		bullet->img = new my::Image;
 		//
-		bullet->img->init("Resource/Images/Project/playerBullet1.bmp", 14, 15, true, RGB(255, 0, 255));
+		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 48, 48, true, RGB(255, 0, 255));
 		bullet->type = ObservedType::MINION_MISSILE;
 		bullet->speed = 5.0f;
 		bullet->x = bullet->fireX = x;
@@ -410,11 +411,124 @@ void SlimeMissile::fire(float x, float y)
 	_bulletCount = 0;
 }
 
-void SlimeMissile::draw(void)
+void ThreeDirectionMissile::draw(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
 		(*_viBullet)->img->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
+	}
+}
 
+//==================================
+// ### CircleMissile ###
+//==================================
+
+HRESULT CircleMissile::init(int bulletMax, float range)
+{
+	AMissile::init(bulletMax, range);
+	_bulletCount = 0;
+	_firstAngle = (PI / 2) + (static_cast<float>(bulletMax / 2)*_offsetAngle);
+
+	return S_OK;
+}
+
+void CircleMissile::move(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	{
+		(*_viBullet)->x += cosf((*_viBullet)->angle)*(*_viBullet)->speed;
+		(*_viBullet)->y += -sinf((*_viBullet)->angle)*(*_viBullet)->speed;
+		(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
+			(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
+	}
+}
+
+void CircleMissile::fire(float x, float y)
+{
+	if (_bulletMax <= _vBullet.size())return;
+
+	for (int i = 0; i <= _bulletMax; i++)
+	{
+		tagCBullet* bullet = new tagCBullet;
+		bullet->img = new my::Image;
+		//
+		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 48, 48, true, RGB(255, 0, 255));
+		bullet->type = ObservedType::MINION_MISSILE;
+		bullet->speed = 5.0f;
+		bullet->x = bullet->fireX = x;
+		bullet->y = bullet->fireY = y;
+		bullet->angle = _firstAngle - (_bulletCount*_offsetAngle);
+		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
+		bullet->fire = true;
+		bullet->init();
+		_vBullet.push_back(bullet);
+
+		_bulletCount++;
+	}
+	_bulletCount = 0;
+}
+
+void CircleMissile::draw(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	{
+		(*_viBullet)->img->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
+	}
+}
+
+//==================================
+// ### TwoDirectionMissile ###
+//==================================
+HRESULT TwoDirectionMissile::init(int bulletMax, float range)
+{
+	AMissile::init(bulletMax, range);
+	_bulletCount = 0;
+	//_firstAngle = (PI / 2) + (static_cast<float>(bulletMax / 2)*_offsetAngle);
+
+	return S_OK;
+}
+
+void TwoDirectionMissile::move(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	{
+		(*_viBullet)->x += cosf((*_viBullet)->angle)*(*_viBullet)->speed;
+		(*_viBullet)->y += -sinf((*_viBullet)->angle)*(*_viBullet)->speed;
+		(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
+			(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
+	}
+}
+
+void TwoDirectionMissile::fire(float x, float y, float angle)
+{
+	if (_bulletMax <= _vBullet.size())return;
+
+	for (int i = 0; i < _bulletMax; i++)
+	{
+		_firstAngle = angle + (static_cast<float>(_bulletMax / 2)*_offsetAngle);
+		tagCBullet* bullet = new tagCBullet;
+		bullet->img = new my::Image;
+		//
+		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 48, 48, true, RGB(255, 0, 255));
+		bullet->type = ObservedType::MINION_MISSILE;
+		bullet->speed = 5.0f;
+		bullet->x = bullet->fireX = x;
+		bullet->y = bullet->fireY = y;
+		bullet->angle = _firstAngle - (_bulletCount*_offsetAngle);
+		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
+		bullet->fire = true;
+		bullet->init();
+		_vBullet.push_back(bullet);
+
+		_bulletCount++;
+	}
+	_bulletCount = 0;
+}
+
+void TwoDirectionMissile::draw(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	{
+		(*_viBullet)->img->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
 	}
 }

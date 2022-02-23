@@ -189,9 +189,6 @@
     <ClCompile Include="OJHScene.cpp">
       <Filter>OJH</Filter>
     </ClCompile>
-    <ClCompile Include="Text.cpp">
-      <Filter>OJH</Filter>
-    </ClCompile>
     <ClCompile Include="TextSystemManager.cpp">
       <Filter>OJH</Filter>
     </ClCompile>
@@ -235,6 +232,16 @@
     <ClCompile Include="Slime.cpp">
       <Filter>KGY</Filter>
     </ClCompile>
+    <ClCompile Include="Lobby.cpp">
+      <Filter>OJH</Filter>
+    </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>OJH</Filter>
+    </ClCompile>
+    <ClCompile Include="Snake.cpp">
+      <Filter>KGY</Filter>
+    </ClCompile>
+    <ClCompile Include="mButton.cpp" />
     <ClCompile Include="PixelCollision.cpp">
       <Filter>API FrameWork</Filter>
     </ClCompile>
@@ -351,9 +358,6 @@
     <ClInclude Include="OJHScene.h">
       <Filter>OJH</Filter>
     </ClInclude>
-    <ClInclude Include="Text.h">
-      <Filter>OJH</Filter>
-    </ClInclude>
     <ClInclude Include="TextSystemManager.h">
       <Filter>OJH</Filter>
     </ClInclude>
@@ -397,6 +401,13 @@
     <ClInclude Include="Slime.h">
       <Filter>KGY</Filter>
     </ClInclude>
+    <ClInclude Include="Lobby.h">
+      <Filter>OJH</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake.h">
+      <Filter>KGY</Filter>
+      </ClInclude>
+    <ClInclude Include="mButton.h" />
     <ClInclude Include="PlayerWeapon.h">
       <Filter>MainGame\Player</Filter>
     </ClInclude>

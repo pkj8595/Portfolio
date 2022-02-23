@@ -1,7 +1,6 @@
 #pragma once
 #include "GameNode.h"
-
-#define TEXT_NUM 1000
+#define TEXT_MAX 500
 
 struct Text
 {
@@ -12,11 +11,11 @@ struct Text
 class TextSystemManager :public GameNode
 {
 private:
-	struct Text _text[TEXT_NUM];
+	Text _text[TEXT_MAX];
 	const int SCRIPT_MAX_LENGTH = 55;
-	string _name;
-	int _price;
-	int _textIndex;
+	LPCWSTR _itemName;
+	LPCWSTR _price;
+	int _arrtext;
 	int _textBufferCnt;
 	int _textAlpha;
 	int _count;
@@ -30,8 +29,10 @@ private:
 public:
 	HRESULT init(void);
 	void release(void);
-	void update(int arrNum);
-	void render(int arrNum);
+	void update(void);
+	void render(void);
+	void shopLog(LPCWSTR itemName, LPCWSTR price);
+	void EventLog(int arrText);
 
 	TextSystemManager() {}
 	~TextSystemManager() {}

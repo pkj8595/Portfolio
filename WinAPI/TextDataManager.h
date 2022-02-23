@@ -27,6 +27,8 @@ public:
 	vector<string> load(const char* fileName);
 	vector<string> charArraySeparation(char charArray[]);
 
+	vector<string> loadFstream(const char* fileName);
+
 	TextDataManager() {}
 	~TextDataManager() {}
 };
