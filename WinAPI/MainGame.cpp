@@ -17,7 +17,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("TextTest", new OJHScene);
 
 
-	SCENEMANAGER->changeScene("TextTest");
+	SCENEMANAGER->changeScene("PlayScene");
 	//SCENEMANAGER->changeScene("PlayScene");
 
 
