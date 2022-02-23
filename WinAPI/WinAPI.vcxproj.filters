@@ -223,6 +223,9 @@
     <ClCompile Include="Slime.cpp">
       <Filter>KGY</Filter>
     </ClCompile>
+    <ClCompile Include="Snake.cpp">
+      <Filter>KGY</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -368,6 +371,9 @@
       <Filter>KGY</Filter>
     </ClInclude>
     <ClInclude Include="Slime.h">
+      <Filter>KGY</Filter>
+    </ClInclude>
+    <ClInclude Include="Snake.h">
       <Filter>KGY</Filter>
     </ClInclude>
   </ItemGroup>

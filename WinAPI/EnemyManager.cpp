@@ -2,6 +2,8 @@
 #include "EnemyManager.h"
 #include "Minion.h"
 #include "CProjectPlayer.h"
+#include "Slime.h"
+#include "Snake.h"
 
 EnemyManager::EnemyManager(){
 	//DO NOTTING
@@ -23,6 +25,10 @@ HRESULT EnemyManager::init(void)
 	IMAGEMANAGER->addFrameImage("bullet3030", "Resource/Images/Project/bullet3030.bmp", 0.0f, 0.0f, 192, 30, 6, 1, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addImage("적 미사일", "Resource/Images/Rocket/bullet.bmp", 7 , 7 , true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("Slime", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Slime2.bmp", 288, 2016, 3, 21, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Snake", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Snake.bmp", 144, 624, 3, 13, true, RGB(255, 0, 255));
+
 
 	//미니언 생성
 	setMinion();
@@ -52,11 +58,13 @@ void EnemyManager::update(void)
 	for (;_viMinion != _vMinion.end(); ++_viMinion) 
 	{
 		(*_viMinion)->update();
-	}
+		(*_viMinion)->setPlayerPos(_pPlayer->getPosition());
+		(*_viMinion)->setPlayer(_pPlayer);
 
-	checkActive();
-	minionBulletFire();
-	_bullet->update();
+	}
+	//checkActive();
+	//minionBulletFire();
+	//_bullet->update();
 }
 
 void EnemyManager::render(void)
@@ -66,21 +74,31 @@ void EnemyManager::render(void)
 	{
 		(*_viMinion)->render();
 	}
-	_bullet->render();
+	//_bullet->render();
 }
 
 void EnemyManager::setMinion(void)
 {
-	for (int i = 0; i < 2; i++)
-	{
-		for (int  j = 0; j < 10; j++)
-		{
-			Enemy* minion;
-			minion = new Minion;
-			minion->init("enemy1", PointMake(50 + j * 50, 100 + i * 100));
-			_vMinion.push_back(minion);
-		}
-	}
+	//for (int i = 0; i < 2; i++)
+	//{
+	//	for (int  j = 0; j < 10; j++)
+	//	{
+	//		Enemy* minion;
+	//		minion = new Minion;
+	//		minion->init("enemy1", PointMake(50 + j * 50, 100 + i * 100));
+	//		_vMinion.push_back(minion);
+	//	}
+	//}
+
+	Enemy* slime;
+	slime = new Slime;
+	slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
+	_vMinion.push_back(slime);
+
+	Enemy* snake;
+	snake = new Snake;
+	snake->init("Snake", PointMake(CENTER_X - 200, CENTER_Y));
+	_vMinion.push_back(snake);
 }
 
 void EnemyManager::removeMinion(int arrNum)
