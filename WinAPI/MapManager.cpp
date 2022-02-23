@@ -1,7 +1,7 @@
 #include "Stdafx.h"
 #include "MapManager.h"
 
-HRESULT MapManager::init(int mapAmount)
+HRESULT MapManager::init(int mapAmount, int stage)
 {
 	int i = 0;
 	IMAGEMANAGER->addImage("Minimap_Off", "Resource/Images/Lucie/CompleteImg/miniMap/minimap_cell_off.bmp", 30, 30, true, RGB(255, 0, 255));
@@ -29,21 +29,27 @@ void MapManager::release(void)
 void MapManager::update(void)
 {
 	_currentMap->update();
-	changeMap();
 	if (KEYMANAGER->isOnceKeyDown(VK_TAB))
 	{
 		_tempMinimapToggle = !_tempMinimapToggle;
 	}
-	
+	if (KEYMANAGER->isOnceKeyDown('Q'))
+	{
+		_currentMap->setClear(true);
+	}
+
 	(_isFadeInMinimap) ? _minimapAlpha += 10 : _minimapAlpha -= 10;
 	if (_minimapAlpha >= 180) _isFadeInMinimap = false;
 	else if (_minimapAlpha <= 0) _isFadeInMinimap = true;
+
+
+
 }
 
 void MapManager::render(void)
 {
 	_currentMap->render();
-	if (_tempMinimapToggle) printTempMinimap();
+
 }
 
 void MapManager::createMap(POINT position)
@@ -317,9 +323,10 @@ void MapManager::setConnectedMap()
 	}
 }
 
-void MapManager::changeMap(void)
+//0, 1, 2, 3 : LEFT, RIGHT, UP, DOWN
+void MapManager::changeMap(int pos) 
 {
-	if (KEYMANAGER->isOnceKeyDown(VK_LEFT) && _currentMap->isClear())
+	if (pos == 0 && _currentMap->isClear())
 	{
 		for (Map* m : _vMap)
 		{
@@ -332,7 +339,7 @@ void MapManager::changeMap(void)
 			}
 		}
 	}
-	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT) && _currentMap->isClear())
+	if (pos == 1 && _currentMap->isClear())
 	{
 		for (Map* m : _vMap)
 		{
@@ -344,7 +351,7 @@ void MapManager::changeMap(void)
 			}
 		}
 	}
-	if (KEYMANAGER->isOnceKeyDown(VK_UP) && _currentMap->isClear())
+	if (pos == 2 && _currentMap->isClear())
 	{
 		for (Map* m : _vMap)
 		{
@@ -356,7 +363,7 @@ void MapManager::changeMap(void)
 			}
 		}
 	}
-	if (KEYMANAGER->isOnceKeyDown(VK_DOWN) && _currentMap->isClear())
+	if (pos == 3 && _currentMap->isClear())
 	{
 		for (Map* m : _vMap)
 		{
@@ -367,10 +374,6 @@ void MapManager::changeMap(void)
 				break;
 			}
 		}
-	}
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
-	{
-		_currentMap->setClear(true);
 	}
 }
 

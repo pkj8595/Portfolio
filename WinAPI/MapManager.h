@@ -28,7 +28,7 @@ private:
 	bool _isFadeInMinimap;
 
 public:
-	HRESULT init(int mapAmount);
+	HRESULT init(int mapAmount, int stage);
 	void release(void);
 	void update(void);
 	void render(void);
@@ -41,8 +41,16 @@ public:
 	void setMapData();
 	void setConnectedMap();
 
-	void changeMap(void);
+	void changeMap(int pos);
 	void printTempMinimap();
 	bool isNearCurrentMap(Map* currentmap, Map* targetMap);
+
+	Map* getCurrentMap() { return _currentMap; }
+	my::Image* getCurrentMapPixel()
+	{
+		return _currentMap->getPixelCollisionImage();
+	}
+
+	bool isMinimapToggle()	{ return _tempMinimapToggle; }
 };
 

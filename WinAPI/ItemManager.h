@@ -7,7 +7,7 @@ class ItemManager : public GameNode
 private:
 	vector<Item*> _vItem;
 	vector<Item*>::iterator _viItem;
-	int _index;
+	my::Image* _itemImg;
 
 public:
 	HRESULT init(void);
@@ -15,8 +15,11 @@ public:
 	void update(void);
 	void render(void);
 
+	my::Image* getImage(void) { return _itemImg; }
+	Item* getItem(int imgIndex);
+	void itemImgRender(int index, int x, int y);
+	//void ItemWindowRender(void);
 
-	void setItemList();
 
 	ItemManager() {}
 	~ItemManager() {}

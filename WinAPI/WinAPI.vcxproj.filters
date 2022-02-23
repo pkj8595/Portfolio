@@ -73,6 +73,9 @@
     <Filter Include="GameClass\Tilemap">
       <UniqueIdentifier>{c2cd7251-33f9-4ea7-80b6-264052853fdf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OJH">
+      <UniqueIdentifier>{c97959c3-a0de-4ea5-a870-7caa1bf8b583}</UniqueIdentifier>
+    </Filter>
     <Filter Include="MainGame\Map">
       <UniqueIdentifier>{c483dc4f-bec1-4669-b67b-24839a8bdf83}</UniqueIdentifier>
     </Filter>
@@ -183,6 +186,15 @@
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="OJHScene.cpp">
+      <Filter>OJH</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>OJH</Filter>
+    </ClCompile>
+    <ClCompile Include="TextSystemManager.cpp">
+      <Filter>OJH</Filter>
+    </ClCompile>
     <ClCompile Include="MapManager.cpp">
       <Filter>MainGame\Map</Filter>
     </ClCompile>
@@ -225,6 +237,13 @@
     </ClCompile>
     <ClCompile Include="Snake.cpp">
       <Filter>KGY</Filter>
+    </ClCompile>
+    <ClCompile Include="mButton.cpp" />
+    <ClCompile Include="PixelCollision.cpp">
+      <Filter>API FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWeapon.cpp">
+      <Filter>MainGame\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -333,6 +352,15 @@
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="OJHScene.h">
+      <Filter>OJH</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>OJH</Filter>
+    </ClInclude>
+    <ClInclude Include="TextSystemManager.h">
+      <Filter>OJH</Filter>
+    </ClInclude>
     <ClInclude Include="MapManager.h">
       <Filter>MainGame\Map</Filter>
     </ClInclude>
@@ -375,6 +403,10 @@
     </ClInclude>
     <ClInclude Include="Snake.h">
       <Filter>KGY</Filter>
+      </ClInclude>
+    <ClInclude Include="mButton.h" />
+    <ClInclude Include="PlayerWeapon.h">
+      <Filter>MainGame\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

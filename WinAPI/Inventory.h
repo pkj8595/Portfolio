@@ -1,7 +1,10 @@
 #pragma once
 #include "GameNode.h"
-class Inventory : GameNode
+#include "mButton.h"
+class Inventory : public GameNode
 {
+	my::Image* _window;
+	mButton* _btn;
 
 public:
 	HRESULT init(void);
