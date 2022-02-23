@@ -57,28 +57,28 @@ void Snake::update(void)
 		_y += -sinf(_angle) * _speed;
 
 		//슬라임 왼쪽
-		if (_playerPos.x > _x)
-		{
-			_direction = SNAKEDIRECTION::SNAKE_RIGHT;
-		}
+		//if (_playerPos.x > _x)
+		//{
+		//	_direction = SNAKEDIRECTION::SNAKE_RIGHT;
+		//}
 
-		////슬라임 오른쪽
-		if (_playerPos.x < _x)
-		{
-			_direction = SNAKEDIRECTION::SNAKE_LEFT;
-		}
+		//////슬라임 오른쪽
+		//if (_playerPos.x < _x)
+		//{
+		//	_direction = SNAKEDIRECTION::SNAKE_LEFT;
+		//}
 
-		////슬라임 밑
-		if (_playerPos.y < _y)
-		{
-			_direction = SNAKEDIRECTION::SNAKE_UP;
-		}
+		//////슬라임 밑
+		//if (_playerPos.y < _y)
+		//{
+		//	_direction = SNAKEDIRECTION::SNAKE_UP;
+		//}
 
-		////슬라임 위
-		if (_playerPos.y > _y)
-		{
-			_direction = SNAKEDIRECTION::SNAKE_DOWN;
-		}
+		//////슬라임 위
+		//if (_playerPos.y > _y)
+		//{
+		//	_direction = SNAKEDIRECTION::SNAKE_DOWN;
+		//}
 
 			//_stae = SNAMESTATE::SNAKE_MOVE;
 			_angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);

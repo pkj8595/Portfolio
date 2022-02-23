@@ -24,6 +24,7 @@ HRESULT KgyScene::init(void)
 	_playerpos.x = CENTER_X - 200;
 	_playerpos.y = CENTER_Y;
 
+	_em->setRoketMemoryAddress(_player);
 	return S_OK;
 }
 
@@ -38,7 +39,6 @@ void KgyScene::release(void)
 
 void KgyScene::update(void)
 {
-	_em->setRoketMemoryAddress(_player);
 	_em->update();
 	_player->update();
 }

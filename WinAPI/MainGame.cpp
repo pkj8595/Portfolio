@@ -25,7 +25,7 @@ HRESULT MainGame::init(void)
 	//SCENEMANAGER->changeScene("ShopScene");
 
 	//SCENEMANAGER->changeScene("TextTest");
-	SCENEMANAGER->changeScene("PlayScene");
+	SCENEMANAGER->changeScene("kgy");
 
 
 	return S_OK;
