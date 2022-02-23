@@ -5,6 +5,7 @@
 #include "LobbyScene.h"
 #include "PlayScene.h"
 #include "OJHScene.h"
+#include "ShopScene.h"
 
 HRESULT MainGame::init(void)
 {
@@ -15,9 +16,11 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("LobbyScene", new LobbyScene);
 	SCENEMANAGER->addScene("PlayScene", new PlayScene);
 	SCENEMANAGER->addScene("TextTest", new OJHScene);
+	SCENEMANAGER->addScene("ShopScene", new ShopScene);
 
+	SCENEMANAGER->changeScene("ShopScene");
 
-	SCENEMANAGER->changeScene("TextTest");
+	//SCENEMANAGER->changeScene("TextTest");
 	//SCENEMANAGER->changeScene("PlayScene");
 
 

@@ -50,18 +50,18 @@ public:
 
 	void operator=(CPlayer_Attribute other)
 	{
-		_hp + other._hp;
-		_maxHp + other._maxHp;
-		_mana + other._mana;
-		_maxMana + other._maxMana;
-		_critical + other._critical;
-		_offencePower + other._offencePower;
-		_magicPower + other._magicPower;
-		_speed + other._speed;
-		_attackSpeed + other._attackSpeed;
-		_damageBalace + other._damageBalace;
-		_experience + other._experience;
-		_stamina + other._stamina;
+		_hp = other._hp;
+		_maxHp = other._maxHp;
+		_mana = other._mana;
+		_maxMana = other._maxMana;
+		_critical = other._critical;
+		_offencePower = other._offencePower;
+		_magicPower = other._magicPower;
+		_speed = other._speed;
+		_attackSpeed = other._attackSpeed;
+		_damageBalace = other._damageBalace;
+		_experience = other._experience;
+		_stamina = other._stamina;
 	}
 
 	CPlayer_Attribute()
@@ -82,7 +82,8 @@ public:
 	~CPlayer_Attribute() {}
 };
 
-
+//벡터에 아이템을 넣어서 CPlayer_Attribute를 더해주는 방식
+// CPlayer_Attribute, 장착 item 중인 무기 1개, vector<item*>ABILITY
 class Item
 {
 public:

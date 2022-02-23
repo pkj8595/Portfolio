@@ -235,6 +235,7 @@
     <ClCompile Include="Slime.cpp">
       <Filter>KGY</Filter>
     </ClCompile>
+    <ClCompile Include="mButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -391,6 +392,7 @@
     <ClInclude Include="Slime.h">
       <Filter>KGY</Filter>
     </ClInclude>
+    <ClInclude Include="mButton.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">

@@ -3,6 +3,7 @@
 
 HRESULT Inventory::init(void)
 {
+	
 	return S_OK;
 }
 
