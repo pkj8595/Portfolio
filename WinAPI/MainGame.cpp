@@ -1,6 +1,5 @@
 #include "Stdafx.h" 
 #include "MainGame.h"
-#include "ShootingScene.h"
 #include "TitleScene.h"
 #include "LobbyScene.h"
 #include "PlayScene.h"
@@ -13,7 +12,6 @@ HRESULT MainGame::init(void)
 {
 	GameNode::init(TRUE);
 
-	SCENEMANAGER->addScene("½´ÆÃ", new ShootingScene);
 	SCENEMANAGER->addScene("TitleScene", new TitleScene);
 	SCENEMANAGER->addScene("LobbyScene", new LobbyScene);
 	SCENEMANAGER->addScene("PlayScene", new PlayScene);

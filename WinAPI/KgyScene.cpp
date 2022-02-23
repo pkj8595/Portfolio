@@ -18,7 +18,7 @@ HRESULT KgyScene::init(void)
 	_em = new EnemyManager;
 	_em->init();
 	
-	_player = new CProjectPlayer;
+	_player = new Player;
 	_player->init();
 
 	_playerpos.x = CENTER_X - 200;

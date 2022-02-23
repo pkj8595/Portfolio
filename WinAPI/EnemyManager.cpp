@@ -1,7 +1,7 @@
 #include "Stdafx.h"
 #include "EnemyManager.h"
 #include "Minion.h"
-#include "CProjectPlayer.h"
+#include "Player.h"
 #include "Slime.h"
 #include "Snake.h"
 
@@ -31,7 +31,6 @@ HRESULT EnemyManager::init(void)
 
 
 	//미니언 생성
-	setMinion();
 
 	_bullet = new Bullet;
 	_bullet->init("bullet16",30,1000);
