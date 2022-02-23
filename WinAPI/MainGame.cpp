@@ -23,7 +23,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("ShopScene", new ShopScene);
 
 	//SCENEMANAGER->changeScene("TextTest");
-	SCENEMANAGER->changeScene("PlayScene");
+	SCENEMANAGER->changeScene("kgy");
 
 	return S_OK;
 }
