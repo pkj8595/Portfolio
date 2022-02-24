@@ -83,6 +83,8 @@ void Inventory::renderInventoryBase()
 	_inventorySlot.img->frameRender(getMemDC(), _inventorySlot.pt.x, _inventorySlot.pt.y, 1, 1);
 	_inventorySlotA.img->frameRender(getMemDC(), _inventorySlotA.pt.x, _inventorySlotA.pt.y, 1, 1);
 	_inventorySlotB.img->frameRender(getMemDC(), _inventorySlotB.pt.x, _inventorySlotB.pt.y, 1, 1);
+
+
 }
 
 Item* Inventory::getEquipWeapon()

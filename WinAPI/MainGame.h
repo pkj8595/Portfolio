@@ -6,8 +6,6 @@
 ∞°ø¨ æ¿ ¿€æ˜ §°§° 
 ¿Á»∆ æ¿ OJHScene
 ∞Ê¿Á æ¿ pkjScene
-
-
 */
 
 class MainGame : public GameNode
