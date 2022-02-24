@@ -3,7 +3,7 @@
 #include "Animation.h"
 #include "Bullets.h"
 
-#define COLLRECTSIZEY 30
+//#define PI 3.141592f
 
 enum class SLIMESTATE
 {
@@ -22,10 +22,27 @@ enum class SLIMEDIRECTION
 	SM_END
 };
 
+enum class SLIMEATTACK
+{
+	SLIME_PARTTERN1,
+	SLIME_PARTTERN2,
+	SLIME_PARTTERN_END
+};
+
 
 class Slime:public Enemy
 {
 private:
+	SLIMEDIRECTION _direction;
+	SLIMESTATE _state;
+	float _speed; //이동 속도
+	int _randomX, _randomY;
+	float _worldTime; 
+	float _frameSpeed;
+	int _index;
+	int _frameY;
+	float _randomTimeCount;
+	float _moveTimeCount;
 	
 	Animation* _ani;
 	SLIMEDIRECTION _slimeDir;
@@ -34,13 +51,10 @@ private:
 	SLIMEDIRECTION _beforeSlimeDir;
 	SLIMESTATE _beforeSlimestate;
 
-	int randomX , randomY;
 	float _x, _y;
-	float _speed;
 	float _angle;
 	float _range; //플레이어 탐지 범위
 	float _time;
-	float _worldTime;
 
 	float _moveRange;
 	int _attTime; 
@@ -51,12 +65,10 @@ private:
 
 	RECT _rc_playerCollCheck;
 
-
 	float _playerDistance;
 
-	bool _moveCheck;
-	bool _attCheck;
-	int attRange;
+	bool _moveCheck; //공격시 움직임 체크
+
 
 public:
 	HRESULT init(const char* imageName, POINT position);
@@ -66,12 +78,18 @@ public:
 
 	void move(void);
 	void draw(void);
+	void frame();
 	void animation();
+
+
+	void randomValue(int i); //정수를 랜덤으로 뽑아내는 기능
+	void randomMove(); //랜덤으로 이동 기능
+
 	//void bulletParttern(); //총알 패턴
 
-	void attack();
-
-	void randomMove();
+	//void attack();
+	//
+	//void randomMove();
 	bool playerCheck(); //플레이어 감지함수
 
 public:
@@ -81,25 +99,3 @@ public:
 	Slime();
 	virtual ~Slime();
 };
-
-/*
-1. 추적 대상이 공격 사거리 안에 있으면 공격 함수 실행
-2. 추적 대상 방향으로 바라보기
-
-attack()
-{
-
-자신 사망X && 추적 대상과 거리가 공격 사거리 안에 있으면
-if()
-{
-움직임 멈추고
-
-추적 대상 바라본다.
-
-최근 공격 시점에서 일정 시간 지나면 공격 가능
-
-}
-
-}
-
-*/
