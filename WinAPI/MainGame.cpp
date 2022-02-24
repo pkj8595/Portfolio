@@ -1,31 +1,30 @@
 #include "Stdafx.h" 
 #include "MainGame.h"
-#include "ShootingScene.h"
 #include "TitleScene.h"
 #include "LobbyScene.h"
 #include "PlayScene.h"
 #include "KgyScene.h"
 #include "OJHScene.h"
+#include "Lobby.h"
 #include "ShopScene.h"
 
 HRESULT MainGame::init(void)
 {
 	GameNode::init(TRUE);
 
-	SCENEMANAGER->addScene("½´ÆÃ", new ShootingScene);
 	SCENEMANAGER->addScene("TitleScene", new TitleScene);
 	SCENEMANAGER->addScene("LobbyScene", new LobbyScene);
 	SCENEMANAGER->addScene("PlayScene", new PlayScene);
 	SCENEMANAGER->addScene("kgy", new KgyScene);
-
-	SCENEMANAGER->changeScene("kgy");
 	SCENEMANAGER->addScene("TextTest", new OJHScene);
+	SCENEMANAGER->addScene("Lobby", new Lobby);
 	SCENEMANAGER->addScene("ShopScene", new ShopScene);
-
 	//SCENEMANAGER->changeScene("ShopScene");
 
 	//SCENEMANAGER->changeScene("TextTest");
-	SCENEMANAGER->changeScene("kgy");
+	//SCENEMANAGER->changeScene("kgy");
+	SCENEMANAGER->changeScene("PlayScene");
+
 
 
 	return S_OK;

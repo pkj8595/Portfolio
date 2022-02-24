@@ -1,7 +1,7 @@
 #include "Stdafx.h"
 #include "EnemyManager.h"
 #include "Minion.h"
-#include "CProjectPlayer.h"
+#include "Player.h"
 #include "Slime.h"
 #include "Snake.h"
 
@@ -31,7 +31,6 @@ HRESULT EnemyManager::init(void)
 
 
 	//미니언 생성
-	setMinion();
 
 	_bullet = new Bullet;
 	_bullet->init("bullet16",30,1000);
@@ -95,10 +94,10 @@ void EnemyManager::setMinion(void)
 	slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
 	_vMinion.push_back(slime);
 
-	Enemy* snake;
-	snake = new Snake;
-	snake->init("Snake", PointMake(CENTER_X - 200, CENTER_Y));
-	_vMinion.push_back(snake);
+	//Enemy* snake;
+	//snake = new Snake;
+	//snake->init("Snake", PointMake(CENTER_X - 200, CENTER_Y));
+	//_vMinion.push_back(snake);
 }
 
 void EnemyManager::removeMinion(int arrNum)

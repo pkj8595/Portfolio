@@ -180,16 +180,10 @@
     <ClCompile Include="TextDataManager.cpp">
       <Filter>API FrameWork\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="ShootingScene.cpp">
-      <Filter>API FrameWork\ExampleClasses\ShootingGame</Filter>
-    </ClCompile>
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="OJHScene.cpp">
-      <Filter>OJH</Filter>
-    </ClCompile>
-    <ClCompile Include="Text.cpp">
       <Filter>OJH</Filter>
     </ClCompile>
     <ClCompile Include="TextSystemManager.cpp">
@@ -234,6 +228,12 @@
     </ClCompile>
     <ClCompile Include="Slime.cpp">
       <Filter>KGY</Filter>
+    </ClCompile>
+    <ClCompile Include="Lobby.cpp">
+      <Filter>OJH</Filter>
+    </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>OJH</Filter>
     </ClCompile>
     <ClCompile Include="Snake.cpp">
       <Filter>KGY</Filter>
@@ -346,16 +346,10 @@
     <ClInclude Include="SceneManager.h">
       <Filter>API FrameWork\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="ShootingScene.h">
-      <Filter>API FrameWork\ExampleClasses\ShootingGame</Filter>
-    </ClInclude>
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="OJHScene.h">
-      <Filter>OJH</Filter>
-    </ClInclude>
-    <ClInclude Include="Text.h">
       <Filter>OJH</Filter>
     </ClInclude>
     <ClInclude Include="TextSystemManager.h">
@@ -401,9 +395,12 @@
     <ClInclude Include="Slime.h">
       <Filter>KGY</Filter>
     </ClInclude>
+    <ClInclude Include="Lobby.h">
+      <Filter>OJH</Filter>
+    </ClInclude>
     <ClInclude Include="Snake.h">
       <Filter>KGY</Filter>
-      </ClInclude>
+    </ClInclude>
     <ClInclude Include="mButton.h" />
     <ClInclude Include="PlayerWeapon.h">
       <Filter>MainGame\Player</Filter>

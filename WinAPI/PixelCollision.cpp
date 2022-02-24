@@ -13,24 +13,29 @@ void PlayScene::pixelCollision()
 		_player->setCollision();
 	}
 
+	//changeMap : 0, 1, 2, 3 -> LEFT, RIGHT, UP, DOWN
 	if (_player->getPosition().x < 0 && _mapManager->getCurrentMap()->isClear())
 	{
 		_mapManager->changeMap(0);
+		if (_mapManager->getCurrentMap()->getType() == Map::MAPTYPE::DEFAULT) _enemyManager->setMinion();
 		_player->setPosition(_mapManager->getCurrentMapPixel()->getWidth() - 350, _player->getPosition().y);
 	}
 	if (_player->getPosition().x > _mapManager->getCurrentMapPixel()->getWidth() && _mapManager->getCurrentMap()->isClear())
 	{
 		_mapManager->changeMap(1);
+		if (_mapManager->getCurrentMap()->getType() == Map::MAPTYPE::DEFAULT) _enemyManager->setMinion();
 		_player->setPosition(350, _player->getPosition().y);
 	}
 	if (_player->getPosition().y < 0 && _mapManager->getCurrentMap()->isClear())
 	{
 		_mapManager->changeMap(2);
+		if (_mapManager->getCurrentMap()->getType() == Map::MAPTYPE::DEFAULT) _enemyManager->setMinion();
 		_player->setPosition(_player->getPosition().x, _mapManager->getCurrentMapPixel()->getHeight() - 200);
 	}
 	if (_player->getPosition().y > _mapManager->getCurrentMapPixel()->getHeight() && _mapManager->getCurrentMap()->isClear())
 	{
 		_mapManager->changeMap(3);
+		if (_mapManager->getCurrentMap()->getType() == Map::MAPTYPE::DEFAULT) _enemyManager->setMinion();
 		_player->setPosition(_player->getPosition().x, 200);
 	}
 }

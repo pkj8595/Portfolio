@@ -45,5 +45,6 @@ public:
 	}
 
 	my::Image* getPixelCollisionImage() { return _pixelCollisionImage; }
+	MAPTYPE getMapType() { return _type; }
 };
 
