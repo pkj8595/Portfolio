@@ -70,6 +70,9 @@ public:
 		_maxStamina = other._maxStamina;
 	}
 
+
+	
+
 	CPlayer_Attribute()
 	{
 		_hp = 0;
@@ -95,13 +98,13 @@ public:
 class Item
 {
 public:
-	int _index;
-	EITEM_TYPE _type;				//아이템 타입
-	string _name;					//name
-	string _description;			//설명
-	int _imgNum;					//장비 이미지 넘버
-	int _equip_level;				//장비 레벨
-	int _price;						//가격
+	int			_index;
+	EITEM_TYPE	_type;				//아이템 타입
+	string		_name;				//name
+	string		_description;		//설명
+	int			_imgNum;			//장비 이미지 넘버
+	int			_equip_level;		//장비 레벨
+	int			_price;				//가격
 	//int _durability;				//내구도
 	//int _maxDurability;			//최대내구도
 
@@ -142,6 +145,32 @@ public:
 		_attribute._damageBalance =damageBalace;
 		_attribute._experience =experience;
 		_attribute._stamina = stamina;
+	}
+
+	void toString(void)
+	{
+		cout << "=============================================" << endl;
+		cout << "_index			:" <<_index << endl;
+		cout << "_type			:" <<(int)_type << endl;
+		cout << "_name			:" <<_name << endl;
+		cout << "_description		:" <<_description << endl;
+		cout << "_imgNum			:" <<_imgNum << endl;
+		cout << "_equip_level		:" <<_equip_level << endl;
+		cout << "_price			:" << _price << endl;
+		cout << "hp			:" << _attribute._hp << endl;
+		cout << "maxHp			:" << _attribute._maxHp << endl;
+		cout << "mana			:" << _attribute._mana << endl;
+		cout << "maxMana			:" << _attribute._maxMana << endl;
+		cout << "critical		:" << _attribute._critical << endl;
+		cout << "offencePower		:" << _attribute._offencePower << endl;
+		cout << "magicPower		:" << _attribute._magicPower << endl;
+		cout << "speed			:" << _attribute._speed << endl;
+		cout << "attackSpeed		:" << _attribute._attackSpeed << endl;
+		cout << "damageBalance		:" << _attribute._damageBalance << endl;
+		cout << "experience		:" << _attribute._experience << endl;
+		cout << "maxExperience		:" << _attribute._maxExperience << endl;
+		cout << "stamina			:" << _attribute._stamina << endl;
+		cout << "maxStamina		:" << _attribute._maxStamina << endl;
 	}
 
 	Item()

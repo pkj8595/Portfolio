@@ -2,6 +2,8 @@
 #include "ItemClass.h"
 #include "GameNode.h"
 
+#define IMAGE_SIZE		32
+
 class ItemManager : public GameNode
 {
 private:

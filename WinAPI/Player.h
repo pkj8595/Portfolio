@@ -1,9 +1,10 @@
 #pragma once
 #include "GameNode.h"
-#include "ItemClass.h"
+//#include "ItemClass.h"
 #include "PlayerWeapon.h"
 #include "PlayerStatusUI.h"
 #include "IRectObserved.h"
+#include "Inventory.h"
 
 class Player : public GameNode, public IRectObserved
 {
@@ -45,7 +46,6 @@ private:
 	//Item, UI
 	CPlayer_Attribute _status;
 	CPlayer_Attribute _totalStatus;
-	CPlayer_Attribute _itemTotalStatus;
 	vector<Item*> _ability;
 	Item* _equipItem;
 
@@ -55,6 +55,9 @@ private:
 	SwordWeapon* _sword;
 	NormalWeapon* _normal;
 	PlayerStatusUI* _statusUI;
+
+	Inventory* _inventory;
+
 
 private:
 	//weaponClass
@@ -82,6 +85,9 @@ public:
 	void healStamina();
 
 	void setCollision();
+
+	//TotalAttribute гу╩Й
+	void computeTotalAttribute();
 
 
 public:

@@ -58,6 +58,8 @@ HRESULT Player::init(void)
 	_statusUI = new PlayerStatusUI;
 	_statusUI->init(&_totalStatus, &_level);
 
+	_inventory = new Inventory;
+	_inventory->init();
 
 	return S_OK;
 }
@@ -65,10 +67,12 @@ HRESULT Player::init(void)
 void Player::release(void)
 {
 	RECTOBSERVERMANAGER->removeObserved(this);
+	_inventory->release();
 }
 
 void Player::update(void)
 {
+	
 	if (_state == PLAYER_STATE::WALK || _state == PLAYER_STATE::DODGE || _state == PLAYER_STATE::STOP)
 	{
 		if (_swordSpecialAttack) setDirectionByMouseInput();
@@ -82,7 +86,8 @@ void Player::update(void)
 	frameUpdate();
 	
 	setDodge();
-	setAttack();
+
+	if (!_inventory->getIsShowInven()) { setAttack(); }
 
 	healStamina();
 	if (KEYMANAGER->isOnceKeyDown('1'))
@@ -98,6 +103,8 @@ void Player::update(void)
 	_sword->update();
 	_normal->update();
 	_statusUI->update();
+	_inventory->update(); 
+	computeTotalAttribute(); // гу╩Й
 
 	_rc = RectMakeCenter(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2 + 20, 8, 5);
 
@@ -111,6 +118,8 @@ void Player::render(void)
 	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 	if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPOEN_SWORD)_sword->render();
 	else if (_equipItem->_type == EITEM_TYPE::EMPTY)_normal->render();
+
+	_inventory->render();
 }
 
 STObservedData Player::getRectUpdate()
@@ -636,4 +645,9 @@ void Player::setCollision()
 		}
 	} break;
 	}
+}
+
+void Player::computeTotalAttribute()
+{
+	_totalStatus = _status + _inventory->getItemTotalAttribute();
 }
