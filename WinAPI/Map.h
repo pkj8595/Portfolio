@@ -20,6 +20,10 @@ protected:
 	POINT _location;
 	MAPTYPE _type;
 
+	//캐릭터 활동반경
+	RECT _mapRC;
+
+
 	bool _show;
 	bool _clear;
 	bool _connectedMap[4]; //Left, Up, Right, Down
@@ -46,5 +50,10 @@ public:
 
 	my::Image* getPixelCollisionImage() { return _pixelCollisionImage; }
 	MAPTYPE getMapType() { return _type; }
+	bool isConnected(int map) { return _connectedMap[map]; }
+
+	RECT getMapRC() { return _mapRC; }
+
+	Map() : _mapRC({ 0,0,WINSIZE_X,WINSIZE_Y }) {}
 };
 

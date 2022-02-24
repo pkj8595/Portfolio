@@ -3,14 +3,18 @@
 
 HRESULT Player::init(void)
 {
+	RECTOBSERVERMANAGER->registerObserved(this);
+	_type = ObservedType::ROCKET;
 	_image = IMAGEMANAGER->addFrameImage("Player", "Resource/Images/Lucie/CompleteImg/Player/Player.bmp", 600, 4100, 6, 41, true, RGB(255, 0, 255));
 
 	_equipItem = new Item();
 	_equipItem->_type = EITEM_TYPE::EQUIP_WEAPOEN_SWORD;
 
 	_state = PLAYER_STATE::STOP;
-	_direction = PLAYER_DIRECTION::DOWN;
+	_level = 1;
 
+	_direction = PLAYER_DIRECTION::DOWN;
+	
 	_x = CENTER_X;
 	_y = CENTER_Y;
 
@@ -29,7 +33,18 @@ HRESULT Player::init(void)
 	_dead = false;
 	
 	_status._hp = _status._maxHp = 6;
+	_status._mana = _status._maxMana = 3;
+	_status._critical = 0.1f;
+	_status._offencePower = 10.0f;
+	_status._magicPower = 10.0f;
 	_status._speed = 2.0f;
+	_status._damageBalance = 0.0f;
+	_status._experience = 0.0f;
+	_status._maxExperience = 100.0f;
+	_status._stamina = _status._maxStamina = 100.0f;
+
+	_totalStatus = _status;
+	
 
 	_frameTick = TIMEMANAGER->getWorldTime();
 	_startFrame = _endFrame = 4;
@@ -38,7 +53,10 @@ HRESULT Player::init(void)
 	_sword->init(&_x, &_y);
 
 	_normal = new NormalWeapon;
-	_normal->init(3, WINSIZE_X / 3 * 2);
+	_normal->init(5, WINSIZE_X / 3 * 2);
+
+	_statusUI = new PlayerStatusUI;
+	_statusUI->init(&_totalStatus, &_level);
 
 
 	return S_OK;
@@ -46,6 +64,7 @@ HRESULT Player::init(void)
 
 void Player::release(void)
 {
+	RECTOBSERVERMANAGER->removeObserved(this);
 }
 
 void Player::update(void)
@@ -56,6 +75,7 @@ void Player::update(void)
 		else setDirectionByKeyInput();
 	}
 	else setDirectionByMouseInput();
+
 	changeState();
 
 	setFrame();
@@ -64,6 +84,7 @@ void Player::update(void)
 	setDodge();
 	setAttack();
 
+	healStamina();
 	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
 		_equipItem->_type = EITEM_TYPE::EQUIP_WEAPOEN_SWORD;
@@ -74,19 +95,43 @@ void Player::update(void)
 	}
 	if (!_attack || _equipItem->_type == EITEM_TYPE::EQUIP_WEAPOEN_BOW) move();
 
-
 	_sword->update();
 	_normal->update();
+	_statusUI->update();
 
-	_rc = RectMakeCenter(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2 + 20, 25, 15);
+	_rc = RectMakeCenter(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2 + 20, 8, 5);
+
+	if (_hit) _hitInvTime--;
+	if (_hitInvTime <= 0) _hit = false;
 }
 
 void Player::render(void)
 {
-	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 	_image->frameRender(getMemDC(), _x, _y);
+	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 	if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPOEN_SWORD)_sword->render();
 	else if (_equipItem->_type == EITEM_TYPE::EMPTY)_normal->render();
+}
+
+STObservedData Player::getRectUpdate()
+{
+	STObservedData temp;
+
+	temp.rc = &_rc;
+	temp.typeKey = &_type;
+	temp.isActive = &_attack;
+	return temp;
+}
+
+void Player::collideObject()
+{
+	if (!_hit)
+	{
+		_totalStatus._hp -= 1;
+		_hit = true;
+		_hitInvTime = 100;
+	}
+
 }
 
 void Player::setFrame()
@@ -220,7 +265,12 @@ void Player::setDodge()
 {
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && !_dodge && !_attack)
 	{
-		_dodge = true;
+		if (_totalStatus._stamina >= 10.0f)
+		{
+			_dodge = true;
+			_totalStatus._stamina -= 10.0f;
+		}
+
 	}
 	if (_state == PLAYER_STATE::DODGE && _currentFrame >= _endFrame)
 	{
@@ -235,11 +285,13 @@ void Player::setAttack()
 	{
 		if (!_attack)
 		{
+			if (_totalStatus._stamina < 5.0f) return;
 			_attack = true;
 			if (_equipItem->_type == EITEM_TYPE::EMPTY)
 			{
 				float angle = MY_UTIL::getAngle(_x, _y, _ptMouse.x, _ptMouse.y);
 				_normal->fire(_x + 50, _y + 50, angle);
+				_totalStatus._stamina -= 5.0f;
 			}
 			else if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPOEN_BOW)
 			{
@@ -249,6 +301,7 @@ void Player::setAttack()
 			{
 				_dodge = false;
 				setSwordSpecialAttack();
+				_totalStatus._stamina -= 5.0f;
 			}
 			else if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPOEN_SWORD)
 			{
@@ -258,13 +311,14 @@ void Player::setAttack()
 				_comboCooldown = TIMEMANAGER->getWorldTime();
 				_comboCount = 0;
 				_sword->fire(0, static_cast<int>(_direction));
+				_totalStatus._stamina -= 5.0f;
 			}
 		}
 		else
 		{
+			if (_totalStatus._stamina < 5.0f) return;
 			setSwordAttack();
 		}
-		
 	}
 	if (_comboCooldown <= TIMEMANAGER->getWorldTime() - 0.35f && _equipItem->_type == EITEM_TYPE::EQUIP_WEAPOEN_SWORD)
 	{
@@ -306,6 +360,7 @@ void Player::setSwordAttack()
 		_stateFrameTick = 0.08f;
 		_comboCount++;
 		_sword->fire(2, static_cast<int>(_direction));
+		_totalStatus._stamina -= 5.0f;
 	}break;
 	case 2: {
 		_comboCooldown = TIMEMANAGER->getWorldTime();
@@ -322,6 +377,7 @@ void Player::setSwordAttack()
 		_stateFrameTick = 0.08f;
 		_comboCount++;
 		_sword->fire(4, static_cast<int>(_direction));
+		_totalStatus._stamina -= 5.0f;
 	}break;
 	default: break;
 	}
@@ -335,6 +391,7 @@ void Player::setSwordSpecialAttack()
 	_sword->fire(4, static_cast<int>(_direction));
 	_swordSpecialAttack = true;
 }
+
 
 
 void Player::move()
@@ -354,7 +411,7 @@ void Player::move()
 		}
 		else
 		{
-			_x -= _status._speed;
+			_x -= _totalStatus._speed;
 		}
 	} break;
 	case PLAYER_DIRECTION::RIGHT:
@@ -369,7 +426,7 @@ void Player::move()
 		}
 		else
 		{
-			_x += _status._speed;
+			_x += _totalStatus._speed;
 		}
 	} break;
 	case PLAYER_DIRECTION::UP:
@@ -384,7 +441,7 @@ void Player::move()
 		}
 		else
 		{
-			_y -= _status._speed;
+			_y -= _totalStatus._speed;
 		}
 	} break;
 	case PLAYER_DIRECTION::DOWN:
@@ -399,7 +456,7 @@ void Player::move()
 		}
 		else
 		{
-			_y += _status._speed;
+			_y += _totalStatus._speed;
 		}
 	} break;
 	case PLAYER_DIRECTION::LEFTUP:
@@ -416,8 +473,8 @@ void Player::move()
 		}
 		else
 		{
-			_x -= _status._speed;
-			_y -= _status._speed;
+			_x -= _totalStatus._speed;
+			_y -= _totalStatus._speed;
 		}
 	} break;
 	case PLAYER_DIRECTION::RIGHTUP:
@@ -434,8 +491,8 @@ void Player::move()
 		}
 		else
 		{
-			_x += _status._speed;
-			_y -= _status._speed;
+			_x += _totalStatus._speed;
+			_y -= _totalStatus._speed;
 		}
 	} break;
 	case PLAYER_DIRECTION::LEFTDOWN:
@@ -452,8 +509,8 @@ void Player::move()
 		}
 		else
 		{
-			_x -= _status._speed;
-			_y += _status._speed;
+			_x -= _totalStatus._speed;
+			_y += _totalStatus._speed;
 		}
 	} break;
 	case PLAYER_DIRECTION::RIGHTDOWN:
@@ -470,10 +527,19 @@ void Player::move()
 		}
 		else
 		{
-			_x += _status._speed;
-			_y += _status._speed;
+			_x += _totalStatus._speed;
+			_y += _totalStatus._speed;
 		}
 	} break;
+	}
+}
+
+void Player::healStamina()
+{
+	if (_totalStatus._stamina < _totalStatus._maxStamina && _state != PLAYER_STATE::DODGE && _state != PLAYER_STATE::ATTACK_BOW
+		&& _state != PLAYER_STATE::ATTACK_NONE && _state != PLAYER_STATE::ATTACK_SWORD)
+	{
+		_totalStatus._stamina += 0.4f;
 	}
 }
 
@@ -484,22 +550,22 @@ void Player::setCollision()
 	case PLAYER_DIRECTION::DOWN : {
 		if (_swordSpecialAttack) _y -= 12.0f;
 		else if (_dodge) _y -= 4.0f;
-		else _y -= _status._speed;
+		else _y -= _totalStatus._speed;
 	} break;
 	case PLAYER_DIRECTION::UP: {
 		if (_swordSpecialAttack) _y += 12.0f;
 		else if (_dodge) _y += 4.0f;
-		else _y += _status._speed;
+		else _y += _totalStatus._speed;
 	} break;
 	case PLAYER_DIRECTION::LEFT: {
 		if (_swordSpecialAttack) _x += 12.0f;
 		else if (_dodge) _x += 4.0f;
-		else _x += _status._speed;
+		else _x += _totalStatus._speed;
 	} break;
 	case PLAYER_DIRECTION::RIGHT: {
 		if (_swordSpecialAttack) _x -= 12.0f;
 		else if (_dodge) _x -= 4.0f;
-		else _x -= _status._speed;
+		else _x -= _totalStatus._speed;
 	} break;
 	case PLAYER_DIRECTION::LEFTDOWN: {
 		if (_swordSpecialAttack)
@@ -514,8 +580,8 @@ void Player::setCollision()
 		}
 		else
 		{
-			_x += _status._speed;
-			_y -= _status._speed;
+			_x += _totalStatus._speed;
+			_y -= _totalStatus._speed;
 		}	
 	} break;
 	case PLAYER_DIRECTION::RIGHTDOWN: {
@@ -531,8 +597,8 @@ void Player::setCollision()
 		}
 		else
 		{
-			_x -= _status._speed;
-			_y -= _status._speed;
+			_x -= _totalStatus._speed;
+			_y -= _totalStatus._speed;
 		}
 	} break;
 	case PLAYER_DIRECTION::LEFTUP: {
@@ -548,8 +614,8 @@ void Player::setCollision()
 		}
 		else
 		{
-			_x += _status._speed;
-			_y += _status._speed;
+			_x += _totalStatus._speed;
+			_y += _totalStatus._speed;
 		}
 	} break;
 	case PLAYER_DIRECTION::RIGHTUP: {
@@ -565,8 +631,8 @@ void Player::setCollision()
 		}
 		else
 		{
-			_x -= _status._speed;
-			_y += _status._speed;
+			_x -= _totalStatus._speed;
+			_y += _totalStatus._speed;
 		}
 	} break;
 	}

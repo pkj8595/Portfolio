@@ -171,6 +171,7 @@
     <ClCompile Include="PixelCollision.cpp" />
     <ClCompile Include="OJHScene.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerStatusUI.cpp" />
     <ClCompile Include="PlayerWeapon.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="Minion.h" />
     <ClInclude Include="OJHScene.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerStatusUI.h" />
     <ClInclude Include="PlayerWeapon.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="ProgressBar.h" />
