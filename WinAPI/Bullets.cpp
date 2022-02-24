@@ -356,9 +356,13 @@ STObservedData tagCBullet::getRectUpdate()
 	return temp;
 }
 
-void tagCBullet::collideObject()
+void tagCBullet::collideObject(STObservedData obData)
 {
-	fire = false;
+	if ((*obData.typeKey) == ObservedType::ROCKET) fire = false;
+	else if ((*obData.typeKey) == ObservedType::ROCKET_MISSILE)
+	{
+		//반격, 공격반사 처리
+	}
 }
 
 

@@ -246,6 +246,8 @@
     <ClCompile Include="PixelCollision.cpp">
       <Filter>MainGame</Filter>
     </ClCompile>
+    <ClCompile Include="DamageEffectManager.cpp" />
+    <ClCompile Include="Damage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -407,6 +409,8 @@
       <Filter>MainGame\Player</Filter>
     </ClInclude>
     <ClInclude Include="PlayerStatusUI.h" />
+    <ClInclude Include="DamageEffectManager.h" />
+    <ClInclude Include="Damage.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">

@@ -8,9 +8,9 @@ HRESULT ItemManager::init(void)
 
 	vector<string> vData = TEXTDATAMANAGER->loadFstream("Resource/Text/ITEM_DATA.csv");
 
-	if (vData.size() % 19 == 0)
+	if (vData.size() % 22 == 0)
 	{
-		for (int i = 0; i < vData.size(); i += 19)
+		for (int i = 0; i < vData.size(); i += 22)
 		{
 			Item* item = new Item;
 			item->_index = atoi(vData[i].c_str());
@@ -20,18 +20,21 @@ HRESULT ItemManager::init(void)
 			item->_description = vData[i + 4].c_str();
 			item->_equip_level = atoi(vData[i + 5].c_str());
 			item->_price = atoi(vData[i + 6].c_str());
-			item->_attribute._hp = atoi(vData[i + 7].c_str());
-			item->_attribute._maxHp = atoi(vData[i + 8].c_str());
-			item->_attribute._mana = atoi(vData[i + 9].c_str());
-			item->_attribute._maxMana = atoi(vData[i + 10].c_str());
-			item->_attribute._critical = atoi(vData[i + 11].c_str());
-			item->_attribute._offencePower = atoi(vData[i + 12].c_str());
-			item->_attribute._magicPower = atoi(vData[i + 13].c_str());
-			item->_attribute._speed = atof(vData[i + 14].c_str());
-			item->_attribute._attackSpeed = atoi(vData[i + 15].c_str());
-			item->_attribute._damageBalance = atoi(vData[i + 16].c_str());
-			item->_attribute._experience = atoi(vData[i + 17].c_str());
-			item->_attribute._stamina = atoi(vData[i + 18].c_str());
+			item->_durability = atoi(vData[i + 7].c_str());
+			item->_maxDurability = atoi(vData[i + 8].c_str());
+			item->_attribute._hp = atoi(vData[i + 9].c_str());
+			item->_attribute._maxHp = atoi(vData[i + 10].c_str());
+			item->_attribute._mana = atoi(vData[i + 11].c_str());
+			item->_attribute._maxMana = atoi(vData[i + 12].c_str());
+			item->_attribute._critical = atoi(vData[i + 13].c_str());
+			item->_attribute._offencePower = atoi(vData[i + 14].c_str());
+			item->_attribute._magicPower = atoi(vData[i + 15].c_str());
+			item->_attribute._speed = atof(vData[i + 16].c_str());
+			item->_attribute._attackSpeed = atoi(vData[i + 17].c_str());
+			item->_attribute._damageBalance = atoi(vData[i + 18].c_str());
+			item->_attribute._experience = atoi(vData[i + 19].c_str());
+			item->_attribute._stamina = atoi(vData[i + 20].c_str());
+			item->_attribute._maxStamina = atoi(vData[i + 21].c_str());
 
 			//item->toString();
 			_vItem.push_back(item);

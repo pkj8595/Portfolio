@@ -10,6 +10,7 @@
 #define	INVENTORY_IMG_OFFSETX		40
 #define	INVENTORY_IMG_OFFSETY		40
 
+class Player;
 class Inventory : public GameNode
 {
 	typedef struct STInvenPos
@@ -17,6 +18,14 @@ class Inventory : public GameNode
 		my::Image* img;
 		POINT pt;			//offset
 	}InvenPos;
+
+	typedef struct STInvenPosBtn
+	{
+		my::Image* img;
+		POINT pt;			//offset
+		RECT rc;
+		int frameX;
+	}InvenPosBtn;
 
 	ItemManager* _itemManager;
 	my::Image* _inventoryBackground;
@@ -26,14 +35,15 @@ class Inventory : public GameNode
 	InvenPos _inventoryGoldIcon;
 	InvenPos _inventoryHintCorner;
 	InvenPos _inventoryClickHelp;
-	InvenPos _combineBtnIcon2;
-	InvenPos _inventoryCloseBtn;
+	InvenPosBtn _combineBtnIcon2;
+	InvenPosBtn _inventoryCloseBtn;
+	RECT _rcCloseBtn;
 	InvenPos _inventorySlot;
 	InvenPos _inventorySlotA;
 	InvenPos _inventorySlotB;
 
 	//=================================
-	vector<pair<Item*,RECT>> _vItem;
+	vector<pair<Item*, RECT>> _vItem;
 	vector<pair<Item*, RECT>>::iterator _viItem;
 
 	Item* _equipWeapon;		//장착중인 무기
@@ -48,6 +58,8 @@ class Inventory : public GameNode
 	int _abilutyItemCount;
 	int _invenItemCount;
 
+	Player* _player;
+	POINT _statusTextPos;
 
 public:
 	HRESULT init(void);
@@ -55,10 +67,10 @@ public:
 	void update(void);
 	void render(void);
 
-	void renderInventoryBase();
-	void showInventoryItem();
-	void showAbilityItem();
-
+	void renderInventoryBase(void);
+	void showInventoryItem(void);
+	void showAbilityItem(void);
+	void registerAddressPlayer(Player* player) { _player = player; }
 
 	//==========================
 	// ### Player Equipment ###
@@ -97,9 +109,10 @@ public:
 	}
 
 	void checkMouse(void);
+	void computeRect(void);
 
 	bool getIsShowInven(void) { return _isShowInven; }
 	void setIsShowInven(bool isShowInven) { _isShowInven = isShowInven; }
-
+	void showAttributeText(void);
 };
 

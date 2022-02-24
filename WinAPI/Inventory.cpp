@@ -1,5 +1,6 @@
 #include "Stdafx.h"
 #include "Inventory.h"
+#include "Player.h"
 
 HRESULT Inventory::init(void)
 {
@@ -35,6 +36,10 @@ HRESULT Inventory::init(void)
 	_inventorySlotA.pt = PointMake(_rc.left + 100, _rc.top + 100);
 	_inventorySlotB.pt = PointMake(_rc.left + 100, _rc.top + 100);
 
+	_statusTextPos = PointMake(_rc.left + 25 , _rc.top+170);
+
+	_rcCloseBtn = RectMake(_inventoryCloseBtn.pt.x, _inventoryCloseBtn.pt.y, _inventoryCloseBtn.img->getFrameWidth(), _inventoryCloseBtn.img->getFrameHeight());
+
 	_emptyItem = new Item;
 	_equipWeapon=	nullptr;
 	_equipArmor =	nullptr;
@@ -58,7 +63,6 @@ void Inventory::release(void)
 
 void Inventory::update(void)
 {
-	_rc = RectMake(_x, _y, _inventoryBackground->getWidth(), _inventoryBackground->getHeight());
 	//마우스가 이미지 렉트 위에 올라가면 프레임이 바뀌어야함
 	//_btn->update();
 	checkMouse();
@@ -77,10 +81,24 @@ void Inventory::render(void)
 	{
 		renderInventoryBase();
 		showInventoryItem();
+		showAttributeText();
+
+		if (PtInRect(&_rcCloseBtn, _ptMouse))
+		{
+
+			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			{
+				_isShowInven = false;
+			}
+		}
 	}
 
 	showAbilityItem();
-	//_btn->render();
+	
+
+
+	
+
 }
 
 void Inventory::renderInventoryBase()
@@ -195,6 +213,7 @@ void Inventory::showAbilityItem()
 	}
 }
 
+
 void Inventory::checkMouse(void)
 {
 	_viItem = _vItem.begin();
@@ -214,11 +233,11 @@ void Inventory::checkMouse(void)
 					break;
 				case EITEM_TYPE::ABILITY:
 					break;
-				case EITEM_TYPE::EQUIP_WEAPOEN_BOW:
+				case EITEM_TYPE::EQUIP_WEAPON_BOW:
 					cout <<"setEquipWeapon() :" <<(*_viItem).first->_name << endl;
 					setEquipWeapon((*_viItem).first);
 					break;
-				case EITEM_TYPE::EQUIP_WEAPOEN_SWORD:
+				case EITEM_TYPE::EQUIP_WEAPON_SWORD:
 					cout << "setEquipWeapon() :" << (*_viItem).first->_name << endl;
 					setEquipWeapon((*_viItem).first);
 					break;
@@ -244,12 +263,67 @@ void Inventory::checkMouse(void)
 			{
 				if ((*_viItem).first->_type != EITEM_TYPE::ABILITY)
 				{
-					_invenItemCount--;
+					cout<< (*_viItem).first->_name<<endl;
 					_vItem.erase(_viItem);
+					computeRect();
 					break;
 					//todo 드랍아이템 생성
 				}
 			}
 		}
 	}
+}
+
+void Inventory::computeRect(void)
+{
+	_abilutyItemCount = 0;
+	_invenItemCount = 0;
+	_viItem = _vItem.begin();
+	for (; _viItem != _vItem.end(); ++_viItem)
+	{
+		if ((*_viItem).first->_type == EITEM_TYPE::ABILITY) 
+		{
+			RECT temp = RectMake(
+				ABILITY_IMG_X + (_abilutyItemCount* ABILITY_IMG_OFFSET),
+				ABILITY_IMG_Y,
+				32, 32);
+			(*_viItem).second = temp;
+			_abilutyItemCount++;
+		}
+		else
+		{
+			RECT temp = RectMake(
+				_inventorySlot.pt.x + 3 + (INVENTORY_IMG_OFFSETX * (_invenItemCount % 5)),
+				_inventorySlot.pt.y + 3 + (INVENTORY_IMG_OFFSETY * (_invenItemCount / 5)),
+				32, 32);
+			(*_viItem).second = temp;
+			_invenItemCount++;
+		}
+	}
+	
+}
+
+void Inventory::showAttributeText(void)
+{
+	string script[8];
+	script[0] = "최대체력 : " + to_string(_player->getTotalAttribute()._maxHp);
+	script[1] = "공격력 : " + to_string(_player->getTotalAttribute()._offencePower);
+	script[2] = "마법력 : " + to_string(_player->getTotalAttribute()._magicPower);
+	script[3] = "이동속도 : " + to_string(_player->getTotalAttribute()._speed);
+	script[4] = "최대마나 : " + to_string(_player->getTotalAttribute()._maxMana);
+	script[5] = "공격속도 : " + to_string(_player->getTotalAttribute()._attackSpeed);
+	script[6] = "데미지 밸런스 : " + to_string(_player->getTotalAttribute()._damageBalance);
+	script[7] = "치명타 : " + to_string(_player->getTotalAttribute()._critical);
+
+	for (int i = 0; i < 8; i++)
+	{
+		char* str = new char[script[i].size() + 1];
+		copy(script[i].begin(), script[i].end(), str);
+		str[script[i].size()] = '\0';
+
+		FONTMANAGER->drawText(getMemDC(), (int)_statusTextPos.x, (int)_statusTextPos.y+(20*i), "Kostar", 15, 200, str, strlen(str), RGB(255, 255, 255));
+
+		delete[] str;
+	}
+
 }

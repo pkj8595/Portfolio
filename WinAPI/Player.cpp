@@ -1,14 +1,17 @@
 #include "Stdafx.h"
 #include "Player.h"
 
+
 HRESULT Player::init(void)
 {
 	RECTOBSERVERMANAGER->registerObserved(this);
 	_type = ObservedType::ROCKET;
 	_image = IMAGEMANAGER->addFrameImage("Player", "Resource/Images/Lucie/CompleteImg/Player/Player.bmp", 600, 4100, 6, 41, true, RGB(255, 0, 255));
+	_swordStackImage = IMAGEMANAGER->addImage("SwordStack", "Resource/Images/Lucie/CompleteImg/system/ruby.bmp", 13, 14, true, RGB(255, 0, 255));
+	_bowStackImage = IMAGEMANAGER->addImage("BowStack", "Resource/Images/Lucie/CompleteImg/system/emerald.bmp", 16, 13, true, RGB(255, 0, 255));
 
 	_equipItem = new Item();
-	_equipItem->_type = EITEM_TYPE::EQUIP_WEAPOEN_SWORD;
+	_equipItem->_type = EITEM_TYPE::EQUIP_WEAPON_SWORD;
 
 	_state = PLAYER_STATE::STOP;
 	_level = 1;
@@ -32,9 +35,14 @@ HRESULT Player::init(void)
 
 	_dead = false;
 	
+	_swordStack = 0;
+	_bowStack = 0;
+	_tripleshot = false;
+	_tripleShotStartCount = 0.0f;
+
 	_status._hp = _status._maxHp = 6;
 	_status._mana = _status._maxMana = 3;
-	_status._critical = 0.1f;
+	_status._critical = 10.0f;
 	_status._offencePower = 10.0f;
 	_status._magicPower = 10.0f;
 	_status._speed = 2.0f;
@@ -42,9 +50,9 @@ HRESULT Player::init(void)
 	_status._experience = 0.0f;
 	_status._maxExperience = 100.0f;
 	_status._stamina = _status._maxStamina = 100.0f;
-
 	_totalStatus = _status;
 	
+
 
 	_frameTick = TIMEMANAGER->getWorldTime();
 	_startFrame = _endFrame = 4;
@@ -55,11 +63,15 @@ HRESULT Player::init(void)
 	_normal = new NormalWeapon;
 	_normal->init(5, WINSIZE_X / 3 * 2);
 
+	_bow = new BowWeapon;
+	_bow->init(15, WINSIZE_X / 3 * 2);
+
 	_statusUI = new PlayerStatusUI;
 	_statusUI->init(&_totalStatus, &_level);
 
 	_inventory = new Inventory;
 	_inventory->init();
+	_inventory->registerAddressPlayer(this);
 
 	return S_OK;
 }
@@ -76,6 +88,7 @@ void Player::update(void)
 	if (_state == PLAYER_STATE::WALK || _state == PLAYER_STATE::DODGE || _state == PLAYER_STATE::STOP)
 	{
 		if (_swordSpecialAttack) setDirectionByMouseInput();
+		else if (_bow->isFiring()) setDirectionByMouseInput();
 		else setDirectionByKeyInput();
 	}
 	else setDirectionByMouseInput();
@@ -89,19 +102,25 @@ void Player::update(void)
 
 	if (!_inventory->getIsShowInven()) { setAttack(); }
 
+	checkBowStack();
+
 	healStamina();
+
 	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
-		_equipItem->_type = EITEM_TYPE::EQUIP_WEAPOEN_SWORD;
+		_equipItem->_type = EITEM_TYPE::EQUIP_WEAPON_SWORD;
 	}
 	if (KEYMANAGER->isOnceKeyDown('2'))
 	{
-		_equipItem->_type = EITEM_TYPE::EMPTY;
+		_equipItem->_type = EITEM_TYPE::EQUIP_WEAPON_BOW;
 	}
-	if (!_attack || _equipItem->_type == EITEM_TYPE::EQUIP_WEAPOEN_BOW) move();
-
+	if (!_attack || _equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
+	{	
+		move();
+	}
 	_sword->update();
 	_normal->update();
+	_bow->update();
 	_statusUI->update();
 	_inventory->update(); 
 	computeTotalAttribute(); // 합산
@@ -115,11 +134,104 @@ void Player::update(void)
 void Player::render(void)
 {
 	_image->frameRender(getMemDC(), _x, _y);
-	Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
-	if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPOEN_SWORD)_sword->render();
+
+	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
+	if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
+	{
+		showSwordStack();
+		_sword->render();
+	}
 	else if (_equipItem->_type == EITEM_TYPE::EMPTY)_normal->render();
 
+	else if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
+	{
+		showBowStack();
+		_bow->render();
+	}
 	_inventory->render();
+
+}
+void Player::showSwordStack()
+{
+	int fixX;
+	int fixY = 75;
+	switch (_swordStack)
+	{
+	case 0: fixX = 44; break;
+	case 1: fixX = 44; break;
+	case 2: fixX = 37; break;
+	case 3: fixX = 30; break;
+	}
+	for (int i = 0; i < _swordStack; i++)
+	{
+		_swordStackImage->render(getMemDC(), _x + fixX + i*14, _y + fixY);
+	}
+
+}
+
+void Player::showBowStack()
+{
+	int fixX;
+	int fixY = 75;
+	switch (_bowStack)
+	{
+	case 0: fixX = 42; break;
+	case 1: fixX = 42; break;
+	case 2: fixX = 36; break;
+	case 3: fixX = 28; break;
+	case 4: fixX = 36; break;
+	case 5: fixX = 28; break;
+	default: fixX = 42; break;
+	}
+	if (_bowStack <= 3)
+	{
+		for (int i = 0; i < _bowStack; i++)
+		{
+			_bowStackImage->render(getMemDC(), _x + fixX + i * 15, _y + fixY);
+		}
+	}
+	else if (_bowStack == 4)
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			_bowStackImage->render(getMemDC(), _x + fixX + i * 15, _y + fixY);
+			_bowStackImage->render(getMemDC(), _x + fixX + i * 15, _y + fixY + 15);
+		}
+	}
+	else if (_bowStack == 5)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			_bowStackImage->render(getMemDC(), _x + fixX + i * 15, _y + fixY);
+		}
+		
+		for (int i = 0; i < 2; i++)
+		{
+			_bowStackImage->render(getMemDC(), _x + fixX + 8 + i * 15, _y + fixY + 15);
+		}
+	}
+	else return;
+}
+
+void Player::checkBowStack()
+{
+	if (_bowStack != 5) return;
+	else
+	{
+		if (!_tripleshot)
+		{
+			_tripleshot = true;
+			_tripleShotStartCount = TIMEMANAGER->getWorldTime();
+		}
+		else
+		{
+			if (_tripleShotStartCount <= TIMEMANAGER->getWorldTime() - 5.0f)
+			{
+				_tripleshot = false;
+				_bowStack = 0;
+			}
+		}
+	}
 }
 
 STObservedData Player::getRectUpdate()
@@ -132,15 +244,24 @@ STObservedData Player::getRectUpdate()
 	return temp;
 }
 
-void Player::collideObject()
+
+void Player::collideObject(STObservedData obData)
 {
-	if (!_hit)
+	if (_swordSpecialAttack) return;
+	if (_state == PLAYER_STATE::DODGE)
+	{
+		if(_totalStatus._mana < _totalStatus._maxMana) _totalStatus._mana++;
+		if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
+		{
+			if(_bowStack < 5 && !_tripleshot) _bowStack++;
+		}
+	}
+	else
 	{
 		_totalStatus._hp -= 1;
 		_hit = true;
 		_hitInvTime = 100;
 	}
-
 }
 
 void Player::setFrame()
@@ -193,11 +314,11 @@ void Player::changeState()
 		{
 			_state = PLAYER_STATE::ATTACK_NONE;
 		} break;
-		case EITEM_TYPE::EQUIP_WEAPOEN_BOW:
+		case EITEM_TYPE::EQUIP_WEAPON_BOW:
 		{
 			_state = PLAYER_STATE::ATTACK_BOW;
 		} break;
-		case EITEM_TYPE::EQUIP_WEAPOEN_SWORD:
+		case EITEM_TYPE::EQUIP_WEAPON_SWORD:
 		{
 			_state = PLAYER_STATE::ATTACK_SWORD;
 		} break;
@@ -289,7 +410,7 @@ void Player::setDodge()
 
 void Player::setAttack()
 {
-	if (_dodge && _equipItem->_type != EITEM_TYPE::EQUIP_WEAPOEN_SWORD) return;
+	if (_dodge && _equipItem->_type != EITEM_TYPE::EQUIP_WEAPON_SWORD) return;
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
 		if (!_attack)
@@ -298,13 +419,32 @@ void Player::setAttack()
 			_attack = true;
 			if (_equipItem->_type == EITEM_TYPE::EMPTY)
 			{
-				float angle = MY_UTIL::getAngle(_x, _y, _ptMouse.x, _ptMouse.y);
-				_normal->fire(_x + 50, _y + 50, angle);
-				_totalStatus._stamina -= 5.0f;
+				if (_attackCount < TIMEMANAGER->getWorldTime() - 0.3f)
+				{
+					float angle = MY_UTIL::getAngle(_x, _y, _ptMouse.x, _ptMouse.y);
+					_normal->fire(calculatePhysicalDamage(), _x + 50, _y + 50, angle);
+					_totalStatus._stamina -= 5.0f;
+					_attackCount = TIMEMANAGER->getWorldTime();
+				}
 			}
-			else if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPOEN_BOW)
+			else if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
 			{
-
+				if (_attackCount < TIMEMANAGER->getWorldTime() - 0.3f)
+				{
+					float angle = MY_UTIL::getAngle(_x, _y, _ptMouse.x, _ptMouse.y);
+					if (_tripleshot)
+					{
+						_bow->fire(calculatePhysicalDamage(), _x + 50, _y + 50, angle - 15 * PI / 180);
+						_bow->fire(calculatePhysicalDamage(), _x + 50, _y + 50, angle);
+						_bow->fire(calculatePhysicalDamage(), _x + 50, _y + 50, angle + 15 * PI / 180);
+					}
+					else
+					{
+						_bow->fire(calculatePhysicalDamage(), _x + 50, _y + 50, angle);
+					}
+					_totalStatus._stamina -= 5.0f;
+					_attackCount = TIMEMANAGER->getWorldTime();
+				}
 			}
 			if (_dodge)
 			{
@@ -312,14 +452,14 @@ void Player::setAttack()
 				setSwordSpecialAttack();
 				_totalStatus._stamina -= 5.0f;
 			}
-			else if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPOEN_SWORD)
+			else if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
 			{
 				_startFrame = static_cast<int>(_direction) * 8 + 180;
 				_endFrame = _startFrame + 1;
 				_stateFrameTick = 0.15f;
 				_comboCooldown = TIMEMANAGER->getWorldTime();
 				_comboCount = 0;
-				_sword->fire(0, static_cast<int>(_direction));
+				_sword->fire(calculatePhysicalDamage(), 0, static_cast<int>(_direction));
 				_totalStatus._stamina -= 5.0f;
 			}
 		}
@@ -329,7 +469,7 @@ void Player::setAttack()
 			setSwordAttack();
 		}
 	}
-	if (_comboCooldown <= TIMEMANAGER->getWorldTime() - 0.35f && _equipItem->_type == EITEM_TYPE::EQUIP_WEAPOEN_SWORD)
+	if (_comboCooldown <= TIMEMANAGER->getWorldTime() - 0.35f && _equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
 	{
 		_attack = false;
 	}
@@ -360,7 +500,7 @@ void Player::setSwordAttack()
 		_endFrame = _startFrame + 2;
 		_stateFrameTick = 0.08f;
 		_comboCount++;
-		_sword->fire(1, static_cast<int>(_direction));
+		_sword->fire(calculatePhysicalDamage(), 1, static_cast<int>(_direction));
 	}break;
 	case 1: {
 		_comboCooldown = TIMEMANAGER->getWorldTime();
@@ -368,7 +508,7 @@ void Player::setSwordAttack()
 		_endFrame = _startFrame + 1;
 		_stateFrameTick = 0.08f;
 		_comboCount++;
-		_sword->fire(2, static_cast<int>(_direction));
+		_sword->fire(calculatePhysicalDamage(), 2, static_cast<int>(_direction));
 		_totalStatus._stamina -= 5.0f;
 	}break;
 	case 2: {
@@ -377,7 +517,7 @@ void Player::setSwordAttack()
 		_endFrame = _startFrame + 2;
 		_stateFrameTick = 0.08f;
 		_comboCount++;
-		_sword->fire(3, static_cast<int>(_direction));
+		_sword->fire(calculatePhysicalDamage(), 3, static_cast<int>(_direction));
 	}break;
 	case 3: {
 		_comboCooldown = TIMEMANAGER->getWorldTime();
@@ -385,8 +525,9 @@ void Player::setSwordAttack()
 		_endFrame = _startFrame + 2;
 		_stateFrameTick = 0.08f;
 		_comboCount++;
-		_sword->fire(4, static_cast<int>(_direction));
+		_sword->fire(calculatePhysicalDamage(), 4, static_cast<int>(_direction));
 		_totalStatus._stamina -= 5.0f;
+		if(_swordStack < 3) _swordStack++;
 	}break;
 	default: break;
 	}
@@ -397,15 +538,22 @@ void Player::setSwordSpecialAttack()
 	//대쉬중 공격(돌진)
 	setDirectionByMouseInput();
 	_specialAttackCooldown = TIMEMANAGER->getWorldTime();
-	_sword->fire(4, static_cast<int>(_direction));
+	_sword->fire(calculatePhysicalDamage() * (1 + 0.5 *_swordStack), 4, static_cast<int>(_direction));
 	_swordSpecialAttack = true;
+	_swordStack = 0;
 }
 
 
 
 void Player::move()
 {
+	
 	if (_state != PLAYER_STATE::WALK && _state != PLAYER_STATE::DODGE && _state != PLAYER_STATE::ATTACK_BOW) return;
+	if (_state == PLAYER_STATE::ATTACK_BOW)
+	{	
+		setDirectionByKeyInput();
+	}
+	else if (_bow->isFiring()) setDirectionByKeyInput();
 	switch (_direction)
 	{
 	case PLAYER_DIRECTION::LEFT: 
@@ -650,4 +798,32 @@ void Player::setCollision()
 void Player::computeTotalAttribute()
 {
 	_totalStatus = _status + _inventory->getItemTotalAttribute();
+}
+float Player::calculatePhysicalDamage()
+{ 
+	float minDamage = _totalStatus._offencePower - ((_totalStatus._offencePower * 0.3f) * (1.0f - _totalStatus._damageBalance*0.01));
+	float maxDamage = _totalStatus._offencePower;
+	if (minDamage > maxDamage) minDamage = maxDamage;
+	float criticalProperty = _totalStatus._critical * 0.01;
+	if (criticalProperty > 1.0f) criticalProperty = 1.0f;
+	
+	float rndDamage = RND->getFromFloatTo(minDamage, maxDamage);
+	float rndCritical = RND->getFromFloatTo(0.0f, 1.0f);
+	if (rndCritical <= criticalProperty) rndDamage *= 2; 
+	return rndDamage;
+}
+
+float Player::calculateMagicDamage()
+{
+	float minDamage = _totalStatus._magicPower - ((_totalStatus._magicPower * 0.3f) * (1.0f - _totalStatus._damageBalance*0.01));
+	float maxDamage = _totalStatus._magicPower;
+	if (minDamage > maxDamage) minDamage = maxDamage;
+	float criticalProperty = _totalStatus._critical * 0.01;
+	if (criticalProperty > 1.0f) criticalProperty = 1.0f;
+
+	float rndDamage = RND->getFromFloatTo(minDamage, maxDamage);
+	float rndCritical = RND->getFromFloatTo(0.0f, 1.0f);
+	
+	if (rndDamage <= criticalProperty) rndDamage *= 2;
+	return rndDamage;
 }

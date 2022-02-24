@@ -13,12 +13,19 @@ public:
 	float angle;
 	float speed;
 	float weaponTick;
+	float damage;
 	bool fire;
+	bool firstHit;
+	bool sword;
 
 	void init(void);
 	void release(void);
 	virtual STObservedData getRectUpdate();
-	virtual void collideObject();
+	virtual void collideObject(STObservedData obData);
+
+	void setDamage(float damage) { this->damage = damage; }
+	void setFirstHit(bool firstHit) { this->firstHit = firstHit; }
+	void setSword(bool sword) { this->sword = sword; }
 };
 
 class NormalWeapon : public GameNode
@@ -37,7 +44,7 @@ public:
 	void update(void);
 	void render(void);
 
-	void fire(float x, float y, float angle);
+	void fire(float damage, float x, float y, float angle);
 	void draw();
 	void move();
 
@@ -62,10 +69,12 @@ public:
 	void update(void);
 	void render(void);
 
-	void fire(int combo, int direction);
+	void fire(float damage, int combo, int direction);
 	void draw();
 	void move();
 	void updateFrame();
+
+
 
 	SwordWeapon() {}
 	~SwordWeapon() {}
@@ -74,4 +83,29 @@ public:
 
 class BowWeapon : public GameNode
 {
+private:
+	vector<tagWeapon*> _vWeapon;
+	vector<tagWeapon*>::iterator _viWeapon;
+
+	float _range;
+	int _bulletMax;
+	int _fixX, _fixY;
+public:
+	HRESULT init(int bulletMax, float range);
+	void release(void);
+	void update(void);
+	void render(void);
+
+	void fire(float damage, float x, float y, float angle);
+	void draw();
+	void move();
+
+	bool isFiring()
+	{
+		if (_vWeapon.size() == 0) return false;
+		else return true;
+	}
+
+	BowWeapon() {}
+	~BowWeapon() {}
 };

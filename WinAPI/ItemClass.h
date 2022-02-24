@@ -7,8 +7,8 @@ enum class EITEM_TYPE
 	MATERIAL,
 	SCROLL,
 	ABILITY,
-	EQUIP_WEAPOEN_BOW,
-	EQUIP_WEAPOEN_SWORD,
+	EQUIP_WEAPON_BOW,
+	EQUIP_WEAPON_SWORD,
 	EQUIP_ARMOR,
 	EQUIP_HAT,
 	EQUIP_SHOES,
@@ -28,9 +28,9 @@ public:
 	float _attackSpeed;		//공격속도
 	float _damageBalance;	//데미지 밸런스
 	float _experience;		//경험치
-	float _maxExperience;		//최대 경험치
+	float _maxExperience;	//최대 경험치
 	float _stamina;			//스테미나
-	float _maxStamina;			//최대 스테미나
+	float _maxStamina;		//최대 스테미나
 
 	CPlayer_Attribute operator+(CPlayer_Attribute other)
 	{
@@ -69,8 +69,6 @@ public:
 		_stamina = other._stamina;
 		_maxStamina = other._maxStamina;
 	}
-
-
 	
 
 	CPlayer_Attribute()
@@ -99,53 +97,16 @@ class Item
 {
 public:
 	int			_index;
+	int			_imgNum;			//장비 이미지 넘버
 	EITEM_TYPE	_type;				//아이템 타입
 	string		_name;				//name
 	string		_description;		//설명
-	int			_imgNum;			//장비 이미지 넘버
 	int			_equip_level;		//장비 레벨
 	int			_price;				//가격
-	//int _durability;				//내구도
-	//int _maxDurability;			//최대내구도
+	int			_durability;		//내구도
+	int			_maxDurability;		//최대내구도
 
 	CPlayer_Attribute _attribute;	//능력치
-
-	inline void setItemData(int index,EITEM_TYPE type, string name, string description, int imgNum, int equip_level, int price)
-	{
-		_index = index;
-		_type = type;
-		_name= name;
-		_description= description;
-		_imgNum = imgNum;
-		_equip_level= equip_level;
-		_price = price;
-	}
-	inline void setItemAttribute(int   hp,
-								 int   maxHp,
-								 int   mana,
-								 int   maxMana,
-								 float critical,
-								 float offencePower,
-								 float magicPower,
-								 float speed,
-								 float attackSpeed,
-								 float damageBalace,
-								 float experience,
-								 float stamina)
-	{
-		_attribute._hp = hp;
-		_attribute._maxHp =maxHp;
-		_attribute._mana =mana;
-		_attribute._maxMana =maxMana;
-		_attribute._critical =critical;
-		_attribute._offencePower =offencePower;
-		_attribute._magicPower =magicPower;
-		_attribute._speed =speed;
-		_attribute._attackSpeed =attackSpeed;
-		_attribute._damageBalance =damageBalace;
-		_attribute._experience =experience;
-		_attribute._stamina = stamina;
-	}
 
 	void toString(void)
 	{
@@ -157,6 +118,8 @@ public:
 		cout << "_imgNum			:" <<_imgNum << endl;
 		cout << "_equip_level		:" <<_equip_level << endl;
 		cout << "_price			:" << _price << endl;
+		cout << "_durability			:" << _durability << endl;
+		cout << "_maxDurability			:" << _maxDurability << endl;
 		cout << "hp			:" << _attribute._hp << endl;
 		cout << "maxHp			:" << _attribute._maxHp << endl;
 		cout << "mana			:" << _attribute._mana << endl;
@@ -181,6 +144,8 @@ public:
 		_imgNum = 0;
 		_equip_level = 0;
 		_price = 0;
+		_durability=0;
+		_maxDurability=0;
 	}
 	~Item() {}
 };

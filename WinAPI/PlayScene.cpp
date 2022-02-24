@@ -22,7 +22,7 @@ void PlayScene::release(void)
 
 void PlayScene::update(void)
 {
-	RECTOBSERVERMANAGER->getRectFromObserved();
+	RECTOBSERVERMANAGER->update();
 	_mapManager->update();
 	_enemyManager->update();
 	_player->update();
@@ -36,6 +36,9 @@ void PlayScene::render(void)
 	_mapManager->render();
 	_enemyManager->render();
 	_player->render();
+	RECTOBSERVERMANAGER->render();
+
+	//UI
 	if (_mapManager->isMinimapToggle()) _mapManager->printTempMinimap();
 	_player->printUI();
 }
