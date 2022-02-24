@@ -94,7 +94,7 @@ public:
 
 public:
 	virtual STObservedData getRectUpdate();
-	virtual void collideObject();
+	virtual void collideObject(STObservedData obData);
 
 	Slime();
 	virtual ~Slime();

@@ -96,5 +96,5 @@ STObservedData Enemy::getRectUpdate(){
 	return STObservedData();
 }
 
-void Enemy::collideObject(){
+void Enemy::collideObject(STObservedData obData){
 }

@@ -43,12 +43,10 @@ void PlayScene::changeMap()
 		_player->setPosition(_player->getPosition().x, 200);
 	}
 
-	///// TempDebug - 방 클리어시 모든 몬스터 제거함수. 나중에 지울것.
-	if (_mapManager->getCurrentMap()->isClear())
+	if (_enemyManager->checkClear())
 	{
-		_enemyManager->clearMinion();
+		_mapManager->getCurrentMap()->setClear(true);
 	}
-	//////////////////////
 }
 
 void PlayScene::spawnMonster()

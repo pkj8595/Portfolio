@@ -21,21 +21,22 @@ STObservedData tagWeapon::getRectUpdate()
 	temp.rc = &rc;
 	temp.typeKey = &type;
 	temp.isActive = &fire;
+	temp.angle = &angle;
+	temp.damage = &damage;
 	return temp;
 }
 
-void tagWeapon::collideObject()
+void tagWeapon::collideObject(STObservedData obData)
 {
-	fire = false;
+	if ((*obData.typeKey) == ObservedType::MINION)
+	{
+		if(!sword) fire = false;
+		
+	}
 }
-
-
-
-
 
 HRESULT NormalWeapon::init(int bulletMax, float range)
 {
-
 	_bulletMax = bulletMax;
 	_range = range;
 	return S_OK;
@@ -61,16 +62,17 @@ void NormalWeapon::render(void)
 	draw();
 }
 
-void NormalWeapon::fire(float x, float y, float angle)
+void NormalWeapon::fire(float damage, float x, float y, float angle)
 {
 	if (_bulletMax <= _vWeapon.size()) return;
 	tagWeapon* weapon = new tagWeapon;
 	weapon->type = ObservedType::ROCKET_MISSILE;
 	weapon->img = new my::Image;
 	weapon->img->init("Resource/Images/Lucie/CompleteImg/effect/NormalBullet_effect.bmp", 50, 50, true, RGB(255, 0, 255));
-	weapon->fire = false;
+	weapon->fire = true;
 	weapon->speed = 30.0f;
 	weapon->angle = angle;
+	weapon->damage = damage;
 	weapon->x = weapon->fireX = x;
 	weapon->y = weapon->fireY = y;
 	weapon->rc = RectMakeCenter(weapon->x, weapon->y, weapon->img->getWidth(), weapon->img->getHeight());
@@ -98,6 +100,11 @@ void NormalWeapon::move()
 		if (_range < getDistance((*_viWeapon)->fireX, (*_viWeapon)->fireY, (*_viWeapon)->x, (*_viWeapon)->y + 100))
 		{
 			(*_viWeapon)->release();
+			SAFE_DELETE((*_viWeapon)->img);
+			_viWeapon = _vWeapon.erase(_viWeapon);
+		}
+		else if (!(*_viWeapon)->fire)
+		{
 			SAFE_DELETE((*_viWeapon)->img);
 			_viWeapon = _vWeapon.erase(_viWeapon);
 		}
@@ -138,7 +145,7 @@ void SwordWeapon::render(void)
 	draw();
 }
 
-void SwordWeapon::fire(int combo, int direction)
+void SwordWeapon::fire(float damage, int combo, int direction)
 {
 	if (_effectMax <= _vWeapon.size()) return;
 	tagWeapon* effect = new tagWeapon;
@@ -152,9 +159,11 @@ void SwordWeapon::fire(int combo, int direction)
 	case 3: effect->img->init("Resource/Images/Lucie/CompleteImg/effect/sword_effect2.bmp", 0.0f, 0.0f, 1920, 1536, 10, 8, true, RGB(255, 0, 255)); break;
 	case 4: effect->img->init("Resource/Images/Lucie/CompleteImg/effect/sword_effect3.bmp", 0.0f, 0.0f, 1920, 1536, 10, 8, true, RGB(255, 0, 255)); break;
 	}
-	effect->fire = false;
+	effect->fire = true;
 	effect->weaponTick = TIMEMANAGER->getWorldTime();
 	effect->img->setFrameX(0);
+	effect->sword = true;
+	(combo == 0) ? effect->firstHit = true : effect->firstHit = false;
 	switch (direction)
 	{
 	case 0: effect->img->setFrameY(5); _fixX = -30; _fixY = 30; break;
@@ -166,6 +175,7 @@ void SwordWeapon::fire(int combo, int direction)
 	case 6: effect->img->setFrameY(0); _fixX = 0; _fixY = -30; break;
 	case 7: effect->img->setFrameY(1); _fixX = 30; _fixY = -30; break;
 	}
+	effect->damage = damage;
 	effect->x = *_x + 50 + _fixX;
 	effect->y = *_y + 50 + _fixY;
 	effect->rc = RectMakeCenter(effect->x, effect->y, effect->img->getFrameWidth(), effect->img->getFrameHeight());
@@ -207,6 +217,86 @@ void SwordWeapon::updateFrame()
 		{
 			(*_viWeapon)->img->setFrameX((*_viWeapon)->img->getFrameX() + 1);
 			(*_viWeapon)->weaponTick = TIMEMANAGER->getWorldTime();
+		}
+	}
+}
+
+HRESULT BowWeapon::init(int bulletMax, float range)
+{
+	_bulletMax = bulletMax;
+	_range = range;
+	return S_OK;
+}
+
+void BowWeapon::release(void)
+{
+	_viWeapon = _vWeapon.begin();
+	for (; _viWeapon != _vWeapon.end(); ++_viWeapon)
+	{
+		SAFE_DELETE((*_viWeapon)->img);
+	}
+	_vWeapon.clear();
+}
+
+void BowWeapon::update(void)
+{
+	move();
+}
+
+void BowWeapon::render(void)
+{
+	draw();
+}
+
+void BowWeapon::fire(float damage, float x, float y, float angle)
+{
+	if (_bulletMax <= _vWeapon.size()) return;
+	tagWeapon* weapon = new tagWeapon;
+	weapon->type = ObservedType::ROCKET_MISSILE;
+	weapon->img = new my::Image;
+	weapon->img->init("Resource/Images/Lucie/CompleteImg/effect/bow_effect.bmp", 20, 20, true, RGB(255, 0, 255));
+	weapon->fire = true;
+	weapon->speed = 30.0f;
+	weapon->angle = angle;
+	weapon->damage = damage;
+	weapon->x = weapon->fireX = x;
+	weapon->y = weapon->fireY = y;
+	weapon->rc = RectMakeCenter(weapon->x, weapon->y, weapon->img->getWidth(), weapon->img->getHeight());
+	_vWeapon.push_back(weapon);
+	weapon->init();
+}
+
+void BowWeapon::draw()
+{
+	_viWeapon = _vWeapon.begin();
+	for (; _viWeapon != _vWeapon.end(); ++_viWeapon)
+	{
+		(*_viWeapon)->img->render(getMemDC(), (*_viWeapon)->rc.left, (*_viWeapon)->rc.top);
+	}
+}
+
+void BowWeapon::move()
+{
+	_viWeapon = _vWeapon.begin();
+	for (; _viWeapon != _vWeapon.end();)
+	{
+		(*_viWeapon)->x += (*_viWeapon)->speed * cos((*_viWeapon)->angle);
+		(*_viWeapon)->y += -1 * (*_viWeapon)->speed * sin((*_viWeapon)->angle);
+		(*_viWeapon)->rc = RectMakeCenter((*_viWeapon)->x, (*_viWeapon)->y, (*_viWeapon)->img->getWidth(), (*_viWeapon)->img->getHeight());
+		if (_range < getDistance((*_viWeapon)->fireX, (*_viWeapon)->fireY, (*_viWeapon)->x, (*_viWeapon)->y + 100))
+		{
+			(*_viWeapon)->release();
+			SAFE_DELETE((*_viWeapon)->img);
+			_viWeapon = _vWeapon.erase(_viWeapon);
+		}
+		else if (!(*_viWeapon)->fire)
+		{
+			SAFE_DELETE((*_viWeapon)->img);
+			_viWeapon = _vWeapon.erase(_viWeapon);
+		}
+		else
+		{
+			++_viWeapon;
 		}
 	}
 }

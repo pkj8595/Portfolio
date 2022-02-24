@@ -5,6 +5,12 @@
 #include "Slime.h"
 #include "Snake.h"
 
+bool EnemyManager::checkClear()
+{
+	if (_vMinion.size() == 0) return true;
+	else return false;
+}
+
 EnemyManager::EnemyManager(){
 	//DO NOTTING
 }
@@ -61,7 +67,7 @@ void EnemyManager::update(void)
 		(*_viMinion)->setPlayer(_pPlayer);
 
 	}
-	//checkActive();
+	checkActive();
 	//minionBulletFire();
 	//_bullet->update();
 }

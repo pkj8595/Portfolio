@@ -54,10 +54,24 @@ private:
 
 	SwordWeapon* _sword;
 	NormalWeapon* _normal;
+	BowWeapon* _bow;
 	PlayerStatusUI* _statusUI;
 
 private:
 	//weaponClass
+	my::Image* _swordStackImage;
+	my::Image* _bowStackImage;
+	
+	int _swordStack;
+	int _bowStack;
+	bool _tripleshot;
+	float _tripleShotStartCount;
+
+	float _attackCount;
+
+	void showSwordStack();
+	void showBowStack();
+	void checkBowStack();
 
 public:
 	HRESULT init(void);
@@ -65,7 +79,7 @@ public:
 	void update(void);
 	void render(void);
 	virtual STObservedData getRectUpdate();
-	virtual void collideObject();
+	virtual void collideObject(STObservedData obData);
 
 	void setFrame();
 	void changeState();
@@ -83,6 +97,9 @@ public:
 
 	void setCollision();
 
+
+	float calculatePhysicalDamage();
+	float calculateMagicDamage();
 
 public:
 	//접근자, 지시자
@@ -106,6 +123,8 @@ public:
 	}
 	PLAYER_STATE getState() { return _state;	 }
 	void printUI() { _statusUI->render(); }
+
+	bool isDead() { return _dead; }
 };
 
 //검
