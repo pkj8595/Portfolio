@@ -14,6 +14,8 @@ typedef struct tagObservedInfo
 	ObservedType* typeKey;
 	RECT* rc;
 	bool* isActive;	//적이 충돌했을때 
+	float* damage;
+	float* angle;
 
 }STObservedData;
 

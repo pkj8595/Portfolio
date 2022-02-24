@@ -5,7 +5,6 @@
 
 HRESULT CRectObserverManager::init()
 {
-	SCENEMANAGER->addScene("Play", new PlayScene);
 	return S_OK;
 }
 
@@ -58,7 +57,7 @@ void CRectObserverManager::getRectFromObserved()
 				{
 					(*_viRect)->collideObject();
 					(*_viRectCompare)->collideObject();
-					_effectManager->createEffect("effect1", collisionRect);
+
 					break;
 				}
 			}
@@ -71,7 +70,20 @@ void CRectObserverManager::getRectFromObserved()
 				{
 					(*_viRect)->collideObject();
 					(*_viRectCompare)->collideObject();
-					_effectManager->createEffect("effect2", collisionRect);
+
+					break;
+				}
+			}
+
+			//Sword 반격
+			if ((*obData.typeKey) == ObservedType::ROCKET_MISSILE &&
+				(*obDataCompare.typeKey) == ObservedType::MINION_MISSILE)
+			{
+				RECT collisionRect;
+				if (IntersectRect(&collisionRect, obData.rc, obDataCompare.rc))
+				{
+					(*_viRectCompare)->collideObject();	//각도, type를 바꿔주는 다른 방법(or 함수) 필요.
+
 					break;
 				}
 			}

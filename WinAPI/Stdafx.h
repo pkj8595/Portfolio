@@ -1,6 +1,7 @@
 #pragma once
 #pragma comment(lib,"gdiplus")
-
+#pragma warning(disable:4244)
+#pragma warning(disable:4838)
 #include <SDKDDKVer.h>	
 
 //===================================

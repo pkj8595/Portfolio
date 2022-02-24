@@ -1,8 +1,11 @@
 #pragma once
 #include "GameNode.h"
+#include "IRectObserved.h"
 
-struct tagWeapon
+class tagWeapon : public IRectObserved
 {
+public:
+	ObservedType type;
 	my::Image* img;
 	RECT rc;
 	float x, y;
@@ -11,13 +14,18 @@ struct tagWeapon
 	float speed;
 	float weaponTick;
 	bool fire;
+
+	void init(void);
+	void release(void);
+	virtual STObservedData getRectUpdate();
+	virtual void collideObject();
 };
 
 class NormalWeapon : public GameNode
 {
 private:
-	vector<tagWeapon> _vWeapon;
-	vector<tagWeapon>::iterator _viWeapon;
+	vector<tagWeapon*> _vWeapon;
+	vector<tagWeapon*>::iterator _viWeapon;
 
 	float _range;
 	int _bulletMax;
@@ -39,8 +47,8 @@ public:
 class SwordWeapon : public GameNode
 {
 private:
-	vector<tagWeapon> _vWeapon;
-	vector<tagWeapon>::iterator _viWeapon;
+	vector<tagWeapon*> _vWeapon;
+	vector<tagWeapon*>::iterator _viWeapon;
 
 	int _effectMax;
 	int _direction;
