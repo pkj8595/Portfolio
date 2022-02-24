@@ -29,6 +29,10 @@ private:
 	Animation* _ani;
 	SLIMEDIRECTION _slimeDir;
 	SLIMESTATE _slimestate;
+
+	SLIMEDIRECTION _beforeSlimeDir;
+	SLIMESTATE _beforeSlimestate;
+
 	int randomX , randomY;
 	float _x, _y;
 	float _speed;

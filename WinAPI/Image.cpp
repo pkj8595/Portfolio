@@ -698,4 +698,12 @@ namespace my {
 	{
 		render(hdc, destX, destY, ani->getFramePos().x, ani->getFramePos().y, ani->getFrameWidth(), ani->getFrameHeight());
 	}
+
+	void Image::resizeRender(HDC hdc, int destX, int destY, int width, int height)
+	{
+		_blendFunc.SourceConstantAlpha = 128;
+		AlphaBlend(hdc, destX, destY, width, height, _imageInfo->hMemDc,
+			0, 0, _imageInfo->width, _imageInfo->height, _blendFunc);
+	}
+
 }

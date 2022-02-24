@@ -3,7 +3,8 @@
 
 HRESULT ItemManager::init(void)
 {
-	_itemImg = IMAGEMANAGER->addFrameImage("ItemImage", "Resource/Images/Lucie/CompleteImg/item/Item_Image.bmp", 320, 256, 10, 8, true, RGB(255, 0, 255));
+	//_itemImg = IMAGEMANAGER->addFrameImage("ItemImage", "Resource/Images/Lucie/CompleteImg/item/Item_Image.bmp", 320, 256, 10, 8, true, RGB(255, 0, 255));
+	_itemImg = IMAGEMANAGER->addImage("ItemImage", "Resource/Images/Lucie/CompleteImg/item/Item_Image.bmp", 320, 256,  true, RGB(255, 0, 255));
 
 	vector<string> vData = TEXTDATAMANAGER->loadFstream("Resource/Text/ITEM_DATA.csv");
 
@@ -66,9 +67,16 @@ Item* ItemManager::getItem(int imgIndex)
 	return nullptr;
 }
 
-inline void ItemManager::itemImgRender(int imgIndex, int x, int y)
+Item * ItemManager::getItemIndex(int index)
+{
+	if (index > _vItem.size()) return nullptr;
+	return _vItem[index];
+}
+
+void ItemManager::getItemImgRender(int imgIndex, int x, int y)
 {
 	int destX = imgIndex / 10;
 	int destY = imgIndex % 10;
-	IMAGEMANAGER->findImage("ItemImage")->frameRender(getMemDC(),x,y, destX, destY);
+	//cout << imgIndex <<" destX: " <<destX <<" destY:" << destY<< endl;
+	IMAGEMANAGER->findImage("ItemImage")->render(getMemDC(),x,y, destX * 32 , destY * 32 ,32,32);
 }

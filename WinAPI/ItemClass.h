@@ -94,6 +94,8 @@ public:
 	int _imgNum;					//장비 이미지 넘버
 	int _equip_level;				//장비 레벨
 	int _price;						//가격
+	//int _durability;				//내구도
+	//int _maxDurability;			//최대내구도
 
 	CPlayer_Attribute _attribute;	//능력치
 

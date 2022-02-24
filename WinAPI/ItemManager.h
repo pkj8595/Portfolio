@@ -17,7 +17,8 @@ public:
 
 	my::Image* getImage(void) { return _itemImg; }
 	Item* getItem(int imgIndex);
-	void itemImgRender(int index, int x, int y);
+	Item* getItemIndex(int index);
+	void getItemImgRender(int index, int x, int y);
 	//void ItemWindowRender(void);
 
 

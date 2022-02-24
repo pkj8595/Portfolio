@@ -180,9 +180,6 @@
     <ClCompile Include="TextDataManager.cpp">
       <Filter>API FrameWork\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="ShootingScene.cpp">
-      <Filter>API FrameWork\ExampleClasses\ShootingGame</Filter>
-    </ClCompile>
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="PlayScene.cpp" />
@@ -349,9 +346,6 @@
     <ClInclude Include="SceneManager.h">
       <Filter>API FrameWork\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="ShootingScene.h">
-      <Filter>API FrameWork\ExampleClasses\ShootingGame</Filter>
-    </ClInclude>
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="PlayScene.h" />
@@ -406,7 +400,7 @@
     </ClInclude>
     <ClInclude Include="Snake.h">
       <Filter>KGY</Filter>
-      </ClInclude>
+    </ClInclude>
     <ClInclude Include="mButton.h" />
     <ClInclude Include="PlayerWeapon.h">
       <Filter>MainGame\Player</Filter>

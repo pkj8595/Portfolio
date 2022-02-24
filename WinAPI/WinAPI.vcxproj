@@ -176,7 +176,6 @@
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="CProjectPlayer.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="ShootingScene.cpp" />
     <ClCompile Include="ShopScene.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameNode.cpp" />
@@ -237,7 +236,6 @@
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="CProjectPlayer.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="ShootingScene.h" />
     <ClInclude Include="ShopScene.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameNode.h" />

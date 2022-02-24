@@ -36,8 +36,13 @@ void mButton::render(void)
 	_btnImg->frameRender(getMemDC(), _btnRc.left, _btnRc.top, _frameX, 1);
 }
 
-bool mButton::isOnClick(void)
+bool mButton::isOnClick(POINT mousePt)
 {
+	if (!KEYMANAGER->getKeyDown()[VK_LBUTTON]){return false;}
+	if (PtInRect(&_btnRc, mousePt))
+	{
+		return true;
+	}
 	return false;
 }
 
