@@ -54,7 +54,7 @@ public:
 
 public:
 	void setPlayerPos(POINT playerPos) { _playerPos = playerPos; }
-	void setPlayer(Player* player) { _player = player; }
+	void setPlayer(Player& player) { _player = &player; }
 
 	Enemy(void);
 	virtual ~Enemy(void) {}

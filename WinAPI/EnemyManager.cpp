@@ -58,7 +58,7 @@ void EnemyManager::update(void)
 	{
 		(*_viMinion)->update();
 		(*_viMinion)->setPlayerPos(_pPlayer->getPosition());
-		(*_viMinion)->setPlayer(_pPlayer);
+		(*_viMinion)->setPlayer(*_pPlayer);
 
 	}
 	//checkActive();
