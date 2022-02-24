@@ -36,6 +36,8 @@ public:
 	vEnemy getEnemy() { return _vMinion; }
 	void clearMinion() { _vMinion.clear(); }
 
+	bool checkClear();
+
 	EnemyManager();
 	~EnemyManager();
 };

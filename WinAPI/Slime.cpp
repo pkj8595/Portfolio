@@ -33,14 +33,13 @@ HRESULT Slime::init(const char * imageName, POINT position)
 
 	_direction = SLIMEDIRECTION::SM_DOWN;
 	_state = SLIMESTATE::SM_IDLE;
-
 	_attackRange = 150;
 
 	_slimeCirclebullet = new CircleMissile;
 	_slimeCirclebullet->init(10, 300);
 
-	_attRect = RectMakeCenter(_x, _y, 150, 150);
-
+	//_attRect = RectMakeCenter(_x, _y, 150, 150);
+	_hp = 100.0f;
 	return S_OK;
 }
 
@@ -75,11 +74,13 @@ void Slime::update(void)
 	}
 
 	frame();
+	//cout << "Slime::update(void) 랜덤X:" << _randomX << endl;
+	//cout << "Slime::update(void) 랜덤Y:" << _randomY << endl;
 
 	cout << (int)_state << endl;
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
-	_attRect = RectMakeCenter(_x, _y + 20, 180, 180);
+	//_attRect = RectMakeCenter(_x, _y + 20, 180, 180);
 	/*_slimebullet->update();
 	_slimeCirclebullet->update();
 
@@ -382,6 +383,20 @@ STObservedData Slime::getRectUpdate()
 	return temp;
 }
 
-void Slime::collideObject()
+void Slime::collideObject(STObservedData obData)
 {
+
+	if ((*obData.typeKey) == ObservedType::ROCKET_MISSILE && (*obData.isActive))
+	{
+		if (_hp <= (*obData.damage))
+		{
+			//나중에 죽는 애니메이션 넣는걸로 바꿀 것.  isActive를 false로 바꾸는 작업은 죽은 애니메이션 전부 실행 뒤 바꿔주는 것으로 변경
+			_isActive = false;
+		}
+		else
+		{
+			_hp -= (*obData.damage);
+			(*obData.isActive) = false;
+		}
+	}
 }

@@ -9,6 +9,8 @@ IRectObserved를 상속받는 클래스를 등록한다.
 IRectObserved >> 플레이어 , 플미, 적미사일, 적
 */
 class EffectManager;
+class DamageEffectManager;
+
 class CRectObserverManager : public SingletonBase<CRectObserverManager>
 {
 private:
@@ -22,9 +24,12 @@ private:
 	viRcObserved _viRectCompare;
 
 	EffectManager* _effectManager;
+	DamageEffectManager* _damageManager;
 public:
 	HRESULT init(void);
 	void release(void);
+	void update(void);
+	void render(void);
 
 	virtual void registerObserved(IRectObserved* observed);
 	virtual void removeObserved(IRectObserved* observed);

@@ -152,6 +152,8 @@
     <ClCompile Include="ChestMap.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="CRectObserverManager.cpp" />
+    <ClCompile Include="Damage.cpp" />
+    <ClCompile Include="DamageEffectManager.cpp" />
     <ClCompile Include="DefaultMap.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -212,6 +214,8 @@
     <ClInclude Include="ChestMap.h" />
     <ClInclude Include="CommonMacroFunction.h" />
     <ClInclude Include="CRectObserverManager.h" />
+    <ClInclude Include="Damage.h" />
+    <ClInclude Include="DamageEffectManager.h" />
     <ClInclude Include="DefaultMap.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
