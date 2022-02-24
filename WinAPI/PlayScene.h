@@ -20,6 +20,10 @@ public:
 	void render(void);
 
 	void pixelCollision();
+	void changeMap();
+	void spawnMonster();
+	void checkPlayerEscapeWithoutClear();
+
 	PlayScene();
 	~PlayScene() {}
 };

@@ -28,7 +28,7 @@ HRESULT ItemManager::init(void)
 			item->_attribute._magicPower = atoi(vData[i + 13].c_str());
 			item->_attribute._speed = atoi(vData[i + 14].c_str());
 			item->_attribute._attackSpeed = atoi(vData[i + 15].c_str());
-			item->_attribute._damageBalace = atoi(vData[i + 16].c_str());
+			item->_attribute._damageBalance = atoi(vData[i + 16].c_str());
 			item->_attribute._experience = atoi(vData[i + 17].c_str());
 			item->_attribute._stamina = atoi(vData[i + 18].c_str());
 

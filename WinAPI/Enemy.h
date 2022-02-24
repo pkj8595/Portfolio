@@ -19,6 +19,7 @@ protected:
 	int _currentFrameX;
 	int _currentFrameY;
 
+	float _attack;
 	float _x, _y;
 	float _rndTimeCount;
 	float _worldTimeCount;

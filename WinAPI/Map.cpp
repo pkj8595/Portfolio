@@ -17,7 +17,7 @@ void Map::update(void)
 
 void Map::render(void)
 {
-	cout << "NORMALMAP " << _location.x << "," << _location.y << endl;
+
 }
 
 void Map::showMinimapIcon(int x, int y)

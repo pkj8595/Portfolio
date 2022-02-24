@@ -26,6 +26,7 @@ enum class SLIMEDIRECTION
 class Slime:public Enemy
 {
 private:
+	
 	Animation* _ani;
 	SLIMEDIRECTION _slimeDir;
 	SLIMESTATE _slimestate;
@@ -70,6 +71,9 @@ public:
 	bool playerCheck(); //플레이어 감지함수
 
 public:
+	virtual STObservedData getRectUpdate();
+	virtual void collideObject();
+
 	Slime();
 	virtual ~Slime();
 };

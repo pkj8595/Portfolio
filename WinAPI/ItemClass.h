@@ -26,9 +26,11 @@ public:
 	float _magicPower;		//마법력
 	float _speed;			//이동속도
 	float _attackSpeed;		//공격속도
-	float _damageBalace;	//데미지 밸런스
+	float _damageBalance;	//데미지 밸런스
 	float _experience;		//경험치
+	float _maxExperience;		//최대 경험치
 	float _stamina;			//스테미나
+	float _maxStamina;			//최대 스테미나
 
 	CPlayer_Attribute operator+(CPlayer_Attribute other)
 	{
@@ -42,9 +44,11 @@ public:
 		temp._magicPower = _magicPower + other._magicPower;
 		temp._speed = _speed + other._speed;
 		temp._attackSpeed = _attackSpeed + other._attackSpeed;
-		temp._damageBalace = _damageBalace + other._damageBalace;
+		temp._damageBalance = _damageBalance + other._damageBalance;
 		temp._experience = _experience + other._experience;
+		temp._maxExperience = _maxExperience + other._maxExperience;
 		temp._stamina = _stamina + other._stamina;
+		temp._maxStamina = _maxStamina + other._maxStamina;
 		return temp;
 	}
 
@@ -59,9 +63,11 @@ public:
 		_magicPower = other._magicPower;
 		_speed = other._speed;
 		_attackSpeed = other._attackSpeed;
-		_damageBalace = other._damageBalace;
+		_damageBalance = other._damageBalance;
 		_experience = other._experience;
+		_maxExperience = other._maxExperience;
 		_stamina = other._stamina;
+		_maxStamina = other._maxStamina;
 	}
 
 	CPlayer_Attribute()
@@ -75,9 +81,11 @@ public:
 		_magicPower = 0.0f;
 		_speed = 0.0f;
 		_attackSpeed = 0.0f;
-		_damageBalace = 0.0f;
+		_damageBalance = 0.0f;
 		_experience = 0.0f;
+		_maxExperience = 0.0f;
 		_stamina = 0.0f;
+		_maxStamina = 0.0f;
 	}
 	~CPlayer_Attribute() {}
 };
@@ -129,7 +137,7 @@ public:
 		_attribute._magicPower =magicPower;
 		_attribute._speed =speed;
 		_attribute._attackSpeed =attackSpeed;
-		_attribute._damageBalace =damageBalace;
+		_attribute._damageBalance =damageBalace;
 		_attribute._experience =experience;
 		_attribute._stamina = stamina;
 	}

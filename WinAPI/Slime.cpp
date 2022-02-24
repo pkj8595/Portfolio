@@ -12,6 +12,7 @@ Slime::~Slime()
 HRESULT Slime::init(const char * imageName, POINT position)
 {
 	Enemy::init(imageName,position);
+	_type = ObservedType::MINION;
 	_x = position.x;
 	_y = position.y;
 	_speed = 1.f;
@@ -126,7 +127,7 @@ void Slime::draw(void)
 
 	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 	//cout << "·£´ýX:" << randomX << endl;
-	cout << "ÀÎµ¦½º:" << _ani->getFrameIdx() << endl;
+	//cout << "ÀÎµ¦½º:" << _ani->getFrameIdx() << endl;
 
 	//Sleep(1000);
 	//system("pause");
@@ -282,4 +283,18 @@ bool Slime::playerCheck()
 		return true;
 
 	return false;
+}
+
+STObservedData Slime::getRectUpdate()
+{
+	STObservedData temp;
+	temp.rc = &_rc;
+	temp.typeKey = &_type;
+	temp.isActive = &_isActive;
+	temp.damage = &_attack;
+	return temp;
+}
+
+void Slime::collideObject()
+{
 }
