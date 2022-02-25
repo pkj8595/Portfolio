@@ -17,6 +17,7 @@ HRESULT Inventory::init(void)
 	_inventorySlot.img = IMAGEMANAGER->addFrameImage("InventorySlot", "Resource/Images/Lucie/CompleteImg/inventory/InventorySlot.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
 	_inventorySlotA.img = IMAGEMANAGER->addFrameImage("InventorySlotA", "Resource/Images/Lucie/CompleteImg/inventory/InventorySlotA.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
 	_inventorySlotB.img = IMAGEMANAGER->addFrameImage("inventorySlotB", "Resource/Images/Lucie/CompleteImg/inventory/inventorySlotB.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
+	_itemInfoWindow.img = IMAGEMANAGER->addImage("ItemInfoWindow", "Resource/Images/Lucie/CompleteImg/inventory/ItemInfoWindow.bmp", 400,300);
 
 	//_btn = new mButton;
 	//_btn->init();
@@ -230,7 +231,7 @@ void Inventory::checkMouse(void)
 	{
 		if (PtInRect(&(*_viItem).second, _ptMouse))
 		{
-			//사용
+
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
 				cout << (*_viItem).first->_name << endl;
@@ -376,5 +377,33 @@ void Inventory::equipRender(void)
 			_inventorySlotB.img->frameRender(getMemDC(), (*_viItem).second.left-3, (*_viItem).second.top-3, 1, 1);
 		}
 	}
+
+}
+
+void Inventory::renderItemInfo(POINT mousePt)
+{
+	_itemInfoWindow.img->render(getMemDC(), mousePt.x, mousePt.y);
+	/*string script[8];
+	script[0] = "최대체력 : " + to_string(_ptotalAttribute->_maxHp);
+	script[1] = "공격력 : " + to_string((int)_ptotalAttribute->_offencePower);
+	script[2] = "마법력 : " + to_string((int)_ptotalAttribute->_magicPower);
+	script[3] = "이동속도 : " + to_string((int)_ptotalAttribute->_speed);
+	script[4] = "최대마나 : " + to_string(_ptotalAttribute->_maxMana);
+	script[5] = "공격속도 : " + to_string((int)_ptotalAttribute->_attackSpeed);
+	script[6] = "데미지 밸런스 : " + to_string((int)_ptotalAttribute->_damageBalance);
+	script[7] = "치명타 : " + to_string((int)_ptotalAttribute->_critical);
+
+	for (int i = 0; i < 8; i++)
+	{
+		char* str = new char[script[i].size() + 1];
+		copy(script[i].begin(), script[i].end(), str);
+		str[script[i].size()] = '\0';
+
+
+		FONTMANAGER->drawText(getMemDC(), (int)_statusTextPos.x + ((int)i / 4) * 90, (int)_statusTextPos.y + (20 * ((int)i % 4)), "Kostar", 15, 200, str, strlen(str), RGB(255, 255, 255));
+
+		delete[] str;
+	}*/
+
 
 }
