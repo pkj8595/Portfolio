@@ -39,7 +39,15 @@ void MapManager::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown('Q'))
 	{
-		_currentMap->setClear(true);
+		for (Map* m : _vMap)
+		{
+			if (m->getMapType() == Map::MAPTYPE::REPAIR)
+			{
+				_currentMap = m;
+				_currentMap->setShow(true);
+				break;
+			}
+		}
 	}
 }
 

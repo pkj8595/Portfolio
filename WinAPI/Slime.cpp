@@ -1,7 +1,7 @@
 #include "Stdafx.h"
 #include "Slime.h"
 
-Slime::Slime()
+Slime::Slime() : _frameY(0)
 {
 }
 
@@ -13,6 +13,8 @@ HRESULT Slime::init(const char * imageName, POINT position)
 {
 	Enemy::init(imageName,position);
 	_type = ObservedType::MINION;
+	_deadForOb = false;
+	_deadTimeCount = TIMEMANAGER->getWorldTime() + 9999.999f;
 	_x = position.x;
 	_y = position.y;
 	_randomX = 0;
@@ -30,8 +32,6 @@ HRESULT Slime::init(const char * imageName, POINT position)
 	_moveCheck = true;
 	_isActive = true;
 	_attackRange = 150;
-	_deadForOb = false;
-	_deadTimeCount = TIMEMANAGER->getWorldTime() + 9999.999f;
 
 	_slimeCirclebullet = new CircleMissile;
 	_slimeCirclebullet->init(10, 300);
@@ -43,6 +43,8 @@ HRESULT Slime::init(const char * imageName, POINT position)
 	_direction = SLIMEDIRECTION::SL_DOWN;
 	_state = SLIMESTATE::SL_IDLE;
 
+	cout << "Slime::init _frameY : " << _frameY << endl;
+
 	return S_OK;
 }
 
@@ -50,6 +52,7 @@ void Slime::release(void)
 {
 	_slimeCirclebullet->release();
 	SAFE_DELETE(_slimeCirclebullet);
+	SAFE_DELETE(_slimebullet);
 	Enemy::release();
 }
 
@@ -60,7 +63,12 @@ void Slime::update(void)
 	_slimebullet->update();
 
 	//플레이어 추적 범위에 들어왔을 경우
-	if (_deadTimeCount < TIMEMANAGER->getWorldTime() - 0.5f) _isActive = false;
+	if (_deadTimeCount < TIMEMANAGER->getWorldTime() - 0.5f)
+	{
+		_frameY = 1;
+		_state = SLIMESTATE::SL_IDLE;
+		_isActive = false;
+	}
 	if (_state == SLIMESTATE::SL_DEAD)
 	{
 		if (_index >= _image->getMaxFrameX())
@@ -86,7 +94,6 @@ void Slime::update(void)
 		randomPosCreate();
 	}
 
-	frame();
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
@@ -95,8 +102,12 @@ void Slime::update(void)
 void Slime::render(void)
 {
 	//Enemy::render();
-	if(_isActive)
+	if (_isActive)
+	{
+		frame();
 		draw();
+	}
+
 }
 
 void Slime::move(void)
@@ -107,7 +118,7 @@ void Slime::move(void)
 void Slime::draw(void)
 {
 	animation();
-	_image->frameRender(getMemDC(), _rc.left, _rc.top);
+	_image->frameRender(getMemDC(), _rc.left, _rc.top,_index,_frameY);
 	_slimeCirclebullet->render();
 	_slimebullet->render();
 	////Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
@@ -227,7 +238,7 @@ void Slime::animation()
 	if (_frameSpeed + _worldTimeCount <= TIMEMANAGER->getWorldTime())
 	{
 		_worldTimeCount = TIMEMANAGER->getWorldTime();
-		_image->setFrameY(_frameY);
+		//_image->setFrameY(_frameY);
 		_index++;
 
 		if (_index > _image->getMaxFrameX())

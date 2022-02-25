@@ -165,13 +165,25 @@ void Inventory::pushItem(Item* item)
 		_vItem.push_back(make_pair(item, temp));
 		_abilutyItemCount++;
 	}
-	else
+	else if (item->_type == EITEM_TYPE::EQUIP_WEAPON_BOW||
+		item->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
 	{
-		RECT temp = RectMake(
+		Item* copyItem = new Item;
+		*copyItem = *item;
+		RECT tempRc = RectMake(
 			_inventorySlot.pt.x + 3 + (INVENTORY_IMG_OFFSETX * (_invenItemCount % 5)),
 			_inventorySlot.pt.y + 3 + (INVENTORY_IMG_OFFSETY * (_invenItemCount / 5)),
 			32, 32);
-		_vItem.push_back(make_pair(item, temp));
+		_vItem.push_back(make_pair(copyItem, tempRc));
+		_invenItemCount++;
+	}
+	else
+	{
+		RECT tempRc = RectMake(
+			_inventorySlot.pt.x + 3 + (INVENTORY_IMG_OFFSETX * (_invenItemCount % 5)),
+			_inventorySlot.pt.y + 3 + (INVENTORY_IMG_OFFSETY * (_invenItemCount / 5)),
+			32, 32);
+		_vItem.push_back(make_pair(item, tempRc));
 		_invenItemCount++;
 	}
 	computeItemTotalAttribute();
@@ -267,8 +279,19 @@ void Inventory::checkMouse(void)
 				if ((*_viItem).first->_type != EITEM_TYPE::ABILITY)
 				{
 					cout<< (*_viItem).first->_name<<endl;
+					if ((*_viItem).first->_type == EITEM_TYPE::EQUIP_WEAPON_BOW ||
+						(*_viItem).first->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
+					{
+						if (_equipWeapon == (*_viItem).first)
+						{
+							_equipWeapon = _emptyItem;
+							cout << "장비 해제" << endl;
+						}
+						SAFE_DELETE((*_viItem).first);
+					}
 					_vItem.erase(_viItem);
 					computeRect();
+					computeItemTotalAttribute();
 					break;
 					//todo 드랍아이템 생성
 				}
@@ -325,7 +348,8 @@ void Inventory::showAttributeText(void)
 		copy(script[i].begin(), script[i].end(), str);
 		str[script[i].size()] = '\0';
 
-		FONTMANAGER->drawText(getMemDC(), (int)_statusTextPos.x, (int)_statusTextPos.y+(20*i), "Kostar", 15, 200, str, strlen(str), RGB(255, 255, 255));
+		
+		FONTMANAGER->drawText(getMemDC(), (int)_statusTextPos.x+((int)i / 4)*90, (int)_statusTextPos.y+(20*((int)i%4)), "Kostar", 15, 200, str, strlen(str), RGB(255, 255, 255));
 
 		delete[] str;
 	}

@@ -46,10 +46,10 @@ public:
 	virtual void draw(void);
 	virtual void animation(void);
 
-	bool bulletCountFire(void);
+	virtual bool bulletCountFire(void);
 
-	RECT getRect(void) { return _rc; }
-	bool getIsActive(void) { return _isActive; }
+	virtual RECT getRect(void) { return _rc; }
+	virtual bool getIsActive(void) { return _isActive; }
 
 	virtual STObservedData getRectUpdate();
 	virtual void collideObject(STObservedData obData);
