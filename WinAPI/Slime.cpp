@@ -45,6 +45,7 @@ HRESULT Slime::init(const char * imageName, POINT position)
 
 void Slime::release(void)
 {
+	_slimeCirclebullet->release();
 	Enemy::release();
 }
 
@@ -77,7 +78,7 @@ void Slime::update(void)
 	//cout << "Slime::update(void) ·£´ýX:" << _randomX << endl;
 	//cout << "Slime::update(void) ·£´ýY:" << _randomY << endl;
 
-	cout << (int)_state << endl;
+	//cout << (int)_state << endl;
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 	//_attRect = RectMakeCenter(_x, _y + 20, 180, 180);
@@ -386,7 +387,7 @@ STObservedData Slime::getRectUpdate()
 void Slime::collideObject(STObservedData obData)
 {
 
-	if ((*obData.typeKey) == ObservedType::ROCKET_MISSILE && (*obData.isActive))
+	if ((*obData.typeKey) == ObservedType::ROCKET_MISSILE || (*obData.typeKey) == ObservedType::PLAYER_SWORD && (*obData.isActive))
 	{
 		if (_hp <= (*obData.damage))
 		{

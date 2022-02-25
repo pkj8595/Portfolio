@@ -37,6 +37,7 @@ HRESULT Player::init(void)
 	
 	_swordStack = 0;
 	_bowStack = 0;
+	_alreadyAddBowStack = false;
 	_tripleshot = false;
 	_tripleShotStartCount = 0.0f;
 
@@ -129,6 +130,7 @@ void Player::update(void)
 
 	if (_hit) _hitInvTime--;
 	if (_hitInvTime <= 0) _hit = false;
+	if (_state != PLAYER_STATE::DODGE) _alreadyAddBowStack = false;
 }
 
 void Player::render(void)
@@ -250,15 +252,19 @@ void Player::collideObject(STObservedData obData)
 	if (_swordSpecialAttack) return;
 	if (_state == PLAYER_STATE::DODGE)
 	{
-		if(_totalStatus._mana < _totalStatus._maxMana) _totalStatus._mana++;
+		if(_totalStatus._mana < _totalStatus._maxMana) _status._mana++;
 		if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
 		{
-			if(_bowStack < 5 && !_tripleshot) _bowStack++;
+			if (_bowStack < 5 && !_tripleshot && !_alreadyAddBowStack)
+			{
+				_alreadyAddBowStack = true;
+				_bowStack++;
+			}
 		}
 	}
-	else
+	else if (!_hit)
 	{
-		_totalStatus._hp -= 1;
+		_status._hp -= 1;
 		_hit = true;
 		_hitInvTime = 100;
 	}
@@ -395,10 +401,10 @@ void Player::setDodge()
 {
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && !_dodge && !_attack)
 	{
-		if (_totalStatus._stamina >= 10.0f)
+		if (_status._stamina >= 10.0f)
 		{
 			_dodge = true;
-			_totalStatus._stamina -= 10.0f;
+			_status._stamina -= 10.0f;
 		}
 
 	}
@@ -415,7 +421,7 @@ void Player::setAttack()
 	{
 		if (!_attack)
 		{
-			if (_totalStatus._stamina < 5.0f) return;
+			if (_status._stamina < 5.0f) return;
 			_attack = true;
 			if (_equipItem->_type == EITEM_TYPE::EMPTY)
 			{
@@ -423,7 +429,7 @@ void Player::setAttack()
 				{
 					float angle = MY_UTIL::getAngle(_x, _y, _ptMouse.x, _ptMouse.y);
 					_normal->fire(calculatePhysicalDamage(), _x + 50, _y + 50, angle);
-					_totalStatus._stamina -= 5.0f;
+					_status._stamina -= 5.0f;
 					_attackCount = TIMEMANAGER->getWorldTime();
 				}
 			}
@@ -442,7 +448,7 @@ void Player::setAttack()
 					{
 						_bow->fire(calculatePhysicalDamage(), _x + 50, _y + 50, angle);
 					}
-					_totalStatus._stamina -= 5.0f;
+					_status._stamina -= 5.0f;
 					_attackCount = TIMEMANAGER->getWorldTime();
 				}
 			}
@@ -450,7 +456,7 @@ void Player::setAttack()
 			{
 				_dodge = false;
 				setSwordSpecialAttack();
-				_totalStatus._stamina -= 5.0f;
+				_status._stamina -= 5.0f;
 			}
 			else if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
 			{
@@ -460,7 +466,7 @@ void Player::setAttack()
 				_comboCooldown = TIMEMANAGER->getWorldTime();
 				_comboCount = 0;
 				_sword->fire(calculatePhysicalDamage(), 0, static_cast<int>(_direction));
-				_totalStatus._stamina -= 5.0f;
+				_status._stamina -= 5.0f;
 			}
 		}
 		else
@@ -509,7 +515,7 @@ void Player::setSwordAttack()
 		_stateFrameTick = 0.08f;
 		_comboCount++;
 		_sword->fire(calculatePhysicalDamage(), 2, static_cast<int>(_direction));
-		_totalStatus._stamina -= 5.0f;
+		_status._stamina -= 5.0f;
 	}break;
 	case 2: {
 		_comboCooldown = TIMEMANAGER->getWorldTime();
@@ -526,7 +532,7 @@ void Player::setSwordAttack()
 		_stateFrameTick = 0.08f;
 		_comboCount++;
 		_sword->fire(calculatePhysicalDamage(), 4, static_cast<int>(_direction));
-		_totalStatus._stamina -= 5.0f;
+		_status._stamina -= 5.0f;
 		if(_swordStack < 3) _swordStack++;
 	}break;
 	default: break;
@@ -693,10 +699,10 @@ void Player::move()
 
 void Player::healStamina()
 {
-	if (_totalStatus._stamina < _totalStatus._maxStamina && _state != PLAYER_STATE::DODGE && _state != PLAYER_STATE::ATTACK_BOW
+	if (_status._stamina < _totalStatus._maxStamina && _state != PLAYER_STATE::DODGE && _state != PLAYER_STATE::ATTACK_BOW
 		&& _state != PLAYER_STATE::ATTACK_NONE && _state != PLAYER_STATE::ATTACK_SWORD)
 	{
-		_totalStatus._stamina += 0.4f;
+		_status._stamina += 0.4f;
 	}
 }
 

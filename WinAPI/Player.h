@@ -46,7 +46,6 @@ private:
 	//Item, UI
 	CPlayer_Attribute _status;
 	CPlayer_Attribute _totalStatus;
-	vector<Item*> _ability;
 	Item* _equipItem;
 
 	int _beforeItemSize;
@@ -67,6 +66,7 @@ private:
 	
 	int _swordStack;
 	int _bowStack;
+	bool _alreadyAddBowStack;
 	bool _tripleshot;
 	float _tripleShotStartCount;
 
