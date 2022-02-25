@@ -5,6 +5,8 @@
 #include "DefaultMap.h"
 #include "BossMap.h"
 #include "ChestMap.h"
+#include "ShopMap.h"
+#include "RepairMap.h"
 
 class MapManager : public GameNode
 {

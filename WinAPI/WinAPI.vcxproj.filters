@@ -251,6 +251,12 @@
     <ClCompile Include="LobbyCollision.cpp">
       <Filter>OJH</Filter>
     </ClCompile>
+    <ClCompile Include="RepairMap.cpp">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClCompile>
+    <ClCompile Include="ShopMap.cpp">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -414,6 +420,12 @@
     <ClInclude Include="PlayerStatusUI.h" />
     <ClInclude Include="DamageEffectManager.h" />
     <ClInclude Include="Damage.h" />
+    <ClInclude Include="RepairMap.h">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClInclude>
+    <ClInclude Include="ShopMap.h">
+      <Filter>MainGame\Map\MapType</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">

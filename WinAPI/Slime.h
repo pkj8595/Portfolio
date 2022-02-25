@@ -32,12 +32,14 @@ private:
 	float	_attacWorldTime;
 	float	_randomTimeCount;
 	float	_frameSpeed;
+	float	_deadTimeCount;
 	int		_index;
 	int		_frameY;
 	int		_randomX, _randomY;
 	int		_range;				//플레이어 탐지 범위
 	int		_attackRange;		//공격 사거리
 	bool	_moveCheck;			//공격시 움직임 체크
+	bool _deadForOb;
 
 
 public:

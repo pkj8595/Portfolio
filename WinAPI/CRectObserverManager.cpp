@@ -70,7 +70,7 @@ void CRectObserverManager::getRectFromObserved()
 
 			//적 피격 (obData : 내 총알, Compare : 적)
 			if (((*obData.typeKey) == ObservedType::ROCKET_MISSILE || (*obData.typeKey) == ObservedType::PLAYER_SWORD) &&
-				(*obDataCompare.typeKey) == ObservedType::MINION)
+				(*obDataCompare.typeKey) == ObservedType::MINION && !(*obDataCompare.isActive))
 			{
 				RECT collisionRect;
 				if (IntersectRect(&collisionRect, obData.rc, obDataCompare.rc))

@@ -4,7 +4,7 @@
 HRESULT PlayScene::init(void)
 {
 	_mapManager = new MapManager;
-	if (_stageNum == 0)	_mapManager->init(10, _stageNum);
+	if (_stageNum == 0)	_mapManager->init(13, _stageNum);
 	else _mapManager->init(13, _stageNum);
 
 	_enemyManager = new EnemyManager;
@@ -37,6 +37,7 @@ void PlayScene::render(void)
 	_enemyManager->render();
 	_player->render();
 	RECTOBSERVERMANAGER->render();
+	_player->printHitBG();
 
 	//UI
 	if (_mapManager->isMinimapToggle()) _mapManager->printTempMinimap();

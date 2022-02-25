@@ -18,6 +18,8 @@ HRESULT Lobby::init(void)
 	_tsm = new TextSystemManager;
 	_tsm->init();
 
+	_tsm->EventLog(0);
+
 	collBox = false;
 	return S_OK;
 }
@@ -41,13 +43,7 @@ void Lobby::render(void)
 {
 	IMAGEMANAGER->render("Lobby", getMemDC());
 	
-	if (collision(_book_rc) && collBox) _tsm->EventLog(0);
-	if (collision(_box_rc) && collBox) _tsm->EventLog(0);
-	if (collision(_closet_rc) && collBox) _tsm->EventLog(1);
-	if (collision(_mirror_rc) && collBox) _tsm->EventLog(2);
-	if (collision(_window_rc) && collBox) _tsm->EventLog(3);
-	if (collision(_door_rc) && collBox) _tsm->EventLog(4);
-	
 	_player->render();
+	Collision();
 
 }

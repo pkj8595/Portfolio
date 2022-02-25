@@ -9,11 +9,11 @@ HRESULT Player::init(void)
 	_image = IMAGEMANAGER->addFrameImage("Player", "Resource/Images/Lucie/CompleteImg/Player/Player.bmp", 600, 4100, 6, 41, true, RGB(255, 0, 255));
 	_swordStackImage = IMAGEMANAGER->addImage("SwordStack", "Resource/Images/Lucie/CompleteImg/system/ruby.bmp", 13, 14, true, RGB(255, 0, 255));
 	_bowStackImage = IMAGEMANAGER->addImage("BowStack", "Resource/Images/Lucie/CompleteImg/system/emerald.bmp", 16, 13, true, RGB(255, 0, 255));
-
+	_hitBG = IMAGEMANAGER->addImage("HitEffect", "Resource/Images/Lucie/CompleteImg/effect/hitScreen.bmp", 1104, 960, true, RGB(255, 0, 255));
 
 	_state = PLAYER_STATE::STOP;
 	_level = 1;
-
+	_hitAlpha = 0;
 	_direction = PLAYER_DIRECTION::DOWN;
 	
 	_x = CENTER_X;
@@ -29,11 +29,10 @@ HRESULT Player::init(void)
 
 	_dodge = false;
 	_attack = false;
-	_isTextShow = false;
 	_swordSpecialAttack = false;
 
+	_isTextShow = false;
 	_dead = false;
-	
 	
 	_swordStack = 0;
 	_bowStack = 0;
@@ -111,17 +110,7 @@ void Player::update(void)
 
 	healStamina();
 
-	if (KEYMANAGER->isOnceKeyDown('1'))
-	{
-		_equipItem->_type = EITEM_TYPE::EQUIP_WEAPON_SWORD;
-	}
-	if (KEYMANAGER->isOnceKeyDown('2'))
-	{
-		_equipItem->_type = EITEM_TYPE::EQUIP_WEAPON_BOW;
-	}
-	if (!_attack || _equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_BOW )
 	if (!_attack || (*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
-
 	{	
 		if (!_isTextShow)
 		{
@@ -140,6 +129,7 @@ void Player::update(void)
 	if (_hit) _hitInvTime--;
 	if (_hitInvTime <= 0) _hit = false;
 	if (_state != PLAYER_STATE::DODGE) _alreadyAddBowStack = false;
+	if (_hitAlpha > 0) _hitAlpha -= 16;
 }
 
 void Player::render(void)
@@ -273,6 +263,7 @@ void Player::collideObject(STObservedData obData)
 	}
 	else if (!_hit)
 	{
+		_hitAlpha = 255;
 		_status._hp -= 1;
 		_hit = true;
 		_hitInvTime = 100;
@@ -715,6 +706,16 @@ void Player::healStamina()
 	}
 }
 
+void Player::checkLevelUp()
+{
+	if (_status._experience >= _totalStatus._maxExperience)
+	{
+		_status._experience = 0;
+		_totalStatus._maxExperience *= 1.1f;
+
+	}
+}
+
 void Player::setCollision()
 {
 	switch (_direction)
@@ -850,4 +851,9 @@ float Player::calculateMagicDamage()
 	
 	if (rndDamage <= criticalProperty) rndDamage *= 2;
 	return rndDamage;
+}
+
+void Player::printHitBG()
+{
+	if (_hitAlpha > 0) _hitBG->alphaRender(getMemDC(), _hitAlpha);
 }

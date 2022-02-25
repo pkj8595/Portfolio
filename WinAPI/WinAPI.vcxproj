@@ -179,7 +179,9 @@
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="CProjectPlayer.cpp" />
+    <ClCompile Include="RepairMap.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="ShopMap.cpp" />
     <ClCompile Include="ShopScene.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameNode.cpp" />
@@ -242,7 +244,9 @@
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="CProjectPlayer.h" />
+    <ClInclude Include="RepairMap.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="ShopMap.h" />
     <ClInclude Include="ShopScene.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameNode.h" />

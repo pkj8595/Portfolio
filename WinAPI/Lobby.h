@@ -9,6 +9,7 @@ private:
 	TextSystemManager* _tsm;
 	
 	Player* _player;
+
 	RECT rc;
 	RECT _p_rc;
 	RECT _book_rc;
@@ -17,6 +18,7 @@ private:
 	RECT _mirror_rc;
 	RECT _window_rc;
 	RECT _door_rc;
+	RECT _select_rc;
 
 	bool collBox;
 
@@ -25,7 +27,7 @@ public:
 	void release(void);
 	void update(void);
 	void render(void);
-	virtual bool collision(RECT col_rc);
+	virtual void Collision(void);
 	void LobbyCollision(void);
 
 	Lobby() {}

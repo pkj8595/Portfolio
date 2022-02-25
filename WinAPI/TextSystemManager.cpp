@@ -46,11 +46,11 @@ void TextSystemManager::update(void)
 
 void TextSystemManager::render(void)
 {
-	shopLog(_itemName, _price);
+	ShopLog(_itemName, _price);
 	EventLog(_eventArrText);
 }
 
-void TextSystemManager::shopLog(wstring itemName, wstring price)
+void TextSystemManager::ShopLog(wstring itemName, wstring price)
 {
 	_itemName = itemName;
 	_price = price;
@@ -61,13 +61,13 @@ void TextSystemManager::shopLog(wstring itemName, wstring price)
 
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
 	IMAGEMANAGER->alphaRender("Namebox", getMemDC(), _nameRc.left, _nameRc.top, _textAlpha);
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "具愁磊 具眉", 27, 15,
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "具愁磊 具眉 R", 27, 15,
 		L"付府", wcslen(L"付府"), RGB(0, 0, 255));
 
 	IMAGEMANAGER->render("SelOne", getMemDC(), _select_oneRc.left, _select_oneRc.top);
 	IMAGEMANAGER->render("SelOne", getMemDC(), _select_TwoRc.left, _select_TwoRc.top);
 
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.14, WINSIZE_Y*0.78, "具愁磊 具眉", 27, 15,
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.14, WINSIZE_Y*0.78, "具愁磊 具眉 R", 27, 15,
 		Shop_talk, ((_textBufferCnt / 4) > wcslen(Shop_talk) ? wcslen(Shop_talk) : (_textBufferCnt / 4)), RGB(255, 255, 255));
 
 }
@@ -77,11 +77,11 @@ void TextSystemManager::EventLog(int arrText)
 	_eventArrText = arrText;
 
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "具愁磊 具眉", 27, 15,
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "具愁磊 具眉 R", 27, 15,
 		_text[arrText].name, wcslen(_text[arrText].name), RGB(0, 0, 255));
 
 	
 
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.78, "具愁磊 具眉", 27, 15, _text[arrText].script, 
-		((_textBufferCnt / 4) > wcslen(_text[arrText].script) ? wcslen(_text[arrText].script) : (_textBufferCnt / 4)), RGB(255, 0, 255));
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.78, "具愁磊 具眉 R", 27, 15, _text[arrText].script, 
+		((_textBufferCnt / 4) > wcslen(_text[arrText].script) ? wcslen(_text[arrText].script) : (_textBufferCnt / 4)), RGB(255, 255, 255));
 }

@@ -30,6 +30,8 @@ HRESULT Slime::init(const char * imageName, POINT position)
 	_moveCheck = true;
 	_isActive = true;
 	_attackRange = 150;
+	_deadForOb = false;
+	_deadTimeCount = TIMEMANAGER->getWorldTime() + 9999.999f;
 
 	_slimeCirclebullet = new CircleMissile;
 	_slimeCirclebullet->init(10, 300);
@@ -47,6 +49,7 @@ HRESULT Slime::init(const char * imageName, POINT position)
 void Slime::release(void)
 {
 	_slimeCirclebullet->release();
+	SAFE_DELETE(_slimeCirclebullet);
 	Enemy::release();
 }
 
@@ -57,7 +60,15 @@ void Slime::update(void)
 	_slimebullet->update();
 
 	//플레이어 추적 범위에 들어왔을 경우
-	if (playerCheck())
+	if (_deadTimeCount < TIMEMANAGER->getWorldTime() - 0.5f) _isActive = false;
+	if (_state == SLIMESTATE::SL_DEAD)
+	{
+		if (_index >= _image->getMaxFrameX())
+		{
+			_deadTimeCount = TIMEMANAGER->getWorldTime();
+		}
+	}
+	else if (playerCheck())
 	{
 		if (_moveCheck)
 			pursuePlayer();
@@ -78,6 +89,7 @@ void Slime::update(void)
 	frame();
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
+
 }
 
 void Slime::render(void)
@@ -232,14 +244,6 @@ void Slime::animation()
 			}
 		}
 
-		if (_state == SLIMESTATE::SL_DEAD)
-		{
-			if (_index > _image->getMaxFrameX())
-			{
-				_isActive = false;
-			}
-		}
-
 		_image->setFrameX(_index);
 	}
 }
@@ -382,24 +386,26 @@ STObservedData Slime::getRectUpdate()
 	STObservedData temp;
 	temp.rc = &_rc;
 	temp.typeKey = &_type;
-	temp.isActive = &_isActive;
+	temp.isActive = &_deadForOb;
 	temp.damage = &_attack;
 	return temp;
 }
 
 void Slime::collideObject(STObservedData obData)
 {
-	if ((*obData.typeKey) == ObservedType::ROCKET_MISSILE && (*obData.isActive))
+	if (((*obData.typeKey) == ObservedType::ROCKET_MISSILE || (*obData.typeKey) == ObservedType::PLAYER_SWORD) 
+		&& (*obData.isActive))
 	{
 		if (_hp <= (*obData.damage))
 		{
 			//나중에 죽는 애니메이션 넣는걸로 바꿀 것. isActive를 false로 바꾸는 작업은 죽은 애니메이션 전부 실행 뒤 바꿔주는 것으로 변경	
 			_state = SLIMESTATE::SL_DEAD;
+			_deadForOb = true;
 		}
 		else
 		{
 			_hp -= (*obData.damage);
-			(*obData.isActive) = false;
 		}
+		(*obData.isActive) = false;
 	}
 }

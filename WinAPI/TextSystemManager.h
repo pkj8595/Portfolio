@@ -37,7 +37,7 @@ public:
 	void release(void);
 	void update(void);
 	void render(void);
-	void shopLog(wstring itemName, wstring price);
+	void ShopLog(wstring itemName, wstring price);
 	void EventLog(int arrText);
 
 	bool iscollText;
