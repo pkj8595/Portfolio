@@ -33,6 +33,7 @@ void PlayScene::update(void)
 	changeMapFadeOut();
 	changeMap();
 	checkPlayerEscapeWithoutClear();
+
 }
 
 void PlayScene::render(void)

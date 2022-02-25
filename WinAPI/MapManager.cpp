@@ -37,6 +37,24 @@ void MapManager::update(void)
 	if (_minimapAlpha >= 180) _isFadeInMinimap = false;
 	else if (_minimapAlpha <= 0) _isFadeInMinimap = true;
 
+	if (KEYMANAGER->isOnceKeyDown('E'))
+	{
+		_currentMap->setClear(true);
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('Q'))
+	{
+		for (Map* m : _vMap)
+		{
+			if (m->getType() == Map::MAPTYPE::BOSS)
+			{
+				_currentMap = m;
+				_currentMap->setShow(true);
+			}
+		}
+	}
+
+
 }
 
 void MapManager::render(void)

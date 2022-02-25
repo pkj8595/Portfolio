@@ -39,7 +39,7 @@ private:
 	int		_range;				//플레이어 탐지 범위
 	int		_attackRange;		//공격 사거리
 	bool	_moveCheck;			//공격시 움직임 체크
-	bool _deadForOb;
+	bool	_deadForOb;		//사망 여부 [Enemy의 isActive는 몹 삭제 전용, deadForOb는 체력 0 여부]
 
 
 public:
