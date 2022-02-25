@@ -1,9 +1,10 @@
 #pragma once
 #include "GameNode.h"
-#include "ItemClass.h"
+//#include "ItemClass.h"
 #include "PlayerWeapon.h"
 #include "PlayerStatusUI.h"
 #include "IRectObserved.h"
+#include "Inventory.h"
 
 class Player : public GameNode, public IRectObserved
 {
@@ -45,9 +46,7 @@ private:
 	//Item, UI
 	CPlayer_Attribute _status;
 	CPlayer_Attribute _totalStatus;
-	CPlayer_Attribute _itemTotalStatus;
-	vector<Item*> _ability;
-	Item* _equipItem;
+	Item** _equipItem;
 
 	int _beforeItemSize;
 	int _currentItemSize;
@@ -57,6 +56,9 @@ private:
 	BowWeapon* _bow;
 	PlayerStatusUI* _statusUI;
 
+	Inventory* _inventory;
+
+
 private:
 	//weaponClass
 	my::Image* _swordStackImage;
@@ -64,6 +66,7 @@ private:
 	
 	int _swordStack;
 	int _bowStack;
+	bool _alreadyAddBowStack;
 	bool _tripleshot;
 	float _tripleShotStartCount;
 
@@ -97,12 +100,15 @@ public:
 
 	void setCollision();
 
+	//TotalAttribute 합산
+	void computeTotalAttribute();
+
 
 	float calculatePhysicalDamage();
 	float calculateMagicDamage();
 
 public:
-	//접근자, 지시자
+	//접근자, 지정자
 
 	float getX() { return _x; }
 	void setX(float x) { _x = x; }

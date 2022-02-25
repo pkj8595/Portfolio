@@ -7,6 +7,7 @@ class tagWeapon : public IRectObserved
 public:
 	ObservedType type;
 	my::Image* img;
+	RECT imageRc;
 	RECT rc;
 	float x, y;
 	float fireX, fireY;

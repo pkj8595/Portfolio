@@ -46,6 +46,7 @@ HRESULT Slime::init(const char * imageName, POINT position)
 
 void Slime::release(void)
 {
+	_slimeCirclebullet->release();
 	Enemy::release();
 }
 
@@ -82,7 +83,8 @@ void Slime::update(void)
 void Slime::render(void)
 {
 	//Enemy::render();
-	draw();
+	if(_isActive)
+		draw();
 }
 
 void Slime::move(void)
@@ -224,16 +226,20 @@ void Slime::animation()
 				_state = SLIMESTATE::SL_IDLE;
 			}
 
-			if (_state == SLIMESTATE::SL_DEAD)
-			{
-				_isActive = false;
-			}
-
 			else
 			{
 				_index = 0;
 			}
 		}
+
+		if (_state == SLIMESTATE::SL_DEAD)
+		{
+			if (_index > _image->getMaxFrameX())
+			{
+				_isActive = false;
+			}
+		}
+
 		_image->setFrameX(_index);
 	}
 }

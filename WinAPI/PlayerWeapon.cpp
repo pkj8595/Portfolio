@@ -149,7 +149,7 @@ void SwordWeapon::fire(float damage, int combo, int direction)
 {
 	if (_effectMax <= _vWeapon.size()) return;
 	tagWeapon* effect = new tagWeapon;
-	effect->type = ObservedType::ROCKET_MISSILE;
+	effect->type = ObservedType::PLAYER_SWORD;
 	effect->img = new my::Image;
 	switch (combo)
 	{
@@ -166,19 +166,21 @@ void SwordWeapon::fire(float damage, int combo, int direction)
 	(combo == 0) ? effect->firstHit = true : effect->firstHit = false;
 	switch (direction)
 	{
-	case 0: effect->img->setFrameY(5); _fixX = -30; _fixY = 30; break;
-	case 1: effect->img->setFrameY(4); _fixX = 0; _fixY = 30; break;
-	case 2: effect->img->setFrameY(3); _fixX = 30; _fixY = 30; break;
-	case 3: effect->img->setFrameY(6); _fixX = -30; _fixY = 0; break;
-	case 4: effect->img->setFrameY(2); _fixX = 30; _fixY = 0; break;
-	case 5: effect->img->setFrameY(7); _fixX = -30; _fixY = -30; break;
-	case 6: effect->img->setFrameY(0); _fixX = 0; _fixY = -30; break;
-	case 7: effect->img->setFrameY(1); _fixX = 30; _fixY = -30; break;
+	case 0: effect->img->setFrameY(5); _fixX = -30; _fixY = 30; effect->angle = 225 * PI / 180; break;
+	case 1: effect->img->setFrameY(4); _fixX = 0; _fixY = 30; effect->angle = 270 * PI / 180; break;
+	case 2: effect->img->setFrameY(3); _fixX = 30; _fixY = 30; effect->angle = 315 * PI / 180; break;
+	case 3: effect->img->setFrameY(6); _fixX = -30; _fixY = 0; effect->angle = 180 * PI / 180; break;
+	case 4: effect->img->setFrameY(2); _fixX = 30; _fixY = 0; effect->angle = 0 * PI / 180; break;
+	case 5: effect->img->setFrameY(7); _fixX = -30; _fixY = -30; effect->angle = 135 * PI / 180; break;
+	case 6: effect->img->setFrameY(0); _fixX = 0; _fixY = -30; effect->angle = 90 * PI / 180; break;
+	case 7: effect->img->setFrameY(1); _fixX = 30; _fixY = -30; effect->angle = 45 * PI / 180; break;
+	default: effect->angle = 0; break;
 	}
 	effect->damage = damage;
 	effect->x = *_x + 50 + _fixX;
 	effect->y = *_y + 50 + _fixY;
-	effect->rc = RectMakeCenter(effect->x, effect->y, effect->img->getFrameWidth(), effect->img->getFrameHeight());
+	effect->imageRc = RectMakeCenter(effect->x, effect->y, effect->img->getFrameWidth(), effect->img->getFrameHeight());
+	effect->rc = RectMakeCenter(effect->imageRc.left + 96 , effect->imageRc.top + 96, effect->img->getFrameWidth() / 2, effect->img->getFrameHeight() / 2);
 	effect->init();
 	_vWeapon.push_back(effect);
 
@@ -188,7 +190,7 @@ void SwordWeapon::draw()
 {
 	for (_viWeapon = _vWeapon.begin(); _viWeapon != _vWeapon.end(); ++_viWeapon)
 	{
-		(*_viWeapon)->img->frameRender(getMemDC(), (*_viWeapon)->rc.left, (*_viWeapon)->rc.top);
+		(*_viWeapon)->img->frameRender(getMemDC(), (*_viWeapon)->imageRc.left, (*_viWeapon)->imageRc.top);
 	}
 }
 
@@ -198,7 +200,6 @@ void SwordWeapon::move()
 	{
 		(*_viWeapon)->x = *_x + 50 + _fixX;
 		(*_viWeapon)->y = *_y + 50 + _fixY;
-		(*_viWeapon)->rc = RectMakeCenter((*_viWeapon)->x, (*_viWeapon)->y, (*_viWeapon)->img->getFrameWidth(), (*_viWeapon)->img->getFrameHeight());
 		if ((*_viWeapon)->img->getFrameX() == (*_viWeapon)->img->getMaxFrameX())
 		{
 			(*_viWeapon)->release();

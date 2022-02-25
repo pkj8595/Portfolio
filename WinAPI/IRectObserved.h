@@ -6,7 +6,8 @@ enum class ObservedType
 	ROCKET = 0,
 	ROCKET_MISSILE,
 	MINION,
-	MINION_MISSILE
+	MINION_MISSILE,
+	PLAYER_SWORD
 };
 
 typedef struct tagObservedInfo
