@@ -4,7 +4,7 @@
 enum class EITEM_TYPE
 {
 	EMPTY=0,
-	MATERIAL,
+	POTION,
 	SCROLL,
 	ABILITY,
 	EQUIP_WEAPON_BOW,
@@ -12,6 +12,7 @@ enum class EITEM_TYPE
 	EQUIP_ARMOR,
 	EQUIP_HAT,
 	EQUIP_SHOES,
+	MATERIAL,
 };
 
 class CPlayer_Attribute

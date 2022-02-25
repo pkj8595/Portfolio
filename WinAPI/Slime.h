@@ -5,60 +5,42 @@
 
 #define MOVECOOLTIME 1
 #define ATTACKCOOLTIME 3
+#define MONSTER_MOVE_RANGE_LEFT CENTER_X -252
+#define MONSTER_MOVE_RANGE_RIGHT CENTER_X + 148
+#define MONSTER_MOVE_RANGE_UP CENTER_Y - 230
+#define MONSTER_MOVE_RANGE_DOWN CENTER_Y + 20
 
-enum class SLIMESTATE
-{
-	SM_IDLE,
-	SM_MOVE,
-	SM_ATTACK,
-	SM_END
-};
-
-enum class SLIMEDIRECTION
-{
-	SM_LEFT,
-	SM_RIGHT,
-	SM_UP,
-	SM_DOWN,
-	SM_END
-};
-
-enum class SLIMEATTACK
-{
-	SLIME_PARTTERN1,
-	SLIME_PARTTERN2,
-	SLIME_PARTTERN_END
-};
+enum class SLIMESTATE { SL_IDLE, SL_MOVE, SL_ATTACK, SL_DEAD, SL_END };
+enum class SLIMEDIRECTION { SL_LEFT, SL_RIGHT, SL_UP, SL_DOWN, SL_END };
+enum class SLIMEATTACK { SL_PARTTERN1, SL_PARTTERN2, SL_PARTTERN_END };
 
 
 class Slime:public Enemy
 {
 private:
-	ThreeDirectionMissile* _slimebullet;
-	CircleMissile* _slimeCirclebullet;
-	SLIMEDIRECTION _direction;
-	SLIMESTATE _state;
-	float _speed; //이동 속도
-	int _randomX, _randomY;
-	float _frameSpeed;
-	int _index;
-	int _frameY;
-	float _worldTime;
-	float _moveWorldTime;
-	float _attacWorldTime;
-	float _randomTimeCount;
-	float _angle;
-	float _range; //플레이어 탐지 범위
-	float _time;
-	float _playerDistance;
-	bool _moveCheck; //공격시 움직임 체크
-	bool _playerCheck;
-	float _attackRange; //공격 사거리
-	float _attackCheck;
+	ThreeDirectionMissile*	_slimebullet;
+	CircleMissile*			_slimeCirclebullet;
 
-	SLIMEATTACK _attackParttern;
+	SLIMEDIRECTION			_direction;
+	SLIMESTATE				_state;
+	SLIMEATTACK				_attackParttern;
 
-	RECT _attRect;
+	float	_speed;				//이동 속도
+	float	_angle;
+	float	_playerDistance;
+	float	_moveWorldTime;
+	float	_attacWorldTime;
+	float	_randomTimeCount;
+	float	_frameSpeed;
+	float	_deadTimeCount;
+	int		_index;
+	int		_frameY;
+	int		_randomX, _randomY;
+	int		_range;				//플레이어 탐지 범위
+	int		_attackRange;		//공격 사거리
+	bool	_moveCheck;			//공격시 움직임 체크
+	bool _deadForOb;
+
 
 public:
 	HRESULT init(const char* imageName, POINT position);
@@ -73,12 +55,8 @@ public:
 	void pursuePlayer(); //플레이어 추적
 	void randomMove(); //랜덤으로 이동 기능
 	bool playerCheck(); //플레이어 감지함수
-
 	void randomPosCreate();
-	//void bulletParttern(); //총알 패턴
-
 	void attackParttern(); //공격 패턴 정해줌
-
 	void circleDirectionBullet();
 	void threeDirectionBullet();
 

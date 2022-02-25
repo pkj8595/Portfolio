@@ -47,7 +47,7 @@ private:
 	//Item, UI
 	CPlayer_Attribute _status;
 	CPlayer_Attribute _totalStatus;
-	Item* _equipItem;
+	Item** _equipItem;
 
 	int _beforeItemSize;
 	int _currentItemSize;
@@ -133,7 +133,6 @@ public:
 	void printHitBG();
 
 	bool isDead() { return _dead; }
-	CPlayer_Attribute getTotalAttribute() { return _totalStatus; }
 };
 
 //°Ë
