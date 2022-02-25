@@ -10,8 +10,6 @@ HRESULT Player::init(void)
 	_swordStackImage = IMAGEMANAGER->addImage("SwordStack", "Resource/Images/Lucie/CompleteImg/system/ruby.bmp", 13, 14, true, RGB(255, 0, 255));
 	_bowStackImage = IMAGEMANAGER->addImage("BowStack", "Resource/Images/Lucie/CompleteImg/system/emerald.bmp", 16, 13, true, RGB(255, 0, 255));
 
-	_equipItem = new Item();
-	_equipItem->_type = EITEM_TYPE::EQUIP_WEAPON_SWORD;
 
 	_state = PLAYER_STATE::STOP;
 	_level = 1;
@@ -75,6 +73,9 @@ HRESULT Player::init(void)
 	_inventory->setPTotalattribute(&_totalStatus);
 	_inventory->setPlayerAttribute(&_status);
 
+
+	_equipItem = _inventory->getEquipWeapon();
+	
 	return S_OK;
 }
 
@@ -108,24 +109,16 @@ void Player::update(void)
 
 	healStamina();
 
-	if (KEYMANAGER->isOnceKeyDown('1'))
-	{
-		_equipItem->_type = EITEM_TYPE::EQUIP_WEAPON_SWORD;
-	}
-	if (KEYMANAGER->isOnceKeyDown('2'))
-	{
-		_equipItem->_type = EITEM_TYPE::EQUIP_WEAPON_BOW;
-	}
-	if (!_attack || _equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
+	if (!_attack || (*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
 	{	
 		move();
 	}
+	computeTotalAttribute(); // 합산
 	_sword->update();
 	_normal->update();
 	_bow->update();
 	_statusUI->update();
 	_inventory->update(); 
-	computeTotalAttribute(); // 합산
 
 	_rc = RectMakeCenter(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2 + 20, 8, 5);
 
@@ -139,14 +132,14 @@ void Player::render(void)
 	_image->frameRender(getMemDC(), _x, _y);
 
 	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
-	if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
+	if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
 	{
 		showSwordStack();
 		_sword->render();
 	}
-	else if (_equipItem->_type == EITEM_TYPE::EMPTY)_normal->render();
+	else if ((*_equipItem)->_type == EITEM_TYPE::EMPTY)_normal->render();
 
-	else if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
+	else if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
 	{
 		showBowStack();
 		_bow->render();
@@ -254,7 +247,7 @@ void Player::collideObject(STObservedData obData)
 	if (_state == PLAYER_STATE::DODGE)
 	{
 		if(_totalStatus._mana < _totalStatus._maxMana) _status._mana++;
-		if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
+		if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
 		{
 			if (_bowStack < 5 && !_tripleshot && !_alreadyAddBowStack)
 			{
@@ -315,7 +308,7 @@ void Player::changeState()
 	}
 	else if (_attack)
 	{
-		switch (_equipItem->_type)
+		switch ((*_equipItem)->_type)
 		{
 		case EITEM_TYPE::EMPTY:
 		{
@@ -417,14 +410,14 @@ void Player::setDodge()
 
 void Player::setAttack()
 {
-	if (_dodge && _equipItem->_type != EITEM_TYPE::EQUIP_WEAPON_SWORD) return;
+	if (_dodge && (*_equipItem)->_type != EITEM_TYPE::EQUIP_WEAPON_SWORD) return;
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
 		if (!_attack)
 		{
 			if (_status._stamina < 5.0f) return;
 			_attack = true;
-			if (_equipItem->_type == EITEM_TYPE::EMPTY)
+			if ((*_equipItem)->_type == EITEM_TYPE::EMPTY)
 			{
 				if (_attackCount < TIMEMANAGER->getWorldTime() - 0.3f)
 				{
@@ -434,7 +427,7 @@ void Player::setAttack()
 					_attackCount = TIMEMANAGER->getWorldTime();
 				}
 			}
-			else if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
+			else if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
 			{
 				if (_attackCount < TIMEMANAGER->getWorldTime() - 0.3f)
 				{
@@ -459,7 +452,7 @@ void Player::setAttack()
 				setSwordSpecialAttack();
 				_status._stamina -= 5.0f;
 			}
-			else if (_equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
+			else if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
 			{
 				_startFrame = static_cast<int>(_direction) * 8 + 180;
 				_endFrame = _startFrame + 1;
@@ -476,7 +469,7 @@ void Player::setAttack()
 			setSwordAttack();
 		}
 	}
-	if (_comboCooldown <= TIMEMANAGER->getWorldTime() - 0.35f && _equipItem->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
+	if (_comboCooldown <= TIMEMANAGER->getWorldTime() - 0.35f && (*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
 	{
 		_attack = false;
 	}
@@ -805,7 +798,16 @@ void Player::setCollision()
 void Player::computeTotalAttribute()
 {
 	_totalStatus = _status + _inventory->getItemTotalAttribute();
+	if (_totalStatus._maxHp < _status._hp)
+	{
+		_status._hp = _totalStatus._maxHp;
+	}
+	if (_totalStatus._maxMana < _status._mana)
+	{
+		_status._mana = _totalStatus._maxMana;
+	}
 }
+
 float Player::calculatePhysicalDamage()
 { 
 	float minDamage = _totalStatus._offencePower - ((_totalStatus._offencePower * 0.3f) * (1.0f - _totalStatus._damageBalance*0.01));

@@ -46,7 +46,7 @@ private:
 	//Item, UI
 	CPlayer_Attribute _status;
 	CPlayer_Attribute _totalStatus;
-	Item* _equipItem;
+	Item** _equipItem;
 
 	int _beforeItemSize;
 	int _currentItemSize;

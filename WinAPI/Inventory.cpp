@@ -40,7 +40,7 @@ HRESULT Inventory::init(void)
 	_rcCloseBtn = RectMake(_inventoryCloseBtn.pt.x, _inventoryCloseBtn.pt.y, _inventoryCloseBtn.img->getFrameWidth(), _inventoryCloseBtn.img->getFrameHeight());
 
 	_emptyItem = new Item;
-	_equipWeapon=	nullptr;
+	_equipWeapon= _emptyItem;
 	_equipArmor =	nullptr;
 	_equipShoes =	nullptr;
 	_equipHat	=	nullptr;
@@ -96,10 +96,6 @@ void Inventory::render(void)
 	}
 
 	showAbilityItem();
-	
-
-
-	
 
 }
 
@@ -127,15 +123,10 @@ void Inventory::renderInventoryBase()
 
 }
 
-Item* Inventory::getEquipWeapon()
+Item** Inventory::getEquipWeapon()
 {
-	if (_equipWeapon)
-	{
-		return _equipWeapon;
-	}
-	return _emptyItem;
+	return &_equipWeapon;
 }
-
 
 
 //아이템이 벡터에 들어올때마다 실행시켜서 총합산 데미지를 최신화한다.
@@ -230,7 +221,8 @@ void Inventory::checkMouse(void)
 				switch ((*_viItem).first->_type)
 				{
 				case EITEM_TYPE::POTION:
-					*_pAttribute = *_pAttribute +(*_viItem).first->_attribute;
+					*_pAttribute = *_pAttribute + (*_viItem).first->_attribute;
+					
 					_vItem.erase(_viItem);
 					computeRect();
 					break;
