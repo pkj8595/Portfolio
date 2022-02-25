@@ -131,7 +131,6 @@ public:
 	void printUI() { _statusUI->render(); }
 
 	bool isDead() { return _dead; }
-	CPlayer_Attribute getTotalAttribute() { return _totalStatus; }
 };
 
 //°Ë

@@ -71,7 +71,8 @@ HRESULT Player::init(void)
 
 	_inventory = new Inventory;
 	_inventory->init();
-	_inventory->registerAddressPlayer(this);
+	_inventory->setPTotalattribute(&_totalStatus);
+	_inventory->setPlayerAttribute(&_status);
 
 	return S_OK;
 }

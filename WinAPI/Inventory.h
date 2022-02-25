@@ -10,7 +10,6 @@
 #define	INVENTORY_IMG_OFFSETX		40
 #define	INVENTORY_IMG_OFFSETY		40
 
-class Player;
 class Inventory : public GameNode
 {
 	typedef struct STInvenPos
@@ -52,13 +51,14 @@ class Inventory : public GameNode
 	Item* _equipHat;		//장착중인 신발
 	Item* _emptyItem;		//빈 아이템
 
-	CPlayer_Attribute _totalAttribute;	//총 아이템 능력치
+	CPlayer_Attribute _itemTotalAttribute;	//총 아이템 능력치
+	CPlayer_Attribute* _ptotalAttribute;	//아이템 + 플레이어
+	CPlayer_Attribute* _pAttribute;			//플레이어 능력치
 
 	bool _isShowInven;
 	int _abilutyItemCount;
 	int _invenItemCount;
 
-	Player* _player;
 	POINT _statusTextPos;
 
 public:
@@ -70,7 +70,15 @@ public:
 	void renderInventoryBase(void);
 	void showInventoryItem(void);
 	void showAbilityItem(void);
-	void registerAddressPlayer(Player* player) { _player = player; }
+
+	void setPTotalattribute(CPlayer_Attribute* att)
+	{
+		_ptotalAttribute = att;
+	}
+	void setPlayerAttribute(CPlayer_Attribute* att)
+	{
+		_pAttribute = att;
+	}
 
 	//==========================
 	// ### Player Equipment ###
@@ -82,7 +90,8 @@ public:
 	//장착중인 무기 반환
 	Item* getEquipWeapon();
 
-	CPlayer_Attribute getItemTotalAttribute(){return _totalAttribute;}
+	CPlayer_Attribute getItemTotalAttribute(){return _itemTotalAttribute;}
+
 	void setEquipWeapon(Item* witem)
 	{
 		if (_equipWeapon == nullptr) _equipWeapon = witem;

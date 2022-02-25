@@ -1,6 +1,5 @@
 #include "Stdafx.h"
 #include "Inventory.h"
-#include "Player.h"
 
 HRESULT Inventory::init(void)
 {
@@ -49,6 +48,9 @@ HRESULT Inventory::init(void)
 	_isShowInven = false;
 	_abilutyItemCount = 0;
 	_invenItemCount = 0;
+
+	_ptotalAttribute = nullptr;
+	_pAttribute = nullptr;
 
 	return S_OK;
 }
@@ -153,7 +155,7 @@ void Inventory::computeItemTotalAttribute()
 	if (_equipShoes) { temp = temp + _equipShoes->_attribute; }
 	if (_equipHat) { temp = temp + _equipHat->_attribute; }
 
-	_totalAttribute = temp;
+	_itemTotalAttribute = temp;
 }
 
 void Inventory::pushItem(Item* item)
@@ -227,7 +229,16 @@ void Inventory::checkMouse(void)
 				cout << (*_viItem).first->_name << endl;
 				switch ((*_viItem).first->_type)
 				{
+				case EITEM_TYPE::POTION:
+					*_pAttribute = *_pAttribute +(*_viItem).first->_attribute;
+					_vItem.erase(_viItem);
+					computeRect();
+					break;
 				case EITEM_TYPE::MATERIAL:
+					//todo
+					//_pAttribute->_hp;
+					_vItem.erase(_viItem);
+					computeRect();
 					break;
 				case EITEM_TYPE::SCROLL:
 					break;
@@ -305,15 +316,16 @@ void Inventory::computeRect(void)
 
 void Inventory::showAttributeText(void)
 {
+	if (!_ptotalAttribute) return;
 	string script[8];
-	script[0] = "최대체력 : " + to_string(_player->getTotalAttribute()._maxHp);
-	script[1] = "공격력 : " + to_string(_player->getTotalAttribute()._offencePower);
-	script[2] = "마법력 : " + to_string(_player->getTotalAttribute()._magicPower);
-	script[3] = "이동속도 : " + to_string(_player->getTotalAttribute()._speed);
-	script[4] = "최대마나 : " + to_string(_player->getTotalAttribute()._maxMana);
-	script[5] = "공격속도 : " + to_string(_player->getTotalAttribute()._attackSpeed);
-	script[6] = "데미지 밸런스 : " + to_string(_player->getTotalAttribute()._damageBalance);
-	script[7] = "치명타 : " + to_string(_player->getTotalAttribute()._critical);
+	script[0] = "최대체력 : " + to_string(_ptotalAttribute->_maxHp);
+	script[1] = "공격력 : " + to_string((int)_ptotalAttribute->_offencePower);
+	script[2] = "마법력 : " + to_string((int)_ptotalAttribute->_magicPower);
+	script[3] = "이동속도 : " + to_string((int)_ptotalAttribute->_speed);
+	script[4] = "최대마나 : " + to_string(_ptotalAttribute->_maxMana);
+	script[5] = "공격속도 : " + to_string((int)_ptotalAttribute->_attackSpeed);
+	script[6] = "데미지 밸런스 : " + to_string((int)_ptotalAttribute->_damageBalance);
+	script[7] = "치명타 : " + to_string((int)_ptotalAttribute->_critical);
 
 	for (int i = 0; i < 8; i++)
 	{
