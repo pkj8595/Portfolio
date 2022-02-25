@@ -33,17 +33,14 @@ void MapManager::update(void)
 	{
 		_tempMinimapToggle = !_tempMinimapToggle;
 	}
-	if (KEYMANAGER->isOnceKeyDown('Q'))
-	{
-		_currentMap->setClear(true);
-	}
-
 	(_isFadeInMinimap) ? _minimapAlpha += 10 : _minimapAlpha -= 10;
 	if (_minimapAlpha >= 180) _isFadeInMinimap = false;
 	else if (_minimapAlpha <= 0) _isFadeInMinimap = true;
 
-
-
+	if (KEYMANAGER->isOnceKeyDown('Q'))
+	{
+		_currentMap->setClear(true);
+	}
 }
 
 void MapManager::render(void)
@@ -176,6 +173,7 @@ void MapManager::createRndMap(POINT position)
 
 void MapManager::createSpecialMap(POINT startPosition) 
 {
+	//find One or Two Entrance Map
 	vector<tempMapData> tempData;
 	for (int i = 0; i < _vTempMap.size(); i++)
 	{
@@ -201,6 +199,7 @@ void MapManager::createSpecialMap(POINT startPosition)
 		}
 	}
 
+	//set selecMap to Boss, TreasureMap
 	int tempIndexA = RND->getInt(tempData.size());
 	int tempIndexB = RND->getInt(tempData.size());
 	while (tempIndexA == tempIndexB)
@@ -223,6 +222,34 @@ void MapManager::createSpecialMap(POINT startPosition)
 		}
 	}
 
+	//create Shop, RepairMap
+	int tempIndexC = RND->getInt(_vTempMap.size());
+	while (_vTempMap[tempIndexC].type != Map::MAPTYPE::DEFAULT)
+	{
+		tempIndexC = RND->getInt(_vTempMap.size());
+	}
+	tempMapData tempMapC = _vTempMap[tempIndexC];
+	for (int i = 0; i < _vTempMap.size(); i++)
+	{
+		if (tempMapC.location.x == _vTempMap[i].location.x && tempMapC.location.y == _vTempMap[i].location.y)
+		{
+			_vTempMap[i].type = Map::MAPTYPE::SHOP;
+		}
+	}
+
+	int tempIndexD = RND->getInt(_vTempMap.size());
+	while (_vTempMap[tempIndexD].type != Map::MAPTYPE::DEFAULT)
+	{
+		tempIndexD = RND->getInt(_vTempMap.size());
+	}
+	tempMapData tempMapD = _vTempMap[tempIndexD];
+	for (int i = 0; i < _vTempMap.size(); i++)
+	{
+		if (tempMapD.location.x == _vTempMap[i].location.x && tempMapD.location.y == _vTempMap[i].location.y)
+		{
+			_vTempMap[i].type = Map::MAPTYPE::REPAIR;
+		}
+	}
 }
 
 bool MapManager::isOneEntrance(tempMapData mapdata)
@@ -287,6 +314,20 @@ void MapManager::setMapData()
 		{
 			Map* map;
 			map = new ChestMap;
+			map->init(iter.location);
+			_vMap.push_back(map);
+		} break;
+		case Map::MAPTYPE::SHOP:
+		{
+			Map* map;
+			map = new ShopMap;
+			map->init(iter.location);
+			_vMap.push_back(map);
+		} break;
+		case Map::MAPTYPE::REPAIR:
+		{
+			Map* map;
+			map = new RepairMap;
 			map->init(iter.location);
 			_vMap.push_back(map);
 		} break;
