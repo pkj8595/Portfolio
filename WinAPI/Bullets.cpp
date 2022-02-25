@@ -356,9 +356,13 @@ STObservedData tagCBullet::getRectUpdate()
 	return temp;
 }
 
-void tagCBullet::collideObject()
+void tagCBullet::collideObject(STObservedData obData)
 {
-	fire = false;
+	if ((*obData.typeKey) == ObservedType::ROCKET) fire = false;
+	else if ((*obData.typeKey) == ObservedType::ROCKET_MISSILE)
+	{
+		//반격, 공격반사 처리
+	}
 }
 
 
@@ -395,7 +399,7 @@ void ThreeDirectionMissile::fire(float x, float y, float angle)
 		tagCBullet* bullet = new tagCBullet;
 		bullet->img = new my::Image;
 		//
-		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 48, 48, true, RGB(255, 0, 255));
+		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 26, 26, true, RGB(255, 0, 255));
 		bullet->type = ObservedType::MINION_MISSILE;
 		bullet->speed = 5.0f;
 		bullet->x = bullet->fireX = x;
@@ -452,7 +456,7 @@ void CircleMissile::fire(float x, float y)
 		tagCBullet* bullet = new tagCBullet;
 		bullet->img = new my::Image;
 		//
-		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 48, 48, true, RGB(255, 0, 255));
+		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 26, 26, true, RGB(255, 0, 255));
 		bullet->type = ObservedType::MINION_MISSILE;
 		bullet->speed = 5.0f;
 		bullet->x = bullet->fireX = x;
@@ -509,7 +513,7 @@ void TwoDirectionMissile::fire(float x, float y, float angle)
 		tagCBullet* bullet = new tagCBullet;
 		bullet->img = new my::Image;
 		//
-		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 48, 48, true, RGB(255, 0, 255));
+		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 26, 26, true, RGB(255, 0, 255));
 		bullet->type = ObservedType::MINION_MISSILE;
 		bullet->speed = 5.0f;
 		bullet->x = bullet->fireX = x;

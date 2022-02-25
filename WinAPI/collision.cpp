@@ -1,15 +1,27 @@
 #include "Stdafx.h"
 #include "Lobby.h"
 
-void Lobby::collision(void)
+bool Lobby::collision(RECT col_rc)
 {
-	RECT rc;
-	if (IntersectRect(&rc, &_p_rc, &_Boxrc) && KEYMANAGER->isOnceKeyDown('E'))
+	if (IntersectRect(&rc, &_player->getRect(), &col_rc))
 	{
-		collBox = true;
-		_tsm->test = true;
-	}
-	else if (!IntersectRect(&rc, &_p_rc, &_Boxrc)) collBox = false;
+		if (KEYMANAGER->isOnceKeyDown('E'))
+		{
+			collBox = true;
+			_tsm->iscollText = true;
+			_player->_isTextShow = true;
 
-	if (!collBox) _tsm->test = false;
+			return true;
+		}
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('Z'))
+	{
+		collBox = false;
+		_tsm->iscollText = false;
+		_player->_isTextShow = false;
+	}
+
+	return true;
 }
+

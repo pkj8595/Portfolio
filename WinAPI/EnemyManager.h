@@ -34,6 +34,9 @@ public:
 	Bullet* getBullet(void) { return _bullet; }
 	void setRoketMemoryAddress(Player* rk) { _pPlayer = rk; }
 	vEnemy getEnemy() { return _vMinion; }
+	void clearMinion() { _vMinion.clear(); }
+
+	bool checkClear();
 
 	EnemyManager();
 	~EnemyManager();

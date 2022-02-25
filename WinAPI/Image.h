@@ -144,6 +144,8 @@ public:
 
 	void aniRender(HDC hdc, int destX, int destY, Animation* ani);
 
+	void resizeRender(HDC hdc, int destX, int destY, int width, int height);
+
 	//================
 	//#인라인 함수#
 	//================

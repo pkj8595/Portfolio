@@ -12,7 +12,7 @@ HRESULT TextSystemManager::init(void)
 	_count = 0;
 	_eventArrText = 0;
 
-	test = false;
+	iscollText = false;
 
 	_text[0] = { L"", L"±âº» ¹«±â Áß ÇÏ³ª¸¦ °¡Á®°¥ ¼ö ÀÖ´Ù. ¾î¶² Á¾·ù¸¦ °¡Á®°¥±î?" };
 	_text[1] = { L"", L"Å©·¹µ÷À» 20 ¼Ò¸ðÇØ ·£´ýÇÑ ¾îºô¸®Æ¼¸¦ ÇÏ³ª »ÌÀ» ¼ö ÀÖ´Ù. »Ì¾Æº¼±î?" };
@@ -39,8 +39,8 @@ void TextSystemManager::release(void)
 void TextSystemManager::update(void)
 {
 	
-	if (test) _textBufferCnt += 1; _textAlpha += 4.0f;
-	if (!test) _textBufferCnt = 0;
+	if (iscollText) _textBufferCnt += 1; _textAlpha += 4.0f;
+	if (!iscollText) _textBufferCnt = 0;
 
 	if (_textAlpha >= 230) _textAlpha = 230;
 }
@@ -62,13 +62,13 @@ void TextSystemManager::shopLog(wstring itemName, wstring price)
 
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
 	IMAGEMANAGER->alphaRender("Namebox", getMemDC(), _nameRc.left, _nameRc.top, _textAlpha);
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "¸¼Àº °íµñ", 27, 15,
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "¾ß³îÀÚÃ¤", 27, 15,
 		L"¸¶¸®", wcslen(L"¸¶¸®"), RGB(0, 0, 255));
 
 	IMAGEMANAGER->render("SelOne", getMemDC(), _select_oneRc.left, _select_oneRc.top);
 	IMAGEMANAGER->render("SelOne", getMemDC(), _select_TwoRc.left, _select_TwoRc.top);
 
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.14, WINSIZE_Y*0.78, "¸¼Àº °íµñ", 27, 15,
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.14, WINSIZE_Y*0.78, "¾ß³îÀÚÃ¤", 27, 15,
 		Shop_talk, ((_textBufferCnt / 4) > wcslen(Shop_talk) ? wcslen(Shop_talk) : (_textBufferCnt / 4)), RGB(255, 255, 255));
 
 }
@@ -78,11 +78,11 @@ void TextSystemManager::EventLog(int arrText)
 	_eventArrText = arrText;
 
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "¸¼Àº °íµñ", 27, 15,
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "¾ß³îÀÚÃ¤", 27, 15,
 		_text[arrText].name, wcslen(_text[arrText].name), RGB(0, 0, 255));
 
 	
 
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.78, "¸¼Àº °íµñ", 27, 15, _text[arrText].script, 
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.78, "¾ß³îÀÚÃ¤", 27, 15, _text[arrText].script, 
 		((_textBufferCnt / 4) > wcslen(_text[arrText].script) ? wcslen(_text[arrText].script) : (_textBufferCnt / 4)), RGB(255, 0, 255));
 }

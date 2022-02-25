@@ -1,20 +1,19 @@
 #pragma once
 #include "GameNode.h"
 
-
-class mButton : public GameNode
+class mCallback
 {
-public:
-	class mCallback
-	{
-		virtual void callbackMethod() = 0;
-	};
+	virtual void callbackMethod(void) = 0;
+};
+
+class mButton : public GameNode , public mCallback
+{
 private:
 	my::Image* _btnImg;
 	RECT _btnRc;
 	int _x, _y;
 	int _frameX;
-	mCallback* _mCallback;
+	//mCallback* _mCallback;
 
 public:
 	virtual HRESULT init(void);
@@ -23,11 +22,12 @@ public:
 	virtual void update(void);
 	virtual void render(void);
 	
-	bool isOnClick(void);
-	void setCallback(mCallback* callback){_mCallback = callback;}
+	bool isOnClick(POINT mousePt);
+	//void setCallback(mCallback* callback){_mCallback = callback;}
 	void setFrameX(int frameX) { _frameX = frameX; }
+
+	void callbackMethod(void) {}
 
 	mButton();
 	virtual~mButton();
 };
-

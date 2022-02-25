@@ -19,6 +19,7 @@ protected:
 	int _currentFrameX;
 	int _currentFrameY;
 
+	float _attack;
 	float _x, _y;
 	float _rndTimeCount;
 	float _worldTimeCount;
@@ -31,6 +32,8 @@ protected:
 
 	POINT _playerPos;
 	Player* _player;
+
+	float _hp;
 
 public:
 	virtual HRESULT init(void);
@@ -49,11 +52,11 @@ public:
 	bool getIsActive(void) { return _isActive; }
 
 	virtual STObservedData getRectUpdate();
-	virtual void collideObject();
+	virtual void collideObject(STObservedData obData);
 
 public:
 	void setPlayerPos(POINT playerPos) { _playerPos = playerPos; }
-	void setPlayer(Player* player) { _player = player; }
+	void setPlayer(Player& player) { _player = &player; }
 
 	Enemy(void);
 	virtual ~Enemy(void) {}

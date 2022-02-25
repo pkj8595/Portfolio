@@ -1,14 +1,21 @@
 #pragma once
 #include "GameNode.h"
-#include "ItemClass.h"
+//#include "ItemClass.h"
 #include "PlayerWeapon.h"
+#include "PlayerStatusUI.h"
+#include "IRectObserved.h"
+#include "Inventory.h"
 
-class Player : public GameNode {
+class Player : public GameNode, public IRectObserved
+{
 private:
+	ObservedType _type;
 	//State, Frame
 	enum class PLAYER_STATE { STOP, WALK, DODGE, ATTACK_NONE, ATTACK_SWORD, ATTACK_BOW, DEAD};
 	enum class PLAYER_DIRECTION {LEFTDOWN, DOWN, RIGHTDOWN, LEFT, RIGHT, LEFTUP, UP, RIGHTUP };
 	my::Image* _image;
+
+	int _level;
 
 	PLAYER_STATE _state;
 	PLAYER_DIRECTION _direction;
@@ -20,7 +27,6 @@ private:
 	float _specialAttackCooldown;
 	int _comboCount;
 
-	
 	bool _hit;
 	int _hitInvTime;		//피격 후 무적시간
 
@@ -37,22 +43,46 @@ private:
 	bool _dead;
 
 private:
-	//Item
+	//Item, UI
 	CPlayer_Attribute _status;
+	CPlayer_Attribute _totalStatus;
 	vector<Item*> _ability;
 	Item* _equipItem;
 
+	int _beforeItemSize;
+	int _currentItemSize;
+
 	SwordWeapon* _sword;
 	NormalWeapon* _normal;
+	BowWeapon* _bow;
+	PlayerStatusUI* _statusUI;
+
+	Inventory* _inventory;
+
 
 private:
 	//weaponClass
+	my::Image* _swordStackImage;
+	my::Image* _bowStackImage;
+	
+	int _swordStack;
+	int _bowStack;
+	bool _tripleshot;
+	float _tripleShotStartCount;
+
+	float _attackCount;
+
+	void showSwordStack();
+	void showBowStack();
+	void checkBowStack();
 
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
+	virtual STObservedData getRectUpdate();
+	virtual void collideObject(STObservedData obData);
 
 	void setFrame();
 	void changeState();
@@ -66,11 +96,24 @@ public:
 	void setSwordSpecialAttack();
 	void move();
 
+	void healStamina();
+
 	void setCollision();
 
+	//TotalAttribute 합산
+	void computeTotalAttribute();
+
+
+	float calculatePhysicalDamage();
+	float calculateMagicDamage();
 
 public:
-	//get, set
+	//접근자, 지정자
+
+	float getX() { return _x; }
+	void setX(float x) { _x = x; }
+	float getY() { return _y; }
+	void setY(float y) { _y = y; }
 
 	RECT getRect() { return _rc; }
 
@@ -85,6 +128,10 @@ public:
 		_y = y;
 	}
 	PLAYER_STATE getState() { return _state;	 }
+	void printUI() { _statusUI->render(); }
+	bool _isTextShow;
+	bool isDead() { return _dead; }
+	CPlayer_Attribute getTotalAttribute() { return _totalStatus; }
 };
 
 //검

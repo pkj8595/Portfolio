@@ -3,7 +3,8 @@
 #include "Animation.h"
 #include "Bullets.h"
 
-#define COLLRECTSIZEY 30
+#define MOVECOOLTIME 1
+#define ATTACKCOOLTIME 3
 
 enum class SLIMESTATE
 {
@@ -22,36 +23,42 @@ enum class SLIMEDIRECTION
 	SM_END
 };
 
+enum class SLIMEATTACK
+{
+	SLIME_PARTTERN1,
+	SLIME_PARTTERN2,
+	SLIME_PARTTERN_END
+};
+
 
 class Slime:public Enemy
 {
 private:
-	Animation* _ani;
-	SLIMEDIRECTION _slimeDir;
-	SLIMESTATE _slimestate;
-	int randomX , randomY;
-	float _x, _y;
-	float _speed;
+	ThreeDirectionMissile* _slimebullet;
+	CircleMissile* _slimeCirclebullet;
+	SLIMEDIRECTION _direction;
+	SLIMESTATE _state;
+	float _speed; //이동 속도
+	int _randomX, _randomY;
+	float _frameSpeed;
+	int _index;
+	int _frameY;
+	float _worldTime;
+	float _moveWorldTime;
+	float _attacWorldTime;
+	float _randomTimeCount;
 	float _angle;
 	float _range; //플레이어 탐지 범위
 	float _time;
-	float _worldTime;
-
-	float _moveRange;
-	int _attTime; 
-
-
-	ThreeDirectionMissile* _slimebullet;
-	CircleMissile* _slimeCirclebullet;
-
-	RECT _rc_playerCollCheck;
-
-
 	float _playerDistance;
+	bool _moveCheck; //공격시 움직임 체크
+	bool _playerCheck;
+	float _attackRange; //공격 사거리
+	float _attackCheck;
 
-	bool _moveCheck;
-	bool _attCheck;
-	int attRange;
+	SLIMEATTACK _attackParttern;
+
+	RECT _attRect;
 
 public:
 	HRESULT init(const char* imageName, POINT position);
@@ -61,37 +68,25 @@ public:
 
 	void move(void);
 	void draw(void);
+	void frame();
 	void animation();
-	//void bulletParttern(); //총알 패턴
-
-	void attack();
-
-	void randomMove();
+	void pursuePlayer(); //플레이어 추적
+	void randomMove(); //랜덤으로 이동 기능
 	bool playerCheck(); //플레이어 감지함수
 
+	void randomPosCreate();
+	//void bulletParttern(); //총알 패턴
+
+	void attackParttern(); //공격 패턴 정해줌
+
+	void circleDirectionBullet();
+	void threeDirectionBullet();
+
+
 public:
+	virtual STObservedData getRectUpdate();
+	virtual void collideObject(STObservedData obData);
+
 	Slime();
 	virtual ~Slime();
 };
-
-/*
-1. 추적 대상이 공격 사거리 안에 있으면 공격 함수 실행
-2. 추적 대상 방향으로 바라보기
-
-attack()
-{
-
-자신 사망X && 추적 대상과 거리가 공격 사거리 안에 있으면
-if()
-{
-움직임 멈추고
-
-추적 대상 바라본다.
-
-최근 공격 시점에서 일정 시간 지나면 공격 가능
-
-}
-
-}
-
-*/

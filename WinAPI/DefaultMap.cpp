@@ -3,6 +3,7 @@
 
 HRESULT DefaultMap::init(POINT location)
 {
+	_type = Map::MAPTYPE::DEFAULT;
 	_leftWallImageFixY = 0;
 	_rightWallImageFixY = 0;
 	_show = false;
@@ -13,7 +14,7 @@ HRESULT DefaultMap::init(POINT location)
 	_downWall = IMAGEMANAGER->addImage("DownWall1", "Resource/Images/Lucie/CompleteImg/ground/wall/downWall1.bmp", 240, 240, true, RGB(255, 0, 255));
 	
 	createRndMapImage();
-	
+		
 	_pixel = false;
 	return S_OK;
 }
@@ -55,6 +56,7 @@ void DefaultMap::createRndMapImage()
 		_upWall = IMAGEMANAGER->addImage("UpWall1", "Resource/Images/Lucie/CompleteImg/ground/wall/upperWall1.bmp", 240, 240, true, RGB(255,0,255));
 		_leftWall = IMAGEMANAGER->addImage("LeftWall1", "Resource/Images/Lucie/CompleteImg/ground/wall/LeftWall1.bmp", 281, 480, true, RGB(255, 0, 255));
 		_rightWall = IMAGEMANAGER->addImage("RightWall2", "Resource/Images/Lucie/CompleteImg/ground/wall/RightWall2.bmp", 281, 528, true, RGB(255, 0, 255));
+		_mapRC = { 200, 50, 700, 600 };
 	}break;
 	case 1:
 	{
@@ -67,6 +69,7 @@ void DefaultMap::createRndMapImage()
 		_rightWall = IMAGEMANAGER->addImage("RightWall2", "Resource/Images/Lucie/CompleteImg/ground/wall/RightWall2.bmp", 281, 528, true, RGB(255, 0, 255));
 		_leftWallImageFixY = -2;
 		_leftWallImageFixY = 0;
+		_mapRC = { 200, 50, 700, 600 };
 	}break;
 	case 2:
 	{
@@ -77,7 +80,7 @@ void DefaultMap::createRndMapImage()
 		_upWall = IMAGEMANAGER->addImage("UpWall3", "Resource/Images/Lucie/CompleteImg/ground/wall/upperWall3.bmp", 240, 240, true, RGB(255, 0, 255));
 		_leftWall = IMAGEMANAGER->addImage("LeftWall1", "Resource/Images/Lucie/CompleteImg/ground/wall/LeftWall1.bmp", 281, 480, true, RGB(255, 0, 255));
 		_rightWall = IMAGEMANAGER->addImage("RightWall2", "Resource/Images/Lucie/CompleteImg/ground/wall/RightWall2.bmp", 281, 528, true, RGB(255, 0, 255));
-
+		_mapRC = { 200, 50, 700, 600 };
 	}break;
 	case 3:
 	{
@@ -91,6 +94,7 @@ void DefaultMap::createRndMapImage()
 		_leftWallImageFixY = 100;
 		_rightWallImageFixX = 50;
 		_rightWallImageFixY = 100;
+		_mapRC = { 133, 20, 770, 505 };
 	}break;
 	case 4:
 	{
@@ -102,6 +106,7 @@ void DefaultMap::createRndMapImage()
 		_leftWall = IMAGEMANAGER->addImage("LeftWall1", "Resource/Images/Lucie/CompleteImg/ground/wall/LeftWall1.bmp", 281, 480, true, RGB(255, 0, 255));
 		_rightWall = IMAGEMANAGER->addImage("RightWall1", "Resource/Images/Lucie/CompleteImg/ground/wall/RightWall1.bmp", 281, 480, true, RGB(255, 0, 255));
 		_leftWallImageFixY = -5;
+		_mapRC = { 200, 50, 700, 600 };
 	}break;
 	}
 }

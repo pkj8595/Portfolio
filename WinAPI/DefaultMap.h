@@ -18,5 +18,6 @@ public:
 	void render(void);
 
 	void createRndMapImage();
+	
 };
 

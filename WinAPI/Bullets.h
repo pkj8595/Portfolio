@@ -23,7 +23,7 @@ public:
 	void init(void);
 	void release(void);
 	virtual STObservedData getRectUpdate();
-	virtual void collideObject();
+	virtual void collideObject(STObservedData obData);
 };
 
 //추상 미사일

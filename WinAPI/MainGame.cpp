@@ -22,7 +22,6 @@ HRESULT MainGame::init(void)
 
 	SCENEMANAGER->changeScene("Lobby");
 
-
 	return S_OK;
 }
 

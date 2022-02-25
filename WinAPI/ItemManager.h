@@ -2,6 +2,8 @@
 #include "ItemClass.h"
 #include "GameNode.h"
 
+#define IMAGE_SIZE		32
+
 class ItemManager : public GameNode
 {
 private:
@@ -17,7 +19,8 @@ public:
 
 	my::Image* getImage(void) { return _itemImg; }
 	Item* getItem(int imgIndex);
-	void itemImgRender(int index, int x, int y);
+	Item* getItemIndex(int index);
+	void getItemImgRender(int index, int x, int y);
 	//void ItemWindowRender(void);
 
 

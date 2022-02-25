@@ -3,6 +3,7 @@
 
 HRESULT BossMap::init(POINT location)
 {
+	_type = Map::MAPTYPE::BOSS;
 	_show = false;
 	_clear = false;
 	_image = IMAGEMANAGER->addImage("BossGround", "Resource/Images/Lucie/CompleteImg/ground/map/ground95.bmp", 1104, 960, false, RGB(255, 0, 255));

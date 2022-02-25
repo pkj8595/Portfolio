@@ -239,11 +239,17 @@
       <Filter>KGY</Filter>
     </ClCompile>
     <ClCompile Include="mButton.cpp" />
-    <ClCompile Include="PixelCollision.cpp">
-      <Filter>API FrameWork</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerWeapon.cpp">
       <Filter>MainGame\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStatusUI.cpp" />
+    <ClCompile Include="PixelCollision.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageEffectManager.cpp" />
+    <ClCompile Include="Damage.cpp" />
+    <ClCompile Include="LobbyCollision.cpp">
+      <Filter>OJH</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -405,6 +411,9 @@
     <ClInclude Include="PlayerWeapon.h">
       <Filter>MainGame\Player</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerStatusUI.h" />
+    <ClInclude Include="DamageEffectManager.h" />
+    <ClInclude Include="Damage.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">

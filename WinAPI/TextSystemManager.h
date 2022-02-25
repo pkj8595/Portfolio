@@ -12,6 +12,7 @@ struct TagText
 class TextSystemManager :public GameNode
 {
 private:
+
 	TagText _text[TEXT_MAX];
 	const int SCRIPT_MAX_LENGTH = 55;
 	wstring _itemName;
@@ -39,7 +40,7 @@ public:
 	void shopLog(wstring itemName, wstring price);
 	void EventLog(int arrText);
 
-	bool test;
+	bool iscollText;
 
 	TextSystemManager() {}
 	~TextSystemManager() {}

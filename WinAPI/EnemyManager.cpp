@@ -5,6 +5,12 @@
 #include "Slime.h"
 #include "Snake.h"
 
+bool EnemyManager::checkClear()
+{
+	if (_vMinion.size() == 0) return true;
+	else return false;
+}
+
 EnemyManager::EnemyManager(){
 	//DO NOTTING
 }
@@ -58,10 +64,10 @@ void EnemyManager::update(void)
 	{
 		(*_viMinion)->update();
 		(*_viMinion)->setPlayerPos(_pPlayer->getPosition());
-		(*_viMinion)->setPlayer(_pPlayer);
+		(*_viMinion)->setPlayer(*_pPlayer);
 
 	}
-	//checkActive();
+	checkActive();
 	//minionBulletFire();
 	//_bullet->update();
 }
@@ -94,10 +100,10 @@ void EnemyManager::setMinion(void)
 	slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
 	_vMinion.push_back(slime);
 
-	Enemy* snake;
-	snake = new Snake;
-	snake->init("Snake", PointMake(CENTER_X - 200, CENTER_Y));
-	_vMinion.push_back(snake);
+	//Enemy* snake;
+	//snake = new Snake;
+	//snake->init("Snake", PointMake(CENTER_X - 200, CENTER_Y));
+	//_vMinion.push_back(snake);
 }
 
 void EnemyManager::removeMinion(int arrNum)

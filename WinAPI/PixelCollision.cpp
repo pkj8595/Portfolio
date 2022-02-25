@@ -13,29 +13,73 @@ void PlayScene::pixelCollision()
 		_player->setCollision();
 	}
 
+}
+
+void PlayScene::changeMap()
+{
 	//changeMap : 0, 1, 2, 3 -> LEFT, RIGHT, UP, DOWN
 	if (_player->getPosition().x < 0 && _mapManager->getCurrentMap()->isClear())
 	{
 		_mapManager->changeMap(0);
-		if (_mapManager->getCurrentMap()->getType() == Map::MAPTYPE::DEFAULT) _enemyManager->setMinion();
+		spawnMonster();
 		_player->setPosition(_mapManager->getCurrentMapPixel()->getWidth() - 350, _player->getPosition().y);
 	}
 	if (_player->getPosition().x > _mapManager->getCurrentMapPixel()->getWidth() && _mapManager->getCurrentMap()->isClear())
 	{
 		_mapManager->changeMap(1);
-		if (_mapManager->getCurrentMap()->getType() == Map::MAPTYPE::DEFAULT) _enemyManager->setMinion();
+		spawnMonster();
 		_player->setPosition(350, _player->getPosition().y);
 	}
 	if (_player->getPosition().y < 0 && _mapManager->getCurrentMap()->isClear())
 	{
 		_mapManager->changeMap(2);
-		if (_mapManager->getCurrentMap()->getType() == Map::MAPTYPE::DEFAULT) _enemyManager->setMinion();
+		spawnMonster();
 		_player->setPosition(_player->getPosition().x, _mapManager->getCurrentMapPixel()->getHeight() - 200);
 	}
 	if (_player->getPosition().y > _mapManager->getCurrentMapPixel()->getHeight() && _mapManager->getCurrentMap()->isClear())
 	{
 		_mapManager->changeMap(3);
-		if (_mapManager->getCurrentMap()->getType() == Map::MAPTYPE::DEFAULT) _enemyManager->setMinion();
+		spawnMonster();
 		_player->setPosition(_player->getPosition().x, 200);
 	}
+
+	if (_enemyManager->checkClear())
+	{
+		_mapManager->getCurrentMap()->setClear(true);
+	}
+}
+
+void PlayScene::spawnMonster()
+{
+	if (_mapManager->getCurrentMap()->getType() == Map::MAPTYPE::DEFAULT &&
+		!_mapManager->getCurrentMap()->isClear())
+	{
+		_enemyManager->setMinion();
+	}
+}
+
+void PlayScene::checkPlayerEscapeWithoutClear()
+{
+	if (_mapManager->getCurrentMap()->isClear())
+	{
+		if (_player->getX() < _mapManager->getCurrentMap()->getMapRC().left && !_mapManager->getCurrentMap()->isConnected(0)) 
+			_player->setX(_mapManager->getCurrentMap()->getMapRC().left);
+		if (_player->getX() > _mapManager->getCurrentMap()->getMapRC().right && !_mapManager->getCurrentMap()->isConnected(2))
+			_player->setX(_mapManager->getCurrentMap()->getMapRC().right);
+		if (_player->getY() < _mapManager->getCurrentMap()->getMapRC().top && !_mapManager->getCurrentMap()->isConnected(1))
+			_player->setY(_mapManager->getCurrentMap()->getMapRC().top);
+		if (_player->getY() > _mapManager->getCurrentMap()->getMapRC().bottom && !_mapManager->getCurrentMap()->isConnected(3))
+			_player->setY(_mapManager->getCurrentMap()->getMapRC().bottom);
+	}
+	else
+	{
+		if (_player->getX() < _mapManager->getCurrentMap()->getMapRC().left) 
+			_player->setX(_mapManager->getCurrentMap()->getMapRC().left);
+		if (_player->getX() > _mapManager->getCurrentMap()->getMapRC().right) 
+			_player->setX(_mapManager->getCurrentMap()->getMapRC().right);
+		if (_player->getY() < _mapManager->getCurrentMap()->getMapRC().top) 
+			_player->setY(_mapManager->getCurrentMap()->getMapRC().top);
+		if (_player->getY() > _mapManager->getCurrentMap()->getMapRC().bottom) _player->setY(_mapManager->getCurrentMap()->getMapRC().bottom);
+	}
+
 }
