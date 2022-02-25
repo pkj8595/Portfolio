@@ -87,7 +87,6 @@ void Player::release(void)
 
 void Player::update(void)
 {
-	cout << _x << "," << _y << endl;
 	if (_state == PLAYER_STATE::WALK || _state == PLAYER_STATE::DODGE || _state == PLAYER_STATE::STOP)
 	{
 		if (_swordSpecialAttack) setDirectionByMouseInput();

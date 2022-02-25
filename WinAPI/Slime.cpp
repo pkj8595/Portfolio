@@ -1,7 +1,7 @@
 #include "Stdafx.h"
 #include "Slime.h"
 
-Slime::Slime()
+Slime::Slime() : _frameY(0)
 {
 }
 
@@ -43,14 +43,17 @@ HRESULT Slime::init(const char * imageName, POINT position)
 	_direction = SLIMEDIRECTION::SL_DOWN;
 	_state = SLIMESTATE::SL_IDLE;
 
+	cout << "Slime::init _frameY : " << _frameY << endl;
+
 	return S_OK;
 }
 
 void Slime::release(void)
 {
-	Enemy::release();
 	_slimeCirclebullet->release();
 	SAFE_DELETE(_slimeCirclebullet);
+	SAFE_DELETE(_slimebullet);
+	Enemy::release();
 }
 
 void Slime::update(void)
@@ -91,7 +94,6 @@ void Slime::update(void)
 		randomPosCreate();
 	}
 
-	frame();
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 
@@ -100,8 +102,12 @@ void Slime::update(void)
 void Slime::render(void)
 {
 	//Enemy::render();
-	if(_isActive)
+	if (_isActive)
+	{
+		frame();
 		draw();
+	}
+
 }
 
 void Slime::move(void)
@@ -112,7 +118,7 @@ void Slime::move(void)
 void Slime::draw(void)
 {
 	animation();
-	_image->frameRender(getMemDC(), _rc.left, _rc.top);
+	_image->frameRender(getMemDC(), _rc.left, _rc.top,_index,_frameY);
 	_slimeCirclebullet->render();
 	_slimebullet->render();
 	////Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
@@ -232,7 +238,7 @@ void Slime::animation()
 	if (_frameSpeed + _worldTimeCount <= TIMEMANAGER->getWorldTime())
 	{
 		_worldTimeCount = TIMEMANAGER->getWorldTime();
-		_image->setFrameY(_frameY);
+		//_image->setFrameY(_frameY);
 		_index++;
 
 		if (_index > _image->getMaxFrameX())
