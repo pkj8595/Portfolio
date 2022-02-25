@@ -26,6 +26,12 @@ class Inventory : public GameNode
 		int frameX;
 	}InvenPosBtn;
 
+	typedef struct STItemInfoWindow
+	{
+		my::Image* img;
+		RECT rc;
+	}InfoWindow;
+
 	ItemManager* _itemManager;
 	my::Image* _inventoryBackground;
 	RECT _rc;
@@ -61,6 +67,8 @@ class Inventory : public GameNode
 	int _invenItemCount;
 
 	POINT _statusTextPos;
+	InfoWindow _itemInfoWindow;
+	
 
 public:
 	HRESULT init(void);
@@ -124,5 +132,8 @@ public:
 	bool getIsShowInven(void) { return _isShowInven; }
 	void setIsShowInven(bool isShowInven) { _isShowInven = isShowInven; }
 	void showAttributeText(void);
+	void equipRender(void);
+	void renderItemInfo(POINT mousePt);
+
 };
 

@@ -19,12 +19,8 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("TextTest", new OJHScene);
 	SCENEMANAGER->addScene("Lobby", new Lobby);
 	SCENEMANAGER->addScene("ShopScene", new ShopScene);
-	//SCENEMANAGER->changeScene("ShopScene");
 
-	//SCENEMANAGER->changeScene("TextTest");
-	//SCENEMANAGER->changeScene("kgy");
 	SCENEMANAGER->changeScene("PlayScene");
-	//SCENEMANAGER->changeScene("ShopScene");
 
 	return S_OK;
 }

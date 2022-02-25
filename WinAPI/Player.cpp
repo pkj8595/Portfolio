@@ -10,10 +10,12 @@ HRESULT Player::init(void)
 	_swordStackImage = IMAGEMANAGER->addImage("SwordStack", "Resource/Images/Lucie/CompleteImg/system/ruby.bmp", 13, 14, true, RGB(255, 0, 255));
 	_bowStackImage = IMAGEMANAGER->addImage("BowStack", "Resource/Images/Lucie/CompleteImg/system/emerald.bmp", 16, 13, true, RGB(255, 0, 255));
 	_hitBG = IMAGEMANAGER->addImage("HitEffect", "Resource/Images/Lucie/CompleteImg/effect/hitScreen.bmp", 1104, 960, true, RGB(255, 0, 255));
+	_dodgeBG = IMAGEMANAGER->addImage("DodgeEffect", "Resource/Images/Lucie/CompleteImg/effect/whiteScreen.bmp", 1104, 960, true, RGB(255, 0, 255));
 
 	_state = PLAYER_STATE::STOP;
 	_level = 1;
 	_hitAlpha = 0;
+	_dodgeAlpha = 0;
 	_direction = PLAYER_DIRECTION::DOWN;
 	
 	_x = CENTER_X;
@@ -31,6 +33,7 @@ HRESULT Player::init(void)
 	_attack = false;
 	_swordSpecialAttack = false;
 
+	_isTextShow = false;
 	_dead = false;
 	
 	_swordStack = 0;
@@ -44,7 +47,8 @@ HRESULT Player::init(void)
 	_status._critical = 10.0f;
 	_status._offencePower = 10.0f;
 	_status._magicPower = 10.0f;
-	_status._speed = 2.0f;
+	//_status._speed = 2.0f;
+	_status._speed = 8.0f;
 	_status._damageBalance = 0.0f;
 	_status._experience = 0.0f;
 	_status._maxExperience = 100.0f;
@@ -87,7 +91,6 @@ void Player::release(void)
 
 void Player::update(void)
 {
-	
 	if (_state == PLAYER_STATE::WALK || _state == PLAYER_STATE::DODGE || _state == PLAYER_STATE::STOP)
 	{
 		if (_swordSpecialAttack) setDirectionByMouseInput();
@@ -111,7 +114,10 @@ void Player::update(void)
 
 	if (!_attack || (*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
 	{	
-		move();
+		if (!_isTextShow)
+		{
+			move();
+		}
 	}
 	computeTotalAttribute(); // гу╩Й
 	_sword->update();
@@ -126,6 +132,7 @@ void Player::update(void)
 	if (_hitInvTime <= 0) _hit = false;
 	if (_state != PLAYER_STATE::DODGE) _alreadyAddBowStack = false;
 	if (_hitAlpha > 0) _hitAlpha -= 16;
+	if (_dodgeAlpha > 0) _dodgeAlpha -= 16;
 }
 
 void Player::render(void)
@@ -252,10 +259,13 @@ void Player::collideObject(STObservedData obData)
 		{
 			if (_bowStack < 5 && !_tripleshot && !_alreadyAddBowStack)
 			{
-				_alreadyAddBowStack = true;
+				
 				_bowStack++;
+				
 			}
 		}
+		if(!_alreadyAddBowStack) _dodgeAlpha = 80;
+		_alreadyAddBowStack = true;
 	}
 	else if (!_hit)
 	{
@@ -852,4 +862,5 @@ float Player::calculateMagicDamage()
 void Player::printHitBG()
 {
 	if (_hitAlpha > 0) _hitBG->alphaRender(getMemDC(), _hitAlpha);
+	if (_dodgeAlpha > 0) _dodgeBG->alphaRender(getMemDC(), _dodgeAlpha);
 }

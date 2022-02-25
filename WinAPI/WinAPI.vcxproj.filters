@@ -91,6 +91,9 @@
     <Filter Include="KGY">
       <UniqueIdentifier>{3969682f-08ec-4009-864e-80830d80781d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="LHW">
+      <UniqueIdentifier>{95633ec0-0fc8-4c24-8fd6-b875fb5a1e9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -248,11 +251,20 @@
     </ClCompile>
     <ClCompile Include="DamageEffectManager.cpp" />
     <ClCompile Include="Damage.cpp" />
+    <ClCompile Include="LobbyCollision.cpp">
+      <Filter>OJH</Filter>
+    </ClCompile>
     <ClCompile Include="RepairMap.cpp">
       <Filter>MainGame\Map\MapType</Filter>
     </ClCompile>
     <ClCompile Include="ShopMap.cpp">
       <Filter>MainGame\Map\MapType</Filter>
+    </ClCompile>
+    <ClCompile Include="KingSlime.cpp">
+      <Filter>LHW</Filter>
+    </ClCompile>
+    <ClCompile Include="BigSlime.cpp">
+      <Filter>LHW</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -422,6 +434,12 @@
     </ClInclude>
     <ClInclude Include="ShopMap.h">
       <Filter>MainGame\Map\MapType</Filter>
+    </ClInclude>
+    <ClInclude Include="KingSlime.h">
+      <Filter>LHW</Filter>
+    </ClInclude>
+    <ClInclude Include="BigSlime.h">
+      <Filter>LHW</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

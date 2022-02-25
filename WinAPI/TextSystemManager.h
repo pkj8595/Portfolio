@@ -2,37 +2,45 @@
 #include "GameNode.h"
 #define TEXT_MAX 500
 
-struct Text
+struct TagText
 {
 	LPCWSTR name;
 	LPCWSTR script;
 };
 
+
 class TextSystemManager :public GameNode
 {
 private:
-	Text _text[TEXT_MAX];
+
+	TagText _text[TEXT_MAX];
 	const int SCRIPT_MAX_LENGTH = 55;
-	LPCWSTR _itemName;
-	LPCWSTR _price;
-	int _arrtext;
+	wstring _itemName;
+	wstring _price;
+	int _eventArrText;
 	int _textBufferCnt;
 	int _textAlpha;
 	int _count;
 
 	RECT _chatRc;			// 팝업 창 rc
 	RECT _nameRc;
-	LPCWSTR _script;	// 값을 받아올 글자값
-	my::Image* _Chatimage;
-	my::Image* _Nameimage;
+	RECT _select_oneRc;
+	RECT _select_TwoRc;
+
+	LPCWSTR Shop_talk;	//wstring -> LPCWSTR로 변환할 변수
+	my::Image* _chatImage;
+	my::Image* _nameImage;
+	my::Image* _selImage;
 
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
-	void shopLog(LPCWSTR itemName, LPCWSTR price);
+	void ShopLog(wstring itemName, wstring price);
 	void EventLog(int arrText);
+
+	bool iscollText;
 
 	TextSystemManager() {}
 	~TextSystemManager() {}

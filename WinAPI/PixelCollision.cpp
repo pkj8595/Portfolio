@@ -14,33 +14,84 @@ void PlayScene::pixelCollision()
 	}
 
 }
-
-void PlayScene::changeMap()
+void PlayScene::changeMapFadeOut()
 {
-	//changeMap : 0, 1, 2, 3 -> LEFT, RIGHT, UP, DOWN
+	if (_isChanging) return;
 	if (_player->getPosition().x < 0 && _mapManager->getCurrentMap()->isClear())
 	{
-		_mapManager->changeMap(0);
-		spawnMonster();
-		_player->setPosition(_mapManager->getCurrentMapPixel()->getWidth() - 350, _player->getPosition().y);
+		_isChanging = true;
+		_changeScreenType = 0;
 	}
 	if (_player->getPosition().x > _mapManager->getCurrentMapPixel()->getWidth() && _mapManager->getCurrentMap()->isClear())
 	{
-		_mapManager->changeMap(1);
-		spawnMonster();
-		_player->setPosition(350, _player->getPosition().y);
+		_isChanging = true;
+		_changeScreenType = 1;
 	}
 	if (_player->getPosition().y < 0 && _mapManager->getCurrentMap()->isClear())
 	{
-		_mapManager->changeMap(2);
-		spawnMonster();
-		_player->setPosition(_player->getPosition().x, _mapManager->getCurrentMapPixel()->getHeight() - 200);
+		_isChanging = true;
+		_changeScreenType = 2;
 	}
 	if (_player->getPosition().y > _mapManager->getCurrentMapPixel()->getHeight() && _mapManager->getCurrentMap()->isClear())
 	{
+		_isChanging = true;
+		_changeScreenType = 3;
+	}
+}
+void PlayScene::setFadeOutAlpha()
+{
+	
+	if (_isChanging)
+	{
+		_fadeoutAlpha += 4;
+	}
+	else if (!_isChanging && _fadeoutAlpha > 0)
+	{
+		_fadeoutAlpha -= 4;
+	}
+	if (_fadeoutAlpha > 252)
+	{
+		_isChanging = false;
+	}
+}
+
+void PlayScene::changeMap()
+{
+	if (_changeScreenType == 0 && _isChanging && _fadeoutAlpha > 250)
+	{
+		_mapManager->changeMap(0);
+		spawnMonster();
+		if (_mapManager->getCurrentMap()->getMapType() == Map::MAPTYPE::SHOP)
+			_player->setPosition(600, 306);
+		else _player->setPosition(_mapManager->getCurrentMapPixel()->getWidth() - 350, _player->getPosition().y);
+		_isChanging = false;
+	}
+	if (_changeScreenType == 1 && _isChanging && _fadeoutAlpha > 250)
+	{
+		_mapManager->changeMap(1);
+		spawnMonster();
+		if (_mapManager->getCurrentMap()->getMapType() == Map::MAPTYPE::SHOP)
+			_player->setPosition(600, 306);
+		else _player->setPosition(350, _player->getPosition().y);
+		_isChanging = false;
+	}
+	if (_changeScreenType == 2 && _isChanging && _fadeoutAlpha > 250)
+	{
+		_mapManager->changeMap(2);
+		spawnMonster();
+		if (_mapManager->getCurrentMap()->getMapType() == Map::MAPTYPE::SHOP)
+			_player->setPosition(600, 306);
+		else _player->setPosition(_player->getPosition().x, _mapManager->getCurrentMapPixel()->getHeight() - 200);
+		_isChanging = false;
+	}
+	if (_changeScreenType == 3 && _isChanging && _fadeoutAlpha > 250)
+	{
 		_mapManager->changeMap(3);
 		spawnMonster();
-		_player->setPosition(_player->getPosition().x, 200);
+		if (_mapManager->getCurrentMap()->getMapType() == Map::MAPTYPE::SHOP)
+			_player->setPosition(600, 306);
+		else _player->setPosition(_player->getPosition().x, 200);
+		_isChanging = false;
 	}
 
 	if (_enemyManager->checkClear())
@@ -55,6 +106,11 @@ void PlayScene::spawnMonster()
 		!_mapManager->getCurrentMap()->isClear())
 	{
 		_enemyManager->setMinion();
+	}
+	else if (_mapManager->getCurrentMap()->getType() == Map::MAPTYPE::BOSS /* &&
+		!_mapManager->getCurrentMap()->isClear()*/)
+	{
+		_enemyManager->setBoss();
 	}
 }
 
