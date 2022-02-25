@@ -1,6 +1,7 @@
 #pragma once
 #include "GameNode.h"
 #include "MapManager.h"
+#include "EnemyManager.h"
 #include "Player.h"
 
 class PlayScene : public GameNode
@@ -8,6 +9,7 @@ class PlayScene : public GameNode
 private:
 
 	MapManager* _mapManager;
+	EnemyManager* _enemyManager;
 	Player* _player;
 	int _stageNum;
 

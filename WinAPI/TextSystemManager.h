@@ -8,41 +8,38 @@ struct TagText
 	LPCWSTR script;
 };
 
-struct TagText2
-{
-	LPCWSTR script;
-	LPCWSTR name;
-	LPCWSTR price;
-	LPCWSTR script2;
-};
 
 class TextSystemManager :public GameNode
 {
 private:
 	TagText _text[TEXT_MAX];
-	TagText2 _text2[2];
 	const int SCRIPT_MAX_LENGTH = 55;
-	LPCWSTR _itemName;
-	LPCWSTR _price;
+	wstring _itemName;
+	wstring _price;
 	int _eventArrText;
-	int _chatArrText;
 	int _textBufferCnt;
 	int _textAlpha;
 	int _count;
 
 	RECT _chatRc;			// 팝업 창 rc
 	RECT _nameRc;
-	LPCWSTR _script;	// 값을 받아올 글자값
-	my::Image* _Chatimage;
-	my::Image* _Nameimage;
+	RECT _select_oneRc;
+	RECT _select_TwoRc;
+
+	LPCWSTR Shop_talk;	//wstring -> LPCWSTR로 변환할 변수
+	my::Image* _chatImage;
+	my::Image* _nameImage;
+	my::Image* _selImage;
 
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
-	void shopLog(int arrText, LPCWSTR itemName, LPCWSTR price);
+	void shopLog(wstring itemName, wstring price);
 	void EventLog(int arrText);
+
+	bool test;
 
 	TextSystemManager() {}
 	~TextSystemManager() {}

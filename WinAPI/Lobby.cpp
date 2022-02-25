@@ -53,7 +53,7 @@ void Lobby::render(void)
 	Rectangle(getMemDC(), _Bookrc.left, _Bookrc.top, _Bookrc.right, _Bookrc.bottom);
 	Rectangle(getMemDC(), _Boxrc.left, _Boxrc.top, _Boxrc.right, _Boxrc.bottom);
 	Rectangle(getMemDC(), _p_rc.left, _p_rc.top, _p_rc.right, _p_rc.bottom);
-
-	if (collBox) _tsm->shopLog(0, L"로브", L"250");
+	
+	if (collBox) _tsm->shopLog(L"로브", L"250");
 
 }

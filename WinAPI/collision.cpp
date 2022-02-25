@@ -7,6 +7,9 @@ void Lobby::collision(void)
 	if (IntersectRect(&rc, &_p_rc, &_Boxrc) && KEYMANAGER->isOnceKeyDown('E'))
 	{
 		collBox = true;
+		_tsm->test = true;
 	}
 	else if (!IntersectRect(&rc, &_p_rc, &_Boxrc)) collBox = false;
+
+	if (!collBox) _tsm->test = false;
 }

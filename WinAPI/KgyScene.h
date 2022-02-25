@@ -1,7 +1,7 @@
 #pragma once
 #include "GameNode.h"
 #include "EnemyManager.h"
-#include "CProjectPlayer.h"
+#include "Player.h"
 
 class KgyScene:public GameNode
 {
@@ -9,7 +9,7 @@ private:
 	EnemyManager* _em;
 	RECT _rc;
 	POINT _playerpos;
-	CProjectPlayer* _player;
+	Player* _player;
 
 public:
 	HRESULT init(void);

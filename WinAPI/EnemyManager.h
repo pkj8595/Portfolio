@@ -3,7 +3,7 @@
 #include "Enemy.h"
 #include "Bullets.h"
 
-class CProjectPlayer;
+class Player;
 class EnemyManager: public GameNode
 {
 private:
@@ -17,7 +17,7 @@ private:
 	viEnemy _viMinion;
 
 	Bullet* _bullet;
-	CProjectPlayer* _pPlayer;
+	Player* _pPlayer;
 
 public:
 	HRESULT init(void);
@@ -32,7 +32,7 @@ public:
 	void minionBulletFire(void);
 
 	Bullet* getBullet(void) { return _bullet; }
-	void setRoketMemoryAddress(CProjectPlayer* rk) { _pPlayer = rk; }
+	void setRoketMemoryAddress(Player* rk) { _pPlayer = rk; }
 	vEnemy getEnemy() { return _vMinion; }
 
 	EnemyManager();
