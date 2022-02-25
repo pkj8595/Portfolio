@@ -53,6 +53,10 @@ HRESULT Inventory::init(void)
 	_ptotalAttribute = nullptr;
 	_pAttribute = nullptr;
 
+	_worldTime = TIMEMANAGER->getWorldTime();
+	_isShowGetItem = false;
+	_showGetItemAlpha = 255;
+
 	return S_OK;
 }
 
@@ -68,7 +72,7 @@ void Inventory::update(void)
 {
 	//마우스가 이미지 렉트 위에 올라가면 프레임이 바뀌어야함
 	//_btn->update();
-	checkMouse();
+	checkMouseEvent();
 	if (KEYMANAGER->isOnceKeyDown('I')) { _isShowInven = !_isShowInven; }
 	if (KEYMANAGER->isOnceKeyDown(VK_F6))
 	{
@@ -96,6 +100,11 @@ void Inventory::render(void)
 		}
 	}
 
+	if (_isShowGetItem)
+	{
+		showGetItem();
+	}
+
 	renderItemInfo();
 	showAbilityItem();
 
@@ -120,16 +129,12 @@ void Inventory::renderInventoryBase()
 				_inventorySlot.pt.y+ INVENTORY_IMG_OFFSETY *i, 1, 1);
 		}
 	}
+	char str[32] = "인벤토리";
+	FONTMANAGER->drawText(getMemDC(), _rc.left +98, _rc.top + 18, "야놀자 야체 Regular", 20, 200, str, strlen(str), RGB(255, 255, 255));
+
 	//_inventorySlotA.img->frameRender(getMemDC(), _inventorySlotA.pt.x, _inventorySlotA.pt.y, 1, 1);
 	//_inventorySlotB.img->frameRender(getMemDC(), _inventorySlotB.pt.x, _inventorySlotB.pt.y, 1, 1);
-
 }
-
-Item** Inventory::getEquipWeapon()
-{
-	return &_equipWeapon;
-}
-
 
 //아이템이 벡터에 들어올때마다 실행시켜서 총합산 데미지를 최신화한다.
 void Inventory::computeItemTotalAttribute()
@@ -153,6 +158,12 @@ void Inventory::computeItemTotalAttribute()
 
 void Inventory::pushItem(Item* item)
 {
+	//================================
+	_showGetItemImgNum = item->_imgNum;
+	_showGetItemAlpha = 255;
+	_isShowGetItem = true;
+	//================================
+
 	if (item->_type == EITEM_TYPE::ABILITY)
 	{
 		_viItem = _vItem.begin();
@@ -191,6 +202,7 @@ void Inventory::pushItem(Item* item)
 		_vItem.push_back(make_pair(item, tempRc));
 		_invenItemCount++;
 	}
+
 	computeItemTotalAttribute();
 }
 
@@ -224,7 +236,7 @@ void Inventory::showAbilityItem()
 }
 
 
-void Inventory::checkMouse(void)
+void Inventory::checkMouseEvent(void)
 {
 	_viItem = _vItem.begin();
 	for (; _viItem != _vItem.end(); ++_viItem)
@@ -326,6 +338,22 @@ void Inventory::computeRect(void)
 		}
 	}
 	
+}
+
+void Inventory::showGetItem()
+{
+
+	int x = ((_showGetItemImgNum - 1) % 10) * 64;
+	int y = ((_showGetItemImgNum - 1) / 10) * 64;
+	//cout << "_showGetItemImgNum : "<< _showGetItemImgNum << endl;
+	IMAGEMANAGER->findImage("bigItemImg")->alphaRender(getMemDC(),CENTER_X,CENTER_Y, x, y,64,64, _showGetItemAlpha);
+
+	_showGetItemAlpha--;
+	if (_showGetItemAlpha < 0) 
+	{
+		_isShowGetItem = false; 
+		_showGetItemAlpha = 255;
+	}
 }
 
 void Inventory::showAttributeText(void)
@@ -455,6 +483,38 @@ void Inventory::renderItemInfo()
 		}
 	}
 
+}
+
+void Inventory::removeItem(Item* item)
+{
+	_viItem = _vItem.begin();
+	for (; _viItem != _vItem.end(); ++_viItem)
+	{
+		if ((*_viItem).first == item)
+		{
+			if ((*_viItem).first->_type != EITEM_TYPE::ABILITY)
+			{
+				cout << (*_viItem).first->_name << endl;
+				if ((*_viItem).first->_type == EITEM_TYPE::EQUIP_WEAPON_BOW ||
+					(*_viItem).first->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD ||
+					(*_viItem).first->_type == EITEM_TYPE::EQUIP_HAT ||
+					(*_viItem).first->_type == EITEM_TYPE::EQUIP_ARMOR ||
+					(*_viItem).first->_type == EITEM_TYPE::EQUIP_SHOES)
+				{
+					if (_equipWeapon == (*_viItem).first) { _equipWeapon = _emptyItem; }
+					if (_equipArmor == (*_viItem).first) { _equipArmor = _emptyItem; }
+					if (_equipShoes == (*_viItem).first) { _equipShoes = _emptyItem; }
+					if (_equipHat == (*_viItem).first) { _equipHat = _emptyItem; }
+					SAFE_DELETE((*_viItem).first);
+				}
+				_vItem.erase(_viItem);
+				computeRect();
+				computeItemTotalAttribute();
+				break;
+				//todo 드랍아이템 생성
+			}
+		}
+	}
 }
 
 string Inventory::changeItemTypeToStr(EITEM_TYPE type)

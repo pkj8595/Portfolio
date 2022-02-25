@@ -31,6 +31,7 @@ class Inventory : public GameNode
 		my::Image* img;
 		RECT rc;
 	}InfoWindow;
+
 	typedef struct STItemInfoText
 	{
 		string str;
@@ -46,7 +47,6 @@ class Inventory : public GameNode
 			pt = POINT{0,0};
 		}
 	}InfoWindowText;
-
 
 	ItemManager* _itemManager;
 	my::Image* _inventoryBackground;
@@ -83,8 +83,12 @@ class Inventory : public GameNode
 	int _invenItemCount;
 
 	POINT _statusTextPos;
+
 	InfoWindow _itemInfoWindow;
-	
+	float _worldTime;
+	bool _isShowGetItem;
+	int _showGetItemAlpha;
+	int _showGetItemImgNum;
 
 public:
 	HRESULT init(void);
@@ -96,6 +100,17 @@ public:
 	void showInventoryItem(void);
 	void showAbilityItem(void);
 
+	void checkMouseEvent(void);
+	void computeRect(void);
+
+	void showGetItem();
+	void showAttributeText(void);
+	void equipRender(void);
+	void renderItemInfo();
+	void removeItem(Item* item);//인벤토리 아이템 없앨때 사용
+
+	bool getIsShowInven(void) { return _isShowInven; }
+	void setIsShowInven(bool isShowInven) { _isShowInven = isShowInven; }
 	void setPTotalattribute(CPlayer_Attribute* att)
 	{
 		_ptotalAttribute = att;
@@ -105,6 +120,8 @@ public:
 		_pAttribute = att;
 	}
 
+	string changeItemTypeToStr(EITEM_TYPE type);
+	string changeAttributeToStr(CPlayer_Attribute attri);
 	//==========================
 	// ### Player Equipment ###
 	//==========================
@@ -113,7 +130,7 @@ public:
 	//총 아이템 능력치 합산
 	void computeItemTotalAttribute();
 	//장착중인 무기 반환
-	Item** getEquipWeapon();
+	Item** getEquipWeapon() { return &_equipWeapon; };
 
 	CPlayer_Attribute getItemTotalAttribute(){return _itemTotalAttribute;}
 
@@ -142,16 +159,6 @@ public:
 		computeItemTotalAttribute();
 	}
 
-	void checkMouse(void);
-	void computeRect(void);
-
-	bool getIsShowInven(void) { return _isShowInven; }
-	void setIsShowInven(bool isShowInven) { _isShowInven = isShowInven; }
-	void showAttributeText(void);
-	void equipRender(void);
-	void renderItemInfo();
-
-	string changeItemTypeToStr(EITEM_TYPE type);
-	string changeAttributeToStr(CPlayer_Attribute attri);
+	
 };
 
