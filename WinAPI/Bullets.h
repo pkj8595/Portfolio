@@ -11,9 +11,11 @@ class tagCBullet :public IRectObserved
 public:
 	ObservedType type;
 	my::Image* img;
+	my::Image* reflectImg;
 	RECT rc;
 	int radius;
 	int count;
+	float damage;
 	float x, y;
 	float fireX, fireY;
 	float angle;
