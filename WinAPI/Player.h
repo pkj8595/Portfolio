@@ -46,8 +46,7 @@ private:
 	//Item, UI
 	CPlayer_Attribute _status;
 	CPlayer_Attribute _totalStatus;
-	vector<Item*> _ability;
-	Item* _equipItem;
+	Item** _equipItem;
 
 	int _beforeItemSize;
 	int _currentItemSize;
@@ -67,6 +66,7 @@ private:
 	
 	int _swordStack;
 	int _bowStack;
+	bool _alreadyAddBowStack;
 	bool _tripleshot;
 	float _tripleShotStartCount;
 
@@ -131,7 +131,6 @@ public:
 	void printUI() { _statusUI->render(); }
 	bool _isTextShow;
 	bool isDead() { return _dead; }
-	CPlayer_Attribute getTotalAttribute() { return _totalStatus; }
 };
 
 //°Ë

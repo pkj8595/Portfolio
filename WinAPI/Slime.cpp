@@ -18,33 +18,35 @@ HRESULT Slime::init(const char * imageName, POINT position)
 	_randomX = 0;
 	_randomY = 0;
 	_speed = 0.5f;
-	_worldTime = TIMEMANAGER->getWorldTime();
 	_frameSpeed = 0.3f;
 	_index = 0;
 	_frameY = 0;
+	_worldTimeCount = TIMEMANAGER->getWorldTime();
 	_randomTimeCount = RND->getFromFloatTo(0.f,2.f);
 	_moveWorldTime = TIMEMANAGER->getWorldTime();
 	_attacWorldTime = TIMEMANAGER->getWorldTime();
 	_playerDistance = 0.0f;
 	_range = 300.f;
 	_moveCheck = true;
-	_playerCheck = false;
-	_attackCheck = false;
-
-	_direction = SLIMEDIRECTION::SM_DOWN;
-	_state = SLIMESTATE::SM_IDLE;
+	_isActive = true;
 	_attackRange = 150;
 
 	_slimeCirclebullet = new CircleMissile;
 	_slimeCirclebullet->init(10, 300);
 
-	//_attRect = RectMakeCenter(_x, _y, 150, 150);
+	_slimebullet = new ThreeDirectionMissile;
+	_slimebullet->init(3, 300);
 	_hp = 100.0f;
+
+	_direction = SLIMEDIRECTION::SL_DOWN;
+	_state = SLIMESTATE::SL_IDLE;
+
 	return S_OK;
 }
 
 void Slime::release(void)
 {
+	_slimeCirclebullet->release();
 	Enemy::release();
 }
 
@@ -52,17 +54,17 @@ void Slime::update(void)
 {
 	Enemy::update();
 	_slimeCirclebullet->update();
+	_slimebullet->update();
 
-	RECT rc;
 	//플레이어 추적 범위에 들어왔을 경우
-	if(playerCheck())
+	if (playerCheck())
 	{
-		if(_moveCheck)
-		pursuePlayer();
-		
+		if (_moveCheck)
+			pursuePlayer();
+
 		//공격 사거리 안으로 들어왔을 경우
 		if (_playerDistance < _attackRange)
-		{		
+		{
 			attackParttern();
 		}
 	}
@@ -74,43 +76,15 @@ void Slime::update(void)
 	}
 
 	frame();
-	//cout << "Slime::update(void) 랜덤X:" << _randomX << endl;
-	//cout << "Slime::update(void) 랜덤Y:" << _randomY << endl;
-
-	cout << (int)_state << endl;
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
-	//_attRect = RectMakeCenter(_x, _y + 20, 180, 180);
-	/*_slimebullet->update();
-	_slimeCirclebullet->update();
-
-	//플레이어가 일정 범위에 들어왔다면
-	if (playerCheck())
-	{
-
-		//공격 사거리 안으로 들어왔을 경우
-		if (_playerDistance < attRange)
-		{	
-			_moveCheck = false;
-			
-			//공격 실행
-			attack();
-		}
-	}
-	else
-	{
-		_moveCheck = true;
-		randomMove();
-	}
-
-	_ani->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
-	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());*/
 }
 
 void Slime::render(void)
 {
 	//Enemy::render();
-	draw();
+	if(_isActive)
+		draw();
 }
 
 void Slime::move(void)
@@ -121,10 +95,9 @@ void Slime::move(void)
 void Slime::draw(void)
 {
 	animation();
-	Rectangle(getMemDC(), _attRect.left, _attRect.top, _attRect.right, _attRect.bottom);
 	_image->frameRender(getMemDC(), _rc.left, _rc.top);
-	//_slimebullet->render();
 	_slimeCirclebullet->render();
+	_slimebullet->render();
 	////Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 }
 
@@ -132,44 +105,44 @@ void Slime::frame()
 {
 	switch (_state)
 	{
-	case SLIMESTATE::SM_IDLE:
+	case SLIMESTATE::SL_IDLE:
 		switch (_direction)
 		{
-		case SLIMEDIRECTION::SM_LEFT:
+		case SLIMEDIRECTION::SL_LEFT:
 			_frameY = 1;
 			break;
 
-		case SLIMEDIRECTION::SM_RIGHT:
+		case SLIMEDIRECTION::SL_RIGHT:
 			_frameY = 2;
 			break;
 
-		case SLIMEDIRECTION::SM_UP:
+		case SLIMEDIRECTION::SL_UP:
 			_frameY = 3;
 			break;
 
-		case SLIMEDIRECTION::SM_DOWN:
+		case SLIMEDIRECTION::SL_DOWN:
 			_frameY = 0;
 			break;
 		}
 		break;
 
-	case SLIMESTATE::SM_MOVE:
+	case SLIMESTATE::SL_MOVE:
 		switch (_direction)
 		{
-		case SLIMEDIRECTION::SM_LEFT:
+		case SLIMEDIRECTION::SL_LEFT:
 			_frameY = 5;
 			break;
 
-		case SLIMEDIRECTION::SM_RIGHT:
+		case SLIMEDIRECTION::SL_RIGHT:
 			_frameY = 6;
 			break;
 
-		case SLIMEDIRECTION::SM_UP:
-			_frameY = 4;
+		case SLIMEDIRECTION::SL_UP:
+			_frameY = 7;
 			break;
 
-		case SLIMEDIRECTION::SM_DOWN:
-			_frameY = 7;
+		case SLIMEDIRECTION::SL_DOWN:
+			_frameY = 4;
 			break;
 		}
 		if (!playerCheck())
@@ -177,94 +150,114 @@ void Slime::frame()
 		_moveCheck = true;
 		break;
 
-	case SLIMESTATE::SM_ATTACK: //공격
+	case SLIMESTATE::SL_ATTACK: //공격
 		switch (_attackParttern) //어떤 패턴 실행
 		{
-		case SLIMEATTACK::SLIME_PARTTERN1: //원방향
+		case SLIMEATTACK::SL_PARTTERN1: //원방향
 			switch (_direction) //패턴 실행 시 방향
 			{
-			case SLIMEDIRECTION::SM_LEFT:
+			case SLIMEDIRECTION::SL_LEFT:
 				_frameY = 9;
 				break;
 
-			case SLIMEDIRECTION::SM_RIGHT:
+			case SLIMEDIRECTION::SL_RIGHT:
 				_frameY = 10;
 				break;
 
-			case SLIMEDIRECTION::SM_UP:
+			case SLIMEDIRECTION::SL_UP:
 				_frameY = 11;
 				break;
 
-			case SLIMEDIRECTION::SM_DOWN:
+			case SLIMEDIRECTION::SL_DOWN:
 				_frameY = 8;
 				break;
 			}
+			_moveCheck = false;
 			circleDirectionBullet();
-			break;
+		break;
 
-		case SLIMEATTACK::SLIME_PARTTERN2: //3방향
+		case SLIMEATTACK::SL_PARTTERN2: //3방향
 			switch (_direction)
 			{
-			case SLIMEDIRECTION::SM_LEFT:
-				_frameY = 14;
+			case SLIMEDIRECTION::SL_LEFT:
+				_frameY = 17;
+				threeDirectionBullet();
 				break;
 
-			case SLIMEDIRECTION::SM_RIGHT:
-				_frameY = 15;
+			case SLIMEDIRECTION::SL_RIGHT:
+				_frameY = 18;
+				threeDirectionBullet();
 				break;
 
-			case SLIMEDIRECTION::SM_UP:
-				_frameY = 16;
+			case SLIMEDIRECTION::SL_UP:
+				_frameY = 19;
+				threeDirectionBullet();
 				break;
 
-			case SLIMEDIRECTION::SM_DOWN:
-				_frameY = 13;
+			case SLIMEDIRECTION::SL_DOWN:
+				_frameY = 12; 
 				break;
 			}
+			_moveCheck = false;
+			threeDirectionBullet();
 			break;
 		}
-		_moveCheck = false;
+		break;
+
+	case SLIMESTATE::SL_DEAD:
+		_frameY = 20;
 		break;
 	}
 }
 
 void Slime::animation()
 {
-	if (_frameSpeed + _worldTime <= TIMEMANAGER->getWorldTime())
+	if (_frameSpeed + _worldTimeCount <= TIMEMANAGER->getWorldTime())
 	{
-		_worldTime = TIMEMANAGER->getWorldTime();
+		_worldTimeCount = TIMEMANAGER->getWorldTime();
 		_image->setFrameY(_frameY);
 		_index++;
 
 		if (_index > _image->getMaxFrameX())
 		{
-			if (_state == SLIMESTATE::SM_ATTACK)
+			if (_state == SLIMESTATE::SL_ATTACK)
 			{
 				_index = _image->getMaxFrameX();
-				_state = SLIMESTATE::SM_IDLE;
+				_state = SLIMESTATE::SL_IDLE;
 			}
 
 			else
+			{
 				_index = 0;
+			}
 		}
+
+		if (_state == SLIMESTATE::SL_DEAD)
+		{
+			if (_index > _image->getMaxFrameX())
+			{
+				_isActive = false;
+			}
+		}
+
 		_image->setFrameX(_index);
 	}
 }
 
 void Slime::pursuePlayer()
 {	
-	_state = SLIMESTATE::SM_MOVE;
+	_state = SLIMESTATE::SL_MOVE;
 	_moveCheck = true;
 	//추적 대상을 바라보기
 	//플레이어 왼쪽 || 왼쪽 아래 || 왼쪽 위 일 경우
 	if (_playerPos.x < _x || _playerPos.x < _x && _playerPos.y > _y || _playerPos.x < _x && _playerPos.y < _y)
 	{
-		_direction = SLIMEDIRECTION::SM_LEFT;
+		_direction = SLIMEDIRECTION::SL_LEFT;
 	}
 
 	if (_playerPos.x > _x || _playerPos.x > _x && _playerPos.y > _y || _playerPos.x > _x && _playerPos.y < _y)
 	{
-		_direction = SLIMEDIRECTION::SM_RIGHT;
+		_direction = SLIMEDIRECTION::SL_RIGHT;
 	}
 
 	////위
@@ -288,8 +281,15 @@ void Slime::pursuePlayer()
 
 void Slime::randomMove()
 {
-	_x += _randomX * _speed;
-	_y -= _randomY * _speed;
+	if (MONSTER_MOVE_RANGE_LEFT < _x &&  _rc.left < MONSTER_MOVE_RANGE_RIGHT)
+	{
+		_x +=  _randomX * _speed;
+	}
+
+	if (MONSTER_MOVE_RANGE_UP < _rc.top && _rc.top < MONSTER_MOVE_RANGE_DOWN)
+	{
+		_y += _randomY * _speed;
+	}
 }
 
 bool Slime::playerCheck()
@@ -298,7 +298,6 @@ bool Slime::playerCheck()
 
 	if (_range > _playerDistance)
 	{
-		_playerCheck = true;
 		return true;
 	}
 
@@ -307,11 +306,11 @@ bool Slime::playerCheck()
 
 void Slime::randomPosCreate()
 {	
+	_state = SLIMESTATE::SL_MOVE;
 	//랜덤좌표 생성
 	if (MOVECOOLTIME + _moveWorldTime < TIMEMANAGER->getWorldTime())
 	{
 		_moveWorldTime = TIMEMANAGER->getWorldTime();
-
 		_randomX = RND->getInt(3) - 1;
 		_randomY = RND->getInt(3) - 1;
 	}
@@ -320,34 +319,34 @@ void Slime::randomPosCreate()
 	//왼쪽 || 왼쪽 아래 || 왼쪽 위
 	if (_randomX == -1 || _randomX == -1 && _randomY == -1 || _randomX == -1 && _randomY == 1)
 	{
-		_direction = SLIMEDIRECTION::SM_LEFT;
+		_direction = SLIMEDIRECTION::SL_LEFT;
 	}
 
 	//오른쪽 || 오른쪽 아래 || 오른쪽 위
 	if (_randomX == 1 || _randomX == 1 && _randomY == -1 || _randomX == 1 && _randomY == 1)
 	{
-		_direction = SLIMEDIRECTION::SM_RIGHT;
+		_direction = SLIMEDIRECTION::SL_RIGHT;
 	}
 
 	//위
 	if (_randomY == -1 && _randomX == 0)
 	{
-		_direction = SLIMEDIRECTION::SM_UP;
+		_direction = SLIMEDIRECTION::SL_UP;
 	}
 
 	//아래
 	if (_randomY == 1 && _randomX == 0)
 	{
-		_direction = SLIMEDIRECTION::SM_DOWN;
+		_direction = SLIMEDIRECTION::SL_DOWN;
 	}
 
 	//움직이지 않을경우
 	if (_randomX == 0 && _randomY == 0)
 	{
-		_state = SLIMESTATE::SM_IDLE;
+		_state = SLIMESTATE::SL_IDLE;
 	}
 	else
-		_state = SLIMESTATE::SM_MOVE;
+		_state = SLIMESTATE::SL_MOVE;
 }
 
 void Slime::attackParttern()
@@ -356,14 +355,14 @@ void Slime::attackParttern()
 	if (ATTACKCOOLTIME + _attacWorldTime < TIMEMANAGER->getWorldTime())
 	{
 		_attacWorldTime = TIMEMANAGER->getWorldTime();
-		_state = SLIMESTATE::SM_ATTACK;
-		_attackParttern = SLIMEATTACK::SLIME_PARTTERN1;//static_cast<SLIMEATTACK>(RND->getInt(2));	
+		_state = SLIMESTATE::SL_ATTACK;
+		_attackParttern = static_cast<SLIMEATTACK>(RND->getInt(2));	
 	}
 }
 
 void Slime::circleDirectionBullet()
 {
-	if (_attackParttern == SLIMEATTACK::SLIME_PARTTERN1 && _image->getMaxFrameX() == _index)
+	if (_attackParttern == SLIMEATTACK::SL_PARTTERN1 && _image->getMaxFrameX() == _index)
 	{
 		_slimeCirclebullet->fire(_x, _y);
 	}
@@ -371,6 +370,11 @@ void Slime::circleDirectionBullet()
 
 void Slime::threeDirectionBullet()
 {
+	if (_attackParttern == SLIMEATTACK::SL_PARTTERN2 && _image->getMaxFrameX() == _index)
+	{
+		float angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
+		_slimebullet->fire(_x, _y, angle);
+	}
 }
 
 STObservedData Slime::getRectUpdate()
@@ -385,13 +389,12 @@ STObservedData Slime::getRectUpdate()
 
 void Slime::collideObject(STObservedData obData)
 {
-
 	if ((*obData.typeKey) == ObservedType::ROCKET_MISSILE && (*obData.isActive))
 	{
 		if (_hp <= (*obData.damage))
 		{
-			//나중에 죽는 애니메이션 넣는걸로 바꿀 것.  isActive를 false로 바꾸는 작업은 죽은 애니메이션 전부 실행 뒤 바꿔주는 것으로 변경
-			_isActive = false;
+			//나중에 죽는 애니메이션 넣는걸로 바꿀 것. isActive를 false로 바꾸는 작업은 죽은 애니메이션 전부 실행 뒤 바꿔주는 것으로 변경	
+			_state = SLIMESTATE::SL_DEAD;
 		}
 		else
 		{

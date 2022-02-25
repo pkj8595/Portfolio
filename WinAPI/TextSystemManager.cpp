@@ -15,11 +15,10 @@ HRESULT TextSystemManager::init(void)
 	iscollText = false;
 
 	_text[0] = { L"", L"기본 무기 중 하나를 가져갈 수 있다. 어떤 종류를 가져갈까?" };
-	_text[1] = { L"", L"크레딧을 20 소모해 랜덤한 어빌리티를 하나 뽑을 수 있다. 뽑아볼까?" };
-	_text[2] = { L"", L"아무 것도 안 들어있겠지?" };
-	_text[3] = { L"", L"거울같이 생겼는데, 불투명해" };
-	_text[4] = { L"", L"...지금은 보고 싶지 않아." };
-	_text[5] = { L"", L"잠겨있어." };
+	_text[1] = { L"", L"아무 것도 안 들어있겠지?" };
+	_text[2] = { L"", L"거울같이 생겼는데, 불투명해" };
+	_text[3] = { L"", L"...지금은 보고 싶지 않아." };
+	_text[4] = { L"", L"잠겨있어." };
 	
 
 	_chatRc = RectMake(WINSIZE_X*0.08, WINSIZE_Y*0.75, _chatImage->getWidth(), _chatImage->getHeight());
@@ -62,13 +61,13 @@ void TextSystemManager::shopLog(wstring itemName, wstring price)
 
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
 	IMAGEMANAGER->alphaRender("Namebox", getMemDC(), _nameRc.left, _nameRc.top, _textAlpha);
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "야놀자채", 27, 15,
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "야놀자 야체", 27, 15,
 		L"마리", wcslen(L"마리"), RGB(0, 0, 255));
 
 	IMAGEMANAGER->render("SelOne", getMemDC(), _select_oneRc.left, _select_oneRc.top);
 	IMAGEMANAGER->render("SelOne", getMemDC(), _select_TwoRc.left, _select_TwoRc.top);
 
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.14, WINSIZE_Y*0.78, "야놀자채", 27, 15,
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.14, WINSIZE_Y*0.78, "야놀자 야체", 27, 15,
 		Shop_talk, ((_textBufferCnt / 4) > wcslen(Shop_talk) ? wcslen(Shop_talk) : (_textBufferCnt / 4)), RGB(255, 255, 255));
 
 }
@@ -78,11 +77,11 @@ void TextSystemManager::EventLog(int arrText)
 	_eventArrText = arrText;
 
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "야놀자채", 27, 15,
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "야놀자 야체", 27, 15,
 		_text[arrText].name, wcslen(_text[arrText].name), RGB(0, 0, 255));
 
 	
 
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.78, "야놀자채", 27, 15, _text[arrText].script, 
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.78, "야놀자 야체", 27, 15, _text[arrText].script, 
 		((_textBufferCnt / 4) > wcslen(_text[arrText].script) ? wcslen(_text[arrText].script) : (_textBufferCnt / 4)), RGB(255, 0, 255));
 }

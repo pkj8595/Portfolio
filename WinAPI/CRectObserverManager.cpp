@@ -69,7 +69,7 @@ void CRectObserverManager::getRectFromObserved()
 			if ((*obData.typeKey) == (*obDataCompare.typeKey)) continue;
 
 			//적 피격 (obData : 내 총알, Compare : 적)
-			if ((*obData.typeKey) == ObservedType::ROCKET_MISSILE &&
+			if (((*obData.typeKey) == ObservedType::ROCKET_MISSILE || (*obData.typeKey) == ObservedType::PLAYER_SWORD) &&
 				(*obDataCompare.typeKey) == ObservedType::MINION)
 			{
 				RECT collisionRect;
@@ -107,7 +107,7 @@ void CRectObserverManager::getRectFromObserved()
 			}
 
 			//Sword 반격 (obData : 
-			if ((*obData.typeKey) == ObservedType::ROCKET_MISSILE &&
+			if ((*obData.typeKey) == ObservedType::PLAYER_SWORD &&
 				(*obDataCompare.typeKey) == ObservedType::MINION_MISSILE)
 			{
 				RECT collisionRect;

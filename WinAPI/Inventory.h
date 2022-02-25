@@ -10,7 +10,6 @@
 #define	INVENTORY_IMG_OFFSETX		40
 #define	INVENTORY_IMG_OFFSETY		40
 
-class Player;
 class Inventory : public GameNode
 {
 	typedef struct STInvenPos
@@ -50,15 +49,17 @@ class Inventory : public GameNode
 	Item* _equipArmor;		//장착중인 아머
 	Item* _equipShoes;		//장착중인 신발
 	Item* _equipHat;		//장착중인 신발
+
 	Item* _emptyItem;		//빈 아이템
 
-	CPlayer_Attribute _totalAttribute;	//총 아이템 능력치
+	CPlayer_Attribute _itemTotalAttribute;	//총 아이템 능력치
+	CPlayer_Attribute* _ptotalAttribute;	//아이템 + 플레이어
+	CPlayer_Attribute* _pAttribute;			//플레이어 능력치
 
 	bool _isShowInven;
 	int _abilutyItemCount;
 	int _invenItemCount;
 
-	Player* _player;
 	POINT _statusTextPos;
 
 public:
@@ -70,7 +71,15 @@ public:
 	void renderInventoryBase(void);
 	void showInventoryItem(void);
 	void showAbilityItem(void);
-	void registerAddressPlayer(Player* player) { _player = player; }
+
+	void setPTotalattribute(CPlayer_Attribute* att)
+	{
+		_ptotalAttribute = att;
+	}
+	void setPlayerAttribute(CPlayer_Attribute* att)
+	{
+		_pAttribute = att;
+	}
 
 	//==========================
 	// ### Player Equipment ###
@@ -80,31 +89,32 @@ public:
 	//총 아이템 능력치 합산
 	void computeItemTotalAttribute();
 	//장착중인 무기 반환
-	Item* getEquipWeapon();
+	Item** getEquipWeapon();
 
-	CPlayer_Attribute getItemTotalAttribute(){return _totalAttribute;}
+	CPlayer_Attribute getItemTotalAttribute(){return _itemTotalAttribute;}
+
 	void setEquipWeapon(Item* witem)
 	{
-		if (_equipWeapon == nullptr) _equipWeapon = witem;
-		else if (_equipWeapon != nullptr) _equipWeapon = nullptr;
+		if (_equipWeapon == _emptyItem) _equipWeapon = witem;
+		else if (_equipWeapon != _emptyItem) _equipWeapon = _emptyItem;
 		computeItemTotalAttribute();
 	}
 	void setEquipArmor(Item* aitem)
 	{
-		if (_equipArmor == nullptr) _equipArmor = aitem;
-		else if (_equipArmor != nullptr) _equipArmor = nullptr;
+		if (_equipArmor == _emptyItem) _equipArmor = aitem;
+		else if (_equipArmor != _emptyItem) _equipArmor = _emptyItem;
 		computeItemTotalAttribute();
 	}
 	void setEquipShoes(Item* sitem)
 	{
-		if (_equipShoes == nullptr) _equipShoes = sitem;
-		else if (_equipShoes != nullptr) _equipShoes = nullptr;
+		if (_equipShoes == _emptyItem) _equipShoes = sitem;
+		else if (_equipShoes != _emptyItem) _equipShoes = _emptyItem;
 		computeItemTotalAttribute();
 	}
 	void setEquipHat(Item* hitem)
 	{
-		if(_equipHat==nullptr) _equipHat = hitem;
-		else if (_equipHat != nullptr) _equipHat = nullptr;
+		if(_equipHat== _emptyItem) _equipHat = hitem;
+		else if (_equipHat != _emptyItem) _equipHat = _emptyItem;
 		computeItemTotalAttribute();
 	}
 

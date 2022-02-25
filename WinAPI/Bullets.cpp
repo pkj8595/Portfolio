@@ -19,6 +19,7 @@ void AMissile::release(void)
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
 		SAFE_DELETE((*_viBullet)->img);
+		SAFE_DELETE((*_viBullet)->reflectImg);
 	}
 	_vBullet.clear();
 }
@@ -72,6 +73,7 @@ void AMissile::isRange()
 		if (_range < getDistance((*_viBullet)->fireX, (*_viBullet)->fireY, (*_viBullet)->x, (*_viBullet)->y + 100))
 		{
 			SAFE_DELETE((*_viBullet)->img);
+			SAFE_DELETE((*_viBullet)->reflectImg);
 			(*_viBullet)->fire = false;
 			(*_viBullet)->release();
 			_viBullet = _vBullet.erase(_viBullet);
@@ -353,15 +355,19 @@ STObservedData tagCBullet::getRectUpdate()
 	temp.rc = &rc;
 	temp.typeKey = &type;
 	temp.isActive = &fire;
+	temp.damage = &damage;
+	temp.angle = &angle;
 	return temp;
 }
 
 void tagCBullet::collideObject(STObservedData obData)
 {
 	if ((*obData.typeKey) == ObservedType::ROCKET) fire = false;
-	else if ((*obData.typeKey) == ObservedType::ROCKET_MISSILE)
+	else if ((*obData.typeKey) == ObservedType::PLAYER_SWORD)
 	{
 		//반격, 공격반사 처리
+		angle = (*obData.angle);
+		type = ObservedType::ROCKET_MISSILE;
 	}
 }
 
@@ -401,11 +407,12 @@ void ThreeDirectionMissile::fire(float x, float y, float angle)
 		//
 		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 26, 26, true, RGB(255, 0, 255));
 		bullet->type = ObservedType::MINION_MISSILE;
-		bullet->speed = 5.0f;
+		bullet->speed = 3.0f;
 		bullet->x = bullet->fireX = x;
 		bullet->y = bullet->fireY = y;
 		bullet->angle = _firstAngle - (_bulletCount*_offsetAngle);
 		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
+		bullet->damage = 1.0f;
 		bullet->fire = true;
 		bullet->init();
 		_vBullet.push_back(bullet);
@@ -455,15 +462,18 @@ void CircleMissile::fire(float x, float y)
 	{
 		tagCBullet* bullet = new tagCBullet;
 		bullet->img = new my::Image;
+		bullet->reflectImg = new my::Image;
 		//
 		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 26, 26, true, RGB(255, 0, 255));
+		bullet->reflectImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectBullet.bmp", 26, 26, true, RGB(255, 0, 255));
 		bullet->type = ObservedType::MINION_MISSILE;
-		bullet->speed = 5.0f;
+		bullet->speed = 3.0f;
 		bullet->x = bullet->fireX = x;
 		bullet->y = bullet->fireY = y;
 		bullet->angle = _firstAngle - (_bulletCount*_offsetAngle);
 		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
 		bullet->fire = true;
+		bullet->damage = 1.0f;
 		bullet->init();
 		_vBullet.push_back(bullet);
 
@@ -476,7 +486,8 @@ void CircleMissile::draw(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		(*_viBullet)->img->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
+		if ((*_viBullet)->type == ObservedType::MINION_MISSILE) (*_viBullet)->img->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
+		else (*_viBullet)->reflectImg->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
 	}
 }
 
