@@ -31,6 +31,22 @@ class Inventory : public GameNode
 		my::Image* img;
 		RECT rc;
 	}InfoWindow;
+	typedef struct STItemInfoText
+	{
+		string str;
+		COLORREF color;
+		int fontSize;
+		POINT pt;
+
+		STItemInfoText()
+		{
+			str = "";
+			color = RGB(255, 255, 255);
+			fontSize = 20;
+			pt = POINT{0,0};
+		}
+	}InfoWindowText;
+
 
 	ItemManager* _itemManager;
 	my::Image* _inventoryBackground;
@@ -133,7 +149,9 @@ public:
 	void setIsShowInven(bool isShowInven) { _isShowInven = isShowInven; }
 	void showAttributeText(void);
 	void equipRender(void);
-	void renderItemInfo(POINT mousePt);
+	void renderItemInfo();
 
+	string changeItemTypeToStr(EITEM_TYPE type);
+	string changeAttributeToStr(CPlayer_Attribute attri);
 };
 
