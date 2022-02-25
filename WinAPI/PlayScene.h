@@ -7,11 +7,15 @@
 class PlayScene : public GameNode
 {
 private:
-
+	my::Image* _fadeoutImage;
 	MapManager* _mapManager;
 	EnemyManager* _enemyManager;
 	Player* _player;
 	int _stageNum;
+
+	bool _isChanging;
+	int _fadeoutAlpha;
+	int _changeScreenType; //0, 1, 2, 3 : LEFT, RIGHT, UP, DOWN
 
 public:
 	HRESULT init(void);
@@ -20,6 +24,9 @@ public:
 	void render(void);
 
 	void pixelCollision();
+
+	void changeMapFadeOut();
+	void setFadeOutAlpha();
 	void changeMap();
 	void spawnMonster();
 	void checkPlayerEscapeWithoutClear();

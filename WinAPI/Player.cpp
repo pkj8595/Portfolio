@@ -31,6 +31,7 @@ HRESULT Player::init(void)
 	_attack = false;
 	_swordSpecialAttack = false;
 
+	_isTextShow = false;
 	_dead = false;
 	
 	_swordStack = 0;
@@ -110,7 +111,10 @@ void Player::update(void)
 
 	if (!_attack || (*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
 	{	
-		move();
+		if (!_isTextShow)
+		{
+			move();
+		}
 	}
 	computeTotalAttribute(); // ÇÕ»ê
 	_sword->update();

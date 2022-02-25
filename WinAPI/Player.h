@@ -131,7 +131,8 @@ public:
 	PLAYER_STATE getState() { return _state;	 }
 	void printUI() { _statusUI->render(); }
 	void printHitBG();
-
+	
+	bool _isTextShow;
 	bool isDead() { return _dead; }
 };
 

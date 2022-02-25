@@ -164,6 +164,7 @@
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="KgyScene.cpp" />
     <ClCompile Include="Lobby.cpp" />
+    <ClCompile Include="LobbyCollision.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapManager.cpp" />

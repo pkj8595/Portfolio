@@ -248,6 +248,9 @@
     </ClCompile>
     <ClCompile Include="DamageEffectManager.cpp" />
     <ClCompile Include="Damage.cpp" />
+    <ClCompile Include="LobbyCollision.cpp">
+      <Filter>OJH</Filter>
+    </ClCompile>
     <ClCompile Include="RepairMap.cpp">
       <Filter>MainGame\Map\MapType</Filter>
     </ClCompile>
