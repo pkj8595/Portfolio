@@ -83,7 +83,6 @@ void Slime::update(void)
 void Slime::render(void)
 {
 	//Enemy::render();
-	if(_isActive)
 		draw();
 }
 
