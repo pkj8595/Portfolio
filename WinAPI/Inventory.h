@@ -124,5 +124,6 @@ public:
 	bool getIsShowInven(void) { return _isShowInven; }
 	void setIsShowInven(bool isShowInven) { _isShowInven = isShowInven; }
 	void showAttributeText(void);
+	void equipRender(void);
 };
 

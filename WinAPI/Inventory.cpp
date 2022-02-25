@@ -41,9 +41,9 @@ HRESULT Inventory::init(void)
 
 	_emptyItem = new Item;
 	_equipWeapon= _emptyItem;
-	_equipArmor =	nullptr;
-	_equipShoes =	nullptr;
-	_equipHat	=	nullptr;
+	_equipArmor = _emptyItem;
+	_equipShoes = _emptyItem;
+	_equipHat	= _emptyItem;
 
 	_isShowInven = false;
 	_abilutyItemCount = 0;
@@ -82,6 +82,7 @@ void Inventory::render(void)
 	if (_isShowInven)
 	{
 		renderInventoryBase();
+		equipRender();
 		showInventoryItem();
 		showAttributeText();
 
@@ -166,7 +167,10 @@ void Inventory::pushItem(Item* item)
 		_abilutyItemCount++;
 	}
 	else if (item->_type == EITEM_TYPE::EQUIP_WEAPON_BOW||
-		item->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
+			item->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD||
+			item->_type == EITEM_TYPE::EQUIP_HAT||
+			item->_type == EITEM_TYPE::EQUIP_ARMOR||
+			item->_type == EITEM_TYPE::EQUIP_SHOES)
 	{
 		Item* copyItem = new Item;
 		*copyItem = *item;
@@ -280,7 +284,10 @@ void Inventory::checkMouse(void)
 				{
 					cout<< (*_viItem).first->_name<<endl;
 					if ((*_viItem).first->_type == EITEM_TYPE::EQUIP_WEAPON_BOW ||
-						(*_viItem).first->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
+						(*_viItem).first->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD||
+						(*_viItem).first->_type == EITEM_TYPE::EQUIP_HAT||
+						(*_viItem).first->_type == EITEM_TYPE::EQUIP_ARMOR||
+						(*_viItem).first->_type == EITEM_TYPE::EQUIP_SHOES)
 					{
 						if (_equipWeapon == (*_viItem).first)
 						{
@@ -352,6 +359,22 @@ void Inventory::showAttributeText(void)
 		FONTMANAGER->drawText(getMemDC(), (int)_statusTextPos.x+((int)i / 4)*90, (int)_statusTextPos.y+(20*((int)i%4)), "Kostar", 15, 200, str, strlen(str), RGB(255, 255, 255));
 
 		delete[] str;
+	}
+
+}
+
+void Inventory::equipRender(void)
+{
+	_viItem = _vItem.begin();
+	for (; _viItem != _vItem.end(); ++_viItem)
+	{
+		if ((*_viItem).first == _equipWeapon||
+			(*_viItem).first == _equipArmor ||
+			(*_viItem).first == _equipShoes||
+			(*_viItem).first == _equipHat)
+		{
+			_inventorySlotB.img->frameRender(getMemDC(), (*_viItem).second.left-3, (*_viItem).second.top-3, 1, 1);
+		}
 	}
 
 }
