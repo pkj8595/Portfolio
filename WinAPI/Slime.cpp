@@ -13,6 +13,8 @@ HRESULT Slime::init(const char * imageName, POINT position)
 {
 	Enemy::init(imageName,position);
 	_type = ObservedType::MINION;
+	_deadForOb = false;
+	_deadTimeCount = TIMEMANAGER->getWorldTime() + 9999.999f;
 	_x = position.x;
 	_y = position.y;
 	_randomX = 0;
@@ -30,8 +32,6 @@ HRESULT Slime::init(const char * imageName, POINT position)
 	_moveCheck = true;
 	_isActive = true;
 	_attackRange = 150;
-	_deadForOb = false;
-	_deadTimeCount = TIMEMANAGER->getWorldTime() + 9999.999f;
 
 	_slimeCirclebullet = new CircleMissile;
 	_slimeCirclebullet->init(10, 300);
@@ -48,9 +48,9 @@ HRESULT Slime::init(const char * imageName, POINT position)
 
 void Slime::release(void)
 {
+	Enemy::release();
 	_slimeCirclebullet->release();
 	SAFE_DELETE(_slimeCirclebullet);
-	Enemy::release();
 }
 
 void Slime::update(void)
@@ -60,7 +60,12 @@ void Slime::update(void)
 	_slimebullet->update();
 
 	//플레이어 추적 범위에 들어왔을 경우
-	if (_deadTimeCount < TIMEMANAGER->getWorldTime() - 0.5f) _isActive = false;
+	if (_deadTimeCount < TIMEMANAGER->getWorldTime() - 0.5f)
+	{
+		_frameY = 1;
+		_state = SLIMESTATE::SL_IDLE;
+		_isActive = false;
+	}
 	if (_state == SLIMESTATE::SL_DEAD)
 	{
 		if (_index >= _image->getMaxFrameX())
