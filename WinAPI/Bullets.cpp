@@ -405,8 +405,10 @@ void ThreeDirectionMissile::fire(float x, float y, float angle)
 		_firstAngle = angle + (static_cast<float>(_bulletMax / 2)*_offsetAngle);
 		tagCBullet* bullet = new tagCBullet;
 		bullet->img = new my::Image;
+		bullet->reflectImg = new my::Image;
 		//
 		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 26, 26, true, RGB(255, 0, 255));
+		bullet->reflectImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectBullet.bmp", 26, 26, true, RGB(255, 0, 255));
 		bullet->type = ObservedType::MINION_MISSILE;
 		bullet->speed = 3.0f;
 		bullet->x = bullet->fireX = x;
@@ -427,7 +429,8 @@ void ThreeDirectionMissile::draw(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		(*_viBullet)->img->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
+		if ((*_viBullet)->type == ObservedType::MINION_MISSILE) (*_viBullet)->img->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
+		else (*_viBullet)->reflectImg->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
 	}
 }
 

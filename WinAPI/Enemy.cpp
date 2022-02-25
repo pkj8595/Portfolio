@@ -23,15 +23,15 @@ HRESULT Enemy::init(const char* imageName, POINT position)
 {
 	cout << "Enemy::init" << endl;
 	_worldTimeCount = TIMEMANAGER->getWorldTime();
-	_rndTimeCount = RND->getFromFloatTo(0.04f, 0.1f);
+	_rndTimeCount = RND->getFromFloatTo(0.5f, 2.f);
 
-	_bulletFireCount = TIMEMANAGER->getWorldTime();
-	_rndFireCount = RND->getFromFloatTo(0.5f,4.5f);
+	//_bulletFireCount = TIMEMANAGER->getWorldTime();
+	//_rndFireCount = RND->getFromFloatTo(0.5f,4.5f);
 
 	_image = IMAGEMANAGER->findImage(imageName);
 	_rc = RectMakeCenter(position.x, position.y, _image->getFrameWidth(), _image->getFrameHeight());
 
-	_attack = 1;
+	//_attack = 1;
 
 	//Observer code
 	_type = ObservedType::MINION;
@@ -68,15 +68,7 @@ void Enemy::draw(void)
 
 void Enemy::animation(void)
 {
-	if (_rndTimeCount + _worldTimeCount <= TIMEMANAGER->getWorldTime())
-	{
-		_worldTimeCount = TIMEMANAGER->getWorldTime();
-		_currentFrameX++;
-		if (_image->getMaxFrameX() < _currentFrameX)
-		{
-			_currentFrameX = 0;
-		}
-	}
+
 }
 
 bool Enemy::bulletCountFire(void)

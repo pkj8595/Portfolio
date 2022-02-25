@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="BigSlime.cpp" />
     <ClCompile Include="BossMap.cpp" />
     <ClCompile Include="Bullets.cpp" />
     <ClCompile Include="CEffect.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="ItemClass.cpp" />
     <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="KgyScene.cpp" />
+    <ClCompile Include="KingSlime.cpp" />
     <ClCompile Include="Lobby.cpp" />
     <ClCompile Include="LobbyCollision.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
@@ -211,6 +213,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="BigSlime.h" />
     <ClInclude Include="BossMap.h" />
     <ClInclude Include="Bullets.h" />
     <ClInclude Include="CEffect.h" />
@@ -230,6 +233,7 @@
     <ClInclude Include="ItemClass.h" />
     <ClInclude Include="ItemManager.h" />
     <ClInclude Include="KgyScene.h" />
+    <ClInclude Include="KingSlime.h" />
     <ClInclude Include="Lobby.h" />
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="Map.h" />

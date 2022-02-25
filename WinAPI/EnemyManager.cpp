@@ -3,6 +3,8 @@
 #include "Minion.h"
 #include "Player.h"
 #include "Slime.h"
+#include "KingSlime.h"
+#include "BigSlime.h"
 #include "Snake.h"
 
 bool EnemyManager::checkClear()
@@ -35,6 +37,7 @@ HRESULT EnemyManager::init(void)
 	IMAGEMANAGER->addFrameImage("Slime", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Slime2.bmp", 288, 2016, 3, 21, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Snake", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Snake.bmp", 144, 624, 3, 13, true, RGB(255, 0, 255));
 
+	IMAGEMANAGER->addFrameImage("KingSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 1080, 7560, 3, 21, true, RGB(255, 0, 255));
 
 	//미니언 생성
 
@@ -100,15 +103,27 @@ void EnemyManager::setMinion(void)
 	slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
 	_vMinion.push_back(slime);
 
+	Enemy* snake;
+	snake = new Snake;
+	snake->init("Snake", PointMake(CENTER_X - 100, CENTER_Y));
+	_vMinion.push_back(snake);
+
 	Enemy* slime2;
 	slime2 = new Slime;
 	slime2->init("Slime", PointMake(CENTER_X - 50, CENTER_Y - 50));
 	_vMinion.push_back(slime2);
+}
 
-	//Enemy* snake;
-	//snake = new Snake;
-	//snake->init("Snake", PointMake(CENTER_X - 200, CENTER_Y));
-	//_vMinion.push_back(snake);
+void EnemyManager::setBoss(void)
+{
+	Enemy* kingslime;
+	kingslime = new KingSlime;
+	kingslime->init("KingSlime", PointMake(CENTER_X, CENTER_Y));
+	_vMinion.push_back(kingslime);
+}
+
+void EnemyManager::setMiniBoss(void)
+{
 }
 
 void EnemyManager::removeMinion(int arrNum)
