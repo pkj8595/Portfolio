@@ -14,7 +14,8 @@ private:
 	enum class PLAYER_STATE { STOP, WALK, DODGE, ATTACK_NONE, ATTACK_SWORD, ATTACK_BOW, DEAD};
 	enum class PLAYER_DIRECTION {LEFTDOWN, DOWN, RIGHTDOWN, LEFT, RIGHT, LEFTUP, UP, RIGHTUP };
 	my::Image* _image;
-
+	my::Image* _hitBG;
+	int _hitAlpha;
 	int _level;
 
 	PLAYER_STATE _state;
@@ -97,12 +98,12 @@ public:
 	void move();
 
 	void healStamina();
+	void checkLevelUp();
 
 	void setCollision();
 
 	//TotalAttribute гу╩Й
 	void computeTotalAttribute();
-
 
 	float calculatePhysicalDamage();
 	float calculateMagicDamage();
@@ -129,6 +130,7 @@ public:
 	}
 	PLAYER_STATE getState() { return _state;	 }
 	void printUI() { _statusUI->render(); }
+	void printHitBG();
 
 	bool isDead() { return _dead; }
 };
