@@ -4,22 +4,8 @@
 #include "Bullets.h"
 
 
-enum class SNAMESTATE
-{
-	SNAKE_IDLE,
-	SNAKE_MOVE,
-	SNAKE_ATTACK,
-	SNAKE_END
-};
-
-enum class SNAKEDIRECTION
-{
-	SNAKE_LEFT,
-	SNAKE_RIGHT,
-	SNAKE_UP,
-	SNAKE_DOWN,
-	SNAKE_END
-};
+enum class SNAMESTATE { SNAKE_IDLE, SNAKE_MOVE, SNAKE_ATTACK, SNAKE_END };
+enum class SNAKEDIRECTION { SNAKE_LEFT, SNAKE_RIGHT, SNAKE_UP, SNAKE_DOWN, SNAKE_END };
 
 class Snake:public Enemy
 {
@@ -56,6 +42,10 @@ public:
 	void randomMove();
 	void attack();
 	bool playerCheck(); //플레이어 감지함수
+
+public:
+	virtual STObservedData getRectUpdate();
+	virtual void collideObject(STObservedData obData);
 
 public:
 	Snake();
