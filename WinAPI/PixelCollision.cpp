@@ -22,7 +22,9 @@ void PlayScene::changeMap()
 	{
 		_mapManager->changeMap(0);
 		spawnMonster();
-		_player->setPosition(_mapManager->getCurrentMapPixel()->getWidth() - 350, _player->getPosition().y);
+		if(_mapManager->getCurrentMap()->getMapType() == Map::MAPTYPE::SHOP)
+			_player->setPosition(_mapManager->getCurrentMapPixel()->getWidth() - 550, _player->getPosition().y + 100);
+		else _player->setPosition(_mapManager->getCurrentMapPixel()->getWidth() - 350, _player->getPosition().y);
 	}
 	if (_player->getPosition().x > _mapManager->getCurrentMapPixel()->getWidth() && _mapManager->getCurrentMap()->isClear())
 	{
