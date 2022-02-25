@@ -61,13 +61,13 @@ void TextSystemManager::ShopLog(wstring itemName, wstring price)
 
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
 	IMAGEMANAGER->alphaRender("Namebox", getMemDC(), _nameRc.left, _nameRc.top, _textAlpha);
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "¾ß³îÀÚ ¾ßÃ¼ R", 27, 15,
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "µÕ±Ù¸ð²Ã", 27, 15,
 		L"¸¶¸®", wcslen(L"¸¶¸®"), RGB(0, 0, 255));
 
 	IMAGEMANAGER->render("SelOne", getMemDC(), _select_oneRc.left, _select_oneRc.top);
 	IMAGEMANAGER->render("SelOne", getMemDC(), _select_TwoRc.left, _select_TwoRc.top);
 
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.14, WINSIZE_Y*0.78, "¾ß³îÀÚ ¾ßÃ¼ R", 27, 15,
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.14, WINSIZE_Y*0.78, "µÕ±Ù¸ð²Ã", 27, 15,
 		Shop_talk, ((_textBufferCnt / 4) > wcslen(Shop_talk) ? wcslen(Shop_talk) : (_textBufferCnt / 4)), RGB(255, 255, 255));
 
 }
@@ -77,11 +77,11 @@ void TextSystemManager::EventLog(int arrText)
 	_eventArrText = arrText;
 
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "¾ß³îÀÚ ¾ßÃ¼ R", 27, 15,
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "µÕ±Ù¸ð²Ã", 27, 15,
 		_text[arrText].name, wcslen(_text[arrText].name), RGB(0, 0, 255));
 
 	
 
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.78, "¾ß³îÀÚ ¾ßÃ¼ R", 27, 15, _text[arrText].script, 
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.78, "µÕ±Ù¸ð²Ã", 27, 15, _text[arrText].script, 
 		((_textBufferCnt / 4) > wcslen(_text[arrText].script) ? wcslen(_text[arrText].script) : (_textBufferCnt / 4)), RGB(255, 255, 255));
 }

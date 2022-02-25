@@ -18,8 +18,6 @@ HRESULT Lobby::init(void)
 	_tsm = new TextSystemManager;
 	_tsm->init();
 
-	_tsm->EventLog(0);
-
 	collBox = false;
 	return S_OK;
 }
