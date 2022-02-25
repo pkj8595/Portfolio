@@ -137,6 +137,21 @@ public:
 		cout << "maxStamina		:" << _attribute._maxStamina << endl;
 	}
 
+	void operator=(Item other)
+	{
+		_index= other._index;
+		_imgNum=other._imgNum;
+		_type = other._type;
+		_name = other._name;
+		_description = other._description;
+		_equip_level = other._equip_level;
+		_price = other._price;
+		_durability = other._durability;
+		_maxDurability = other._maxDurability;
+		_attribute = other._attribute;
+	}
+
+
 	Item()
 	{
 		_type = EITEM_TYPE::EMPTY;

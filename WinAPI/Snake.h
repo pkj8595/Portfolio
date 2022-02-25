@@ -4,30 +4,26 @@
 #include "Bullets.h"
 
 
-enum class SNAMESTATE { SNAKE_IDLE, SNAKE_MOVE, SNAKE_ATTACK, SNAKE_END };
-enum class SNAKEDIRECTION { SNAKE_LEFT, SNAKE_RIGHT, SNAKE_UP, SNAKE_DOWN, SNAKE_END };
+enum class SNAKESTATE { SN_IDLE, SN_MOVE, SN_ATTACK, SN_END };
+enum class SNAKEDIRECTION { SN_LEFT, SN_RIGHT, SN_UP, SN_DOWN, SN_END };
 
 class Snake:public Enemy
 {
 private:
-	Animation* _ani;
-	int randomX, randomY;
-	float _x, _y;
-	float _speed;
-	float _angle;
-	float _range;
-	float _time;
+	ThreeDirectionMissile*  _threeDirBullet;
+	TwoDirectionMissile*	_twoDirBullet;
+
+	SNAKESTATE		_state;
 	SNAKEDIRECTION  _direction;
-	SNAMESTATE _stae;
-	float _playerDistance;
 
-	bool _moveCheck;
-	int attRange;
-	float _worldTime;
-	int _attTime;
+	float	_moveWorldTime;
+	float	_playerDistance;
+	float	_speed;				//이동 속도
+	int		_range;				//플레이어 탐지 범위
+	int		_randomX, _randomY;
+	int		_maxFrameX;
+	float	_frameSpeed;
 
-	ThreeDirectionMissile* _threebullet;
-	TwoDirectionMissile* _twobullet;
 
 public:
 	HRESULT init(const char* imageName, POINT position);
@@ -39,9 +35,11 @@ public:
 	void draw(void);
 	void animation(void);
 
+	void randomPosCreate();
 	void randomMove();
 	void attack();
 	bool playerCheck(); //플레이어 감지함수
+	void frame();
 
 public:
 	virtual STObservedData getRectUpdate();

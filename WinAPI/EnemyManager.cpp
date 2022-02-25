@@ -100,10 +100,10 @@ void EnemyManager::setMinion(void)
 	slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
 	_vMinion.push_back(slime);
 
-	//Enemy* snake;
-	//snake = new Snake;
-	//snake->init("Snake", PointMake(CENTER_X - 200, CENTER_Y));
-	//_vMinion.push_back(snake);
+	Enemy* snake;
+	snake = new Snake;
+	snake->init("Snake", PointMake(CENTER_X - 100, CENTER_Y));
+	_vMinion.push_back(snake);
 }
 
 void EnemyManager::removeMinion(int arrNum)
