@@ -12,7 +12,6 @@ Slime::~Slime()
 HRESULT Slime::init(const char * imageName, POINT position)
 {
 	Enemy::init(imageName,position);
-	_type = ObservedType::MINION;
 	_x = position.x;
 	_y = position.y;
 	_randomX = 0;
@@ -21,18 +20,15 @@ HRESULT Slime::init(const char * imageName, POINT position)
 	_frameSpeed = 0.3f;
 	_index = 0;
 	_frameY = 0;
-	_worldTimeCount = TIMEMANAGER->getWorldTime();
 	_randomTimeCount = RND->getFromFloatTo(0.f,2.f);
 	_moveWorldTime = TIMEMANAGER->getWorldTime();
 	_attacWorldTime = TIMEMANAGER->getWorldTime();
 	_playerDistance = 0.0f;
 	_range = 300.f;
 	_moveCheck = true;
-	_isActive = true;
 	_attackRange = 150;
 	_deadForOb = false;
 	_deadTimeCount = TIMEMANAGER->getWorldTime() + 9999.999f;
-
 	_slimeCirclebullet = new CircleMissile;
 	_slimeCirclebullet->init(10, 300);
 
