@@ -46,6 +46,7 @@ HRESULT Slime::init(const char * imageName, POINT position)
 void Slime::release(void)
 {
 	_slimeCirclebullet->release();
+	SAFE_DELETE(_slimeCirclebullet);
 	Enemy::release();
 }
 

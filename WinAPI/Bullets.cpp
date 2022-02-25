@@ -18,6 +18,7 @@ void AMissile::release(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
+		(*_viBullet)->release();
 		SAFE_DELETE((*_viBullet)->img);
 		SAFE_DELETE((*_viBullet)->reflectImg);
 	}
@@ -72,10 +73,10 @@ void AMissile::isRange()
 		//사거리 밖으로 나갔음
 		if (_range < getDistance((*_viBullet)->fireX, (*_viBullet)->fireY, (*_viBullet)->x, (*_viBullet)->y + 100))
 		{
-			SAFE_DELETE((*_viBullet)->img);
-			SAFE_DELETE((*_viBullet)->reflectImg);
 			(*_viBullet)->fire = false;
 			(*_viBullet)->release();
+			SAFE_DELETE((*_viBullet)->img);
+			SAFE_DELETE((*_viBullet)->reflectImg);
 			_viBullet = _vBullet.erase(_viBullet);
 		}
 		else ++_viBullet;
