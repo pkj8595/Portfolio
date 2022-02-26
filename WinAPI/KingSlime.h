@@ -1,19 +1,35 @@
 #pragma once
 #include "Enemy.h"
+#include "Bullets.h"
 
 #define FRAMEDELAY		0.5f;
 
 class KingSlime : public Enemy
 {
 private:
-	//NormalBullet* _normalBullet				≈∫∏∑ ø©∑Ø∞≥
-	//BubbleBullet	* _bubbleBullet				≈´ ≈∫»Ø->¿€¿∫ ≈∫»Ø ø©∑Ø∞≥
-	//BounceBullet* _bounceBullet				∆®±‚¥¬ ≈∫»Ø
-	enum class STATE {STOP, WALK, ATTACK_BUBBLE, ATTACK_NORMAL, ATTACK_BOUNCE};
+	my::Image* _bossNameImage;
+	int _bossNameAlpha;
+	bool _bossNameFadeIn;
+
+	my::Image* _bossHpFrameImage;
+	my::Image* _bossHpImage;
+	my::Image* _bossHpDamageImage;
+	float _maxHP;
+	int _bossHpAlpha;
+	float _hpWidth;
+	float _damageHpWidth;
+
+	NormalBullet* _normalBullet;				//≈∫∏∑ ø©∑Ø∞≥
+	BubbleBullet* _bubbleBullet;				//≈´ ≈∫»Ø->¿€¿∫ ≈∫»Ø ø©∑Ø∞≥
+	enum class STATE {STOP, WALK, ATTACK_BUBBLE, ATTACK_NORMAL};
 	enum class DIRECTION {DOWN = 0, LEFT, RIGHT, UP};
 
+	RECT _fixRC;
 	STATE _state;
 	DIRECTION _direction;
+
+	bool _alreadyShot;
+	float _angle;
 
 	bool _deadForOb;
 	int _frameX, _frameY;
@@ -32,10 +48,16 @@ public:
 	virtual STObservedData getRectUpdate();
 	virtual void collideObject(STObservedData obData);
 
+	void bossNameUpdate();
+	void hpUpdate();
+	void hpRender(int x, int y);
+
 	void frameUpdate();
+	void setDirection();
 	void move();
 
 	void changeState(STATE state);
+	void changeDirectionState();
 	void changeAnotherState();
 
 	KingSlime() : _frameY(0) {}

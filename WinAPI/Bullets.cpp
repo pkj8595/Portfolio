@@ -527,6 +527,7 @@ void TwoDirectionMissile::fire(float x, float y, float angle)
 		_firstAngle = angle + (static_cast<float>(_bulletMax / 2)*_offsetAngle);
 		tagCBullet* bullet = new tagCBullet;
 		bullet->img = new my::Image;
+		bullet->reflectImg = new my::Image;
 		//
 		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 26, 26, true, RGB(255, 0, 255));
 		bullet->type = ObservedType::MINION_MISSILE;
@@ -549,5 +550,129 @@ void TwoDirectionMissile::draw(void)
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
 		(*_viBullet)->img->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
+	}
+}
+
+
+//==================================
+// ### Boss Normal Bullets ###
+//==================================
+
+HRESULT NormalBullet::init(int bulletMax, float range)
+{
+	AMissile::init(bulletMax, range);
+
+	return S_OK;
+}
+
+void NormalBullet::move(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	{
+		(*_viBullet)->x += cosf((*_viBullet)->angle)*(*_viBullet)->speed;
+		(*_viBullet)->y += -sinf((*_viBullet)->angle)*(*_viBullet)->speed;
+		(*_viBullet)->angle += (*_viBullet)->rotateAngle;
+		(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
+			(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
+	}
+}
+
+void NormalBullet::fire(float x, float y, float angle, float speed, float rotate)
+{
+	tagCBullet* bullet = new tagCBullet;
+	bullet->img = new my::Image;
+	bullet->reflectImg = new my::Image;
+	//
+	bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 26, 26, true, RGB(255, 0, 255));
+	bullet->reflectImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectBullet.bmp", 26, 26, true, RGB(255, 0, 255));
+	bullet->type = ObservedType::MINION_MISSILE;
+	bullet->speed = speed;
+	bullet->x = bullet->fireX = x;
+	bullet->y = bullet->fireY = y;
+	bullet->angle = angle;
+	bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
+	bullet->fire = true;
+	bullet->init();
+	bullet->rotateAngle = rotate;
+	_vBullet.push_back(bullet);
+}
+
+void NormalBullet::draw(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	{
+		if ((*_viBullet)->type == ObservedType::MINION_MISSILE) (*_viBullet)->img->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
+		else (*_viBullet)->reflectImg->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
+	}
+}
+
+//==================================
+// ### Boss Normal Bullets ###
+//==================================
+
+HRESULT BubbleBullet::init(int bulletMax, float range)
+{
+	AMissile::init(bulletMax, range);
+	_bigImg = new my::Image;
+	_reflectbigImg = new my::Image;
+
+	_bigImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/BigBullet.bmp", 52, 52, true, RGB(255, 0, 255));
+	_reflectbigImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectBigBullet.bmp", 52, 52, true, RGB(255, 0, 255));
+	return S_OK;
+}
+
+void BubbleBullet::move(void)
+{
+	count++;
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	{
+		if (count == 100)
+		{
+			(*_viBullet)->angle = (*_viBullet)->rotateAngle;
+		}
+		(*_viBullet)->x += cosf((*_viBullet)->angle)*(*_viBullet)->speed;
+		(*_viBullet)->y += -sinf((*_viBullet)->angle)*(*_viBullet)->speed;
+		(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
+			(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
+	}
+
+	if (_vBullet.size() == 0) count = 0;
+}
+
+void BubbleBullet::fire(float x, float y, float angle, float speed, float rotateAngle)
+{
+	tagCBullet* bullet = new tagCBullet;
+	bullet->img = new my::Image;
+	bullet->reflectImg = new my::Image;
+	//
+	bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 26, 26, true, RGB(255, 0, 255));
+	bullet->reflectImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectBullet.bmp", 26, 26, true, RGB(255, 0, 255));
+	bullet->type = ObservedType::MINION_MISSILE;
+	bullet->speed = speed;
+	bullet->x = bullet->fireX = x;
+	bullet->y = bullet->fireY = y;
+	bullet->angle = angle;
+	bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
+	bullet->fire = true;
+	bullet->init();
+	bullet->rotateAngle = rotateAngle;
+	_vBullet.push_back(bullet);
+}
+
+void BubbleBullet::draw(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	{
+		if (count < 100)
+		{
+			if ((*_viBullet)->type == ObservedType::MINION_MISSILE) _bigImg->render(getMemDC(), (*_viBullet)->rc.left - 13, (*_viBullet)->rc.top - 13);
+			else _reflectbigImg->render(getMemDC(), (*_viBullet)->rc.left - 13, (*_viBullet)->rc.top - 13);
+		}
+		else
+		{
+			if ((*_viBullet)->type == ObservedType::MINION_MISSILE) (*_viBullet)->img->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
+			else (*_viBullet)->reflectImg->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
+		}
+
 	}
 }

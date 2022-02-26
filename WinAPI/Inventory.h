@@ -10,6 +10,8 @@
 #define	INVENTORY_IMG_OFFSETX		40
 #define	INVENTORY_IMG_OFFSETY		40
 
+#define PUSH_ITEM_MESSEGE		0.8f
+
 class Inventory : public GameNode
 {
 	typedef struct STInvenPos
@@ -31,6 +33,22 @@ class Inventory : public GameNode
 		my::Image* img;
 		RECT rc;
 	}InfoWindow;
+
+	typedef struct STItemInfoText
+	{
+		string str;
+		COLORREF color;
+		int fontSize;
+		POINT pt;
+
+		STItemInfoText()
+		{
+			str = "";
+			color = RGB(255, 255, 255);
+			fontSize = 20;
+			pt = POINT{0,0};
+		}
+	}InfoWindowText;
 
 	ItemManager* _itemManager;
 	my::Image* _inventoryBackground;
@@ -67,8 +85,17 @@ class Inventory : public GameNode
 	int _invenItemCount;
 
 	POINT _statusTextPos;
+
 	InfoWindow _itemInfoWindow;
-	
+	float _worldTime;
+	bool _isShowGetItem;
+	int _showGetItemImgNum;
+
+	bool _isExcuteEnchant;
+	bool _isEnchantSuccess;
+	float _enchantSuccessWorldTime;
+	string _enchantStr;
+
 
 public:
 	HRESULT init(void);
@@ -80,6 +107,16 @@ public:
 	void showInventoryItem(void);
 	void showAbilityItem(void);
 
+	void checkMouseEvent(void);
+	void computeRect(void);
+
+	void renderInvenAttributeText(void);
+	void equipRender(void);
+	void renderItemInfoWindow();
+	void removeItem(Item* item);//인벤토리 아이템 없앨때 사용
+
+	bool getIsShowInven(void) { return _isShowInven; }
+	void setIsShowInven(bool isShowInven) { _isShowInven = isShowInven; }
 	void setPTotalattribute(CPlayer_Attribute* att)
 	{
 		_ptotalAttribute = att;
@@ -89,15 +126,23 @@ public:
 		_pAttribute = att;
 	}
 
+	string changeItemTypeToStr(EITEM_TYPE type);
+	string changeAttributeToStr(CPlayer_Attribute attri);
 	//==========================
 	// ### Player Equipment ###
 	//==========================
 	//인벤토리 아이템 추가
 	void pushItem(Item* item);
+	inline void updatePushItemMassege(Item* item);
+	void renderPushItemMassege();
+
+
+	void inventorydrawText(std::string &str, const RECT &massgeRc);
+
 	//총 아이템 능력치 합산
 	void computeItemTotalAttribute();
 	//장착중인 무기 반환
-	Item** getEquipWeapon();
+	Item** getEquipWeapon() { return &_equipWeapon; };
 
 	CPlayer_Attribute getItemTotalAttribute(){return _itemTotalAttribute;}
 
@@ -126,14 +171,6 @@ public:
 		computeItemTotalAttribute();
 	}
 
-	void checkMouse(void);
-	void computeRect(void);
-
-	bool getIsShowInven(void) { return _isShowInven; }
-	void setIsShowInven(bool isShowInven) { _isShowInven = isShowInven; }
-	void showAttributeText(void);
-	void equipRender(void);
-	void renderItemInfo(POINT mousePt);
-
+	
 };
 

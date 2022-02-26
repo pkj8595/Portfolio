@@ -545,6 +545,64 @@ namespace my {
 
 	void Image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha)
 	{
+		
+		if (!_blendImage) initForAlphaBlend();
+
+		_blendFunc.SourceConstantAlpha = alpha;
+
+		if (_isTrans)
+		{
+			BitBlt
+			(
+				_blendImage->hMemDc,
+				0, 0,
+				_imageInfo->width,
+				_imageInfo->height,
+				hdc,
+				0, 0,
+				SRCCOPY
+			);
+			GdiTransparentBlt
+			(
+				_blendImage->hMemDc,
+				0, 0,
+				_imageInfo->width,
+				_imageInfo->height,
+				_imageInfo->hMemDc,
+				0, 0,
+				_imageInfo->width,
+				_imageInfo->height,
+				_transColor
+			);
+			AlphaBlend
+			(
+				hdc,
+				destX, destY,
+				sourWidth,				
+				sourHeight,
+				_blendImage->hMemDc,
+				sourX, sourY,
+				sourWidth,				
+				sourHeight,
+				_blendFunc
+			);
+			//3. 블랜드 이미지를 화면에 그린다.
+		}
+		else
+		{
+			AlphaBlend
+			(
+				hdc,
+				destX, destY,
+				sourWidth,
+				sourHeight,
+				_imageInfo->hMemDc,
+				sourX, sourY,
+				sourWidth,
+				sourHeight,
+				_blendFunc
+			);
+		}
 	}
 
 	void Image::frameRender(HDC hdc, int destX, int destY)
