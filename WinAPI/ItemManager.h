@@ -12,6 +12,8 @@ private:
 	my::Image* _itemImg;
 	my::Image* _bigItemImg;
 
+
+
 public:
 	HRESULT init(void);
 	void release(void);
