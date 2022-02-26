@@ -346,9 +346,9 @@ void Inventory::showGetItem()
 	int x = ((_showGetItemImgNum - 1) % 10) * 64;
 	int y = ((_showGetItemImgNum - 1) / 10) * 64;
 	//cout << "_showGetItemImgNum : "<< _showGetItemImgNum << endl;
-	IMAGEMANAGER->findImage("bigItemImg")->alphaRender(getMemDC(),CENTER_X,CENTER_Y, x, y,64,64, _showGetItemAlpha);
+	IMAGEMANAGER->findImage("bigItemImg")->alphaRender(getMemDC(),CENTER_X-200,CENTER_Y-200, x, y,64,64, _showGetItemAlpha);
 
-	_showGetItemAlpha--;
+	_showGetItemAlpha -=3 ;
 	if (_showGetItemAlpha < 0) 
 	{
 		_isShowGetItem = false; 
