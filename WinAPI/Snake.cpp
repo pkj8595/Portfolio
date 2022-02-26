@@ -15,12 +15,17 @@ HRESULT Snake::init(const char * imageName, POINT position)
 	_x = position.x;
 	_y = position.y;
 	_moveWorldTime = TIMEMANAGER->getWorldTime();
+	_attacWorldTime = TIMEMANAGER->getWorldTime();
+	_attackMoveWorldTime = TIMEMANAGER->getWorldTime();
 	_playerDistance = 0.0f;
-	_range = 0;
+	_range = 250;
+	_attackRange = 200;
 	_randomX = 0;
 	_randomY = 0;
 	_speed = 0.5f;
 	_frameSpeed = 0.3f;
+	_angle = 0.0f;
+	_playerCheck = false;
 
 	_threeDirBullet = new ThreeDirectionMissile;
 	_threeDirBullet->init(3, 300);
@@ -47,32 +52,19 @@ void Snake::update(void)
 	_threeDirBullet->update();
 	_twoDirBullet->update();
 
-	//randomPosCreate();
-	//randomMove();
-
-
-	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+	if (playerCheck())
 	{
-		_state = SNAKESTATE::SN_MOVE;
-		_direction = SNAKEDIRECTION::SN_LEFT;
+		if (_playerDistance < _attackRange)
+		{
+			attack();
+		}
+
+		_x += cosf(_angle) * _speed;
+		_y += -sinf(_angle) * _speed;
 	}
-
-	if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+	else
 	{
-		_state = SNAKESTATE::SN_MOVE;
-		_direction = SNAKEDIRECTION::SN_RIGHT;
-	}
-
-	if (KEYMANAGER->isOnceKeyDown(VK_UP))
-	{
-		_state = SNAKESTATE::SN_MOVE;
-		_direction = SNAKEDIRECTION::SN_UP;
-	}
-
-	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
-	{
-		_state = SNAKESTATE::SN_MOVE;
-		_direction = SNAKEDIRECTION::SN_DOWN;
+		randomPosCreate();
 	}
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
@@ -110,11 +102,11 @@ void Snake::animation(void)
 
 		_image->setFrameX(_currentFrameX);
 	}
-
 }
 
 void Snake::randomPosCreate()
 {
+
 	if (_rndTimeCount + _moveWorldTime < TIMEMANAGER->getWorldTime())
 	{
 		_moveWorldTime = TIMEMANAGER->getWorldTime();
@@ -171,19 +163,39 @@ void Snake::randomMove()
 
 void Snake::attack()
 {
-	//_stae = SNAMESTATE::SNAKE_ATTACK;
+	if (0.5f + _attacWorldTime <= TIMEMANAGER->getWorldTime())
+	{
+		_attacWorldTime = TIMEMANAGER->getWorldTime();
+		_partternNum = RND->getInt(2);
+		if (_partternNum == 0)
+		{
+			_parttern = SNAKEPARTTERN::SN_ATTACK1;
+		}
 
-	//if (2 + _worldTime < TIMEMANAGER->getWorldTime())
-	//{
-	//	_worldTime = TIMEMANAGER->getWorldTime();
-	//	_twobullet->fire(_x, _y, getAngle(_x, _y, _playerPos.x, _playerPos.y));
-	//}
+		if (_partternNum == 1)
+		{
+			_parttern = SNAKEPARTTERN::SN_ATTACK2;
+		}
+	}
 
-	//if (1 + _worldTime < TIMEMANAGER->getWorldTime())
-	//{
-	//	_worldTime = TIMEMANAGER->getWorldTime();
-	//	_threebullet->fire(_x, _y, getAngle(_x, _y, _playerPos.x, _playerPos.y));
-	//}
+	if (3.f + _attackMoveWorldTime <= TIMEMANAGER->getWorldTime())
+	{
+		_attackMoveWorldTime = TIMEMANAGER->getWorldTime();
+		_state = SNAKESTATE::SN_ATTACK;
+		_angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
+
+		if (_playerPos.x < _x || _playerPos.x < _x && _playerPos.y > _y || _playerPos.x < _x && _playerPos.y < _y)
+		{
+			_direction = SNAKEDIRECTION::SN_LEFT;
+		}
+
+		if (_playerPos.x > _x || _playerPos.x > _x && _playerPos.y > _y || _playerPos.x > _x && _playerPos.y < _y)
+		{
+			_direction = SNAKEDIRECTION::SN_RIGHT;
+		}
+	
+		cout << _partternNum << endl;
+	}
 }
 
 bool Snake::playerCheck()
@@ -191,7 +203,9 @@ bool Snake::playerCheck()
 	_playerDistance = getDistance(_x, _y, _playerPos.x, _playerPos.y);
 
 	if (_range > _playerDistance)
+	{
 		return true;
+	}
 
 	return false;
 }
@@ -242,31 +256,77 @@ void Snake::frame()
 			break;
 		}
 		_maxFrameX = 3;
+		randomMove();
 		break;
 
 	case SNAKESTATE::SN_ATTACK:
-		switch (_direction)
+		switch (_parttern)
 		{
-		case SNAKEDIRECTION::SN_LEFT:
-			_currentFrameY = 5;
+		case SNAKEPARTTERN::SN_ATTACK1:
+			switch (_direction)
+			{
+			case SNAKEDIRECTION::SN_LEFT:
+				_currentFrameY = 5;
+				break;
+
+			case SNAKEDIRECTION::SN_RIGHT:
+				_currentFrameY = 6;
+				break;
+
+			case SNAKEDIRECTION::SN_UP:
+				_currentFrameY = 7;
+				break;
+
+			case SNAKEDIRECTION::SN_DOWN:
+				_currentFrameY = 6;
+				break;
+			}
+			_maxFrameX = 4;
+			threeDirectionBullet();
 			break;
 
-		case SNAKEDIRECTION::SN_RIGHT:
-			_currentFrameY = 6;
-			break;
+		case SNAKEPARTTERN::SN_ATTACK2:
+			switch (_direction)
+			{
+			case SNAKEDIRECTION::SN_LEFT:
+				_currentFrameY = 5;
+				break;
 
-		case SNAKEDIRECTION::SN_UP:
-			_currentFrameY = 7;
-			break;
+			case SNAKEDIRECTION::SN_RIGHT:
+				_currentFrameY = 6;
+				break;
 
-		case SNAKEDIRECTION::SN_DOWN:
-			_currentFrameY = 6;
+			case SNAKEDIRECTION::SN_UP:
+				_currentFrameY = 7;
+				break;
+
+			case SNAKEDIRECTION::SN_DOWN:
+				_currentFrameY = 6;
+				break;
+			}
+			_maxFrameX = 4;
+			twoDirectionBullet();
 			break;
 		}
-		_maxFrameX = 3;
 		break;
+	}	
+}
+
+void Snake::threeDirectionBullet()
+{
+	if (_currentFrameX == _maxFrameX -1)
+	{
+		_threeDirBullet->fire(_x, _y, _angle);
+		//_partternNum = 1;
 	}
-	
+}
+
+void Snake::twoDirectionBullet()
+{
+	if (_currentFrameX == _maxFrameX -1)
+	{
+		_twoDirBullet->fire(_x, _y, _angle);
+	}
 }
 
 STObservedData Snake::getRectUpdate()

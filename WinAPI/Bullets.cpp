@@ -530,7 +530,7 @@ void TwoDirectionMissile::fire(float x, float y, float angle)
 		//
 		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 26, 26, true, RGB(255, 0, 255));
 		bullet->type = ObservedType::MINION_MISSILE;
-		bullet->speed = 5.0f;
+		bullet->speed = 3.0f;
 		bullet->x = bullet->fireX = x;
 		bullet->y = bullet->fireY = y;
 		bullet->angle = _firstAngle - (_bulletCount*_offsetAngle);

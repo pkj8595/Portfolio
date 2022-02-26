@@ -319,7 +319,7 @@ void Slime::randomPosCreate()
 {	
 	_state = SLIMESTATE::SL_MOVE;
 	//·£´ýÁÂÇ¥ »ý¼º
-	if (MOVECOOLTIME + _moveWorldTime < TIMEMANAGER->getWorldTime())
+	if (_rndTimeCount + _moveWorldTime < TIMEMANAGER->getWorldTime())
 	{
 		_moveWorldTime = TIMEMANAGER->getWorldTime();
 		_randomX = RND->getInt(3) - 1;
