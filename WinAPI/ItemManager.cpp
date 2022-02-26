@@ -42,11 +42,56 @@ HRESULT ItemManager::init(void)
 		}
 		cout << "ItemManager::init(void) >> item data init ok" << endl;
 	}
+
+	vector<string> vEnchantData = TEXTDATAMANAGER->loadFstream("Resource/Text/ENCHANT_DATA.csv");
+
+	if (vEnchantData.size() % 19 == 0)
+	{
+		for (int i = 0; i < vEnchantData.size(); i += 19)
+		{
+			EnchantItem* enchantItem = new EnchantItem;
+			enchantItem->_index = atoi(vEnchantData[i].c_str());
+			enchantItem->_name = vEnchantData[i + 1].c_str();
+			enchantItem->_equip_level = atoi(vEnchantData[i + 2].c_str());
+			enchantItem->_durability = atoi(vEnchantData[i + 3].c_str());
+			enchantItem->_maxDurability = atoi(vEnchantData[i + 4].c_str());
+			enchantItem->_enchantStr = vEnchantData[i+5].c_str();
+			enchantItem->_attribute._hp = atoi(vEnchantData[i + 6].c_str());
+			enchantItem->_attribute._maxHp = atoi(vEnchantData[i + 7].c_str());
+			enchantItem->_attribute._mana = atoi(vEnchantData[i + 8].c_str());
+			enchantItem->_attribute._maxMana = atoi(vEnchantData[i + 9].c_str());
+			enchantItem->_attribute._critical = atoi(vEnchantData[i + 10].c_str());
+			enchantItem->_attribute._offencePower = atoi(vEnchantData[i + 11].c_str());
+			enchantItem->_attribute._magicPower = atoi(vEnchantData[i + 12].c_str());
+			enchantItem->_attribute._speed = atof(vEnchantData[i + 13].c_str());
+			enchantItem->_attribute._attackSpeed = atoi(vEnchantData[i + 14].c_str());
+			enchantItem->_attribute._damageBalance = atoi(vEnchantData[i + 15].c_str());
+			enchantItem->_attribute._experience = atoi(vEnchantData[i + 16].c_str());
+			enchantItem->_attribute._stamina = atoi(vEnchantData[i + 17].c_str());
+			enchantItem->_attribute._maxStamina = atoi(vEnchantData[i + 18].c_str());
+
+			enchantItem->toString();
+			_vEnchantItem.push_back(enchantItem);
+		}
+		cout << "ItemManager::init(void) >> item enchant data init ok" << endl;
+	}
+
 	return S_OK;
 }
 	
 void ItemManager::release(void)
 {
+	_viItem = _vItem.begin();
+	for (; _viItem != _vItem.end(); ++_viItem)
+	{
+		SAFE_DELETE(*_viItem);
+	}
+
+	_viEnchantItem = _vEnchantItem.begin();
+	for (; _viEnchantItem != _vEnchantItem.end(); ++_viEnchantItem)
+	{
+		SAFE_DELETE(*_viEnchantItem);
+	}
 }
 
 void ItemManager::update(void)
@@ -98,4 +143,9 @@ void ItemManager::getBigItemImgRender(int imgIndex, int x, int y)
 	//cout << imgIndex <<" destX: " <<destX <<" destY:" << destY<< endl;
 	//_itemImg->render(getMemDC(),x,y, destX * IMAGE_SIZE, destY * IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE);
 	_bigItemImg->frameRender(getMemDC(), x, y, destX, destY);
+}
+
+EnchantItem* ItemManager::getEnchantItem()
+{
+	return _vEnchantItem[RND->getInt(_vEnchantItem.size() - 1)];
 }

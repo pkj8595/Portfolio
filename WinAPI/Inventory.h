@@ -89,8 +89,13 @@ class Inventory : public GameNode
 	InfoWindow _itemInfoWindow;
 	float _worldTime;
 	bool _isShowGetItem;
-	int _showGetItemAlpha;
 	int _showGetItemImgNum;
+
+	bool _isExcuteEnchant;
+	bool _isEnchantSuccess;
+	float _enchantSuccessWorldTime;
+	string _enchantStr;
+
 
 public:
 	HRESULT init(void);
@@ -130,6 +135,9 @@ public:
 	void pushItem(Item* item);
 	inline void updatePushItemMassege(Item* item);
 	void renderPushItemMassege();
+
+
+	void inventorydrawText(std::string &str, const RECT &massgeRc);
 
 	//총 아이템 능력치 합산
 	void computeItemTotalAttribute();

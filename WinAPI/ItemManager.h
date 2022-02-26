@@ -7,12 +7,14 @@
 class ItemManager : public GameNode
 {
 private:
-	vector<Item*> _vItem;
-	vector<Item*>::iterator _viItem;
 	my::Image* _itemImg;
 	my::Image* _bigItemImg;
 
+	vector<Item*> _vItem;
+	vector<Item*>::iterator _viItem;
 
+	vector<EnchantItem*> _vEnchantItem;
+	vector<EnchantItem*>::iterator _viEnchantItem;
 
 public:
 	HRESULT init(void);
@@ -26,6 +28,8 @@ public:
 	void getItemImgRender(int imgIndex, int x, int y);
 	void getBigItemImgRender(int imgIndex, int x, int y);
 	//void ItemWindowRender(void);
+
+	EnchantItem* getEnchantItem();
 
 
 	ItemManager() {}

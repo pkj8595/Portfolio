@@ -42,8 +42,8 @@ void FontManager::drawTextRectCenter(HDC hdc, RECT rangeRect, char* fontName, in
 	auto oldColor = GetTextColor(hdc);
 
 	SetTextColor(hdc, color);
-	//TextOut(hdc, destX, destY, printString, length);
-	DrawText(hdc, printString, -1, &rangeRect, DT_WORDBREAK | DT_CENTER);
+	//DT_WORDBREAK rect Å©±â¿¡ ¸ÂÃç¼­ ·»´õ
+	DrawText(hdc, printString, -1, &rangeRect, DT_NOCLIP | DT_CENTER);
 
 	SelectObject(hdc, oldFont);
 	DeleteObject(hFont);

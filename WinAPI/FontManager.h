@@ -19,6 +19,7 @@ public:
 
 	void drawText(HDC hdc, int destX, int destY, char* fontName, int fontSize, int fontWidth, LPCWSTR* printString, int length, COLORREF color);
 
+
 	FontManager() {}
 	~FontManager() {}
 };

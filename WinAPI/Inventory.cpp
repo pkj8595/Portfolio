@@ -7,12 +7,12 @@ HRESULT Inventory::init(void)
 	_itemManager->init();
 
 	_inventoryBackground = IMAGEMANAGER->addImage("inventoryBackground", "Resource/Images/Lucie/CompleteImg/inventory/inventoryBackground.bmp", 240, 296, true, RGB(255, 0, 255));
-	_combineBackground.img = IMAGEMANAGER->addImage("combineBackground", "Resource/Images/Lucie/CompleteImg/inventory/combineBackground.bmp", 180, 180, true, RGB(255, 0, 255));
+	//_combineBackground.img = IMAGEMANAGER->addImage("combineBackground", "Resource/Images/Lucie/CompleteImg/inventory/combineBackground.bmp", 180, 180, true, RGB(255, 0, 255));
 	_inventoryGoldIcon.img = IMAGEMANAGER->addImage("inventoryGoldIcon", "Resource/Images/Lucie/CompleteImg/inventory/inventoryGoldIcon.bmp", 22, 22, true, RGB(255, 0, 255));
 	_inventoryHintCorner.img = IMAGEMANAGER->addImage("inventoryHintCorner", "Resource/Images/Lucie/CompleteImg/inventory/inventoryHintCorner.bmp", 21, 21, true, RGB(255, 0, 255));
 	_inventoryClickHelp.img = IMAGEMANAGER->addImage("inventoryClickHelp", "Resource/Images/Lucie/CompleteImg/inventory/inventoryClickHelp.bmp", 21, 21, true, RGB(255, 0, 255));
 
-	_combineBtnIcon2.img = IMAGEMANAGER->addFrameImage("combineBtnIcon2", "Resource/Images/Lucie/CompleteImg/inventory/combineBtnIcon2.bmp", 240, 27,3,1, true, RGB(255, 0, 255));
+	//_combineBtnIcon2.img = IMAGEMANAGER->addFrameImage("combineBtnIcon2", "Resource/Images/Lucie/CompleteImg/inventory/combineBtnIcon2.bmp", 240, 27,3,1, true, RGB(255, 0, 255));
 	_inventoryCloseBtn.img = IMAGEMANAGER->addFrameImage("inventoryCloseBtn", "Resource/Images/Lucie/CompleteImg/inventory/inventoryCloseBtn.bmp", 32, 16, 2, 1, true, RGB(255, 0, 255));
 	_inventorySlot.img = IMAGEMANAGER->addFrameImage("InventorySlot", "Resource/Images/Lucie/CompleteImg/inventory/InventorySlot.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
 	_inventorySlotA.img = IMAGEMANAGER->addFrameImage("InventorySlotA", "Resource/Images/Lucie/CompleteImg/inventory/InventorySlotA.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
@@ -26,8 +26,8 @@ HRESULT Inventory::init(void)
 
 	_rc = RectMake(_x, _y, _inventoryBackground->getWidth(), _inventoryBackground->getHeight());
 
-	_combineBackground.pt = PointMake(_rc.left - 178, _rc.top + 100);
-	_combineBtnIcon2.pt = PointMake(_rc.left - 120, _rc.top + 240);
+	//_combineBackground.pt = PointMake(_rc.left - 178, _rc.top + 100);
+	//_combineBtnIcon2.pt = PointMake(_rc.left - 120, _rc.top + 240);
 	_inventoryGoldIcon.pt = PointMake(_rc.left + 160, _rc.top + 260);
 	_inventoryHintCorner.pt = PointMake(_rc.left + 100, _rc.top + 100);
 	_inventoryClickHelp.pt = PointMake(_rc.left + 100, _rc.top + 100);
@@ -55,7 +55,11 @@ HRESULT Inventory::init(void)
 
 	_worldTime = TIMEMANAGER->getWorldTime();
 	_isShowGetItem = false;
-	_showGetItemAlpha = 255;
+	
+	_enchantSuccessWorldTime = TIMEMANAGER->getWorldTime();
+	_isExcuteEnchant = false;
+	_isEnchantSuccess = false;
+	_enchantStr = "";
 
 	return S_OK;
 }
@@ -104,6 +108,19 @@ void Inventory::render(void)
 	{
 		renderPushItemMassege();
 	}
+	if (_isExcuteEnchant)
+	{
+		if (TIMEMANAGER->getWorldTime() < _enchantSuccessWorldTime + 1.0f)
+		{
+			RECT messageRc = RectMakeCenter(CENTER_X, CENTER_Y - 300, 32, 32);
+			inventorydrawText(_enchantStr, messageRc);
+		}
+		else
+		{
+			_isEnchantSuccess = false;
+			_isExcuteEnchant = false;
+		}
+	}
 
 	renderItemInfoWindow();
 	showAbilityItem();
@@ -112,13 +129,13 @@ void Inventory::render(void)
 
 void Inventory::renderInventoryBase()
 {
-	_combineBackground.img->render(getMemDC(), _combineBackground.pt.x, _combineBackground.pt.y);
 	_inventoryBackground->render(getMemDC(), _rc.left, _rc.top);
 	_inventoryGoldIcon.img->render(getMemDC(), _inventoryGoldIcon.pt.x, _inventoryGoldIcon.pt.y);
 	_inventoryHintCorner.img->render(getMemDC(), _inventoryHintCorner.pt.x, _inventoryHintCorner.pt.y);
 	_inventoryClickHelp.img->render(getMemDC(), _inventoryClickHelp.pt.x, _inventoryClickHelp.pt.y);
 	//frame render
-	_combineBtnIcon2.img->frameRender(getMemDC(), _combineBtnIcon2.pt.x, _combineBtnIcon2.pt.y,1,1);
+	//_combineBackground.img->render(getMemDC(), _combineBackground.pt.x, _combineBackground.pt.y);
+	//_combineBtnIcon2.img->frameRender(getMemDC(), _combineBtnIcon2.pt.x, _combineBtnIcon2.pt.y,1,1);
 	_inventoryCloseBtn.img->frameRender(getMemDC(), _inventoryCloseBtn.pt.x, _inventoryCloseBtn.pt.y, 1, 1);
 	for (int i = 0; i < 3; i++)
 	{
@@ -204,10 +221,9 @@ void Inventory::pushItem(Item* item)
 	computeItemTotalAttribute();
 }
 
-void Inventory::updatePushItemMassege(Item * item)
+void Inventory::updatePushItemMassege(Item* item)
 {
 	_showGetItemImgNum = item->_imgNum;
-	_showGetItemAlpha = 255;
 	_isShowGetItem = true;
 	_worldTime = TIMEMANAGER->getWorldTime();
 }
@@ -265,7 +281,53 @@ void Inventory::checkMouseEvent(void)
 					computeRect();
 					break;
 				case EITEM_TYPE::SCROLL:
+					_isExcuteEnchant = true;
+					_isEnchantSuccess = false;
+					_enchantSuccessWorldTime = TIMEMANAGER->getWorldTime();
+					switch ((*_viItem).first->_index)
+					{
+					case 5:
+						//armor
+						if (_equipArmor != _emptyItem)
+						{
+							_isEnchantSuccess = _equipArmor->getEnchantedItem(*_itemManager->getEnchantItem());
+						}
+						break;
+					case 6:
+						//shoes
+						if (_equipShoes != _emptyItem)
+						{
+							_isEnchantSuccess = _equipShoes->getEnchantedItem(*_itemManager->getEnchantItem());
+						}
+						break;
+					case 7:
+						//weapon
+						if (_equipWeapon != _emptyItem)
+						{
+							_isEnchantSuccess = _equipWeapon->getEnchantedItem(*_itemManager->getEnchantItem());
+						}
+						break;
+					case 8:
+						//hat
+						if (_equipHat != _emptyItem)
+						{
+							_isEnchantSuccess = _equipHat->getEnchantedItem(*_itemManager->getEnchantItem());
+						}
+						break;
+					}
+					
+					if (_isEnchantSuccess)
+					{
+						_enchantStr = "강화 성공";
+						_vItem.erase(_viItem);
+						computeRect();
+					}
+					else
+					{
+						_enchantStr = "강화 실패";
+					}
 					break;
+
 				case EITEM_TYPE::ABILITY:
 					break;
 				case EITEM_TYPE::EQUIP_WEAPON_BOW:
@@ -361,8 +423,19 @@ void Inventory::renderPushItemMassege()
 			break;
 		}
 	}
-	RECT massgeRc = RectMakeCenter(CENTER_X,CENTER_Y-300, str.size()*17,100);
+	RECT massageRc = RectMakeCenter(CENTER_X,CENTER_Y-300, str.size()*17,100);
 
+	inventorydrawText(str, massageRc);
+
+	IMAGEMANAGER->findImage("bigItemImg")->render(getMemDC(), massageRc.left - 64, massageRc.top - 10, x, y, 64, 64);
+	if (TIMEMANAGER->getWorldTime() > _worldTime + PUSH_ITEM_MESSEGE)
+	{
+		_isShowGetItem = false;
+	}
+}
+
+void Inventory::inventorydrawText(std::string &str, const RECT &massgeRc)
+{
 	char* cstr = new char[str.size() + 1];
 	copy(str.begin(), str.end(), cstr);
 	cstr[str.size()] = '\0';
@@ -370,19 +443,6 @@ void Inventory::renderPushItemMassege()
 	FONTMANAGER->drawTextRectCenter(getMemDC(), massgeRc, "야놀자 야체 Regular", 50, 200, cstr, strlen(cstr), RGB(255, 255, 255));
 
 	delete[] cstr;
-
-	IMAGEMANAGER->findImage("bigItemImg")->render(getMemDC(), massgeRc.left - 64, massgeRc.top - 10, x, y, 64, 64);
-	if (TIMEMANAGER->getWorldTime() > _worldTime + PUSH_ITEM_MESSEGE)
-	{
-		_isShowGetItem = false;
-	}
-	//IMAGEMANAGER->findImage("bigItemImg")->alphaRender(getMemDC(), massgeRc.left-64, massgeRc.top-10, x, y,64,64, _showGetItemAlpha);
-	/*_showGetItemAlpha -=5 ;
-	if (_showGetItemAlpha < 0) 
-	{
-		_isShowGetItem = false; 
-		_showGetItemAlpha = 255;
-	}*/
 }
 
 void Inventory::renderInvenAttributeText(void)
