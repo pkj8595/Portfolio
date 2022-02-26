@@ -9,6 +9,14 @@ HRESULT KingSlime::init(const char * imageName, POINT position)
 	_bossNameAlpha = 0;
 	_bossNameFadeIn = true;
 
+	_bossHpFrameImage = IMAGEMANAGER->addImage("BossHPBar", "Resource/Images/Lucie/CompleteImg/system/boss_Frame.bmp", 506, 32, true, RGB(255, 0, 255));
+	_bossHpImage = IMAGEMANAGER->addImage("BossHPMain", "Resource/Images/Lucie/CompleteImg/system/Boss_HP_main.bmp", 485, 22, false, RGB(255, 0, 255));
+	_bossHpDamageImage = IMAGEMANAGER->addImage("BossHPDamage", "Resource/Images/Lucie/CompleteImg/system/Boss_HP_damage.bmp", 485, 22, false, RGB(255, 0, 255));
+	_bossHpAlpha = 0;
+	_hp = _maxHP = 500;
+
+	_hpWidth = _damageHpWidth = (_bossHpImage->getWidth() * (_hp / _maxHP));
+	
 	_type = ObservedType::MINION;
 	
 	_state = STATE::STOP;
@@ -17,7 +25,6 @@ HRESULT KingSlime::init(const char * imageName, POINT position)
 	_alreadyShot = false;
 	_angle = 0;
 	
-	_hp = 500;
 	_x = position.x;
 	_y = position.y;
 	_frameX = _frameY = 0;
@@ -59,6 +66,7 @@ void KingSlime::update(void)
 	_fixRC = RectMake(_x - 80, _y, _image->getFrameWidth() - 200, _image->getFrameHeight() - 200);
 	setDirection();
 	frameUpdate();
+	hpUpdate();
 	move();
 }
 
@@ -69,6 +77,7 @@ void KingSlime::render(void)
 	_normalBullet->render();
 	_bubbleBullet->render();
 
+	hpRender(280, 100);
 	if (_bossNameFadeIn || (!_bossNameFadeIn && _bossNameAlpha > 0))_bossNameImage->alphaRender(getMemDC(), CENTER_X - 75, 50, _bossNameAlpha);
 }
 
@@ -113,6 +122,23 @@ void KingSlime::bossNameUpdate()
 		_bossNameAlpha -= 2;
 	}
 	if (_bossNameAlpha > 253) _bossNameFadeIn = false;
+}
+
+void KingSlime::hpUpdate()
+{
+	if (!_bossNameFadeIn && _bossNameAlpha < 120) _bossHpAlpha += 10;
+	if (_bossHpAlpha > 255) _bossHpAlpha = 255;
+
+	_hpWidth = (_bossHpImage->getWidth() * (_hp / _maxHP));
+	if (_damageHpWidth > _hpWidth) _damageHpWidth -= (_damageHpWidth - _hpWidth) * 0.1f;
+}
+
+void KingSlime::hpRender(int x, int y)
+{
+	if (_bossHpAlpha <= 0) return;
+	_bossHpDamageImage->alphaRender(getMemDC(), x + 7, y + 5, 0, 0, _damageHpWidth, _bossHpDamageImage->getHeight(), _bossHpAlpha);
+	_bossHpImage->alphaRender(getMemDC(), x + 7, y + 5, 0, 0, _hpWidth, _bossHpImage->getHeight(), _bossHpAlpha);
+	_bossHpFrameImage->alphaRender(getMemDC(), x , y, _bossHpAlpha);
 }
 
 void KingSlime::frameUpdate()

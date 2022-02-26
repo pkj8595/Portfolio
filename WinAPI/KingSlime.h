@@ -11,6 +11,14 @@ private:
 	int _bossNameAlpha;
 	bool _bossNameFadeIn;
 
+	my::Image* _bossHpFrameImage;
+	my::Image* _bossHpImage;
+	my::Image* _bossHpDamageImage;
+	float _maxHP;
+	int _bossHpAlpha;
+	float _hpWidth;
+	float _damageHpWidth;
+
 	NormalBullet* _normalBullet;				//≈∫∏∑ ø©∑Ø∞≥
 	BubbleBullet* _bubbleBullet;				//≈´ ≈∫»Ø->¿€¿∫ ≈∫»Ø ø©∑Ø∞≥
 	enum class STATE {STOP, WALK, ATTACK_BUBBLE, ATTACK_NORMAL};
@@ -41,6 +49,8 @@ public:
 	virtual void collideObject(STObservedData obData);
 
 	void bossNameUpdate();
+	void hpUpdate();
+	void hpRender(int x, int y);
 
 	void frameUpdate();
 	void setDirection();
