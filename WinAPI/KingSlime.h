@@ -7,12 +7,24 @@
 class KingSlime : public Enemy
 {
 private:
+	my::Image* _bossNameImage;
+	int _bossNameAlpha;
+	bool _bossNameFadeIn;
+
+	my::Image* _bossHpFrameImage;
+	my::Image* _bossHpImage;
+	my::Image* _bossHpDamageImage;
+	float _maxHP;
+	int _bossHpAlpha;
+	float _hpWidth;
+	float _damageHpWidth;
+
 	NormalBullet* _normalBullet;				//Åº¸· ¿©·¯°³
 	BubbleBullet* _bubbleBullet;				//Å« ÅºÈ¯->ÀÛÀº ÅºÈ¯ ¿©·¯°³
-	//BounceBullet* _bounceBullet;				//Æ¨±â´Â ÅºÈ¯
-	enum class STATE {STOP, WALK, ATTACK_BUBBLE, ATTACK_NORMAL, ATTACK_BOUNCE};
+	enum class STATE {STOP, WALK, ATTACK_BUBBLE, ATTACK_NORMAL};
 	enum class DIRECTION {DOWN = 0, LEFT, RIGHT, UP};
 
+	RECT _fixRC;
 	STATE _state;
 	DIRECTION _direction;
 
@@ -35,6 +47,10 @@ public:
 
 	virtual STObservedData getRectUpdate();
 	virtual void collideObject(STObservedData obData);
+
+	void bossNameUpdate();
+	void hpUpdate();
+	void hpRender(int x, int y);
 
 	void frameUpdate();
 	void setDirection();
