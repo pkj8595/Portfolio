@@ -17,7 +17,7 @@ HRESULT Inventory::init(void)
 	_inventorySlot.img = IMAGEMANAGER->addFrameImage("InventorySlot", "Resource/Images/Lucie/CompleteImg/inventory/InventorySlot.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
 	_inventorySlotA.img = IMAGEMANAGER->addFrameImage("InventorySlotA", "Resource/Images/Lucie/CompleteImg/inventory/InventorySlotA.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
 	_inventorySlotB.img = IMAGEMANAGER->addFrameImage("inventorySlotB", "Resource/Images/Lucie/CompleteImg/inventory/inventorySlotB.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
-	_itemInfoWindow.img = IMAGEMANAGER->addImage("ItemInfoWindow", "Resource/Images/Lucie/CompleteImg/inventory/ItemInfoWindow.bmp", 400,300);
+	_itemInfoWindow.img = IMAGEMANAGER->addImage("ItemInfoWindow", "Resource/Images/Lucie/CompleteImg/inventory/ItemInfoWindow.bmp", 300,200);
 
 	//_btn = new mButton;
 	//_btn->init();
@@ -53,6 +53,10 @@ HRESULT Inventory::init(void)
 	_ptotalAttribute = nullptr;
 	_pAttribute = nullptr;
 
+	_worldTime = TIMEMANAGER->getWorldTime();
+	_isShowGetItem = false;
+	_showGetItemAlpha = 255;
+
 	return S_OK;
 }
 
@@ -68,7 +72,7 @@ void Inventory::update(void)
 {
 	//마우스가 이미지 렉트 위에 올라가면 프레임이 바뀌어야함
 	//_btn->update();
-	checkMouse();
+	checkMouseEvent();
 	if (KEYMANAGER->isOnceKeyDown('I')) { _isShowInven = !_isShowInven; }
 	if (KEYMANAGER->isOnceKeyDown(VK_F6))
 	{
@@ -85,11 +89,10 @@ void Inventory::render(void)
 		renderInventoryBase();
 		equipRender();
 		showInventoryItem();
-		showAttributeText();
+		renderInvenAttributeText();
 
 		if (PtInRect(&_rcCloseBtn, _ptMouse))
 		{
-
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
 				_isShowInven = false;
@@ -97,6 +100,12 @@ void Inventory::render(void)
 		}
 	}
 
+	if (_isShowGetItem)
+	{
+		renderPushItemMassege();
+	}
+
+	renderItemInfoWindow();
 	showAbilityItem();
 
 }
@@ -120,16 +129,12 @@ void Inventory::renderInventoryBase()
 				_inventorySlot.pt.y+ INVENTORY_IMG_OFFSETY *i, 1, 1);
 		}
 	}
+	char str[32] = "인벤토리";
+	FONTMANAGER->drawText(getMemDC(), _rc.left +98, _rc.top + 18, "야놀자 야체 Regular", 20, 200, str, strlen(str), RGB(255, 255, 255));
+
 	//_inventorySlotA.img->frameRender(getMemDC(), _inventorySlotA.pt.x, _inventorySlotA.pt.y, 1, 1);
 	//_inventorySlotB.img->frameRender(getMemDC(), _inventorySlotB.pt.x, _inventorySlotB.pt.y, 1, 1);
-
 }
-
-Item** Inventory::getEquipWeapon()
-{
-	return &_equipWeapon;
-}
-
 
 //아이템이 벡터에 들어올때마다 실행시켜서 총합산 데미지를 최신화한다.
 void Inventory::computeItemTotalAttribute()
@@ -153,6 +158,7 @@ void Inventory::computeItemTotalAttribute()
 
 void Inventory::pushItem(Item* item)
 {
+
 	if (item->_type == EITEM_TYPE::ABILITY)
 	{
 		_viItem = _vItem.begin();
@@ -165,6 +171,7 @@ void Inventory::pushItem(Item* item)
 			ABILITY_IMG_Y,
 			32, 32);
 		_vItem.push_back(make_pair(item, temp));
+		updatePushItemMassege(item);
 		_abilutyItemCount++;
 	}
 	else if (item->_type == EITEM_TYPE::EQUIP_WEAPON_BOW||
@@ -180,6 +187,7 @@ void Inventory::pushItem(Item* item)
 			_inventorySlot.pt.y + 3 + (INVENTORY_IMG_OFFSETY * (_invenItemCount / 5)),
 			32, 32);
 		_vItem.push_back(make_pair(copyItem, tempRc));
+		updatePushItemMassege(item);
 		_invenItemCount++;
 	}
 	else
@@ -189,42 +197,52 @@ void Inventory::pushItem(Item* item)
 			_inventorySlot.pt.y + 3 + (INVENTORY_IMG_OFFSETY * (_invenItemCount / 5)),
 			32, 32);
 		_vItem.push_back(make_pair(item, tempRc));
+		updatePushItemMassege(item);
 		_invenItemCount++;
 	}
+
 	computeItemTotalAttribute();
+}
+
+void Inventory::updatePushItemMassege(Item * item)
+{
+	_showGetItemImgNum = item->_imgNum;
+	_showGetItemAlpha = 255;
+	_isShowGetItem = true;
+	_worldTime = TIMEMANAGER->getWorldTime();
 }
 
 void Inventory::showInventoryItem()
 {
-	int count = 0;
+	int countInven = 0;
 	_viItem = _vItem.begin();
 	for (; _viItem != _vItem.end(); ++_viItem)
 	{
 		if ((*_viItem).first->_type == EITEM_TYPE::ABILITY) continue;
 		_itemManager->getItemImgRender((*_viItem).first->_imgNum,
-			_inventorySlot.pt.x +3+ (INVENTORY_IMG_OFFSETX * (count % 5)),
-			_inventorySlot.pt.y +3+ (INVENTORY_IMG_OFFSETY * (count / 5)));
-		count++;
+			_inventorySlot.pt.x +3+ (INVENTORY_IMG_OFFSETX * (countInven % 5)),
+			_inventorySlot.pt.y +3+ (INVENTORY_IMG_OFFSETY * (countInven / 5)));
+		countInven++;
 	}
 }
 
 void Inventory::showAbilityItem()
 {
-	int count=0;
+	int countAbility = 0;
 	_viItem = _vItem.begin();
 	for (; _viItem != _vItem.end(); ++_viItem)
 	{
 		if ((*_viItem).first->_type != EITEM_TYPE::ABILITY)continue;
 
 		_itemManager->getItemImgRender((*_viItem).first->_imgNum,
-			ABILITY_IMG_X + (count* ABILITY_IMG_OFFSET),
+			ABILITY_IMG_X + (countAbility* ABILITY_IMG_OFFSET),
 			ABILITY_IMG_Y);
-		count++;
+		countAbility++;
 	}
 }
 
 
-void Inventory::checkMouse(void)
+void Inventory::checkMouseEvent(void)
 {
 	_viItem = _vItem.begin();
 	for (; _viItem != _vItem.end(); ++_viItem)
@@ -239,13 +257,10 @@ void Inventory::checkMouse(void)
 				{
 				case EITEM_TYPE::POTION:
 					*_pAttribute = *_pAttribute + (*_viItem).first->_attribute;
-					
 					_vItem.erase(_viItem);
 					computeRect();
 					break;
 				case EITEM_TYPE::MATERIAL:
-					//todo
-					//_pAttribute->_hp;
 					_vItem.erase(_viItem);
 					computeRect();
 					break;
@@ -254,23 +269,18 @@ void Inventory::checkMouse(void)
 				case EITEM_TYPE::ABILITY:
 					break;
 				case EITEM_TYPE::EQUIP_WEAPON_BOW:
-					cout <<"setEquipWeapon() :" <<(*_viItem).first->_name << endl;
 					setEquipWeapon((*_viItem).first);
 					break;
 				case EITEM_TYPE::EQUIP_WEAPON_SWORD:
-					cout << "setEquipWeapon() :" << (*_viItem).first->_name << endl;
 					setEquipWeapon((*_viItem).first);
 					break;
 				case EITEM_TYPE::EQUIP_ARMOR:
-					cout << "setEquipArmor() :" << (*_viItem).first->_name << endl;
 					setEquipArmor((*_viItem).first);
 					break;
 				case EITEM_TYPE::EQUIP_HAT:
-					cout << "setEquipHat() :" << (*_viItem).first->_name << endl;
 					setEquipHat((*_viItem).first);
 					break;
 				case EITEM_TYPE::EQUIP_SHOES:
-					cout << "setEquipShoes() :" << (*_viItem).first->_name << endl;
 					setEquipShoes((*_viItem).first);
 					break;
 				default:
@@ -290,11 +300,10 @@ void Inventory::checkMouse(void)
 						(*_viItem).first->_type == EITEM_TYPE::EQUIP_ARMOR||
 						(*_viItem).first->_type == EITEM_TYPE::EQUIP_SHOES)
 					{
-						if (_equipWeapon == (*_viItem).first)
-						{
-							_equipWeapon = _emptyItem;
-							cout << "장비 해제" << endl;
-						}
+						if (_equipWeapon == (*_viItem).first) { _equipWeapon = _emptyItem; }
+						if (_equipArmor == (*_viItem).first) { _equipArmor = _emptyItem; }
+						if (_equipShoes == (*_viItem).first) { _equipShoes = _emptyItem; }
+						if (_equipHat == (*_viItem).first) { _equipHat = _emptyItem; }
 						SAFE_DELETE((*_viItem).first);
 					}
 					_vItem.erase(_viItem);
@@ -337,17 +346,60 @@ void Inventory::computeRect(void)
 	
 }
 
-void Inventory::showAttributeText(void)
+void Inventory::renderPushItemMassege()
+{
+	int x = ((_showGetItemImgNum - 1) % 10) * 64;
+	int y = ((_showGetItemImgNum - 1) / 10) * 64;
+
+	string str;
+	_viItem = _vItem.begin();
+	for (; _viItem != _vItem.end(); ++_viItem)
+	{
+		if ((*_viItem).first->_imgNum == _showGetItemImgNum)
+		{
+			str = (*_viItem).first->_name.c_str();
+			break;
+		}
+	}
+	RECT massgeRc = RectMakeCenter(CENTER_X,CENTER_Y-300, str.size()*17,100);
+
+	char* cstr = new char[str.size() + 1];
+	copy(str.begin(), str.end(), cstr);
+	cstr[str.size()] = '\0';
+
+	FONTMANAGER->drawTextRectCenter(getMemDC(), massgeRc, "야놀자 야체 Regular", 50, 200, cstr, strlen(cstr), RGB(255, 255, 255));
+
+	delete[] cstr;
+
+	IMAGEMANAGER->findImage("bigItemImg")->render(getMemDC(), massgeRc.left - 64, massgeRc.top - 10, x, y, 64, 64);
+	if (TIMEMANAGER->getWorldTime() > _worldTime + PUSH_ITEM_MESSEGE)
+	{
+		_isShowGetItem = false;
+	}
+	//IMAGEMANAGER->findImage("bigItemImg")->alphaRender(getMemDC(), massgeRc.left-64, massgeRc.top-10, x, y,64,64, _showGetItemAlpha);
+	/*_showGetItemAlpha -=5 ;
+	if (_showGetItemAlpha < 0) 
+	{
+		_isShowGetItem = false; 
+		_showGetItemAlpha = 255;
+	}*/
+}
+
+void Inventory::renderInvenAttributeText(void)
 {
 	if (!_ptotalAttribute) return;
 	string script[8];
+
 	script[0] = "최대체력 : " + to_string(_ptotalAttribute->_maxHp);
 	script[1] = "공격력 : " + to_string((int)_ptotalAttribute->_offencePower);
 	script[2] = "마법력 : " + to_string((int)_ptotalAttribute->_magicPower);
-	script[3] = "이동속도 : " + to_string((int)_ptotalAttribute->_speed);
+	script[3] = "이동속도 : "; 
+	char speedStr[16];
+	sprintf_s(speedStr, "%.1f", (float)_ptotalAttribute->_speed);
+	script[3] = script[3] + speedStr;
 	script[4] = "최대마나 : " + to_string(_ptotalAttribute->_maxMana);
 	script[5] = "공격속도 : " + to_string((int)_ptotalAttribute->_attackSpeed);
-	script[6] = "데미지 밸런스 : " + to_string((int)_ptotalAttribute->_damageBalance);
+	script[6] = "데미지밸런스 : " + to_string((int)_ptotalAttribute->_damageBalance);
 	script[7] = "치명타 : " + to_string((int)_ptotalAttribute->_critical);
 
 	for (int i = 0; i < 8; i++)
@@ -356,8 +408,7 @@ void Inventory::showAttributeText(void)
 		copy(script[i].begin(), script[i].end(), str);
 		str[script[i].size()] = '\0';
 
-		
-		FONTMANAGER->drawText(getMemDC(), (int)_statusTextPos.x+((int)i / 4)*90, (int)_statusTextPos.y+(20*((int)i%4)), "Kostar", 15, 200, str, strlen(str), RGB(255, 255, 255));
+		FONTMANAGER->drawText(getMemDC(), (int)_statusTextPos.x+((int)i / 4)*90, (int)_statusTextPos.y+(20*((int)i%4)), "야놀자 야체 Regular", 20, 200, str, strlen(str), RGB(0, 0, 0));
 
 		delete[] str;
 	}
@@ -380,30 +431,184 @@ void Inventory::equipRender(void)
 
 }
 
-void Inventory::renderItemInfo(POINT mousePt)
+void Inventory::renderItemInfoWindow()
 {
-	_itemInfoWindow.img->render(getMemDC(), mousePt.x, mousePt.y);
-	/*string script[8];
-	script[0] = "최대체력 : " + to_string(_ptotalAttribute->_maxHp);
-	script[1] = "공격력 : " + to_string((int)_ptotalAttribute->_offencePower);
-	script[2] = "마법력 : " + to_string((int)_ptotalAttribute->_magicPower);
-	script[3] = "이동속도 : " + to_string((int)_ptotalAttribute->_speed);
-	script[4] = "최대마나 : " + to_string(_ptotalAttribute->_maxMana);
-	script[5] = "공격속도 : " + to_string((int)_ptotalAttribute->_attackSpeed);
-	script[6] = "데미지 밸런스 : " + to_string((int)_ptotalAttribute->_damageBalance);
-	script[7] = "치명타 : " + to_string((int)_ptotalAttribute->_critical);
-
-	for (int i = 0; i < 8; i++)
+	_viItem = _vItem.begin();
+	for (; _viItem != _vItem.end(); ++_viItem)
 	{
-		char* str = new char[script[i].size() + 1];
-		copy(script[i].begin(), script[i].end(), str);
-		str[script[i].size()] = '\0';
+		//인벤토리가 꺼져있고 
+		if (!_isShowInven)
+		{
+			if ((*_viItem).first->_type != EITEM_TYPE::ABILITY) continue;
+		}
+		if (PtInRect(&(*_viItem).second, _ptMouse))
+		{
+			int rcX;
+			int rcY;
+			if ((*_viItem).first->_type == EITEM_TYPE::ABILITY)
+			{
+				rcX = (*_viItem).second.left - 300;
+				rcY = (*_viItem).second.top - 175;
+			}
+			else
+			{
+				rcX = (*_viItem).second.left - 300;
+				rcY = (*_viItem).second.top + 20;
+			}
+			
+			_itemInfoWindow.img->alphaRender(getMemDC(), rcX, rcY, 230);
 
+			InfoWindowText itemInfo[6];
 
-		FONTMANAGER->drawText(getMemDC(), (int)_statusTextPos.x + ((int)i / 4) * 90, (int)_statusTextPos.y + (20 * ((int)i % 4)), "Kostar", 15, 200, str, strlen(str), RGB(255, 255, 255));
+			itemInfo[0].str = (*_viItem).first->_name;
+			itemInfo[0].pt = PointMake(rcX+15, rcY+12);
+			itemInfo[0].fontSize = 30;
+			itemInfo[0].color = RGB(255,255,255);
 
-		delete[] str;
-	}*/
+			itemInfo[1].str = (*_viItem).first->_description;
+			char form = '^';
+			char to = '\n';
+			replace(itemInfo[1].str.begin(), itemInfo[1].str.end(), form, to);
+			itemInfo[1].pt = PointMake(rcX+15, rcY+150);
+			itemInfo[1].fontSize = 20;
+			itemInfo[1].color = RGB(255, 255, 255);
 
+			itemInfo[2].str = changeItemTypeToStr((*_viItem).first->_type);
+			itemInfo[2].pt = PointMake(rcX+100, rcY+45);
+			itemInfo[2].fontSize = 25;
+			itemInfo[2].color = RGB(125, 60, 120);
 
+			if ((*_viItem).first->_durability != 0)
+			{
+				itemInfo[3].str = to_string((*_viItem).first->_durability) + "/" + to_string((*_viItem).first->_maxDurability);
+				itemInfo[3].pt = PointMake(rcX + 200, rcY + 50);
+			}
+			if ((*_viItem).first->_equip_level != 0)
+			{
+				itemInfo[4].str = "+"+to_string((*_viItem).first->_equip_level);
+				itemInfo[4].pt = PointMake(rcX+50, rcY+12);
+				itemInfo[4].fontSize = 30;
+				itemInfo[4].color = RGB(125, 60,120);
+			}
+
+			itemInfo[5].str = changeAttributeToStr((*_viItem).first->_attribute);
+			itemInfo[5].pt = PointMake(rcX + 100, rcY + 70);
+			itemInfo[5].fontSize = 20;
+			itemInfo[5].color = RGB(190, 190, 160);
+
+			_itemManager->getBigItemImgRender((*_viItem).first->_imgNum, rcX + 15, rcY + 60);
+			for (int i = 0; i < 6; i++)
+			{
+				char* str = new char[itemInfo[i].str.size() + 1];
+				copy(itemInfo[i].str.begin(), itemInfo[i].str.end(), str);
+				str[itemInfo[i].str.size()] = '\0';
+
+				FONTMANAGER->drawText(getMemDC(), (int)itemInfo[i].pt.x, (int)itemInfo[i].pt.y, "야놀자 야체 Regular", itemInfo[i].fontSize, 300, str, strlen(str), itemInfo[i].color);
+
+				delete[] str;
+			}
+			break;
+
+		}
+	}
+
+}
+
+void Inventory::removeItem(Item* item)
+{
+	_viItem = _vItem.begin();
+	for (; _viItem != _vItem.end(); ++_viItem)
+	{
+		if ((*_viItem).first == item)
+		{
+			if ((*_viItem).first->_type != EITEM_TYPE::ABILITY)
+			{
+				cout << (*_viItem).first->_name << endl;
+				if ((*_viItem).first->_type == EITEM_TYPE::EQUIP_WEAPON_BOW ||
+					(*_viItem).first->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD ||
+					(*_viItem).first->_type == EITEM_TYPE::EQUIP_HAT ||
+					(*_viItem).first->_type == EITEM_TYPE::EQUIP_ARMOR ||
+					(*_viItem).first->_type == EITEM_TYPE::EQUIP_SHOES)
+				{
+					if (_equipWeapon == (*_viItem).first) { _equipWeapon = _emptyItem; }
+					if (_equipArmor == (*_viItem).first) { _equipArmor = _emptyItem; }
+					if (_equipShoes == (*_viItem).first) { _equipShoes = _emptyItem; }
+					if (_equipHat == (*_viItem).first) { _equipHat = _emptyItem; }
+					SAFE_DELETE((*_viItem).first);
+				}
+				_vItem.erase(_viItem);
+				computeRect();
+				computeItemTotalAttribute();
+				break;
+				//todo 드랍아이템 생성
+			}
+		}
+	}
+}
+
+string Inventory::changeItemTypeToStr(EITEM_TYPE type)
+{
+	string str;
+	switch (type)
+	{	
+	case EITEM_TYPE::EMPTY:
+		str = "";
+		break;
+	case EITEM_TYPE::POTION:
+		str = "포션";
+		break;
+	case EITEM_TYPE::SCROLL:
+		str = "스크롤";
+		break;
+	case EITEM_TYPE::ABILITY:
+		str = "어빌리티";
+		break;
+	case EITEM_TYPE::EQUIP_WEAPON_BOW:
+		str = "활";
+		break;
+	case EITEM_TYPE::EQUIP_WEAPON_SWORD:
+		str = "검";
+		break;
+	case EITEM_TYPE::EQUIP_ARMOR:
+		str = "갑옷";
+		break;
+	case EITEM_TYPE::EQUIP_HAT:
+		str = "모자";
+		break;
+	case EITEM_TYPE::EQUIP_SHOES:
+		str = "신발";
+		break;
+	case EITEM_TYPE::MATERIAL:
+		str = "재료";
+		break;
+	default:
+		break;
+	}
+	return str;
+}
+
+string Inventory::changeAttributeToStr(CPlayer_Attribute attri)
+{
+	string str = "";
+	if (attri._hp != 0) str = str + " 체력" + (attri._hp > 0 ? "+" : "") + to_string((int)attri._hp) + '\n';
+	if (attri._maxHp != 0) str = str + " 최대체력" + (attri._maxHp > 0 ? "+" : "") + to_string((int)attri._maxHp) + '\n';
+	if (attri._mana != 0) str = str + " 마나" + (attri._mana > 0 ? "+" : "") + to_string((int)attri._mana) + '\n';
+	if (attri._maxMana != 0) str = str + " 최대마나" + (attri._maxMana > 0 ? "+" : "") + to_string((int)attri._maxMana) + '\n';
+	if (attri._critical != 0) str = str + " 치명타확률" + (attri._critical > 0 ? "+" : "") + to_string((int)attri._critical) + "%\n";
+	if (attri._offencePower != 0) str = str + " 공격력" + (attri._offencePower > 0 ? "+" : "") + to_string((int)attri._offencePower) + '\n';
+	if (attri._magicPower != 0) str = str + " 마법력" + (attri._magicPower > 0 ? "+" : "") + to_string((int)attri._magicPower) + '\n';
+	if (attri._speed != 0) 
+	{ 
+		char num[16];
+		sprintf_s(num, "%.2f", attri._speed);
+		str = str + " 이동속도" + (attri._speed > 0 ? "+" : "") + num + '\n';
+	}
+	if (attri._damageBalance != 0) str = str + " 데미지밸런스" + (attri._damageBalance > 0 ? "+" : "") + to_string((int)attri._damageBalance) + "%\n";
+	if (attri._experience != 0) str = str + " 경험치" + (attri._experience > 0 ? "+" : "") + to_string((int)attri._experience) + '\n';
+	if (attri._stamina != 0) str = str + " 스테미나 회복률" + (attri._stamina > 0 ? "+" : "") + to_string((int)attri._stamina) + "%\n";
+	//if (attri._maxExperience != 0) str = str +" "+ to_string((int)attri._maxExperience)+'\n';
+	//if (attri._attackSpeed	 != 0) str = str +" 공격속도"+ to_string((int)attri._attackSpeed	) +'\n';
+	//if (attri._maxStamina	 != 0) str = str +" "+ to_string((int)attri._maxStamina	) +'\n';
+	
+	return str;
 }
