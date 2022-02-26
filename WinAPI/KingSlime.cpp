@@ -4,6 +4,11 @@
 HRESULT KingSlime::init(const char * imageName, POINT position)
 {
 	Enemy::init(imageName, position);
+	
+	_bossNameImage = IMAGEMANAGER->addImage("BossName", "Resource/Images/Lucie/CompleteImg/pitures/Boss_kingSlime.bmp", 149, 75, true, RGB(255, 0, 255));
+	_bossNameAlpha = 0;
+	_bossNameFadeIn = true;
+
 	_type = ObservedType::MINION;
 	
 	_state = STATE::STOP;
@@ -36,10 +41,6 @@ HRESULT KingSlime::init(const char * imageName, POINT position)
 	_bubbleBullet = new BubbleBullet;
 	_bubbleBullet->init(100, 500);
 
-	/*	이후 공격탄막 추가
-	_bounceBullet = new BounceBullet;
-	_bounceBullet->init();
-	*/
 	return S_OK;
 }
 
@@ -50,10 +51,12 @@ void KingSlime::release(void)
 
 void KingSlime::update(void)
 {
+	if(_bossNameFadeIn || (!_bossNameFadeIn && _bossNameAlpha > 0)) bossNameUpdate();
 	_normalBullet->update();
 	_bubbleBullet->update();
 	_angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
+	_fixRC = RectMake(_x - 80, _y, _image->getFrameWidth() - 200, _image->getFrameHeight() - 200);
 	setDirection();
 	frameUpdate();
 	move();
@@ -65,12 +68,14 @@ void KingSlime::render(void)
 
 	_normalBullet->render();
 	_bubbleBullet->render();
+
+	if (_bossNameFadeIn || (!_bossNameFadeIn && _bossNameAlpha > 0))_bossNameImage->alphaRender(getMemDC(), CENTER_X - 75, 50, _bossNameAlpha);
 }
 
 STObservedData KingSlime::getRectUpdate()
 {
 	STObservedData temp;
-	temp.rc = &_rc;
+	temp.rc = &_fixRC;
 	temp.typeKey = &_type;
 	temp.isActive = &_deadForOb;
 	temp.damage = &_attack;
@@ -79,6 +84,35 @@ STObservedData KingSlime::getRectUpdate()
 
 void KingSlime::collideObject(STObservedData obData)
 {
+	if (((*obData.typeKey) == ObservedType::ROCKET_MISSILE || (*obData.typeKey) == ObservedType::PLAYER_SWORD)
+		&& (*obData.isActive))
+	{
+		if (_hp <= (*obData.damage))
+		{
+			//나중에 죽는 애니메이션 넣는걸로 바꿀 것. isActive를 false로 바꾸는 작업은 죽은 애니메이션 전부 실행 뒤 바꿔주는 것으로 변경	
+			//_state = SLIMESTATE::SL_DEAD;
+			cout << "죽음" << endl;
+			_deadForOb = true;
+		}
+		else
+		{
+			_hp -= (*obData.damage);
+		}
+		(*obData.isActive) = false;
+	}
+}
+
+void KingSlime::bossNameUpdate()
+{
+	if (_bossNameFadeIn)
+	{
+		_bossNameAlpha += 2;
+	}
+	else
+	{
+		_bossNameAlpha -= 2;
+	}
+	if (_bossNameAlpha > 253) _bossNameFadeIn = false;
 }
 
 void KingSlime::frameUpdate()
@@ -150,11 +184,6 @@ void KingSlime::move()
 		}
 		if (_frameSet > _attackSet) changeAnotherState();
 	} break;
-	case STATE::ATTACK_BOUNCE:
-	{
-
-		if (_frameSet > _attackSet) changeAnotherState();
-	} break;
 	}
 }
 
@@ -177,9 +206,6 @@ void KingSlime::changeState(STATE state)
 	{
 	} break;
 	case STATE::ATTACK_BUBBLE:
-	{
-	} break;
-	case STATE::ATTACK_BOUNCE:
 	{
 	} break;
 	}
@@ -205,10 +231,6 @@ void KingSlime::changeDirectionState()
 	{
 		_frameY = static_cast<int>(_direction) + 8;
 	} break;
-	case STATE::ATTACK_BOUNCE:
-	{
-		_frameY = static_cast<int>(_direction) + 8;
-	} break;
 	}
 }
 
@@ -222,21 +244,16 @@ void KingSlime::changeAnotherState()
 	} break;
 	case STATE::WALK:
 	{
-		int rndState = RND->getInt(3);
-		//if (rndState == 0) changeState(STATE::ATTACK_NORMAL);
-		//else if (rndState == 1) changeState(STATE::ATTACK_BUBBLE);
-		//else if (rndState == 2) changeState(STATE::ATTACK_BOUNCE);
-		changeState(STATE::ATTACK_BUBBLE);
+		int rndState = RND->getInt(2);
+		if (rndState == 0) changeState(STATE::ATTACK_NORMAL);
+		else if (rndState == 1) changeState(STATE::ATTACK_BUBBLE);
+
 	} break;
 	case STATE::ATTACK_NORMAL:
 	{
 		changeState(STATE::WALK);
 	} break;
 	case STATE::ATTACK_BUBBLE:
-	{
-		changeState(STATE::WALK);
-	} break;
-	case STATE::ATTACK_BOUNCE:
 	{
 		changeState(STATE::WALK);
 	} break;
