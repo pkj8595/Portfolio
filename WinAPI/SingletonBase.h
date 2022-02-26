@@ -9,7 +9,7 @@ class SingletonBase
 	//-프로젝트 전체에서 한개만 존재해야 하는 객체나 클래스, 또는 프로젝트 전체에서 공유하는 클래스에 적용할 수 있는 패턴
 
 protected:
-	//싱글톤 인스텐스 선언
+	//싱글톤 인스턴스 선언
 	static T* singleton;
 
 	SingletonBase() {};

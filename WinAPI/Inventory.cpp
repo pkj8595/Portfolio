@@ -3,8 +3,7 @@
 
 HRESULT Inventory::init(void)
 {
-	_itemManager = new ItemManager;
-	_itemManager->init();
+	_itemManager = ItemManager::getSingleton();
 
 	_inventoryBackground = IMAGEMANAGER->addImage("inventoryBackground", "Resource/Images/Lucie/CompleteImg/inventory/inventoryBackground.bmp", 240, 296, true, RGB(255, 0, 255));
 	//_combineBackground.img = IMAGEMANAGER->addImage("combineBackground", "Resource/Images/Lucie/CompleteImg/inventory/combineBackground.bmp", 180, 180, true, RGB(255, 0, 255));
@@ -17,7 +16,7 @@ HRESULT Inventory::init(void)
 	_inventorySlot.img = IMAGEMANAGER->addFrameImage("InventorySlot", "Resource/Images/Lucie/CompleteImg/inventory/InventorySlot.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
 	_inventorySlotA.img = IMAGEMANAGER->addFrameImage("InventorySlotA", "Resource/Images/Lucie/CompleteImg/inventory/InventorySlotA.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
 	_inventorySlotB.img = IMAGEMANAGER->addFrameImage("inventorySlotB", "Resource/Images/Lucie/CompleteImg/inventory/inventorySlotB.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
-	_itemInfoWindow.img = IMAGEMANAGER->addImage("ItemInfoWindow", "Resource/Images/Lucie/CompleteImg/inventory/ItemInfoWindow.bmp", 300,200);
+	_itemInfoWindow.img = IMAGEMANAGER->addImage("ItemInfoWindow", "Resource/Images/Lucie/CompleteImg/inventory/ItemInfoWindow.bmp", 300,210);
 
 	//_btn = new mButton;
 	//_btn->init();
@@ -221,6 +220,11 @@ void Inventory::pushItem(Item* item)
 	computeItemTotalAttribute();
 }
 
+void Inventory::pushItem(int num)
+{
+	pushItem(_itemManager->getItemIndex(num));
+}
+
 void Inventory::updatePushItemMassege(Item* item)
 {
 	_showGetItemImgNum = item->_imgNum;
@@ -235,7 +239,7 @@ void Inventory::showInventoryItem()
 	for (; _viItem != _vItem.end(); ++_viItem)
 	{
 		if ((*_viItem).first->_type == EITEM_TYPE::ABILITY) continue;
-		_itemManager->getItemImgRender((*_viItem).first->_imgNum,
+		_itemManager->getItemImgRender(getMemDC(),(*_viItem).first->_imgNum,
 			_inventorySlot.pt.x +3+ (INVENTORY_IMG_OFFSETX * (countInven % 5)),
 			_inventorySlot.pt.y +3+ (INVENTORY_IMG_OFFSETY * (countInven / 5)));
 		countInven++;
@@ -250,7 +254,7 @@ void Inventory::showAbilityItem()
 	{
 		if ((*_viItem).first->_type != EITEM_TYPE::ABILITY)continue;
 
-		_itemManager->getItemImgRender((*_viItem).first->_imgNum,
+		_itemManager->getItemImgRender(getMemDC(), (*_viItem).first->_imgNum,
 			ABILITY_IMG_X + (countAbility* ABILITY_IMG_OFFSET),
 			ABILITY_IMG_Y);
 		countAbility++;
@@ -543,12 +547,12 @@ void Inventory::renderItemInfoWindow()
 				itemInfo[3].str = to_string((*_viItem).first->_durability) + "/" + to_string((*_viItem).first->_maxDurability);
 				itemInfo[3].pt = PointMake(rcX + 200, rcY + 50);
 			}
-			if ((*_viItem).first->_equip_level != 0)
+			if ((*_viItem).first->_enchantStr != "")
 			{
-				itemInfo[4].str = "+"+to_string((*_viItem).first->_equip_level);
-				itemInfo[4].pt = PointMake(rcX+50, rcY+12);
-				itemInfo[4].fontSize = 30;
-				itemInfo[4].color = RGB(125, 60,120);
+				itemInfo[4].str = "추가된 효과 : "+(*_viItem).first->_enchantStr;
+				itemInfo[4].pt = PointMake(rcX + 15, rcY + 190);
+				itemInfo[4].fontSize = 15;
+				itemInfo[4].color = RGB(0, 200,0);
 			}
 
 			itemInfo[5].str = changeAttributeToStr((*_viItem).first->_attribute);
@@ -556,7 +560,7 @@ void Inventory::renderItemInfoWindow()
 			itemInfo[5].fontSize = 20;
 			itemInfo[5].color = RGB(190, 190, 160);
 
-			_itemManager->getBigItemImgRender((*_viItem).first->_imgNum, rcX + 15, rcY + 60);
+			_itemManager->getBigItemImgRender(getMemDC(), (*_viItem).first->_imgNum, rcX + 15, rcY + 60);
 			for (int i = 0; i < 6; i++)
 			{
 				char* str = new char[itemInfo[i].str.size() + 1];

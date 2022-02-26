@@ -4,7 +4,7 @@
 
 #define IMAGE_SIZE		32
 
-class ItemManager : public GameNode
+class ItemManager : public SingletonBase<ItemManager>
 {
 private:
 	my::Image* _itemImg;
@@ -25,14 +25,16 @@ public:
 	my::Image* getImage(void) { return _itemImg; }
 	Item* getItem(int imgIndex);
 	Item* getItemIndex(int index);
-	void getItemImgRender(int imgIndex, int x, int y);
-	void getBigItemImgRender(int imgIndex, int x, int y);
-	//void ItemWindowRender(void);
+	void getItemImgRender(HDC hdc,int imgIndex, int x, int y);
+	void getBigItemImgRender(HDC hdc,int imgIndex, int x, int y);
+	void getItemIndexRender(HDC hdc, int index, int x, int y);
+	void getBigItemIndexRender(HDC hdc, int index, int x, int y);
 
 	EnchantItem* getEnchantItem();
+	int getItemSize() { return _vItem.size(); }
 
 
-	ItemManager() {}
-	~ItemManager() {}
+	ItemManager();
+	~ItemManager();
 };
 

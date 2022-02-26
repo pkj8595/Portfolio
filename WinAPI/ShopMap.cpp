@@ -16,6 +16,14 @@ HRESULT ShopMap::init(POINT location)
 	_mapRC = { 168, 50, 750, 460 };
 	_location = location;
 
+	//==================================================
+	_itemManager = ItemManager::getSingleton();
+
+	_shopBar = IMAGEMANAGER->addImage("shopBar", "Resource/Images/Lucie/CompleteImg/Shop/ShopBar1.bmp", 352, 192, true, RGB(255, 0, 255));
+	_shopNPC = IMAGEMANAGER->addImage("shopNPC", "Resource/Images/Lucie/CompleteImg/Shop/shop_NPC.bmp", 35, 43, true, RGB(255, 0, 255));
+	_x = CENTER_X;
+	_y = CENTER_Y;
+
 	return S_OK;
 }
 
@@ -25,6 +33,26 @@ void ShopMap::release(void)
 
 void ShopMap::update(void)
 {
+	if (KEYMANAGER->isStayKeyDown(VK_UP))
+	{
+		_y--;
+		cout << "x: " << _x << ", y: " << _y << endl;
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+	{
+		_y++;
+		cout << "x: " << _x << ", y: " << _y << endl;
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+	{
+		_x--;
+		cout << "x: " << _x << ", y: " << _y << endl;
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+	{
+		_x++;
+		cout << "x: " << _x << ", y: " << _y << endl;
+	}
 }
 
 void ShopMap::render(void)
@@ -34,4 +62,9 @@ void ShopMap::render(void)
 	if (!_connectedMap[1] || !_clear) _upWall->render(getMemDC(), CENTER_X - 180, -150);
 	if (!_connectedMap[2] || !_clear) _rightWall->render(getMemDC(), 758, 35);
 	if (!_connectedMap[3] || !_clear) _downWall->render(getMemDC(), 352, 465);
+	//============================================
+	_shopNPC->render(getMemDC(), 680, 140);
+	_shopBar->render(getMemDC(), 530, 40);
+
+
 }

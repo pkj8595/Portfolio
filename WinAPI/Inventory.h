@@ -96,6 +96,8 @@ class Inventory : public GameNode
 	float _enchantSuccessWorldTime;
 	string _enchantStr;
 
+	//todo
+	int _gold;
 
 public:
 	HRESULT init(void);
@@ -133,6 +135,7 @@ public:
 	//==========================
 	//인벤토리 아이템 추가
 	void pushItem(Item* item);
+	void pushItem(int num);
 	inline void updatePushItemMassege(Item* item);
 	void renderPushItemMassege();
 
