@@ -1,19 +1,23 @@
 #pragma once
 #include "Enemy.h"
+#include "Bullets.h"
 
 #define FRAMEDELAY		0.5f;
 
 class KingSlime : public Enemy
 {
 private:
-	//NormalBullet* _normalBullet				Åº¸· ¿©·¯°³
-	//BubbleBullet	* _bubbleBullet				Å« ÅºÈ¯->ÀÛÀº ÅºÈ¯ ¿©·¯°³
-	//BounceBullet* _bounceBullet				Æ¨±â´Â ÅºÈ¯
+	NormalBullet* _normalBullet;				//Åº¸· ¿©·¯°³
+	BubbleBullet* _bubbleBullet;				//Å« ÅºÈ¯->ÀÛÀº ÅºÈ¯ ¿©·¯°³
+	//BounceBullet* _bounceBullet;				//Æ¨±â´Â ÅºÈ¯
 	enum class STATE {STOP, WALK, ATTACK_BUBBLE, ATTACK_NORMAL, ATTACK_BOUNCE};
 	enum class DIRECTION {DOWN = 0, LEFT, RIGHT, UP};
 
 	STATE _state;
 	DIRECTION _direction;
+
+	bool _alreadyShot;
+	float _angle;
 
 	bool _deadForOb;
 	int _frameX, _frameY;
@@ -33,9 +37,11 @@ public:
 	virtual void collideObject(STObservedData obData);
 
 	void frameUpdate();
+	void setDirection();
 	void move();
 
 	void changeState(STATE state);
+	void changeDirectionState();
 	void changeAnotherState();
 
 	KingSlime() : _frameY(0) {}

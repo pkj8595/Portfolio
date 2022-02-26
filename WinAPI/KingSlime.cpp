@@ -8,13 +8,19 @@ HRESULT KingSlime::init(const char * imageName, POINT position)
 	
 	_state = STATE::STOP;
 	_direction = DIRECTION::DOWN;
+
+	_alreadyShot = false;
+	_angle = 0;
+	
+	_hp = 500;
 	_x = position.x;
 	_y = position.y;
 	_frameX = _frameY = 0;
 	_frameSet = 0;
 
-	_stopSet = 8;
-	_walkRndSet = RND->getFromIntTo(5, 8);
+	_stopSet = 6;
+	_stopSet = 2;
+	_walkRndSet = RND->getFromIntTo(3, 6);
 	_attackSet = 0;
 
 
@@ -24,13 +30,13 @@ HRESULT KingSlime::init(const char * imageName, POINT position)
 	_frameDelayTime = TIMEMANAGER->getWorldTime();
 
 
-	/*	이후 공격탄막 추가
 	_normalBullet = new NormalBullet;
-	_normalBullet->init();
+	_normalBullet->init(100, 500);
 
 	_bubbleBullet = new BubbleBullet;
-	_bubbleBullet->init();
+	_bubbleBullet->init(100, 500);
 
+	/*	이후 공격탄막 추가
 	_bounceBullet = new BounceBullet;
 	_bounceBullet->init();
 	*/
@@ -44,14 +50,11 @@ void KingSlime::release(void)
 
 void KingSlime::update(void)
 {
-	switch (_state)
-	{
-	case STATE::STOP: cout << "STOP" << endl; break;
-	case STATE::WALK: cout << "WALK" << endl; break;
-	case STATE::ATTACK_BUBBLE: cout << "ATTACK_BUBBLE" << endl; break;
-	case STATE::ATTACK_NORMAL: cout << "ATTACK_NORMAL" << endl; break;
-	case STATE::ATTACK_BOUNCE: cout << "ATTACK_BOUNCE" << endl; break;
-	}
+	_normalBullet->update();
+	_bubbleBullet->update();
+	_angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
+	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
+	setDirection();
 	frameUpdate();
 	move();
 }
@@ -59,6 +62,9 @@ void KingSlime::update(void)
 void KingSlime::render(void)
 {
 	_image->frameRender(getMemDC(), _rc.left, _rc.top, _frameX, _frameY);
+
+	_normalBullet->render();
+	_bubbleBullet->render();
 }
 
 STObservedData KingSlime::getRectUpdate()
@@ -86,6 +92,16 @@ void KingSlime::frameUpdate()
 	}
 }
 
+void KingSlime::setDirection()
+{
+	if (_angle >= 0 && _angle < 45 * PI / 180) _direction = DIRECTION::RIGHT; 
+	else if (_angle >= 45*PI/180 && _angle < 135 * PI / 180) _direction = DIRECTION::UP;
+	else if (_angle >= 135*PI/180 && _angle < 225 * PI / 180) _direction = DIRECTION::LEFT;
+	else if (_angle >= 225*PI/180 && _angle < 315 * PI / 180) _direction = DIRECTION::DOWN;
+	else _direction = DIRECTION::RIGHT;
+	changeDirectionState();
+}
+
 void KingSlime::move()
 {
 	switch (_state)
@@ -96,18 +112,47 @@ void KingSlime::move()
 	} break;
 	case STATE::WALK:
 	{
+		_x += cosf(_angle) * 0.8f;
+		_y += -sinf(_angle) * 0.8f;
 		if (_frameSet > _walkRndSet) changeAnotherState();
 	} break;
 	case STATE::ATTACK_NORMAL:
 	{
+		if (_frameX == 2 && !_alreadyShot)
+		{
+			int tempRnd = RND->getInt(3);
+			float tempRotate;
+			if (tempRnd == 0) tempRotate = 0;
+			else if (tempRnd == 1) tempRotate = -0.3 * PI / 180;
+			else tempRotate = 0.3 * PI / 180;
+
+			for (int i = 0; i < 20; i++)
+			{
+				_normalBullet->fire(_x, _y + 80, 18 * i * PI / 180, 2.8f, tempRotate);
+			}
+			for (int i = 0; i < 10; i++)
+			{
+				_normalBullet->fire(_x, _y + 80, 36 * i * PI / 180, 4.0f, tempRotate * (-1));
+			}
+			_alreadyShot = true;
+		}
 		if (_frameSet > _attackSet) changeAnotherState();
 	} break;
 	case STATE::ATTACK_BUBBLE:
 	{
+		if (_frameX == 2 && !_alreadyShot)
+		{
+			for (int i = 0; i < 80; i++)
+			{
+				_bubbleBullet->fire(_x, _y + 80, 45 * (i / 10) * PI / 180, 3.0f, (PI * 2 / 10) * i);
+			}
+			_alreadyShot = true;
+		}
 		if (_frameSet > _attackSet) changeAnotherState();
 	} break;
 	case STATE::ATTACK_BOUNCE:
 	{
+
 		if (_frameSet > _attackSet) changeAnotherState();
 	} break;
 	}
@@ -125,7 +170,31 @@ void KingSlime::changeState(STATE state)
 	} break;
 	case STATE::WALK:
 	{
+		_alreadyShot = false;
 		_walkRndSet = RND->getFromIntTo(5, 10);
+	} break;
+	case STATE::ATTACK_NORMAL:
+	{
+	} break;
+	case STATE::ATTACK_BUBBLE:
+	{
+	} break;
+	case STATE::ATTACK_BOUNCE:
+	{
+	} break;
+	}
+}
+
+void KingSlime::changeDirectionState()
+{
+	switch (_state)
+	{
+	case STATE::STOP:
+	{
+		_frameY = static_cast<int>(_direction);
+	} break;
+	case STATE::WALK:
+	{
 		_frameY = static_cast<int>(_direction) + 4;
 	} break;
 	case STATE::ATTACK_NORMAL:
@@ -154,9 +223,10 @@ void KingSlime::changeAnotherState()
 	case STATE::WALK:
 	{
 		int rndState = RND->getInt(3);
-		if (rndState == 0) changeState(STATE::ATTACK_NORMAL);
-		else if (rndState == 1) changeState(STATE::ATTACK_BUBBLE);
-		else if (rndState == 2) changeState(STATE::ATTACK_BOUNCE);
+		//if (rndState == 0) changeState(STATE::ATTACK_NORMAL);
+		//else if (rndState == 1) changeState(STATE::ATTACK_BUBBLE);
+		//else if (rndState == 2) changeState(STATE::ATTACK_BOUNCE);
+		changeState(STATE::ATTACK_BUBBLE);
 	} break;
 	case STATE::ATTACK_NORMAL:
 	{
