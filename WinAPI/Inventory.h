@@ -10,6 +10,8 @@
 #define	INVENTORY_IMG_OFFSETX		40
 #define	INVENTORY_IMG_OFFSETY		40
 
+#define PUSH_ITEM_MESSEGE		0.8f
+
 class Inventory : public GameNode
 {
 	typedef struct STInvenPos
@@ -103,10 +105,9 @@ public:
 	void checkMouseEvent(void);
 	void computeRect(void);
 
-	void showGetItem();
-	void showAttributeText(void);
+	void renderInvenAttributeText(void);
 	void equipRender(void);
-	void renderItemInfo();
+	void renderItemInfoWindow();
 	void removeItem(Item* item);//인벤토리 아이템 없앨때 사용
 
 	bool getIsShowInven(void) { return _isShowInven; }
@@ -127,6 +128,9 @@ public:
 	//==========================
 	//인벤토리 아이템 추가
 	void pushItem(Item* item);
+	inline void updatePushItemMassege(Item* item);
+	void renderPushItemMassege();
+
 	//총 아이템 능력치 합산
 	void computeItemTotalAttribute();
 	//장착중인 무기 반환

@@ -89,7 +89,7 @@ void Inventory::render(void)
 		renderInventoryBase();
 		equipRender();
 		showInventoryItem();
-		showAttributeText();
+		renderInvenAttributeText();
 
 		if (PtInRect(&_rcCloseBtn, _ptMouse))
 		{
@@ -102,10 +102,10 @@ void Inventory::render(void)
 
 	if (_isShowGetItem)
 	{
-		showGetItem();
+		renderPushItemMassege();
 	}
 
-	renderItemInfo();
+	renderItemInfoWindow();
 	showAbilityItem();
 
 }
@@ -158,11 +158,6 @@ void Inventory::computeItemTotalAttribute()
 
 void Inventory::pushItem(Item* item)
 {
-	//================================
-	_showGetItemImgNum = item->_imgNum;
-	_showGetItemAlpha = 255;
-	_isShowGetItem = true;
-	//================================
 
 	if (item->_type == EITEM_TYPE::ABILITY)
 	{
@@ -176,6 +171,7 @@ void Inventory::pushItem(Item* item)
 			ABILITY_IMG_Y,
 			32, 32);
 		_vItem.push_back(make_pair(item, temp));
+		updatePushItemMassege(item);
 		_abilutyItemCount++;
 	}
 	else if (item->_type == EITEM_TYPE::EQUIP_WEAPON_BOW||
@@ -191,6 +187,7 @@ void Inventory::pushItem(Item* item)
 			_inventorySlot.pt.y + 3 + (INVENTORY_IMG_OFFSETY * (_invenItemCount / 5)),
 			32, 32);
 		_vItem.push_back(make_pair(copyItem, tempRc));
+		updatePushItemMassege(item);
 		_invenItemCount++;
 	}
 	else
@@ -200,10 +197,19 @@ void Inventory::pushItem(Item* item)
 			_inventorySlot.pt.y + 3 + (INVENTORY_IMG_OFFSETY * (_invenItemCount / 5)),
 			32, 32);
 		_vItem.push_back(make_pair(item, tempRc));
+		updatePushItemMassege(item);
 		_invenItemCount++;
 	}
 
 	computeItemTotalAttribute();
+}
+
+void Inventory::updatePushItemMassege(Item * item)
+{
+	_showGetItemImgNum = item->_imgNum;
+	_showGetItemAlpha = 255;
+	_isShowGetItem = true;
+	_worldTime = TIMEMANAGER->getWorldTime();
 }
 
 void Inventory::showInventoryItem()
@@ -340,23 +346,46 @@ void Inventory::computeRect(void)
 	
 }
 
-void Inventory::showGetItem()
+void Inventory::renderPushItemMassege()
 {
-
 	int x = ((_showGetItemImgNum - 1) % 10) * 64;
 	int y = ((_showGetItemImgNum - 1) / 10) * 64;
-	//cout << "_showGetItemImgNum : "<< _showGetItemImgNum << endl;
-	IMAGEMANAGER->findImage("bigItemImg")->alphaRender(getMemDC(),CENTER_X-200,CENTER_Y-200, x, y,64,64, _showGetItemAlpha);
 
-	_showGetItemAlpha -=3 ;
+	string str;
+	_viItem = _vItem.begin();
+	for (; _viItem != _vItem.end(); ++_viItem)
+	{
+		if ((*_viItem).first->_imgNum == _showGetItemImgNum)
+		{
+			str = (*_viItem).first->_name.c_str();
+			break;
+		}
+	}
+	RECT massgeRc = RectMakeCenter(CENTER_X,CENTER_Y-300, str.size()*17,100);
+
+	char* cstr = new char[str.size() + 1];
+	copy(str.begin(), str.end(), cstr);
+	cstr[str.size()] = '\0';
+
+	FONTMANAGER->drawTextRectCenter(getMemDC(), massgeRc, "¾ß³îÀÚ ¾ßÃ¼ Regular", 50, 200, cstr, strlen(cstr), RGB(255, 255, 255));
+
+	delete[] cstr;
+
+	IMAGEMANAGER->findImage("bigItemImg")->render(getMemDC(), massgeRc.left - 64, massgeRc.top - 10, x, y, 64, 64);
+	if (TIMEMANAGER->getWorldTime() > _worldTime + PUSH_ITEM_MESSEGE)
+	{
+		_isShowGetItem = false;
+	}
+	//IMAGEMANAGER->findImage("bigItemImg")->alphaRender(getMemDC(), massgeRc.left-64, massgeRc.top-10, x, y,64,64, _showGetItemAlpha);
+	/*_showGetItemAlpha -=5 ;
 	if (_showGetItemAlpha < 0) 
 	{
 		_isShowGetItem = false; 
 		_showGetItemAlpha = 255;
-	}
+	}*/
 }
 
-void Inventory::showAttributeText(void)
+void Inventory::renderInvenAttributeText(void)
 {
 	if (!_ptotalAttribute) return;
 	string script[8];
@@ -402,7 +431,7 @@ void Inventory::equipRender(void)
 
 }
 
-void Inventory::renderItemInfo()
+void Inventory::renderItemInfoWindow()
 {
 	_viItem = _vItem.begin();
 	for (; _viItem != _vItem.end(); ++_viItem)
