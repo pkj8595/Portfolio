@@ -4,8 +4,6 @@
 
 #define FLAME_COUNT		4.0f
 
-
-
 class tagCBullet :public IRectObserved
 {
 public:
@@ -19,6 +17,7 @@ public:
 	float x, y;
 	float fireX, fireY;
 	float angle;
+	float rotateAngle;
 	float speed;
 	bool fire;
 
@@ -176,3 +175,39 @@ public:
 	CircleMissile() {}
 	~CircleMissile() {}
 };
+
+//==================================
+// ### Boss Bullets ###
+//==================================
+
+class NormalBullet : public AMissile
+{
+private:
+
+public:
+	virtual HRESULT init(int bulletMax, float range);
+	virtual void move(void);
+	virtual void fire(float x, float y, float angle, float speed, float rotate);
+	virtual void draw(void);
+
+	NormalBullet() {}
+	~NormalBullet() {}
+};
+
+class BubbleBullet : public AMissile
+{
+private:
+	my::Image* _bigImg;
+	my::Image* _reflectbigImg;
+	int count = 0;
+public:
+	virtual HRESULT init(int bulletMax, float range);
+	virtual void move(void);
+	virtual void fire(float x, float y, float angle, float speed, float rotateAngle);
+	virtual void draw(void);
+
+	BubbleBullet() {}
+	~BubbleBullet() {}
+};
+
+//==================================
