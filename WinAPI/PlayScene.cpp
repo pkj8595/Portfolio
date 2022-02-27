@@ -48,6 +48,7 @@ void PlayScene::render(void)
 {
 	_mapManager->render();
 	_player->render();
+	_player->printStack();
 	_enemyManager->render();
 	_itemSpawner->render();
 	RECTOBSERVERMANAGER->render();
@@ -55,10 +56,12 @@ void PlayScene::render(void)
 	//UI
 	if (_mapManager->isMinimapToggle()) _mapManager->printTempMinimap();
 	_player->printUI();
-	
+	_player->printInventory();
+
 	//WINSIZE effect
 	_player->printHitBG();
 	if (_fadeoutAlpha > 0) _fadeoutImage->alphaRender(getMemDC(), _fadeoutAlpha);
+
 }
 
 PlayScene::PlayScene() : _stageNum(0) {

@@ -134,10 +134,15 @@ public:
 	}
 	PLAYER_STATE getState() { return _state;	 }
 	void printUI() { _statusUI->render(); }
+	void printStack();
+	void printInventory();
 	void printHitBG();
 	
 	bool _isTextShow;
 	bool isDead() { return _dead; }
+
+
+	void addExp(int exp) { _status._experience += exp; }
 };
 
 //°Ë
