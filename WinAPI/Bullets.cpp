@@ -586,6 +586,7 @@ void NormalBullet::fire(float x, float y, float angle, float speed, float rotate
 	bullet->reflectImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectBullet.bmp", 26, 26, true, RGB(255, 0, 255));
 	bullet->type = ObservedType::MINION_MISSILE;
 	bullet->speed = speed;
+	bullet->damage = 1.0f;
 	bullet->x = bullet->fireX = x;
 	bullet->y = bullet->fireY = y;
 	bullet->angle = angle;
@@ -651,6 +652,7 @@ void BubbleBullet::fire(float x, float y, float angle, float speed, float rotate
 	bullet->x = bullet->fireX = x;
 	bullet->y = bullet->fireY = y;
 	bullet->angle = angle;
+	bullet->damage = 1.0f;
 	bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
 	bullet->fire = true;
 	bullet->init();
