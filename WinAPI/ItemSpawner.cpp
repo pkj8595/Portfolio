@@ -53,7 +53,7 @@ void ItemObject::update(void)
 void ItemObject::render(void)
 {
 	//RectangleMakeToRECT(getMemDC(), _rc);
-	_itemManager->getBigItemIndexRender(getMemDC(), _itemIndex, _rc.left, _rc.top);
+	_itemManager->getItemIndexRender(getMemDC(), _itemIndex, _rc.left, _rc.top);
 }
 
 STObservedData ItemObject::getRectUpdate()

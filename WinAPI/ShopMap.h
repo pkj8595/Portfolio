@@ -1,7 +1,10 @@
 #pragma once
 #include "Map.h"
-#include "ItemManager.h"
 
+#define ITEM_SIZE	3
+
+class ItemManager;
+class ItemSpawner;
 class ShopMap : public Map
 {
 private:
@@ -10,7 +13,10 @@ private:
 	RECT _shopCollider;
 	int _x, _y;
 
+	//int _itemIndex[3];
+
 	ItemManager* _itemManager;
+	ItemSpawner* _itemSpawner;
 
 public:
 	HRESULT init(POINT location);

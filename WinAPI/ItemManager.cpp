@@ -162,7 +162,7 @@ void ItemManager::getItemIndexRender(HDC hdc, int index, int x, int y)
 	destY = (imgIndex - 1) / 10;
 	destX = (imgIndex - 1) % 10;
 
-	_bigItemImg->frameRender(hdc, x, y, destX, destY);
+	_itemImg->frameRender(hdc, x, y, destX, destY);
 }
 
 void ItemManager::getBigItemIndexRender(HDC hdc, int index, int x, int y)

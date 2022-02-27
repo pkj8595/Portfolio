@@ -29,11 +29,10 @@ void PlayScene::update(void)
 	_mapManager->update();
 	_enemyManager->update();
 	_player->update();
-	_itemSpawner->update();
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F7))
 	{
-		_itemSpawner->createItem(CENTER_X, CENTER_Y, true);
+		_itemSpawner->createItem(CENTER_X, CENTER_Y, false);
 	}
 
 	pixelCollision();
@@ -49,7 +48,6 @@ void PlayScene::render(void)
 	_mapManager->render();
 	_player->render();
 	_enemyManager->render();
-	_itemSpawner->render();
 	RECTOBSERVERMANAGER->render();
 
 	//UI
