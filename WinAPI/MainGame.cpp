@@ -8,6 +8,7 @@
 #include "Lobby.h"
 #include "ShopScene.h"
 
+
 HRESULT MainGame::init(void)
 {
 	GameNode::init(TRUE);
@@ -20,7 +21,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("Lobby", new Lobby);
 	SCENEMANAGER->addScene("ShopScene", new ShopScene);
 
-	SCENEMANAGER->changeScene("Lobby");
+	SCENEMANAGER->changeScene("PlayScene");
 
 	return S_OK;
 }
@@ -28,11 +29,12 @@ HRESULT MainGame::init(void)
 void MainGame::release(void)
 {
 	GameNode::release();
+
 }
 
 void MainGame::update(void)
 {
-	SCENEMANAGER->update();
+	SCENEMANAGER->update();	
 }
 
 void MainGame::render(void)

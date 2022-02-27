@@ -257,6 +257,9 @@
     <ClCompile Include="ShopMap.cpp">
       <Filter>MainGame\Map\MapType</Filter>
     </ClCompile>
+    <ClCompile Include="LobbyPlayer.cpp">
+      <Filter>OJH</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -425,6 +428,9 @@
     </ClInclude>
     <ClInclude Include="ShopMap.h">
       <Filter>MainGame\Map\MapType</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyPlayer.h">
+      <Filter>OJH</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
