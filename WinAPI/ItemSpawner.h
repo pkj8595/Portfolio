@@ -21,7 +21,7 @@ private:
 
 public:
 	HRESULT init(void);
-	HRESULT init(int x, int y,bool isCollider);
+	HRESULT init(int x, int y, bool isCollider);
 	void release(void);
 	void update(void);
 	void render(void);

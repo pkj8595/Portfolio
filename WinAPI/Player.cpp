@@ -277,11 +277,17 @@ void Player::collideObject(STObservedData obData)
 	//¾ÆÀÌÅÛ È¹µæ
 	if (*obData.typeKey == ObservedType::ITEM)
 	{
-		if (TIMEMANAGER->getWorldTime() > *obData.angle + 1.0f)
+		//*obData.isActive -> item -> isCollider
+		if (*obData.isActive)
 		{
-			_inventory->pushItem(*obData.number);
+			//*obData.angle -> item -> respoenseTime
+			if (TIMEMANAGER->getWorldTime() > *obData.angle + 1.0f)
+			{
+				_inventory->pushItem(*obData.number);
+			}
 		}
 	}
+
 }
 
 void Player::setFrame()

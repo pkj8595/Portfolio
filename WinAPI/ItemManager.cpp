@@ -4,12 +4,10 @@
 
 ItemManager::ItemManager()
 {
-	init();
 }
 
 ItemManager::~ItemManager()
 {
-	release();
 }
 
 
@@ -82,7 +80,7 @@ HRESULT ItemManager::init(void)
 			enchantItem->_attribute._stamina = atoi(vEnchantData[i + 17].c_str());
 			enchantItem->_attribute._maxStamina = atoi(vEnchantData[i + 18].c_str());
 
-			enchantItem->toString();
+			//enchantItem->toString();
 			_vEnchantItem.push_back(enchantItem);
 		}
 		cout << "ItemManager::init(void) >> item enchant data init ok" << endl;

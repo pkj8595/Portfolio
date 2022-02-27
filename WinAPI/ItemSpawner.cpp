@@ -53,7 +53,7 @@ STObservedData ItemObject::getRectUpdate()
 	STObservedData temp;
 	temp.typeKey = &_typeKey;
 	temp.number = &_itemIndex;
-	temp.isActive = &_isActive;
+	temp.isActive = &_isCollider;
 	temp.rc = &_rc;
 	temp.angle = &_responseTime;
 

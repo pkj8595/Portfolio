@@ -1,6 +1,5 @@
 #pragma once
 #include "GameNode.h"
-#include "mButton.h"
 #include "ItemManager.h"
 
 #define	ABILITY_IMG_OFFSET		50
