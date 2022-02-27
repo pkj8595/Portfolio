@@ -47,8 +47,8 @@ HRESULT Player::init(void)
 	_status._critical = 10.0f;
 	_status._offencePower = 10.0f;
 	_status._magicPower = 10.0f;
-	//_status._speed = 2.0f;
-	_status._speed = 8.0f;
+	_status._speed = 2.0f;
+	//_status._speed = 8.0f;
 	_status._damageBalance = 0.0f;
 	_status._experience = 0.0f;
 	_status._maxExperience = 100.0f;
@@ -140,22 +140,7 @@ void Player::update(void)
 void Player::render(void)
 {
 	_image->frameRender(getMemDC(), _x, _y);
-
 	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
-	if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
-	{
-		showSwordStack();
-		_sword->render();
-	}
-	else if ((*_equipItem)->_type == EITEM_TYPE::EMPTY)_normal->render();
-
-	else if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
-	{
-		showBowStack();
-		_bow->render();
-	}
-	_inventory->render();
-
 }
 void Player::showSwordStack()
 {
@@ -896,4 +881,24 @@ void Player::printHitBG()
 {
 	if (_hitAlpha > 0) _hitBG->alphaRender(getMemDC(), _hitAlpha);
 	if (_dodgeAlpha > 0) _dodgeBG->alphaRender(getMemDC(), _dodgeAlpha);
+}
+void Player::printStack()
+{
+	if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
+	{
+		showSwordStack();
+		_sword->render();
+	}
+	else if ((*_equipItem)->_type == EITEM_TYPE::EMPTY)_normal->render();
+
+	else if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
+	{
+		showBowStack();
+		_bow->render();
+	}
+}
+
+void Player::printInventory()
+{
+	_inventory->render();
 }

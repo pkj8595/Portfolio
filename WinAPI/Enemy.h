@@ -32,9 +32,10 @@ protected:
 	float _x, _y;
 	float _rndTimeCount;
 	float _worldTimeCount;
-
 	float _bulletFireCount;
 	float _rndFireCount;
+
+	float _exp;
 
 	ObservedType _type;
 	bool _isActive;
@@ -73,6 +74,7 @@ public:
 	void setPlayer(Player& player) { _player = &player; }
 
 	void setHpY(int y) { _hpY = y;}
+	float getExp() { return _exp; }
 
 	Enemy(void);
 	virtual ~Enemy(void) {}

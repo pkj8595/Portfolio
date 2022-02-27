@@ -208,6 +208,7 @@ void EnemyManager::checkActive(void)
 			}
 			else
 			{
+				_pPlayer->addExp((*_viMinion)->getExp());
 				(*_viMinion)->release();
 				SAFE_DELETE(*_viMinion);
 				_viMinion = _vMinion.erase(_viMinion);

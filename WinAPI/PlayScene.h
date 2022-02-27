@@ -9,13 +9,22 @@ class PlayScene : public GameNode
 {
 private:
 	my::Image* _fadeoutImage;
+	my::Image* _clearBossImage;
+	// 주석 제거 금지
+	//my::Image* _clearBossImage2;
+	//my::Image* _clearBossImage3;
 	MapManager* _mapManager;
 	EnemyManager* _enemyManager;
 	Player* _player;
 	ItemSpawner* _itemSpawner;
 	int _stageNum;
-
 	bool _isChanging;
+
+	bool _showBossEffect;
+	int _frameCount;
+	float _bossEffectTime;
+	int _bossClearAlpha;
+
 	int _fadeoutAlpha;
 	int _changeScreenType; //0, 1, 2, 3 : LEFT, RIGHT, UP, DOWN
 
