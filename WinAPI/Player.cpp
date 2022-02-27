@@ -111,7 +111,6 @@ void Player::update(void)
 	checkBowStack();
 
 	healStamina();
-	setLevelUp();
 
 	if (!_attack || (*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
 	{	
@@ -728,6 +727,10 @@ void Player::healStamina()
 	{
 		_status._stamina += 0.4f;
 	}
+	else if (_status._stamina > _totalStatus._maxStamina) 
+	{
+		_status._stamina = _totalStatus._maxStamina; 
+	}
 }
 
 void Player::checkLevelUp()
@@ -875,17 +878,6 @@ float Player::calculateMagicDamage()
 	
 	if (rndDamage <= criticalProperty) rndDamage *= 2;
 	return rndDamage;
-}
-
-void Player::setLevelUp()
-{
-	if (_status._experience >= _status._maxExperience)
-	{
-		_level++;
-		_status._experience = 0.0f;
-		_status._maxExperience *= 1.3f;
-		_status._offencePower += 1.0f;
-	}
 }
 
 void Player::printHitBG()
