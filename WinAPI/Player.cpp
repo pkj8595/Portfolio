@@ -133,6 +133,8 @@ void Player::update(void)
 	if (_state != PLAYER_STATE::DODGE) _alreadyAddBowStack = false;
 	if (_hitAlpha > 0) _hitAlpha -= 16;
 	if (_dodgeAlpha > 0) _dodgeAlpha -= 16;
+
+	setLevelUp();
 }
 
 void Player::render(void)
@@ -882,10 +884,10 @@ float Player::calculateMagicDamage()
 
 void Player::setLevelUp()
 {
-	if (_status._experience >= _status._maxExperience)
+	if (_status._experience >= _totalStatus._maxExperience)
 	{
 		_level++;
-		_status._experience -= _status._maxExperience;
+		_status._experience -= _totalStatus._maxExperience;
 		_status._maxExperience *= 1.3f;
 		_status._offencePower += 1.0f;
 	}
