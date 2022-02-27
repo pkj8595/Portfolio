@@ -39,6 +39,7 @@ HRESULT EnemyManager::init(void)
 	IMAGEMANAGER->addFrameImage("Snake", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Snake.bmp", 144, 624, 3, 13, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addFrameImage("KingSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 1080, 7560, 3, 21, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("BigSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 576, 4032, 3, 21, true, RGB(255, 0, 255));
 	
 	IMAGEMANAGER->addFrameImage("Rafflesia", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Rafflesia.bmp", 240, 549, 3, 9, true, RGB(255, 0, 255));
 	
@@ -129,11 +130,6 @@ void EnemyManager::setMinion(void)
 		_vMinion.push_back(snake2);
 	} break;
 	}
-
-
-
-
-
 }
 
 void EnemyManager::setBoss(void)
@@ -144,9 +140,35 @@ void EnemyManager::setBoss(void)
 	_vMinion.push_back(kingslime);
 }
 
-void EnemyManager::setMiniBoss(void)
+void EnemyManager::setMiniBoss(int x, int y)
 {
+	Enemy* bigslime;
+	bigslime = new BigSlime;
+	bigslime->init("BigSlime", PointMake(x + 10, y));
+	_vMinion.push_back(bigslime);
+
+	Enemy* bigslime2;
+	bigslime2 = new BigSlime;
+	bigslime2->init("BigSlime", PointMake(x - 10, y));
+	bigslime2->setHpY(35);
+	_vMinion.push_back(bigslime2);
 }
+
+void EnemyManager::setSlime(int x, int y)
+{
+	Enemy* slime;
+	slime = new Slime;
+	slime->init("Slime", PointMake(x + 10, y));
+	_vMinion.push_back(slime);
+	Enemy* slime2;
+
+	Enemy* slime3;
+	slime3 = new Slime;
+	slime3->init("Slime", PointMake(x - 10, y));
+	_vMinion.push_back(slime3);
+}
+
+
 
 void EnemyManager::removeMinion(int arrNum)
 {
@@ -163,10 +185,36 @@ void EnemyManager::checkActive(void)
 	{
 		if (!(*_viMinion)->getIsActive()) 
 		{
-			(*_viMinion)->release();
-			SAFE_DELETE(*_viMinion);
-			_viMinion = _vMinion.erase(_viMinion);
-			break;
+			if ((*_viMinion)->isBoss())
+			{
+				POINT temp = { (*_viMinion)->getRect().left + ((*_viMinion)->getRect().right - (*_viMinion)->getRect().left) / 2,
+					(*_viMinion)->getRect().top + ((*_viMinion)->getRect().bottom - (*_viMinion)->getRect().top )/2 };
+				(*_viMinion)->release();
+				SAFE_DELETE(*_viMinion);
+				_viMinion = _vMinion.erase(_viMinion);
+				setMiniBoss(temp.x, temp.y);
+				break;
+			}
+			else if ((*_viMinion)->isMiniBoss())
+			{
+				if ((*_viMinion)->isBoss())
+				{
+					POINT temp = { (*_viMinion)->getRect().left + ((*_viMinion)->getRect().right - (*_viMinion)->getRect().left) / 2,
+						(*_viMinion)->getRect().top + ((*_viMinion)->getRect().bottom - (*_viMinion)->getRect().top) / 2 };
+					(*_viMinion)->release();
+					SAFE_DELETE(*_viMinion);
+					_viMinion = _vMinion.erase(_viMinion);
+					setSlime(temp.x, temp.y);
+					break;
+				}
+			}
+			else
+			{
+				(*_viMinion)->release();
+				SAFE_DELETE(*_viMinion);
+				_viMinion = _vMinion.erase(_viMinion);
+				break;
+			}
 		}
 	}
 }

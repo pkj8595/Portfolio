@@ -97,6 +97,10 @@ void PlayScene::changeMap()
 	if (_enemyManager->checkClear())
 	{
 		_mapManager->getCurrentMap()->setClear(true);
+		if (_mapManager->getCurrentMap()->getMapType() == Map::MAPTYPE::BOSS)
+		{
+			//cout << "보스 이펙트 여기서 작성" << endl;
+		}
 	}
 }
 
@@ -107,7 +111,7 @@ void PlayScene::spawnMonster()
 	{
 		_enemyManager->setMinion();
 	}
-	else if (_mapManager->getCurrentMap()->getType() == Map::MAPTYPE::BOSS /* &&
+	else if (_mapManager->getCurrentMap()->getType() == Map::MAPTYPE::BOSS /*&&
 		!_mapManager->getCurrentMap()->isClear()*/)
 	{
 		_enemyManager->setBoss();

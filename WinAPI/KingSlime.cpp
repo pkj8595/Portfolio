@@ -35,7 +35,7 @@ HRESULT KingSlime::init(const char * imageName, POINT position)
 	_walkRndSet = RND->getFromIntTo(3, 6);
 	_attackSet = 0;
 
-
+	_boss = true;
 	_deadForOb = false;
 	_isActive = true;
 
@@ -53,7 +53,11 @@ HRESULT KingSlime::init(const char * imageName, POINT position)
 
 void KingSlime::release(void)
 {
-
+	_normalBullet->release();
+	_bubbleBullet->release();
+	SAFE_DELETE(_normalBullet);
+	SAFE_DELETE(_bubbleBullet);
+	Enemy::release();
 }
 
 void KingSlime::update(void)
@@ -64,10 +68,19 @@ void KingSlime::update(void)
 	_angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 	_fixRC = RectMake(_x - 80, _y, _image->getFrameWidth() - 200, _image->getFrameHeight() - 200);
-	setDirection();
-	frameUpdate();
-	hpUpdate();
-	move();
+	if (!_deadForOb)
+	{
+		setDirection();
+		frameUpdate();
+		hpUpdate();
+		move();
+	}
+	else
+	{
+		_deadCount++;
+		if (_deadCount > 150) _isActive = false;
+	}
+
 }
 
 void KingSlime::render(void)
@@ -100,7 +113,7 @@ void KingSlime::collideObject(STObservedData obData)
 		{
 			//나중에 죽는 애니메이션 넣는걸로 바꿀 것. isActive를 false로 바꾸는 작업은 죽은 애니메이션 전부 실행 뒤 바꿔주는 것으로 변경	
 			//_state = SLIMESTATE::SL_DEAD;
-			cout << "죽음" << endl;
+			changeState(STATE::DEAD);
 			_deadForOb = true;
 		}
 		else
@@ -233,6 +246,9 @@ void KingSlime::changeState(STATE state)
 	} break;
 	case STATE::ATTACK_BUBBLE:
 	{
+	} break;
+	case STATE::DEAD: {
+		_frameY = 21;
 	} break;
 	}
 }
