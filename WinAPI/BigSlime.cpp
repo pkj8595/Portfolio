@@ -10,11 +10,10 @@ HRESULT BigSlime::init(const char * imageName, POINT position)
 	_bossHpDamageImage = IMAGEMANAGER->addImage("BossHPDamage", "Resource/Images/Lucie/CompleteImg/system/Boss_HP_damage.bmp", 485, 22, false, RGB(255, 0, 255));
 	_bossHpAlpha = 0;
 	_hp = _maxHP = 500;
-	_hpY = 0;
 	_hpWidth = _damageHpWidth = (_bossHpImage->getWidth() * (_hp / _maxHP));
 
 	_type = ObservedType::MINION;
-
+	_speed = RND->getFromFloatTo(0.6f, 1.0f);
 	_state = STATE::STOP;
 	_direction = DIRECTION::DOWN;
 
@@ -164,8 +163,8 @@ void BigSlime::move()
 	} break;
 	case STATE::WALK:
 	{
-		_x += cosf(_angle) * 0.8f;
-		_y += -sinf(_angle) * 0.8f;
+		_x += cosf(_angle) * _speed;
+		_y += -sinf(_angle) * _speed;
 		if (_frameSet > _walkRndSet) changeAnotherState();
 	} break;
 	case STATE::ATTACK_NORMAL:
@@ -192,7 +191,7 @@ void BigSlime::move()
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				_bubbleBullet->fire(_x, _y + 80, 90 * (i / 10) * PI / 180, 3.0f, (72 * PI * 180) * i);
+				_bubbleBullet->fire(_x, _y + 80, 90 * (i % 4) * PI / 180, 3.0f, (72 * PI / 180) * i);
 			}
 			_alreadyShot = true;
 		}
@@ -268,6 +267,7 @@ void BigSlime::changeAnotherState()
 	} break;
 	case STATE::ATTACK_NORMAL:
 	{
+		_speed = RND->getFromFloatTo(0.6f, 1.0f);
 		changeState(STATE::WALK);
 	} break;
 	case STATE::ATTACK_BUBBLE:

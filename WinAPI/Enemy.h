@@ -72,7 +72,7 @@ public:
 	void setPlayerPos(POINT playerPos) { _playerPos = playerPos; }
 	void setPlayer(Player& player) { _player = &player; }
 
-	void setHpY(int y) { _hpY = y; }
+	void setHpY(int y) { _hpY = y;}
 
 	Enemy(void);
 	virtual ~Enemy(void) {}
