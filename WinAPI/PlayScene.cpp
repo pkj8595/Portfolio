@@ -10,6 +10,8 @@ HRESULT PlayScene::init(void)
 
 	_enemyManager = new EnemyManager;
 	_enemyManager->init();
+	_itemSpawner = new ItemSpawner;
+	_itemSpawner->init();
 	_player = new Player;
 	_player->init();
 
@@ -28,6 +30,13 @@ void PlayScene::update(void)
 	_mapManager->update();
 	_enemyManager->update();
 	_player->update();
+	_itemSpawner->update();
+
+	if (KEYMANAGER->isOnceKeyDown(VK_F7))
+	{
+		_itemSpawner->createItem(CENTER_X, CENTER_Y, true);
+	}
+
 	pixelCollision();
 	setFadeOutAlpha();
 	changeMapFadeOut();
@@ -41,6 +50,7 @@ void PlayScene::render(void)
 	_mapManager->render();
 	_player->render();
 	_enemyManager->render();
+	_itemSpawner->render();
 	RECTOBSERVERMANAGER->render();
 
 	//UI

@@ -251,29 +251,6 @@ STObservedData Player::getRectUpdate()
 
 void Player::collideObject(STObservedData obData)
 {
-	if (_swordSpecialAttack) return;
-	if (_state == PLAYER_STATE::DODGE)
-	{
-		if(_totalStatus._mana < _totalStatus._maxMana) _status._mana++;
-		if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
-		{
-			if (_bowStack < 5 && !_tripleshot && !_alreadyAddBowStack)
-			{
-				
-				_bowStack++;
-				
-			}
-		}
-		if(!_alreadyAddBowStack) _dodgeAlpha = 80;
-		_alreadyAddBowStack = true;
-	}
-	else if (!_hit)
-	{
-		_hitAlpha = 255;
-		_status._hp -= 1;
-		_hit = true;
-		_hitInvTime = 100;
-	}
 	//¾ÆÀÌÅÛ È¹µæ
 	if (*obData.typeKey == ObservedType::ITEM)
 	{
@@ -285,6 +262,32 @@ void Player::collideObject(STObservedData obData)
 			{
 				_inventory->pushItem(*obData.number);
 			}
+		}
+	} 
+	else
+	{
+		if (_swordSpecialAttack) return;
+		if (_state == PLAYER_STATE::DODGE)
+		{
+			if (_totalStatus._mana < _totalStatus._maxMana) _status._mana++;
+			if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
+			{
+				if (_bowStack < 5 && !_tripleshot && !_alreadyAddBowStack)
+				{
+
+					_bowStack++;
+
+				}
+			}
+			if (!_alreadyAddBowStack) _dodgeAlpha = 80;
+			_alreadyAddBowStack = true;
+		}
+		else if (!_hit)
+		{
+			_hitAlpha = 255;
+			_status._hp -= 1;
+			_hit = true;
+			_hitInvTime = 100;
 		}
 	}
 
