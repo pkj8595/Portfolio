@@ -3,6 +3,7 @@
 #include "MapManager.h"
 #include "EnemyManager.h"
 #include "Player.h"
+#include "ItemSpawner.h"
 
 class PlayScene : public GameNode
 {
@@ -11,6 +12,7 @@ private:
 	MapManager* _mapManager;
 	EnemyManager* _enemyManager;
 	Player* _player;
+	ItemSpawner* _itemSpawner;
 	int _stageNum;
 
 	bool _isChanging;

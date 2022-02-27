@@ -156,7 +156,7 @@ void ItemManager::getBigItemImgRender(HDC hdc,int imgIndex, int x, int y)
 void ItemManager::getItemIndexRender(HDC hdc, int index, int x, int y)
 {
 	if (index >= _vItem.size()) return;
-	int imgIndex = _viItem[index]->_imgNum;
+	int imgIndex = _vItem[index]->_imgNum;
 	int destY = 0;
 	int destX = 0;
 	destY = (imgIndex - 1) / 10;
@@ -168,7 +168,7 @@ void ItemManager::getItemIndexRender(HDC hdc, int index, int x, int y)
 void ItemManager::getBigItemIndexRender(HDC hdc, int index, int x, int y)
 {
 	if (index >= _vItem.size()) return;
-	int imgIndex = _viItem[index]->_imgNum;
+	int imgIndex = _vItem[index]->_imgNum;
 	int destY = 0;
 	int destX = 0;
 	destY = (imgIndex - 1) / 10;
