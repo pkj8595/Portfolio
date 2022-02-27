@@ -7,11 +7,9 @@ HRESULT PlayScene::init(void)
 	_mapManager = new MapManager;
 	if (_stageNum == 0)	_mapManager->init(13, _stageNum);
 	else _mapManager->init(13, _stageNum);
-
+	_itemSpawner = ItemSpawner::getSingleton();
 	_enemyManager = new EnemyManager;
 	_enemyManager->init();
-	_itemSpawner = new ItemSpawner;
-	_itemSpawner->init();
 	_player = new Player;
 	_player->init();
 
@@ -21,6 +19,7 @@ HRESULT PlayScene::init(void)
 
 void PlayScene::release(void)
 {
+	
 }
 
 void PlayScene::update(void)

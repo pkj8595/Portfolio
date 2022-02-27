@@ -34,7 +34,7 @@ public:
 
 };
 
-class ItemSpawner :public GameNode
+class ItemSpawner :public SingletonBase<ItemSpawner>
 {
 private:
 	vector<ItemObject*> _vItemObj;

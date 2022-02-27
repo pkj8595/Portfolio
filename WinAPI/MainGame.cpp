@@ -14,6 +14,8 @@ HRESULT MainGame::init(void)
 {
 	GameNode::init(TRUE);
 	ItemManager::getSingleton()->init();
+	ItemSpawner::getSingleton()->init();
+
 	SCENEMANAGER->addScene("TitleScene", new TitleScene);
 	SCENEMANAGER->addScene("LobbyScene", new LobbyScene);
 	SCENEMANAGER->addScene("PlayScene", new PlayScene);
@@ -30,8 +32,11 @@ HRESULT MainGame::init(void)
 void MainGame::release(void)
 {
 	ItemManager::getSingleton()->release();
-	GameNode::release();
+	ItemManager::getSingleton()->releaseSingleton();
+	ItemSpawner::getSingleton()->release();
+	ItemSpawner::getSingleton()->releaseSingleton();
 
+	GameNode::release();
 }
 
 void MainGame::update(void)

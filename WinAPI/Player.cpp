@@ -111,7 +111,6 @@ void Player::update(void)
 	checkBowStack();
 
 	healStamina();
-	setLevelUp();
 
 	if (!_attack || (*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
 	{	
@@ -728,6 +727,10 @@ void Player::healStamina()
 	{
 		_status._stamina += 0.4f;
 	}
+	else if (_status._stamina > _totalStatus._maxStamina) 
+	{
+		_status._stamina = _totalStatus._maxStamina; 
+	}
 }
 
 void Player::checkLevelUp()
@@ -887,7 +890,6 @@ void Player::setLevelUp()
 		_status._offencePower += 1.0f;
 	}
 }
-
 void Player::printHitBG()
 {
 	if (_hitAlpha > 0) _hitBG->alphaRender(getMemDC(), _hitAlpha);
