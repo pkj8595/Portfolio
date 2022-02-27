@@ -110,6 +110,8 @@ public:
 	float calculatePhysicalDamage();
 	float calculateMagicDamage();
 
+	void setLevelUp();
+
 public:
 	//접근자, 지정자
 
