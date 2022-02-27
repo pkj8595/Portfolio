@@ -669,7 +669,7 @@ string Inventory::changeAttributeToStr(CPlayer_Attribute attri)
 	}
 	if (attri._damageBalance != 0) str = str + " 데미지밸런스" + (attri._damageBalance > 0 ? "+" : "") + to_string((int)attri._damageBalance) + "%\n";
 	if (attri._experience != 0) str = str + " 경험치" + (attri._experience > 0 ? "+" : "") + to_string((int)attri._experience) + '\n';
-	if (attri._maxStamina != 0) str = str + " 스테미나 회복률" + (attri._maxStamina > 0 ? "+" : "") + to_string((int)attri._maxStamina) + "%\n";
+	if (attri._maxStamina != 0) str = str + " 스테미나 회복률" + (attri._maxStamina > 0 ? "-" : "") + to_string((int)attri._maxStamina) + "%\n";
 	//if (attri._maxExperience != 0) str = str +" "+ to_string((int)attri._maxExperience)+'\n';
 	//if (attri._attackSpeed	 != 0) str = str +" 공격속도"+ to_string((int)attri._attackSpeed	) +'\n';
 	//if (attri._maxStamina	 != 0) str = str +" "+ to_string((int)attri._maxStamina	) +'\n';
