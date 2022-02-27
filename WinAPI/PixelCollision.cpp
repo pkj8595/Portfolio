@@ -99,7 +99,7 @@ void PlayScene::changeMap()
 		_mapManager->getCurrentMap()->setClear(true);
 		if (_mapManager->getCurrentMap()->getMapType() == Map::MAPTYPE::BOSS)
 		{
-			//cout << "보스 이펙트 여기서 작성" << endl;
+			_showBossEffect = true;
 		}
 	}
 }
