@@ -13,8 +13,6 @@ HRESULT Slime::init(const char * imageName, POINT position)
 {
 	Enemy::init(imageName,position);
 	_type = ObservedType::MINION;
-	_deadForOb = false;
-	_deadTimeCount = TIMEMANAGER->getWorldTime() + 9999.999f;
 	_x = position.x;
 	_y = position.y;
 	_randomX = 0;
@@ -319,7 +317,7 @@ void Slime::randomPosCreate()
 {	
 	_state = SLIMESTATE::SL_MOVE;
 	//·£´ýÁÂÇ¥ »ý¼º
-	if (MOVECOOLTIME + _moveWorldTime < TIMEMANAGER->getWorldTime())
+	if (_rndTimeCount + _moveWorldTime < TIMEMANAGER->getWorldTime())
 	{
 		_moveWorldTime = TIMEMANAGER->getWorldTime();
 		_randomX = RND->getInt(3) - 1;

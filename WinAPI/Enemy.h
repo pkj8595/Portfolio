@@ -9,6 +9,8 @@
 #define MONSTER_MOVE_RANGE_UP CENTER_Y - 230
 #define MONSTER_MOVE_RANGE_DOWN CENTER_Y + 20
 
+
+
 class Player;
 
 //Enemy (기반클래스) : 이 클래스를 기반으로 일반 몬스터들을 만든다고 했을때 문제가 없는지 생각
