@@ -7,7 +7,8 @@ enum class ObservedType
 	ROCKET_MISSILE,
 	MINION,
 	MINION_MISSILE,
-	PLAYER_SWORD
+	PLAYER_SWORD,
+	ITEM
 };
 
 typedef struct tagObservedInfo
@@ -17,6 +18,17 @@ typedef struct tagObservedInfo
 	bool* isActive;	//적이 충돌했을때 
 	float* damage;
 	float* angle;
+	int* number;
+
+	tagObservedInfo()
+	{
+		typeKey = nullptr;
+		rc = nullptr;
+		isActive = nullptr;
+		damage = nullptr;
+		angle = nullptr;
+		number = nullptr;
+	}
 }STObservedData;
 
 //순수 가상 클래스 -> 인터페이스

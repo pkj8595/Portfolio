@@ -14,90 +14,72 @@ HRESULT Snake::init(const char * imageName, POINT position)
 	Enemy::init(imageName, position);
 	_x = position.x;
 	_y = position.y;
-	_speed = 1.f;
-	_time = 150;
-	_range = 300;
+	_hp = 100.0f;
+	_moveWorldTime = TIMEMANAGER->getWorldTime();
+	_attacWorldTime = TIMEMANAGER->getWorldTime();
+	_attackMoveWorldTime = TIMEMANAGER->getWorldTime();
+	_deadTimeCount = TIMEMANAGER->getWorldTime();
+	_playerDistance = 0.0f;
+	_range = 250;
+	_attackRange = 200;
+	_randomX = 0;
+	_randomY = 0;
+	_speed = 0.5f;
+	_frameSpeed = 0.3f;
 	_angle = 0.0f;
-	_moveCheck = true;
-	attRange = 150;
-	_attTime = 2;
-	_worldTime = TIMEMANAGER->getWorldTime();
+	_playerCheck = false;
+	_deadForOb = false;
+	_threeDirBullet = new ThreeDirectionMissile;
+	_threeDirBullet->init(3, 300);
 
-	_ani = new Animation;
-	_ani->init(_image->getWidth(), _image->getHeight(), 48, 48);
-	_ani->setDefPlayFrame(false, true);
-	_ani->setFPS(2);
-	_ani->AniStart();
+	_twoDirBullet = new TwoDirectionMissile;
+	_twoDirBullet->init(2, 300);
 
-	_threebullet = new ThreeDirectionMissile;
-	_threebullet->init(3, 300);
 
-	_twobullet = new TwoDirectionMissile;
-	_twobullet->init(2, 300);
+	_direction = SNAKEDIRECTION::SN_RIGHT;
+	_state = SNAKESTATE::SN_MOVE;
 	
 	return S_OK;
 }
 
 void Snake::release(void)
 {
+	_threeDirBullet->release();
+	SAFE_DELETE(_threeDirBullet);
 
+	_twoDirBullet->release();
+	SAFE_DELETE(_twoDirBullet);
+	Enemy::release();
 }
 
 void Snake::update(void)
 {
 	Enemy::update();
-	_threebullet->update();
-	_twobullet->update();
+	_threeDirBullet->update();
+	_twoDirBullet->update();
 
-	//플레이어가 일정 범위에 들어왔다면
-	if (playerCheck())
+	if (!_deadForOb)
 	{
-		_angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
-		_x += cosf(_angle) * _speed;
-		_y += -sinf(_angle) * _speed;
-
-		//슬라임 왼쪽
-		if (_playerPos.x > _x)
+		if (playerCheck())
 		{
-			_direction = SNAKEDIRECTION::SNAKE_RIGHT;
-		}
+			if (_playerDistance < _attackRange)
+			{
+				attack();
+			}
 
-		////슬라임 오른쪽
-		if (_playerPos.x < _x)
-		{
-			_direction = SNAKEDIRECTION::SNAKE_LEFT;
-		}
-
-		////슬라임 밑
-		if (_playerPos.y < _y)
-		{
-			_direction = SNAKEDIRECTION::SNAKE_UP;
-		}
-
-		////슬라임 위
-		if (_playerPos.y > _y)
-		{
-			_direction = SNAKEDIRECTION::SNAKE_DOWN;
-		}
-
-			//_stae = SNAMESTATE::SNAKE_MOVE;
-			_angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
 			_x += cosf(_angle) * _speed;
 			_y += -sinf(_angle) * _speed;
-
-		//공격 사거리 안으로 들어왔을 경우
-		if (_playerDistance < attRange)
+		}
+		else
 		{
-			//공격 실행
-			attack();
+			randomPosCreate();
 		}
 	}
 	else
 	{
-		randomMove();
+		_state = SNAKESTATE::SN_DEAD;
 	}
 
-	_ani->frameUpdate(TIMEMANAGER->getElapsedTime() * 1);
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 }
 
@@ -105,8 +87,8 @@ void Snake::render(void)
 {
 	Enemy::render();
 
-	_threebullet->render();
-	_twobullet->render();
+	_threeDirBullet->render();
+	_twoDirBullet->render();
 }
 
 void Snake::move(void)
@@ -115,147 +97,134 @@ void Snake::move(void)
 
 void Snake::draw(void)
 {
-	_image->aniRender(getMemDC(), _rc.left, _rc.top, _ani);
+	if (_isActive)
+	{
+		frame();
+		_image->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX, _currentFrameY);
+	}
 }
 
 void Snake::animation(void)
 {
-	switch (_direction)
+	if (_frameSpeed + _worldTimeCount <= TIMEMANAGER->getWorldTime())
 	{
-	case SNAKEDIRECTION::SNAKE_LEFT: //왼쪽일 때
-		switch (_stae)
+		_worldTimeCount = TIMEMANAGER->getWorldTime();
+		_currentFrameX++;
+
+		if (_state == SNAKESTATE::SN_DEAD)
 		{
-		case SNAMESTATE::SNAKE_IDLE:
-			_ani->setPlayFrame(24,26, false, true);
-			break;
+			_currentFrameX = 0;
+			_currentFrameY = 12;
 
-		case SNAMESTATE::SNAKE_MOVE:
-			_ani->setPlayFrame(3,6, false, true);
-			break;
-
-		case SNAMESTATE::SNAKE_ATTACK:
-			_ani->setPlayFrame(15,17, false, true);
-			break;
+			if (6.f + _deadTimeCount < TIMEMANAGER->getWorldTime())
+			{
+				_isActive = false;
+			}
 		}
-		break;
-
-	case SNAKEDIRECTION::SNAKE_RIGHT: //오른쪽일 때
-		switch (_stae)
+		else
 		{
-		case SNAMESTATE::SNAKE_IDLE:
-			_ani->setPlayFrame(30,32, false, true);
-			break;
-
-		case SNAMESTATE::SNAKE_MOVE:
-			_ani->setPlayFrame(6,9, false, true);
-			break;
-
-		case SNAMESTATE::SNAKE_ATTACK:
-			_ani->setPlayFrame(18,21, false, true);
-			break;
+			if (_currentFrameX >= _maxFrameX)
+			{
+				_currentFrameX = 0;
+			}
 		}
-		break;
 
-	case SNAKEDIRECTION::SNAKE_UP: //위쪽
-		switch (_stae)
-		{
-		case SNAMESTATE::SNAKE_IDLE:
-			_ani->setPlayFrame(33,35, false, true);
-			break;
-
-		case SNAMESTATE::SNAKE_MOVE:
-			_ani->setPlayFrame(9,12, false, true);
-			break;
-
-		case SNAMESTATE::SNAKE_ATTACK:
-			_ani->setPlayFrame(21,24, false, true);
-			break;
-		}
-		break;
-
-	case SNAKEDIRECTION::SNAKE_DOWN: //아래쪽
-		switch (_stae)
-		{
-		case SNAMESTATE::SNAKE_IDLE:
-			_ani->setPlayFrame(24,26, false, true);
-			break;
-
-		case SNAMESTATE::SNAKE_MOVE:
-			_ani->setPlayFrame(0,3, false, true);
-			break;
-
-		case SNAMESTATE::SNAKE_ATTACK:
-			_ani->setPlayFrame(12,15, false, true);
-			break;
-		}
-		break;
+		_image->setFrameX(_currentFrameX);
 	}
+}
+
+void Snake::randomPosCreate()
+{
+	_state = SNAKESTATE::SN_MOVE;
+
+	if (1 + _moveWorldTime < TIMEMANAGER->getWorldTime())
+	{
+		_moveWorldTime = TIMEMANAGER->getWorldTime();
+		_randomX = RND->getInt(3) - 1;
+		_randomY = RND->getInt(3) - 1;
+	}
+
+	//좌표에 따라 모션 변경
+	//왼쪽 || 왼쪽 아래 || 왼쪽 위
+	if (_randomX == -1 || _randomX == -1 && _randomY == -1 || _randomX == -1 && _randomY == 1)
+	{
+		_direction = SNAKEDIRECTION::SN_LEFT;
+	}
+
+	//오른쪽 || 오른쪽 아래 || 오른쪽 위
+	if (_randomX == 1 || _randomX == 1 && _randomY == -1 || _randomX == 1 && _randomY == 1)
+	{
+		_direction = SNAKEDIRECTION::SN_RIGHT;
+	}
+
+	//위
+	if (_randomY == -1 && _randomX == 0)
+	{
+		_direction = SNAKEDIRECTION::SN_UP;
+	}
+
+	//아래
+	if (_randomY == 1 && _randomX == 0)
+	{
+		_direction = SNAKEDIRECTION::SN_DOWN;
+	}
+
+	//움직이지 않을경우
+	if (_randomX == 0 && _randomY == 0)
+	{
+		_state = SNAKESTATE::SN_IDLE;
+	}
+	else
+		_state = SNAKESTATE::SN_MOVE;
 }
 
 void Snake::randomMove()
 {
-	if (_time <= 0) //확인용
+	if (MONSTER_MOVE_RANGE_LEFT <= _x &&  _rc.left <= MONSTER_MOVE_RANGE_RIGHT)
 	{
-		randomX = RND->getInt(3) - 1;
-		randomY = RND->getInt(3) - 1;
-		_time = 150;
-	}
-	_time--;
-
-	//if (_moveRange < getDistance(_x, _y, _x + 150, _y + 150))
-	//{
-		//randomX = RND->getInt(3) - 1;
-		//randomY = RND->getInt(3) - 1;
-	//}
-
-	_x += randomX * _speed;
-	_y += randomY * _speed;
-
-	if (randomX == -1)
-	{
-		_direction = SNAKEDIRECTION::SNAKE_LEFT;
-		_stae = SNAMESTATE::SNAKE_MOVE;
+		_x += _randomX * _speed;
 	}
 
-	else if (randomX == 1)
+	if (MONSTER_MOVE_RANGE_UP <= _rc.top && _rc.top <= MONSTER_MOVE_RANGE_DOWN)
 	{
-		_direction = SNAKEDIRECTION::SNAKE_RIGHT;
-		_stae = SNAMESTATE::SNAKE_MOVE;
-	}
-
-	else if (randomY == -1)
-	{
-		_direction = SNAKEDIRECTION::SNAKE_UP;
-		_stae = SNAMESTATE::SNAKE_MOVE;
-	}
-
-	else  if (randomY == 1)
-	{
-		_direction = SNAKEDIRECTION::SNAKE_DOWN;
-		_stae = SNAMESTATE::SNAKE_MOVE;
-	}
-
-	else
-	{
-		_direction = _direction;
-		_stae = SNAMESTATE::SNAKE_IDLE;
+		_y += _randomY * _speed;
 	}
 }
 
 void Snake::attack()
 {
-	_stae = SNAMESTATE::SNAKE_ATTACK;
-
-	if (2 + _worldTime < TIMEMANAGER->getWorldTime())
+	if (0.5f + _attacWorldTime <= TIMEMANAGER->getWorldTime())
 	{
-		_worldTime = TIMEMANAGER->getWorldTime();
-		_twobullet->fire(_x, _y, getAngle(_x, _y, _playerPos.x, _playerPos.y));
+		_attacWorldTime = TIMEMANAGER->getWorldTime();
+		_partternNum = RND->getInt(2);
+		if (_partternNum == 0)
+		{
+			_parttern = SNAKEPARTTERN::SN_ATTACK1;
+		}
+
+		if (_partternNum == 1)
+		{
+			_parttern = SNAKEPARTTERN::SN_ATTACK2;
+		}
 	}
 
-	if (1 + _worldTime < TIMEMANAGER->getWorldTime())
+	if (3.f + _attackMoveWorldTime <= TIMEMANAGER->getWorldTime())
 	{
-		_worldTime = TIMEMANAGER->getWorldTime();
-		_threebullet->fire(_x, _y, getAngle(_x, _y, _playerPos.x, _playerPos.y));
+		_attackMoveWorldTime = TIMEMANAGER->getWorldTime();
+		_state = SNAKESTATE::SN_ATTACK;
+		_angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
+
+		if (_playerPos.x < _x || _playerPos.x < _x && _playerPos.y > _y || _playerPos.x < _x && _playerPos.y < _y)
+		{
+			_direction = SNAKEDIRECTION::SN_LEFT;
+		}
+
+		if (_playerPos.x > _x || _playerPos.x > _x && _playerPos.y > _y || _playerPos.x > _x && _playerPos.y < _y)
+		{
+			_direction = SNAKEDIRECTION::SN_RIGHT;
+		}
+	
+		cout << _partternNum << endl;
 	}
 }
 
@@ -264,9 +233,134 @@ bool Snake::playerCheck()
 	_playerDistance = getDistance(_x, _y, _playerPos.x, _playerPos.y);
 
 	if (_range > _playerDistance)
+	{
 		return true;
+	}
 
 	return false;
+}
+
+void Snake::frame()
+{
+	switch (_state)
+	{
+	case SNAKESTATE::SN_IDLE:
+		switch (_direction)
+		{
+		case SNAKEDIRECTION::SN_LEFT:
+			_currentFrameY = 9;
+			break;
+
+		case SNAKEDIRECTION::SN_RIGHT:
+			_currentFrameY = 10;
+			break;
+
+		case SNAKEDIRECTION::SN_UP:
+			_currentFrameY = 11;
+			break;
+
+		case SNAKEDIRECTION::SN_DOWN:
+			_currentFrameY = 8;
+			break;
+		}
+		_maxFrameX = 2;
+		break;
+
+	case SNAKESTATE::SN_MOVE:
+		switch (_direction)
+		{
+		case SNAKEDIRECTION::SN_LEFT:
+			_currentFrameY = 1;
+			break;
+
+		case SNAKEDIRECTION::SN_RIGHT:
+			_currentFrameY = 2;
+			break;
+
+		case SNAKEDIRECTION::SN_UP:
+			_currentFrameY = 3;
+			break;
+
+		case SNAKEDIRECTION::SN_DOWN:
+			_currentFrameY = 0;
+			break;
+		}
+		_maxFrameX = 3;
+		randomMove();
+		break;
+
+	case SNAKESTATE::SN_ATTACK:
+		switch (_parttern)
+		{
+		case SNAKEPARTTERN::SN_ATTACK1:
+			switch (_direction)
+			{
+			case SNAKEDIRECTION::SN_LEFT:
+				_currentFrameY = 5;
+				break;
+
+			case SNAKEDIRECTION::SN_RIGHT:
+				_currentFrameY = 6;
+				break;
+
+			case SNAKEDIRECTION::SN_UP:
+				_currentFrameY = 7;
+				break;
+
+			case SNAKEDIRECTION::SN_DOWN:
+				_currentFrameY = 6;
+				break;
+			}
+			_maxFrameX = 4;
+			threeDirectionBullet();
+			break;
+
+		case SNAKEPARTTERN::SN_ATTACK2:
+			switch (_direction)
+			{
+			case SNAKEDIRECTION::SN_LEFT:
+				_currentFrameY = 5;
+				break;
+
+			case SNAKEDIRECTION::SN_RIGHT:
+				_currentFrameY = 6;
+				break;
+
+			case SNAKEDIRECTION::SN_UP:
+				_currentFrameY = 7;
+				break;
+
+			case SNAKEDIRECTION::SN_DOWN:
+				_currentFrameY = 6;
+				break;
+			}
+			_maxFrameX = 4;
+			twoDirectionBullet();
+			break;
+		}
+		break;
+
+	case SNAKESTATE::SN_DEAD:
+		_currentFrameY = 12;
+		_maxFrameX = 3;
+		break;
+	}	
+}
+
+void Snake::threeDirectionBullet()
+{
+	if (_currentFrameX == _maxFrameX -1)
+	{
+		_threeDirBullet->fire(_x, _y, _angle);
+	}
+}
+
+void Snake::twoDirectionBullet()
+{
+	if (_currentFrameX == _maxFrameX -1)
+	{
+		_twoDirBullet->fire(_x, _y, _angle);
+	}
 }
 
 STObservedData Snake::getRectUpdate()
@@ -274,24 +368,25 @@ STObservedData Snake::getRectUpdate()
 	STObservedData temp;
 	temp.rc = &_rc;
 	temp.typeKey = &_type;
-	temp.isActive = &_isActive;
+	temp.isActive = &_deadForOb;
 	temp.damage = &_attack;
 	return temp;
 }
 
 void Snake::collideObject(STObservedData obData)
 {
-	if ((*obData.typeKey) == ObservedType::ROCKET_MISSILE && (*obData.isActive))
+	if (((*obData.typeKey) == ObservedType::ROCKET_MISSILE || (*obData.typeKey) == ObservedType::PLAYER_SWORD)
+		&& (*obData.isActive))
 	{
 		if (_hp <= (*obData.damage))
 		{
-			//나중에 죽는 애니메이션 넣는걸로 바꿀 것.  isActive를 false로 바꾸는 작업은 죽은 애니메이션 전부 실행 뒤 바꿔주는 것으로 변경
-			_isActive = false;
+			//나중에 죽는 애니메이션 넣는걸로 바꿀 것. isActive를 false로 바꾸는 작업은 죽은 애니메이션 전부 실행 뒤 바꿔주는 것으로 변경	
+			_deadForOb = true;
 		}
 		else
 		{
 			_hp -= (*obData.damage);
-			(*obData.isActive) = false;
 		}
+		(*obData.isActive) = false;
 	}
 }

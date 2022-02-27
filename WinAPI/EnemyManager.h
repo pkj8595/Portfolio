@@ -26,6 +26,8 @@ public:
 	void render(void);
 
 	void setMinion(void);
+	void setBoss(void);
+	void setMiniBoss(void);
 	void removeMinion(int arrNum);
 	void checkActive(void);
 

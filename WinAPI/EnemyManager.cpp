@@ -3,7 +3,10 @@
 #include "Minion.h"
 #include "Player.h"
 #include "Slime.h"
+#include "KingSlime.h"
+#include "BigSlime.h"
 #include "Snake.h"
+#include "Rafflesia.h"
 
 bool EnemyManager::checkClear()
 {
@@ -34,6 +37,11 @@ HRESULT EnemyManager::init(void)
 
 	IMAGEMANAGER->addFrameImage("Slime", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Slime2.bmp", 288, 2016, 3, 21, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Snake", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Snake.bmp", 144, 624, 3, 13, true, RGB(255, 0, 255));
+
+	IMAGEMANAGER->addFrameImage("KingSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 1080, 7560, 3, 21, true, RGB(255, 0, 255));
+	
+	IMAGEMANAGER->addFrameImage("Rafflesia", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Rafflesia.bmp", 240, 549, 3, 9, true, RGB(255, 0, 255));
+	
 
 
 	//미니언 생성
@@ -84,31 +92,60 @@ void EnemyManager::render(void)
 
 void EnemyManager::setMinion(void)
 {
-	//for (int i = 0; i < 2; i++)
-	//{
-	//	for (int  j = 0; j < 10; j++)
-	//	{
-	//		Enemy* minion;
-	//		minion = new Minion;
-	//		minion->init("enemy1", PointMake(50 + j * 50, 100 + i * 100));
-	//		_vMinion.push_back(minion);
-	//	}
-	//}
+	int temp = RND->getInt(3);
+	switch (temp)
+	{
+	case 0: {
+		Enemy* slime;
+		slime = new Slime;
+		slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
+		_vMinion.push_back(slime);
 
-	Enemy* slime;
-	slime = new Slime;
-	slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
-	_vMinion.push_back(slime);
+		Enemy* slime2;
+		slime2 = new Slime;
+		slime2->init("Slime", PointMake(CENTER_X - 50, CENTER_Y - 50));
+		_vMinion.push_back(slime2);
+	}break;
+	case 1: {
+		Enemy* slime;
+		slime = new Slime;
+		slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
+		_vMinion.push_back(slime);
 
-	Enemy* slime2;
-	slime2 = new Slime;
-	slime2->init("Slime", PointMake(CENTER_X - 50, CENTER_Y - 50));
-	_vMinion.push_back(slime2);
+		Enemy* snake;
+		snake = new Snake;
+		snake->init("Snake", PointMake(CENTER_X - 100, CENTER_Y));
+		_vMinion.push_back(snake);
+	} break;
+	case 2: {
+		Enemy* snake;
+		snake = new Snake;
+		snake->init("Snake", PointMake(CENTER_X + 100, CENTER_Y));
+		_vMinion.push_back(snake);
 
-	//Enemy* snake;
-	//snake = new Snake;
-	//snake->init("Snake", PointMake(CENTER_X - 200, CENTER_Y));
-	//_vMinion.push_back(snake);
+		Enemy* snake2;
+		snake2 = new Snake;
+		snake2->init("Snake", PointMake(CENTER_X - 100, CENTER_Y));
+		_vMinion.push_back(snake2);
+	} break;
+	}
+
+
+
+
+
+}
+
+void EnemyManager::setBoss(void)
+{
+	Enemy* kingslime;
+	kingslime = new KingSlime;
+	kingslime->init("KingSlime", PointMake(CENTER_X, CENTER_Y));
+	_vMinion.push_back(kingslime);
+}
+
+void EnemyManager::setMiniBoss(void)
+{
 }
 
 void EnemyManager::removeMinion(int arrNum)

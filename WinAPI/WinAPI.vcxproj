@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="BigSlime.cpp" />
     <ClCompile Include="BossMap.cpp" />
     <ClCompile Include="Bullets.cpp" />
     <ClCompile Include="CEffect.cpp" />
@@ -158,11 +159,14 @@
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="ForestFairy.cpp" />
     <ClCompile Include="HpImgBar.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="ItemClass.cpp" />
     <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="ItemSpawner.cpp" />
     <ClCompile Include="KgyScene.cpp" />
+    <ClCompile Include="KingSlime.cpp" />
     <ClCompile Include="Lobby.cpp" />
     <ClCompile Include="LobbyCollision.cpp" />
     <ClCompile Include="LobbyPlayer.cpp" />
@@ -180,6 +184,7 @@
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="CProjectPlayer.cpp" />
+    <ClCompile Include="Rafflesia.cpp" />
     <ClCompile Include="RepairMap.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShopMap.cpp" />
@@ -212,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
+    <ClInclude Include="BigSlime.h" />
     <ClInclude Include="BossMap.h" />
     <ClInclude Include="Bullets.h" />
     <ClInclude Include="CEffect.h" />
@@ -224,13 +230,16 @@
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="ForestFairy.h" />
     <ClInclude Include="HpImgBar.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="IRectObserved.h" />
     <ClInclude Include="ISubject.h" />
     <ClInclude Include="ItemClass.h" />
     <ClInclude Include="ItemManager.h" />
+    <ClInclude Include="ItemSpawner.h" />
     <ClInclude Include="KgyScene.h" />
+    <ClInclude Include="KingSlime.h" />
     <ClInclude Include="Lobby.h" />
     <ClInclude Include="LobbyPlayer.h" />
     <ClInclude Include="LobbyScene.h" />
@@ -246,6 +255,7 @@
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="CProjectPlayer.h" />
+    <ClInclude Include="Rafflesia.h" />
     <ClInclude Include="RepairMap.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShopMap.h" />

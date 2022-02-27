@@ -15,7 +15,9 @@ private:
 	enum class PLAYER_DIRECTION {LEFTDOWN, DOWN, RIGHTDOWN, LEFT, RIGHT, LEFTUP, UP, RIGHTUP };
 	my::Image* _image;
 	my::Image* _hitBG;
+	my::Image* _dodgeBG;
 	int _hitAlpha;
+	int _dodgeAlpha;
 	int _level;
 
 	PLAYER_STATE _state;

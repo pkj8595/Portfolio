@@ -107,6 +107,11 @@ void PlayScene::spawnMonster()
 	{
 		_enemyManager->setMinion();
 	}
+	else if (_mapManager->getCurrentMap()->getType() == Map::MAPTYPE::BOSS /* &&
+		!_mapManager->getCurrentMap()->isClear()*/)
+	{
+		_enemyManager->setBoss();
+	}
 }
 
 void PlayScene::checkPlayerEscapeWithoutClear()

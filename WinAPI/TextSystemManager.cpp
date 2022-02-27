@@ -80,7 +80,6 @@ void TextSystemManager::EventLog(int arrText)
 	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "µÕ±Ù¸ð²Ã", 27, 15,
 		_text[arrText].name, wcslen(_text[arrText].name), RGB(0, 0, 255));
 
-	
 
 	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.78, "µÕ±Ù¸ð²Ã", 27, 15, _text[arrText].script, 
 		((_textBufferCnt / 4) > wcslen(_text[arrText].script) ? wcslen(_text[arrText].script) : (_textBufferCnt / 4)), RGB(255, 255, 255));

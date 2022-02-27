@@ -1,33 +1,39 @@
 #pragma once
 #include "Enemy.h"
-#include "Animation.h"
 #include "Bullets.h"
 
 
-enum class SNAMESTATE { SNAKE_IDLE, SNAKE_MOVE, SNAKE_ATTACK, SNAKE_END };
-enum class SNAKEDIRECTION { SNAKE_LEFT, SNAKE_RIGHT, SNAKE_UP, SNAKE_DOWN, SNAKE_END };
+enum class SNAKESTATE { SN_IDLE, SN_MOVE, SN_ATTACK,SN_DEAD, SN_END };
+enum class SNAKEDIRECTION { SN_LEFT, SN_RIGHT, SN_UP, SN_DOWN, SN_END };
+enum class SNAKEPARTTERN { SN_ATTACK1, SN_ATTACK2 };
 
 class Snake:public Enemy
 {
 private:
-	Animation* _ani;
-	int randomX, randomY;
-	float _x, _y;
-	float _speed;
-	float _angle;
-	float _range;
-	float _time;
+	ThreeDirectionMissile*  _threeDirBullet;
+	TwoDirectionMissile*	_twoDirBullet;
+
+	SNAKESTATE		_state;
 	SNAKEDIRECTION  _direction;
-	SNAMESTATE _stae;
-	float _playerDistance;
+	SNAKEPARTTERN	_parttern;
 
-	bool _moveCheck;
-	int attRange;
-	float _worldTime;
-	int _attTime;
+	int		_range;				//플레이어 탐지 범위
+	int		_randomX, _randomY;
+	int		_maxFrameX;
+	int		_partternNum;
+	float	_moveWorldTime;
+	float	_attacWorldTime;
+	float	_attackMoveWorldTime;
+	float	_deadTimeCount;
+	float	_playerDistance;
+	float	_attackRange;
+	float	_angle;
+	float	_frameSpeed;
+	float	_speed;				//이동 속도
 
-	ThreeDirectionMissile* _threebullet;
-	TwoDirectionMissile* _twobullet;
+	bool	_playerCheck; //플레이어가 공격범위 안에 들어왔는지 체크
+	bool	_bulletFireCheck; //총알 발사했는지 체크
+	bool	_deadForOb;		//사망 여부 [Enemy의 isActive는 몹 삭제 전용, deadForOb는 체력 0 여부]
 
 public:
 	HRESULT init(const char* imageName, POINT position);
@@ -39,9 +45,15 @@ public:
 	void draw(void);
 	void animation(void);
 
+	void randomPosCreate();
 	void randomMove();
 	void attack();
 	bool playerCheck(); //플레이어 감지함수
+	void frame();
+
+	//총알 발사
+	void threeDirectionBullet();
+	void twoDirectionBullet();
 
 public:
 	virtual STObservedData getRectUpdate();

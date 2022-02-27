@@ -91,6 +91,9 @@
     <Filter Include="KGY">
       <UniqueIdentifier>{3969682f-08ec-4009-864e-80830d80781d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="LHW">
+      <UniqueIdentifier>{95633ec0-0fc8-4c24-8fd6-b875fb5a1e9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WinMain.cpp">
@@ -259,6 +262,21 @@
     </ClCompile>
     <ClCompile Include="LobbyPlayer.cpp">
       <Filter>OJH</Filter>
+    </ClCompile>
+    <ClCompile Include="KingSlime.cpp">
+      <Filter>LHW</Filter>
+    </ClCompile>
+    <ClCompile Include="BigSlime.cpp">
+      <Filter>LHW</Filter>
+    </ClCompile>
+    <ClCompile Include="ForestFairy.cpp">
+      <Filter>KGY</Filter>
+    </ClCompile>
+    <ClCompile Include="Rafflesia.cpp">
+      <Filter>KGY</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemSpawner.cpp">
+      <Filter>PKJ</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -431,6 +449,21 @@
     </ClInclude>
     <ClInclude Include="LobbyPlayer.h">
       <Filter>OJH</Filter>
+    </ClInclude>
+    <ClInclude Include="KingSlime.h">
+      <Filter>LHW</Filter>
+    </ClInclude>
+    <ClInclude Include="BigSlime.h">
+      <Filter>LHW</Filter>
+    </ClInclude>
+    <ClInclude Include="ForestFairy.h">
+      <Filter>KGY</Filter>
+    </ClInclude>
+    <ClInclude Include="Rafflesia.h">
+      <Filter>KGY</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemSpawner.h">
+      <Filter>PKJ</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

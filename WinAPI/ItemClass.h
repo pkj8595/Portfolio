@@ -92,8 +92,54 @@ public:
 	~CPlayer_Attribute() {}
 };
 
-//벡터에 아이템을 넣어서 CPlayer_Attribute를 더해주는 방식
-// CPlayer_Attribute, 장착 item 중인 무기 1개, vector<item*>ABILITY
+class EnchantItem
+{
+public:
+	int			_index;
+	string		_name;				//name
+	int			_equip_level;		//장비 레벨
+	int			_durability;		//내구도
+	int			_maxDurability;		//최대내구도
+	string		_enchantStr;		//인챈트
+
+	CPlayer_Attribute _attribute;	//능력치
+
+	void toString(void)
+	{
+		cout << "=============================================" << endl;
+		cout << "_index			:" << _index << endl;
+		cout << "_name			:" << _name << endl;
+		cout << "_equip_level		:" << _equip_level << endl;
+		cout << "_durability			:" << _durability << endl;
+		cout << "_maxDurability			:" << _maxDurability << endl;
+		cout << "hp			:" << _attribute._hp << endl;
+		cout << "maxHp			:" << _attribute._maxHp << endl;
+		cout << "mana			:" << _attribute._mana << endl;
+		cout << "maxMana			:" << _attribute._maxMana << endl;
+		cout << "critical		:" << _attribute._critical << endl;
+		cout << "offencePower		:" << _attribute._offencePower << endl;
+		cout << "magicPower		:" << _attribute._magicPower << endl;
+		cout << "speed			:" << _attribute._speed << endl;
+		cout << "attackSpeed		:" << _attribute._attackSpeed << endl;
+		cout << "damageBalance		:" << _attribute._damageBalance << endl;
+		cout << "experience		:" << _attribute._experience << endl;
+		cout << "maxExperience		:" << _attribute._maxExperience << endl;
+		cout << "stamina			:" << _attribute._stamina << endl;
+		cout << "maxStamina		:" << _attribute._maxStamina << endl;
+	}
+
+	EnchantItem()
+	{
+		_index = 0;
+		_name = "EMPTY";
+		_equip_level = 0;
+		_durability = 0;
+		_maxDurability = 0;
+		_enchantStr = "";
+	}
+	~EnchantItem() {}
+};
+
 class Item
 {
 public:
@@ -106,6 +152,7 @@ public:
 	int			_price;				//가격
 	int			_durability;		//내구도
 	int			_maxDurability;		//최대내구도
+	string		_enchantStr;		//인챈트
 
 	CPlayer_Attribute _attribute;	//능력치
 
@@ -148,12 +195,24 @@ public:
 		_price = other._price;
 		_durability = other._durability;
 		_maxDurability = other._maxDurability;
+		_enchantStr = other._enchantStr;
 		_attribute = other._attribute;
 	}
 
+	bool getEnchantedItem(EnchantItem other)
+	{
+		if (_enchantStr != "") { return false; }
+		_name = other._name + _name;
+		_durability = other._durability + _durability;
+		_maxDurability = other._maxDurability + _maxDurability;
+		_enchantStr = other._enchantStr + _enchantStr;
+		_attribute = other._attribute + _attribute;
+		return true;
+	}
 
 	Item()
 	{
+		_index = 0;
 		_type = EITEM_TYPE::EMPTY;
 		_name = "EMPTY";
 		_description = "EMPTY";
@@ -162,24 +221,8 @@ public:
 		_price = 0;
 		_durability=0;
 		_maxDurability=0;
+		_enchantStr = "";
 	}
 	~Item() {}
 };
 
-class Player_Skill : public IRectObserved
-{
-public:
-	my::Image* _img;
-	RECT rc;
-	string _name;
-	float _damage;
-	float _range;
-	ObservedType _type;
-	bool _isActive;
-	
-	void init(void);
-	void release(void);
-	virtual STObservedData getRectUpdate();
-	virtual void collideObject();
-
-};

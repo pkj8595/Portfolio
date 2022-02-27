@@ -33,13 +33,14 @@ void PlayScene::update(void)
 	changeMapFadeOut();
 	changeMap();
 	checkPlayerEscapeWithoutClear();
+
 }
 
 void PlayScene::render(void)
 {
 	_mapManager->render();
-	_enemyManager->render();
 	_player->render();
+	_enemyManager->render();
 	RECTOBSERVERMANAGER->render();
 
 	//UI

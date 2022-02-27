@@ -66,7 +66,6 @@ void Lobby::Collision(void)
 		{
 			_bookOpen = true;
 			_collBox = true;
-			cout << "충돌했습니다" << _bookOpen << endl;
 		}
 		if (_collBox) { _fadeOutWhiteAlpha += 3.0f; }
 	}
