@@ -882,7 +882,7 @@ void Player::setLevelUp()
 	if (_status._experience >= _status._maxExperience)
 	{
 		_level++;
-		_status._experience = 0.0f;
+		_status._experience -= _status._maxExperience;
 		_status._maxExperience *= 1.3f;
 		_status._offencePower += 1.0f;
 	}
