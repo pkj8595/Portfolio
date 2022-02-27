@@ -197,16 +197,13 @@ void EnemyManager::checkActive(void)
 			}
 			else if ((*_viMinion)->isMiniBoss())
 			{
-				if ((*_viMinion)->isBoss())
-				{
-					POINT temp = { (*_viMinion)->getRect().left + ((*_viMinion)->getRect().right - (*_viMinion)->getRect().left) / 2,
-						(*_viMinion)->getRect().top + ((*_viMinion)->getRect().bottom - (*_viMinion)->getRect().top) / 2 };
-					(*_viMinion)->release();
-					SAFE_DELETE(*_viMinion);
-					_viMinion = _vMinion.erase(_viMinion);
-					setSlime(temp.x, temp.y);
-					break;
-				}
+				POINT temp = { (*_viMinion)->getRect().left + ((*_viMinion)->getRect().right - (*_viMinion)->getRect().left) / 2,
+								(*_viMinion)->getRect().top + ((*_viMinion)->getRect().bottom - (*_viMinion)->getRect().top) / 2 };
+				(*_viMinion)->release();
+				SAFE_DELETE(*_viMinion);
+				_viMinion = _vMinion.erase(_viMinion);
+				setSlime(temp.x, temp.y);
+				break;
 			}
 			else
 			{
