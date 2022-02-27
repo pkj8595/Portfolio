@@ -6,6 +6,7 @@
 #include "KingSlime.h"
 #include "BigSlime.h"
 #include "Snake.h"
+#include "Rafflesia.h"
 
 bool EnemyManager::checkClear()
 {
@@ -38,6 +39,10 @@ HRESULT EnemyManager::init(void)
 	IMAGEMANAGER->addFrameImage("Snake", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Snake.bmp", 144, 624, 3, 13, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addFrameImage("KingSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 1080, 7560, 3, 21, true, RGB(255, 0, 255));
+	
+	IMAGEMANAGER->addFrameImage("Rafflesia", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Rafflesia.bmp", 240, 549, 3, 9, true, RGB(255, 0, 255));
+	
+
 
 	//미니언 생성
 
@@ -112,6 +117,12 @@ void EnemyManager::setMinion(void)
 	snake = new Snake;
 	snake->init("Snake", PointMake(CENTER_X - 100, CENTER_Y));
 	_vMinion.push_back(snake);
+
+
+	//Enemy* rafflesia;
+	//rafflesia = new Rafflesia;
+	//rafflesia->init("Rafflesia", PointMake(CENTER_X - 150, CENTER_Y + 30));
+	//_vMinion.push_back(rafflesia);
 }
 
 void EnemyManager::setBoss(void)

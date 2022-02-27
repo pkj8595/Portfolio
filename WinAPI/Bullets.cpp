@@ -150,7 +150,6 @@ void Bullet::fire(float x, float y, float angle, float speed)
 
 void Bullet::draw(void)
 {
-	
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet) 
 	{
 		(*_viBullet)->img->frameRender(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top, (*_viBullet)->count,1);
@@ -673,6 +672,58 @@ void BubbleBullet::draw(void)
 			if ((*_viBullet)->type == ObservedType::MINION_MISSILE) (*_viBullet)->img->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
 			else (*_viBullet)->reflectImg->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
 		}
+	}
+}
 
+HRESULT ThornBullet::init(int bulletMax, float range)
+{
+	AMissile::init(bulletMax, range);
+
+	_bulletMax = bulletMax;
+	_range = range;
+
+	return S_OK;
+}
+
+void ThornBullet::move(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	{
+		(*_viBullet)->x += cosf((*_viBullet)->angle);
+		(*_viBullet)->y += -sinf((*_viBullet)->angle);
+		(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
+			(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
+	}
+}
+
+void ThornBullet::fire(float x, float y, float angle)
+{
+	if (_bulletMax <= _vBullet.size())return;
+
+	for (int i = 0; i < _bulletMax; i++)
+	{
+		tagCBullet* bullet = new tagCBullet;
+		bullet->img = new my::Image;
+		//
+		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/check.bmp", 77, 74, true, RGB(255, 0, 255));
+		//bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/RafflesiaBullet.bmp", 1000, 74, 13, 1, true, RGB(255, 0, 255));
+		bullet->type = ObservedType::MINION_MISSILE;
+		bullet->speed = 3.0f;
+		bullet->x = bullet->fireX = x;
+		bullet->y = bullet->fireY = y;
+		bullet->angle = angle;
+		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
+		bullet->fire = true;
+		bullet->count = 13;
+		bullet->init();
+		_vBullet.push_back(bullet);
+	}
+}
+
+void ThornBullet::draw(void)
+{
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	{
+		(*_viBullet)->img->frameRender(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top, (*_viBullet)->count,1);
 	}
 }

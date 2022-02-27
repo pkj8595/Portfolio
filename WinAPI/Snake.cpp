@@ -14,9 +14,11 @@ HRESULT Snake::init(const char * imageName, POINT position)
 	Enemy::init(imageName, position);
 	_x = position.x;
 	_y = position.y;
+	_hp = 100.0f;
 	_moveWorldTime = TIMEMANAGER->getWorldTime();
 	_attacWorldTime = TIMEMANAGER->getWorldTime();
 	_attackMoveWorldTime = TIMEMANAGER->getWorldTime();
+	_deadTimeCount = TIMEMANAGER->getWorldTime();
 	_playerDistance = 0.0f;
 	_range = 250;
 	_attackRange = 200;
@@ -26,12 +28,16 @@ HRESULT Snake::init(const char * imageName, POINT position)
 	_frameSpeed = 0.3f;
 	_angle = 0.0f;
 	_playerCheck = false;
-
+	_deadForOb = false;
 	_threeDirBullet = new ThreeDirectionMissile;
 	_threeDirBullet->init(3, 300);
 
 	_twoDirBullet = new TwoDirectionMissile;
 	_twoDirBullet->init(2, 300);
+
+
+	_direction = SNAKEDIRECTION::SN_RIGHT;
+	_state = SNAKESTATE::SN_MOVE;
 	
 	return S_OK;
 }
@@ -52,19 +58,26 @@ void Snake::update(void)
 	_threeDirBullet->update();
 	_twoDirBullet->update();
 
-	if (playerCheck())
+	if (!_deadForOb)
 	{
-		if (_playerDistance < _attackRange)
+		if (playerCheck())
 		{
-			attack();
-		}
+			if (_playerDistance < _attackRange)
+			{
+				attack();
+			}
 
-		_x += cosf(_angle) * _speed;
-		_y += -sinf(_angle) * _speed;
+			_x += cosf(_angle) * _speed;
+			_y += -sinf(_angle) * _speed;
+		}
+		else
+		{
+			randomPosCreate();
+		}
 	}
 	else
 	{
-		randomPosCreate();
+		_state = SNAKESTATE::SN_DEAD;
 	}
 
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
@@ -84,8 +97,11 @@ void Snake::move(void)
 
 void Snake::draw(void)
 {
-	frame();
-	_image->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX, _currentFrameY);
+	if (_isActive)
+	{
+		frame();
+		_image->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX, _currentFrameY);
+	}
 }
 
 void Snake::animation(void)
@@ -95,9 +111,22 @@ void Snake::animation(void)
 		_worldTimeCount = TIMEMANAGER->getWorldTime();
 		_currentFrameX++;
 
-		if (_currentFrameX >= _maxFrameX)
+		if (_state == SNAKESTATE::SN_DEAD)
 		{
 			_currentFrameX = 0;
+			_currentFrameY = 12;
+
+			if (6.f + _deadTimeCount < TIMEMANAGER->getWorldTime())
+			{
+				_isActive = false;
+			}
+		}
+		else
+		{
+			if (_currentFrameX >= _maxFrameX)
+			{
+				_currentFrameX = 0;
+			}
 		}
 
 		_image->setFrameX(_currentFrameX);
@@ -106,8 +135,9 @@ void Snake::animation(void)
 
 void Snake::randomPosCreate()
 {
+	_state = SNAKESTATE::SN_MOVE;
 
-	if (_rndTimeCount + _moveWorldTime < TIMEMANAGER->getWorldTime())
+	if (1 + _moveWorldTime < TIMEMANAGER->getWorldTime())
 	{
 		_moveWorldTime = TIMEMANAGER->getWorldTime();
 		_randomX = RND->getInt(3) - 1;
@@ -309,6 +339,11 @@ void Snake::frame()
 			break;
 		}
 		break;
+
+	case SNAKESTATE::SN_DEAD:
+		_currentFrameY = 12;
+		_maxFrameX = 3;
+		break;
 	}	
 }
 
@@ -317,7 +352,6 @@ void Snake::threeDirectionBullet()
 	if (_currentFrameX == _maxFrameX -1)
 	{
 		_threeDirBullet->fire(_x, _y, _angle);
-		//_partternNum = 1;
 	}
 }
 
@@ -334,24 +368,25 @@ STObservedData Snake::getRectUpdate()
 	STObservedData temp;
 	temp.rc = &_rc;
 	temp.typeKey = &_type;
-	temp.isActive = &_isActive;
+	temp.isActive = &_deadForOb;
 	temp.damage = &_attack;
 	return temp;
 }
 
 void Snake::collideObject(STObservedData obData)
 {
-	if ((*obData.typeKey) == ObservedType::ROCKET_MISSILE && (*obData.isActive))
+	if (((*obData.typeKey) == ObservedType::ROCKET_MISSILE || (*obData.typeKey) == ObservedType::PLAYER_SWORD)
+		&& (*obData.isActive))
 	{
 		if (_hp <= (*obData.damage))
 		{
-			//나중에 죽는 애니메이션 넣는걸로 바꿀 것.  isActive를 false로 바꾸는 작업은 죽은 애니메이션 전부 실행 뒤 바꿔주는 것으로 변경
-			_isActive = false;
+			//나중에 죽는 애니메이션 넣는걸로 바꿀 것. isActive를 false로 바꾸는 작업은 죽은 애니메이션 전부 실행 뒤 바꿔주는 것으로 변경	
+			_deadForOb = true;
 		}
 		else
 		{
 			_hp -= (*obData.damage);
-			(*obData.isActive) = false;
 		}
+		(*obData.isActive) = false;
 	}
 }

@@ -241,6 +241,7 @@
     <ClCompile Include="Snake.cpp">
       <Filter>KGY</Filter>
     </ClCompile>
+    <ClCompile Include="mButton.cpp" />
     <ClCompile Include="PlayerWeapon.cpp">
       <Filter>MainGame\Player</Filter>
     </ClCompile>
@@ -248,6 +249,8 @@
     <ClCompile Include="PixelCollision.cpp">
       <Filter>MainGame</Filter>
     </ClCompile>
+    <ClCompile Include="DamageEffectManager.cpp" />
+    <ClCompile Include="Damage.cpp" />
     <ClCompile Include="LobbyCollision.cpp">
       <Filter>OJH</Filter>
     </ClCompile>
@@ -263,14 +266,11 @@
     <ClCompile Include="BigSlime.cpp">
       <Filter>LHW</Filter>
     </ClCompile>
-    <ClCompile Include="mButton.cpp">
-      <Filter>PKJ</Filter>
+    <ClCompile Include="ForestFairy.cpp">
+      <Filter>KGY</Filter>
     </ClCompile>
-    <ClCompile Include="Damage.cpp">
-      <Filter>LHW</Filter>
-    </ClCompile>
-    <ClCompile Include="DamageEffectManager.cpp">
-      <Filter>LHW</Filter>
+    <ClCompile Include="Rafflesia.cpp">
+      <Filter>KGY</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -428,10 +428,13 @@
     <ClInclude Include="Snake.h">
       <Filter>KGY</Filter>
     </ClInclude>
+    <ClInclude Include="mButton.h" />
     <ClInclude Include="PlayerWeapon.h">
       <Filter>MainGame\Player</Filter>
     </ClInclude>
     <ClInclude Include="PlayerStatusUI.h" />
+    <ClInclude Include="DamageEffectManager.h" />
+    <ClInclude Include="Damage.h" />
     <ClInclude Include="RepairMap.h">
       <Filter>MainGame\Map\MapType</Filter>
     </ClInclude>
@@ -444,14 +447,11 @@
     <ClInclude Include="BigSlime.h">
       <Filter>LHW</Filter>
     </ClInclude>
-    <ClInclude Include="mButton.h">
-      <Filter>PKJ</Filter>
+    <ClInclude Include="ForestFairy.h">
+      <Filter>KGY</Filter>
     </ClInclude>
-    <ClInclude Include="Damage.h">
-      <Filter>LHW</Filter>
-    </ClInclude>
-    <ClInclude Include="DamageEffectManager.h">
-      <Filter>LHW</Filter>
+    <ClInclude Include="Rafflesia.h">
+      <Filter>KGY</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
