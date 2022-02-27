@@ -50,8 +50,6 @@ void CRectObserverManager::removeObserved(IRectObserved* observed)
 	}
 }
 
-//동적으로 할당된 객체만 observer패턴으로 가져올 수 있었음.. 
-//정적으로 할당된 객체의 정보는 접근할 수 없었음
 void CRectObserverManager::getRectFromObserved()
 {
 	if (_vRect.size() == 0) return;
@@ -115,6 +113,20 @@ void CRectObserverManager::getRectFromObserved()
 				{
 					//sword인지 조건 추가
 					(*_viRectCompare)->collideObject(obData);	//각도 변환, type 변환
+
+					break;
+				}
+			}
+
+			//아이템 충돌 (obData : 아이템, Compare : 플레이어)
+			if ((*obData.typeKey) == ObservedType::ITEM &&
+				(*obDataCompare.typeKey) == ObservedType::ROCKET)
+			{
+				RECT collisionRect;
+				if (IntersectRect(&collisionRect, obData.rc, obDataCompare.rc))
+				{
+					(*_viRect)->collideObject(obDataCompare);
+					(*_viRectCompare)->collideObject(obData);
 
 					break;
 				}

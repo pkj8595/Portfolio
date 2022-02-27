@@ -1,6 +1,18 @@
 #include "Stdafx.h"
 #include "ItemManager.h"
 
+
+ItemManager::ItemManager()
+{
+	init();
+}
+
+ItemManager::~ItemManager()
+{
+	release();
+}
+
+
 HRESULT ItemManager::init(void)
 {
 	_itemImg = IMAGEMANAGER->addFrameImage("ItemImage", "Resource/Images/Lucie/CompleteImg/item/Item_Image.bmp", 320, 256, 10, 8, true, RGB(255, 0, 255));
@@ -119,30 +131,52 @@ Item* ItemManager::getItem(int imgIndex)
 
 Item* ItemManager::getItemIndex(int index)
 {
-	if (index > _vItem.size()) return nullptr;
+	if (index >= _vItem.size()) return nullptr;
 	return _vItem[index];
 }
 
-void ItemManager::getItemImgRender(int imgIndex, int x, int y)
+void ItemManager::getItemImgRender(HDC hdc,int imgIndex, int x, int y)
 {
 	int destY = 0; 
 	int destX = 0;
 	destY = (imgIndex-1) / 10;
 	destX = (imgIndex-1) % 10;
-	//cout << imgIndex <<" destX: " <<destX <<" destY:" << destY<< endl;
-	//_itemImg->render(getMemDC(),x,y, destX * IMAGE_SIZE, destY * IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE);
-	_itemImg->frameRender(getMemDC(), x, y, destX, destY);
+
+	_itemImg->frameRender(hdc, x, y, destX, destY);
 }
 
-void ItemManager::getBigItemImgRender(int imgIndex, int x, int y)
+void ItemManager::getBigItemImgRender(HDC hdc,int imgIndex, int x, int y)
 {
 	int destY = 0;
 	int destX = 0;
 	destY = (imgIndex - 1) / 10;
 	destX = (imgIndex - 1) % 10;
-	//cout << imgIndex <<" destX: " <<destX <<" destY:" << destY<< endl;
-	//_itemImg->render(getMemDC(),x,y, destX * IMAGE_SIZE, destY * IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE);
-	_bigItemImg->frameRender(getMemDC(), x, y, destX, destY);
+
+	_bigItemImg->frameRender(hdc, x, y, destX, destY);
+}
+
+void ItemManager::getItemIndexRender(HDC hdc, int index, int x, int y)
+{
+	if (index >= _vItem.size()) return;
+	int imgIndex = _viItem[index]->_imgNum;
+	int destY = 0;
+	int destX = 0;
+	destY = (imgIndex - 1) / 10;
+	destX = (imgIndex - 1) % 10;
+
+	_bigItemImg->frameRender(hdc, x, y, destX, destY);
+}
+
+void ItemManager::getBigItemIndexRender(HDC hdc, int index, int x, int y)
+{
+	if (index >= _vItem.size()) return;
+	int imgIndex = _viItem[index]->_imgNum;
+	int destY = 0;
+	int destX = 0;
+	destY = (imgIndex - 1) / 10;
+	destX = (imgIndex - 1) % 10;
+
+	_bigItemImg->frameRender(hdc, x, y, destX, destY);
 }
 
 EnchantItem* ItemManager::getEnchantItem()

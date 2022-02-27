@@ -164,6 +164,7 @@
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="ItemClass.cpp" />
     <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="ItemSpawner.cpp" />
     <ClCompile Include="KgyScene.cpp" />
     <ClCompile Include="KingSlime.cpp" />
     <ClCompile Include="Lobby.cpp" />
@@ -235,6 +236,7 @@
     <ClInclude Include="ISubject.h" />
     <ClInclude Include="ItemClass.h" />
     <ClInclude Include="ItemManager.h" />
+    <ClInclude Include="ItemSpawner.h" />
     <ClInclude Include="KgyScene.h" />
     <ClInclude Include="KingSlime.h" />
     <ClInclude Include="Lobby.h" />

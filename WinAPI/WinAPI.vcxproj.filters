@@ -272,6 +272,9 @@
     <ClCompile Include="Rafflesia.cpp">
       <Filter>KGY</Filter>
     </ClCompile>
+    <ClCompile Include="ItemSpawner.cpp">
+      <Filter>PKJ</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -452,6 +455,9 @@
     </ClInclude>
     <ClInclude Include="Rafflesia.h">
       <Filter>KGY</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemSpawner.h">
+      <Filter>PKJ</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

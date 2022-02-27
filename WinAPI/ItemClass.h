@@ -140,8 +140,6 @@ public:
 	~EnchantItem() {}
 };
 
-//벡터에 아이템을 넣어서 CPlayer_Attribute를 더해주는 방식
-// CPlayer_Attribute, 장착 item 중인 무기 1개, vector<item*>ABILITY
 class Item
 {
 public:
@@ -228,20 +226,3 @@ public:
 	~Item() {}
 };
 
-class Player_Skill : public IRectObserved
-{
-public:
-	my::Image* _img;
-	RECT rc;
-	string _name;
-	float _damage;
-	float _range;
-	ObservedType _type;
-	bool _isActive;
-	
-	void init(void);
-	void release(void);
-	virtual STObservedData getRectUpdate();
-	virtual void collideObject();
-
-};

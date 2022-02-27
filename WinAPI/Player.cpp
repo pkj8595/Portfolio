@@ -274,6 +274,14 @@ void Player::collideObject(STObservedData obData)
 		_hit = true;
 		_hitInvTime = 100;
 	}
+	//¾ÆÀÌÅÛ È¹µæ
+	if (*obData.typeKey == ObservedType::ITEM)
+	{
+		if (TIMEMANAGER->getWorldTime() > *obData.angle + 1.0f)
+		{
+			_inventory->pushItem(*obData.number);
+		}
+	}
 }
 
 void Player::setFrame()
