@@ -3,7 +3,6 @@
 
 HRESULT Map::init(POINT location)
 {
-	
 	return S_OK;
 }
 

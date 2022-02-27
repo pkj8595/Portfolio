@@ -43,7 +43,10 @@ protected:
 	Player* _player;
 
 	float _hp;
+	float _hpY;
 
+	bool _boss;
+	bool _miniboss;
 public:
 	virtual HRESULT init(void);
 	virtual HRESULT init(const char* imageName, POINT position);
@@ -62,10 +65,14 @@ public:
 
 	virtual STObservedData getRectUpdate();
 	virtual void collideObject(STObservedData obData);
+	bool isBoss() { return _boss; }
+	bool isMiniBoss() { return _miniboss; }
 
 public:
 	void setPlayerPos(POINT playerPos) { _playerPos = playerPos; }
 	void setPlayer(Player& player) { _player = &player; }
+
+	void setHpY(int y) { _hpY = y; }
 
 	Enemy(void);
 	virtual ~Enemy(void) {}
