@@ -34,7 +34,7 @@ void PlayScene::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F7))
 	{
-		_itemSpawner->createItem(CENTER_X, CENTER_Y, true);
+		_itemSpawner->createItem(CENTER_X, CENTER_Y, false);
 	}
 
 	pixelCollision();
