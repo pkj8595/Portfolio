@@ -62,7 +62,7 @@ void BigSlime::update(void)
 	_bubbleBullet->update();
 	_angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
-	_fixRC = RectMake(_x - 80, _y, _image->getFrameWidth() - 200, _image->getFrameHeight() - 200);
+	_fixRC = RectMake(_x - 80, _y, _image->getFrameWidth() - 100, _image->getFrameHeight() - 100);
 	if (!_deadForOb)
 	{
 		setDirection();
