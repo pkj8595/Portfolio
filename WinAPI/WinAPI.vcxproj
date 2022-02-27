@@ -169,6 +169,7 @@
     <ClCompile Include="KingSlime.cpp" />
     <ClCompile Include="Lobby.cpp" />
     <ClCompile Include="LobbyCollision.cpp" />
+    <ClCompile Include="LobbyPlayer.cpp" />
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapManager.cpp" />
@@ -240,6 +241,7 @@
     <ClInclude Include="KgyScene.h" />
     <ClInclude Include="KingSlime.h" />
     <ClInclude Include="Lobby.h" />
+    <ClInclude Include="LobbyPlayer.h" />
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapManager.h" />

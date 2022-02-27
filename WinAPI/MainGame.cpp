@@ -9,6 +9,7 @@
 #include "Lobby.h"
 #include "ShopScene.h"
 
+
 HRESULT MainGame::init(void)
 {
 	GameNode::init(TRUE);
@@ -30,11 +31,12 @@ void MainGame::release(void)
 {
 	ItemManager::getSingleton()->release();
 	GameNode::release();
+
 }
 
 void MainGame::update(void)
 {
-	SCENEMANAGER->update();
+	SCENEMANAGER->update();	
 }
 
 void MainGame::render(void)

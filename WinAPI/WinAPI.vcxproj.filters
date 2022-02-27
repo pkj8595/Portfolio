@@ -260,6 +260,9 @@
     <ClCompile Include="ShopMap.cpp">
       <Filter>MainGame\Map\MapType</Filter>
     </ClCompile>
+    <ClCompile Include="LobbyPlayer.cpp">
+      <Filter>OJH</Filter>
+    </ClCompile>
     <ClCompile Include="KingSlime.cpp">
       <Filter>LHW</Filter>
     </ClCompile>
@@ -443,6 +446,9 @@
     </ClInclude>
     <ClInclude Include="ShopMap.h">
       <Filter>MainGame\Map\MapType</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyPlayer.h">
+      <Filter>OJH</Filter>
     </ClInclude>
     <ClInclude Include="KingSlime.h">
       <Filter>LHW</Filter>
