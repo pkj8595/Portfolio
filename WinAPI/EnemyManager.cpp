@@ -92,37 +92,48 @@ void EnemyManager::render(void)
 
 void EnemyManager::setMinion(void)
 {
-	//for (int i = 0; i < 2; i++)
-	//{
-	//	for (int  j = 0; j < 10; j++)
-	//	{
-	//		Enemy* minion;
-	//		minion = new Minion;
-	//		minion->init("enemy1", PointMake(50 + j * 50, 100 + i * 100));
-	//		_vMinion.push_back(minion);
-	//	}
-	//}
+	int temp = RND->getInt(3);
+	switch (temp)
+	{
+	case 0: {
+		Enemy* slime;
+		slime = new Slime;
+		slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
+		_vMinion.push_back(slime);
 
-	Enemy* slime;
-	slime = new Slime;
-	slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
-	_vMinion.push_back(slime);
-	
-	Enemy* slime2;
-	slime2 = new Slime;
-	slime2->init("Slime", PointMake(CENTER_X - 50, CENTER_Y - 50));
-	_vMinion.push_back(slime2);
+		Enemy* slime2;
+		slime2 = new Slime;
+		slime2->init("Slime", PointMake(CENTER_X - 50, CENTER_Y - 50));
+		_vMinion.push_back(slime2);
+	}break;
+	case 1: {
+		Enemy* slime;
+		slime = new Slime;
+		slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
+		_vMinion.push_back(slime);
 
-	Enemy* snake;
-	snake = new Snake;
-	snake->init("Snake", PointMake(CENTER_X - 100, CENTER_Y));
-	_vMinion.push_back(snake);
+		Enemy* snake;
+		snake = new Snake;
+		snake->init("Snake", PointMake(CENTER_X - 100, CENTER_Y));
+		_vMinion.push_back(snake);
+	} break;
+	case 2: {
+		Enemy* snake;
+		snake = new Snake;
+		snake->init("Snake", PointMake(CENTER_X + 100, CENTER_Y));
+		_vMinion.push_back(snake);
+
+		Enemy* snake2;
+		snake2 = new Snake;
+		snake2->init("Snake", PointMake(CENTER_X - 100, CENTER_Y));
+		_vMinion.push_back(snake2);
+	} break;
+	}
 
 
-	//Enemy* rafflesia;
-	//rafflesia = new Rafflesia;
-	//rafflesia->init("Rafflesia", PointMake(CENTER_X - 150, CENTER_Y + 30));
-	//_vMinion.push_back(rafflesia);
+
+
+
 }
 
 void EnemyManager::setBoss(void)

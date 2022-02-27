@@ -21,7 +21,7 @@ private:
 
 	NormalBullet* _normalBullet;				//≈∫∏∑ ø©∑Ø∞≥
 	BubbleBullet* _bubbleBullet;				//≈´ ≈∫»Ø->¿€¿∫ ≈∫»Ø ø©∑Ø∞≥
-	enum class STATE {STOP, WALK, ATTACK_BUBBLE, ATTACK_NORMAL};
+	enum class STATE {STOP, WALK, ATTACK_BUBBLE, ATTACK_NORMAL, DEAD};
 	enum class DIRECTION {DOWN = 0, LEFT, RIGHT, UP};
 
 	RECT _fixRC;
