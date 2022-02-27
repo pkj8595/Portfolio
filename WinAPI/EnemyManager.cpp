@@ -145,6 +145,7 @@ void EnemyManager::setMiniBoss(int x, int y)
 	Enemy* bigslime;
 	bigslime = new BigSlime;
 	bigslime->init("BigSlime", PointMake(x + 10, y));
+	bigslime->setHpY(0);
 	_vMinion.push_back(bigslime);
 
 	Enemy* bigslime2;

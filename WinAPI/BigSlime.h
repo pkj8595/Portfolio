@@ -12,7 +12,7 @@ private:
 	int _bossHpAlpha;
 	float _hpWidth;
 	float _damageHpWidth;
-	int _hpY;
+	float _speed;
 
 	NormalBullet* _normalBullet;				//탄막 여러개
 	BubbleBullet* _bubbleBullet;				//큰 탄환->작은 탄환 여러개
