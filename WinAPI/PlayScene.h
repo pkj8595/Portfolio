@@ -20,6 +20,8 @@ private:
 	int _stageNum;
 	bool _isChanging;
 
+	int _startAlpha;
+
 	bool _showBossEffect;
 	int _frameCount;
 	float _bossEffectTime;

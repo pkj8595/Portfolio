@@ -21,6 +21,8 @@ HRESULT PlayScene::init(void)
 	_player = new Player;
 	_player->init();
 
+	_startAlpha = 255;
+
 	_showBossEffect = false;
 	_frameCount = 0;
 	_bossEffectTime = TIMEMANAGER->getWorldTime();
@@ -38,7 +40,7 @@ void PlayScene::release(void)
 
 void PlayScene::update(void)
 {
-
+	if (_startAlpha > 0) _startAlpha -= 4;
 	if (_fadeoutAlpha > 252) _fadeoutAlpha = 252;
 	RECTOBSERVERMANAGER->update();
 	_mapManager->update();
@@ -90,6 +92,7 @@ void PlayScene::render(void)
 	//WINSIZE effect
 	_player->printHitBG();
 	if (_fadeoutAlpha > 0) _fadeoutImage->alphaRender(getMemDC(), _fadeoutAlpha);
+	if (_startAlpha > 0) _fadeoutImage->alphaRender(getMemDC(), _startAlpha);
 
 	// 주석 제거 금지
 	//if (_showBossEffect)
