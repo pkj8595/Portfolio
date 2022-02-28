@@ -25,8 +25,7 @@ HRESULT ShopMap::init(POINT location)
 
 	for (int i = 0; i < ITEM_SIZE; i++)
 	{
-		//_itemIndex[ITEM_SIZE] = RND->getInt(ITEM_SIZE);
-		_itemSpawner->createItem(600+(i*60), 180, false);
+		_itemIndex[i] =_itemSpawner->createItem(610+(i*42), 190, false);
 	}
 	
 	_shopCollider = RectMake(_x, _y, 32, 32);

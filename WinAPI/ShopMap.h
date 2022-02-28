@@ -1,7 +1,7 @@
 #pragma once
 #include "Map.h"
 
-#define ITEM_SIZE	3
+#define ITEM_SIZE	5
 
 class ItemManager;
 class ItemSpawner;
@@ -13,7 +13,7 @@ private:
 	RECT _shopCollider;
 	int _x, _y;
 
-	//int _itemIndex[3];
+	int _itemIndex[ITEM_SIZE];
 
 	ItemManager* _itemManager;
 	ItemSpawner* _itemSpawner;

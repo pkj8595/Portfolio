@@ -5,21 +5,19 @@ HRESULT Inventory::init(void)
 {
 	_itemManager = ItemManager::getSingleton();
 
-	_inventoryBackground = IMAGEMANAGER->addImage("inventoryBackground", "Resource/Images/Lucie/CompleteImg/inventory/inventoryBackground.bmp", 240, 296, true, RGB(255, 0, 255));
 	//_combineBackground.img = IMAGEMANAGER->addImage("combineBackground", "Resource/Images/Lucie/CompleteImg/inventory/combineBackground.bmp", 180, 180, true, RGB(255, 0, 255));
-	_inventoryGoldIcon.img = IMAGEMANAGER->addImage("inventoryGoldIcon", "Resource/Images/Lucie/CompleteImg/inventory/inventoryGoldIcon.bmp", 22, 22, true, RGB(255, 0, 255));
-	_inventoryHintCorner.img = IMAGEMANAGER->addImage("inventoryHintCorner", "Resource/Images/Lucie/CompleteImg/inventory/inventoryHintCorner.bmp", 21, 21, true, RGB(255, 0, 255));
-	_inventoryClickHelp.img = IMAGEMANAGER->addImage("inventoryClickHelp", "Resource/Images/Lucie/CompleteImg/inventory/inventoryClickHelp.bmp", 21, 21, true, RGB(255, 0, 255));
-
+	//_inventoryHintCorner.img = IMAGEMANAGER->addImage("inventoryHintCorner", "Resource/Images/Lucie/CompleteImg/inventory/inventoryHintCorner.bmp", 21, 21, true, RGB(255, 0, 255));
 	//_combineBtnIcon2.img = IMAGEMANAGER->addFrameImage("combineBtnIcon2", "Resource/Images/Lucie/CompleteImg/inventory/combineBtnIcon2.bmp", 240, 27,3,1, true, RGB(255, 0, 255));
+	//_inventorySlotA.img = IMAGEMANAGER->addFrameImage("InventorySlotA", "Resource/Images/Lucie/CompleteImg/inventory/InventorySlotA.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
+	//_inventoryClickHelp.img = IMAGEMANAGER->addImage("inventoryClickHelp", "Resource/Images/Lucie/CompleteImg/inventory/inventoryClickHelp.bmp", 21, 21, true, RGB(255, 0, 255));
+
+	_inventoryBackground = IMAGEMANAGER->addImage("inventoryBackground", "Resource/Images/Lucie/CompleteImg/inventory/inventoryBackground.bmp", 240, 296, true, RGB(255, 0, 255));
+	_inventoryGoldIcon.img = IMAGEMANAGER->addImage("inventoryGoldIcon", "Resource/Images/Lucie/CompleteImg/inventory/inventoryGoldIcon.bmp", 22, 22, true, RGB(255, 0, 255));
 	_inventoryCloseBtn.img = IMAGEMANAGER->addFrameImage("inventoryCloseBtn", "Resource/Images/Lucie/CompleteImg/inventory/inventoryCloseBtn.bmp", 32, 16, 2, 1, true, RGB(255, 0, 255));
 	_inventorySlot.img = IMAGEMANAGER->addFrameImage("InventorySlot", "Resource/Images/Lucie/CompleteImg/inventory/InventorySlot.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
-	_inventorySlotA.img = IMAGEMANAGER->addFrameImage("InventorySlotA", "Resource/Images/Lucie/CompleteImg/inventory/InventorySlotA.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
 	_inventorySlotB.img = IMAGEMANAGER->addFrameImage("inventorySlotB", "Resource/Images/Lucie/CompleteImg/inventory/inventorySlotB.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
 	_itemInfoWindow.img = IMAGEMANAGER->addImage("ItemInfoWindow", "Resource/Images/Lucie/CompleteImg/inventory/ItemInfoWindow.bmp", 300,210);
 
-	//_btn = new mButton;
-	//_btn->init();
 	_x = WINSIZE_X - _inventoryBackground->getWidth()-30;
 	_y = WINSIZE_Y * 0.5 - 200;
 
@@ -27,12 +25,12 @@ HRESULT Inventory::init(void)
 
 	//_combineBackground.pt = PointMake(_rc.left - 178, _rc.top + 100);
 	//_combineBtnIcon2.pt = PointMake(_rc.left - 120, _rc.top + 240);
+	//_inventoryHintCorner.pt = PointMake(_rc.left + 100, _rc.top + 100);
+	//_inventoryClickHelp.pt = PointMake(_rc.left + 100, _rc.top + 100);
+	//_inventorySlotA.pt = PointMake(_rc.left + 100, _rc.top + 100);
 	_inventoryGoldIcon.pt = PointMake(_rc.left + 160, _rc.top + 260);
-	_inventoryHintCorner.pt = PointMake(_rc.left + 100, _rc.top + 100);
-	_inventoryClickHelp.pt = PointMake(_rc.left + 100, _rc.top + 100);
 	_inventoryCloseBtn.pt = PointMake(_rc.left + 205, _rc.top + 15);
 	_inventorySlot.pt = PointMake(_rc.left + 25, _rc.top + 50);
-	_inventorySlotA.pt = PointMake(_rc.left + 100, _rc.top + 100);
 	_inventorySlotB.pt = PointMake(_rc.left + 100, _rc.top + 100);
 
 	_statusTextPos = PointMake(_rc.left + 25 , _rc.top+170);
@@ -68,13 +66,11 @@ void Inventory::release(void)
 	SAFE_DELETE(_itemManager);
 	SAFE_DELETE(_emptyItem);
 
-	//_btn->release();
 }
 
 void Inventory::update(void)
 {
 	//마우스가 이미지 렉트 위에 올라가면 프레임이 바뀌어야함
-	//_btn->update();
 	checkMouseEvent();
 	if (KEYMANAGER->isOnceKeyDown('I')) { _isShowInven = !_isShowInven; }
 	if (KEYMANAGER->isOnceKeyDown(VK_F6))
@@ -130,9 +126,8 @@ void Inventory::renderInventoryBase()
 {
 	_inventoryBackground->render(getMemDC(), _rc.left, _rc.top);
 	_inventoryGoldIcon.img->render(getMemDC(), _inventoryGoldIcon.pt.x, _inventoryGoldIcon.pt.y);
-	_inventoryHintCorner.img->render(getMemDC(), _inventoryHintCorner.pt.x, _inventoryHintCorner.pt.y);
-	_inventoryClickHelp.img->render(getMemDC(), _inventoryClickHelp.pt.x, _inventoryClickHelp.pt.y);
 	//frame render
+	//_inventoryHintCorner.img->render(getMemDC(), _inventoryHintCorner.pt.x, _inventoryHintCorner.pt.y);
 	//_combineBackground.img->render(getMemDC(), _combineBackground.pt.x, _combineBackground.pt.y);
 	//_combineBtnIcon2.img->frameRender(getMemDC(), _combineBtnIcon2.pt.x, _combineBtnIcon2.pt.y,1,1);
 	_inventoryCloseBtn.img->frameRender(getMemDC(), _inventoryCloseBtn.pt.x, _inventoryCloseBtn.pt.y, 1, 1);
@@ -145,6 +140,7 @@ void Inventory::renderInventoryBase()
 				_inventorySlot.pt.y+ INVENTORY_IMG_OFFSETY *i, 1, 1);
 		}
 	}
+	
 	char str[32] = "인벤토리";
 	FONTMANAGER->drawText(getMemDC(), _rc.left +98, _rc.top + 18, "야놀자 야체 Regular", 20, 200, str, strlen(str), RGB(255, 255, 255));
 
@@ -561,6 +557,9 @@ void Inventory::renderItemInfoWindow()
 			itemInfo[5].color = RGB(190, 190, 160);
 
 			_itemManager->getBigItemImgRender(getMemDC(), (*_viItem).first->_imgNum, rcX + 15, rcY + 60);
+
+			
+
 			for (int i = 0; i < 6; i++)
 			{
 				char* str = new char[itemInfo[i].str.size() + 1];

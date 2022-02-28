@@ -3,7 +3,7 @@
 #include "ItemManager.h"
 #include "IRectObserved.h"
 
-#define ITEM_OBJ_SIZE		64
+#define ITEM_OBJ_SIZE		32
 #define MOVE_OFFSET_TIME	0.2f	
 #define CHANGE_DIRECTION	1.0F
 
@@ -28,7 +28,9 @@ public:
 	void release(void);
 	void update(void);
 	void render(void);
+	int getItemIndex(void) { return _itemIndex; }
 	bool getIsActive(void) { return _isActive; }
+	void setIsActive(bool isActive) { _isActive = isActive; }
 	virtual STObservedData getRectUpdate();
 	virtual void collideObject(STObservedData obData);
 
@@ -40,12 +42,13 @@ private:
 	vector<ItemObject*> _vItemObj;
 	vector<ItemObject*>::iterator _viItemObj;
 
+	
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
-	void createItem(int x, int y, bool isCollider);
+	int createItem(int x, int y, bool isCollider);
 	void clearItem(void);
 
 };
