@@ -218,16 +218,15 @@ public:
 
 class ThornBullet : public AMissile
 {
-private:
-
 public:
 	virtual HRESULT init(int bulletMax, float range);
 	virtual void move(void);
-	virtual void fire(float x, float y, float angle);
+	virtual void fire(float x, float y);
 	virtual void draw(void);
 
 	ThornBullet() {}
 	~ThornBullet() {}
+
 };
 
 //==================================

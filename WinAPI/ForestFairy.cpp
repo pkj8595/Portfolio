@@ -11,7 +11,7 @@ ForestFairy::~ForestFairy()
 
 HRESULT ForestFairy::init(const char * imageName, POINT position)
 {
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 void ForestFairy::release(void)
