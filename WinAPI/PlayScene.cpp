@@ -5,6 +5,7 @@ HRESULT PlayScene::init(void)
 {
 	_fadeoutImage = IMAGEMANAGER->addImage("Fadeout", "Resource/Images/Lucie/CompleteImg/effect/changeScreen.bmp", 1104, 960, true, RGB(255, 0, 255));
 	_clearBossImage = IMAGEMANAGER->addFrameImage("BossClear", "Resource/Images/Lucie/CompleteImg/effect/clearBoss1.bmp", 5520, 19200, 5, 20, true, RGB(255,0,255));
+	_gameoverImage = IMAGEMANAGER->addImage("Gameover", "Resource/Images/Lucie/CompleteImg/pitures/banana256.bmp", 960, 540, true, RGB(255, 0, 255));
 	// 주석 제거 금지
 	//_clearBossImage2 = IMAGEMANAGER->addFrameImage("BossClear2", "Resource/Images/Lucie/CompleteImg/effect/clearBoss2.bmp", 5520, 19200, 5, 20, true, RGB(255,0,255));
 	//_clearBossImage3 = IMAGEMANAGER->addImage("whiteScreen", "Resource/Images/Lucie/CompleteImg/effect/whiteScreen.bmp", 1104, 960, false, RGB(255, 0, 255));
@@ -28,6 +29,9 @@ HRESULT PlayScene::init(void)
 	_bossEffectTime = TIMEMANAGER->getWorldTime();
 	_bossClearAlpha = 255;
 
+	_deadAlpha = 0;
+	_deadTimer = 0;
+
 	_enemyManager->setRoketMemoryAddress(_player);
 
 	return S_OK;
@@ -35,7 +39,7 @@ HRESULT PlayScene::init(void)
 
 void PlayScene::release(void)
 {
-	
+	RECTOBSERVERMANAGER->release();
 }
 
 void PlayScene::update(void)
@@ -75,6 +79,8 @@ void PlayScene::update(void)
 	//		}
 	//	}
 	//}
+
+	checkDead();
 }
 
 void PlayScene::render(void)
@@ -84,6 +90,8 @@ void PlayScene::render(void)
 	_player->render();
 	_player->printStack();
 	RECTOBSERVERMANAGER->render();
+
+	_mapManager->getCurrentMap()->printOutsideRC();
 
 	//UI
 	if (_mapManager->isMinimapToggle()) _mapManager->printTempMinimap();
@@ -103,6 +111,11 @@ void PlayScene::render(void)
 	//	else if (_bossClearAlpha > 0) _clearBossImage3->alphaRender(getMemDC(), _bossClearAlpha);
 	//}
 
+	if (_player->isDead())
+	{
+		_fadeoutImage->alphaRender(getMemDC(), _deadAlpha);
+		_gameoverImage->alphaRender(getMemDC(), _deadAlpha);
+	}
 }
 
 PlayScene::PlayScene() : _stageNum(0) {

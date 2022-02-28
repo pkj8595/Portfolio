@@ -13,7 +13,8 @@ HRESULT StartMap::init(POINT location)
 	_leftWall = IMAGEMANAGER->addImage("LeftWall4", "Resource/Images/Lucie/CompleteImg/ground/wall/LeftWall4.bmp", 281, 600, true, RGB(255, 0, 255));
 	_rightWall = IMAGEMANAGER->addImage("RightWall4", "Resource/Images/Lucie/CompleteImg/ground/wall/RightWall4.bmp", 281, 588, true, RGB(255, 0, 255));
 	_downWall = IMAGEMANAGER->addImage("DownWall1", "Resource/Images/Lucie/CompleteImg/ground/wall/downWall1.bmp", 240, 240, true, RGB(255, 0, 255));
-	
+	_outsideRcWidth = { 0, 816, WINSIZE_X, WINSIZE_Y };
+	_outsideRcLength = { 1008, 0, WINSIZE_X, WINSIZE_Y };
 	_location = location;
 	_mapRC = { 200, 50, 700, 600 };
 

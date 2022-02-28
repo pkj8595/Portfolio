@@ -10,6 +10,7 @@ class PlayScene : public GameNode
 private:
 	my::Image* _fadeoutImage;
 	my::Image* _clearBossImage;
+	my::Image* _gameoverImage;
 	// 주석 제거 금지
 	//my::Image* _clearBossImage2;
 	//my::Image* _clearBossImage3;
@@ -30,6 +31,9 @@ private:
 	int _fadeoutAlpha;
 	int _changeScreenType; //0, 1, 2, 3 : LEFT, RIGHT, UP, DOWN
 
+	int _deadAlpha;
+	float _deadTimer;
+
 public:
 	HRESULT init(void);
 	void release(void);
@@ -44,6 +48,8 @@ public:
 	void changeMap();
 	void spawnMonster();
 	void checkPlayerEscapeWithoutClear();
+	void checkDead();
+
 
 	PlayScene();
 	~PlayScene() {}

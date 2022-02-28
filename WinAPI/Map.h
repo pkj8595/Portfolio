@@ -25,6 +25,10 @@ protected:
 	//Ä³¸¯ÅÍ È°µ¿¹Ý°æ
 	RECT _mapRC;
 
+	//¹Ù±ù ¸Ê
+	RECT _outsideRcWidth;
+	RECT _outsideRcLength;
+
 	bool _show;
 	bool _clear;
 	bool _connectedMap[4]; //Left, Up, Right, Down
@@ -54,6 +58,7 @@ public:
 	bool isConnected(int map) { return _connectedMap[map]; }
 
 	RECT getMapRC() { return _mapRC; }
+	void printOutsideRC();
 
 	Map() : _mapRC({ 0,0,WINSIZE_X,WINSIZE_Y }) {}
 };

@@ -113,7 +113,7 @@ public:
 	float calculateMagicDamage();
 
 	void setLevelUp();
-
+	void setDead();
 public:
 	//접근자, 지정자
 

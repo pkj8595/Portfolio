@@ -20,6 +20,8 @@ HRESULT ChestMap::init(POINT location)
 	_frameY = 0;
 
 	_mapRC = { 200, 50, 700, 600 };
+	_outsideRcWidth = { 0, 768, WINSIZE_X, WINSIZE_Y };
+	_outsideRcLength = { 1008, 0, WINSIZE_X, WINSIZE_Y };
 	_location = location;
 	return S_OK;
 }

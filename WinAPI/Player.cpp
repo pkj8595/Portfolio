@@ -93,44 +93,48 @@ void Player::release(void)
 
 void Player::update(void)
 {
-	if (_state == PLAYER_STATE::WALK || _state == PLAYER_STATE::DODGE || _state == PLAYER_STATE::STOP)
+	if (!_dead)
 	{
-		if (_swordSpecialAttack) setDirectionByMouseInput();
-		else if (_bow->isFiring()) setDirectionByMouseInput();
-		else setDirectionByKeyInput();
-	}
-	else setDirectionByMouseInput();
-
-	changeState();
-
-	setFrame();
-	frameUpdate();
-	
-	setDodge();
-
-	if (!_inventory->getIsShowInven()) { setAttack(); }
-
-	checkBowStack();
-
-	healStamina();
-
-	if (!_attack || (*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
-	{	
-		if (!_isTextShow)
+		if (_state == PLAYER_STATE::WALK || _state == PLAYER_STATE::DODGE || _state == PLAYER_STATE::STOP)
 		{
-			move();
+			if (_swordSpecialAttack) setDirectionByMouseInput();
+			else if (_bow->isFiring()) setDirectionByMouseInput();
+			else setDirectionByKeyInput();
 		}
+		else setDirectionByMouseInput();
+
+		changeState();
+
+		setFrame();
+		frameUpdate();
+
+		setDodge();
+
+		if (!_inventory->getIsShowInven()) { setAttack(); }
+
+		checkBowStack();
+
+		healStamina();
+
+		if (!_attack || (*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
+		{
+			if (!_isTextShow)
+			{
+				move();
+			}
+		}
+		computeTotalAttribute(); // 합산
+		_sword->update();
+		_normal->update();
+		_bow->update();
+		_statusUI->update();
+		_inventory->update();
+		_efm->update();
+
+		_rc = RectMakeCenter(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2 + 20, 8, 5);
+
 	}
-	computeTotalAttribute(); // 합산
-	_sword->update();
-	_normal->update();
-	_bow->update();
-	_statusUI->update();
-	_inventory->update(); 
-	_efm->update();
-
-	_rc = RectMakeCenter(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2 + 20, 8, 5);
-
+	
 	if (_hit) _hitInvTime--;
 	if (_hitInvTime <= 0) _hit = false;
 	if (_state != PLAYER_STATE::DODGE) _alreadyAddBowStack = false;
@@ -138,10 +142,16 @@ void Player::update(void)
 	if (_dodgeAlpha > 0) _dodgeAlpha -= 16;
 
 	setLevelUp();
+	setDead();
 }
 
 void Player::render(void)
 {
+	if (_dead)
+	{
+		_image->frameRender(getMemDC(), _x, _y, 5, 9);
+		return;
+	}
 	_image->frameRender(getMemDC(), _x, _y);
 	_efm->render();
 	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
@@ -873,6 +883,10 @@ void Player::setLevelUp()
 		_status._offencePower += 1.0f;
 		_efm->createEffect("Levelup", {_rc.left, _rc.top - 50, _rc.right, _rc.bottom - 50 });
 	}
+}
+void Player::setDead()
+{
+	if (_status._hp <= 0) _dead = true;
 }
 void Player::printHitBG()
 {

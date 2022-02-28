@@ -172,3 +172,19 @@ void PlayScene::checkPlayerEscapeWithoutClear()
 	}
 
 }
+
+void PlayScene::checkDead()
+{
+	if (_player->isDead())
+	{
+		if (_deadTimer == 0) _deadTimer = TIMEMANAGER->getWorldTime();
+
+		if (_deadAlpha > 255) _deadAlpha = 255;
+		else if (_deadAlpha < 255) _deadAlpha ++;
+	}
+	if (_deadTimer != 0 && _deadTimer + 10.0f < TIMEMANAGER->getWorldTime())
+	{
+		release();
+		SCENEMANAGER->changeScene("Lobby");
+	}
+}
