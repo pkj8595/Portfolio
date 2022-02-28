@@ -1,5 +1,6 @@
 #include "Stdafx.h" 
 #include "MainGame.h"
+#include "ItemManager.h"
 #include "TitleScene.h"
 #include "LobbyScene.h"
 #include "PlayScene.h"
@@ -8,9 +9,12 @@
 #include "Lobby.h"
 #include "ShopScene.h"
 
+
 HRESULT MainGame::init(void)
 {
 	GameNode::init(TRUE);
+	ItemManager::getSingleton()->init();
+	ItemSpawner::getSingleton()->init();
 
 	SCENEMANAGER->addScene("TitleScene", new TitleScene);
 	SCENEMANAGER->addScene("LobbyScene", new LobbyScene);
@@ -27,12 +31,17 @@ HRESULT MainGame::init(void)
 
 void MainGame::release(void)
 {
+	ItemManager::getSingleton()->release();
+	ItemManager::getSingleton()->releaseSingleton();
+	ItemSpawner::getSingleton()->release();
+	ItemSpawner::getSingleton()->releaseSingleton();
+
 	GameNode::release();
 }
 
 void MainGame::update(void)
 {
-	SCENEMANAGER->update();
+	SCENEMANAGER->update();	
 }
 
 void MainGame::render(void)

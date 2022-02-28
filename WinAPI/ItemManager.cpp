@@ -4,12 +4,10 @@
 
 ItemManager::ItemManager()
 {
-	init();
 }
 
 ItemManager::~ItemManager()
 {
-	release();
 }
 
 
@@ -82,7 +80,7 @@ HRESULT ItemManager::init(void)
 			enchantItem->_attribute._stamina = atoi(vEnchantData[i + 17].c_str());
 			enchantItem->_attribute._maxStamina = atoi(vEnchantData[i + 18].c_str());
 
-			enchantItem->toString();
+			//enchantItem->toString();
 			_vEnchantItem.push_back(enchantItem);
 		}
 		cout << "ItemManager::init(void) >> item enchant data init ok" << endl;
@@ -158,19 +156,19 @@ void ItemManager::getBigItemImgRender(HDC hdc,int imgIndex, int x, int y)
 void ItemManager::getItemIndexRender(HDC hdc, int index, int x, int y)
 {
 	if (index >= _vItem.size()) return;
-	int imgIndex = _viItem[index]->_imgNum;
+	int imgIndex = _vItem[index]->_imgNum;
 	int destY = 0;
 	int destX = 0;
 	destY = (imgIndex - 1) / 10;
 	destX = (imgIndex - 1) % 10;
 
-	_bigItemImg->frameRender(hdc, x, y, destX, destY);
+	_itemImg->frameRender(hdc, x, y, destX, destY);
 }
 
 void ItemManager::getBigItemIndexRender(HDC hdc, int index, int x, int y)
 {
 	if (index >= _vItem.size()) return;
-	int imgIndex = _viItem[index]->_imgNum;
+	int imgIndex = _vItem[index]->_imgNum;
 	int destY = 0;
 	int destX = 0;
 	destY = (imgIndex - 1) / 10;

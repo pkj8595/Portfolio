@@ -35,6 +35,7 @@ HRESULT Snake::init(const char * imageName, POINT position)
 	_twoDirBullet = new TwoDirectionMissile;
 	_twoDirBullet->init(2, 300);
 
+	_exp = 25;
 
 	_direction = SNAKEDIRECTION::SN_RIGHT;
 	_state = SNAKESTATE::SN_MOVE;

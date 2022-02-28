@@ -21,7 +21,7 @@ private:
 
 	NormalBullet* _normalBullet;				//탄막 여러개
 	BubbleBullet* _bubbleBullet;				//큰 탄환->작은 탄환 여러개
-	enum class STATE {STOP, WALK, ATTACK_BUBBLE, ATTACK_NORMAL};
+	enum class STATE {STOP, WALK, ATTACK_BUBBLE, ATTACK_NORMAL, DEAD};
 	enum class DIRECTION {DOWN = 0, LEFT, RIGHT, UP};
 
 	RECT _fixRC;
@@ -39,6 +39,8 @@ private:
 	int _walkRndSet;		//플레이어를 향해 걸어오는 동작. (4~7 랜덤)
 	int _attackSet;
 	float _frameDelayTime;
+
+	int _deadCount;
 public:
 	HRESULT init(const char* imageName, POINT position);
 	void release(void);

@@ -41,6 +41,7 @@ HRESULT EnemyManager::init(void)
 	IMAGEMANAGER->addFrameImage("ForestFairy", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Forestfairy.bmp", 168, 930, 3, 10, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addFrameImage("KingSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 1080, 7560, 3, 21, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("BigSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 576, 4032, 3, 21, true, RGB(255, 0, 255));
 	
 	
 	
@@ -94,37 +95,50 @@ void EnemyManager::render(void)
 
 void EnemyManager::setMinion(void)
 {
-	//for (int i = 0; i < 2; i++)
-	//{
-	//	for (int  j = 0; j < 10; j++)
-	//	{
-	//		Enemy* minion;
-	//		minion = new Minion;
-	//		minion->init("enemy1", PointMake(50 + j * 50, 100 + i * 100));
-	//		_vMinion.push_back(minion);
-	//	}
-	//}
+	int temp = RND->getInt(3);
+	switch (temp)
+	{
+	case 0: {
+		Enemy* slime;
+		slime = new Slime;
+		slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
+		_vMinion.push_back(slime);
 
-	//Enemy* slime;
-	//slime = new Slime;
-	//slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
-	//_vMinion.push_back(slime);
-	//
-	//Enemy* slime2;
-	//slime2 = new Slime;
-	//slime2->init("Slime", PointMake(CENTER_X - 50, CENTER_Y - 50));
-	//_vMinion.push_back(slime2);
-	//
-	//Enemy* snake;
-	//snake = new Snake;
-	//snake->init("Snake", PointMake(CENTER_X - 100, CENTER_Y));
-	//_vMinion.push_back(snake);
+		Enemy* rafflesia;
+		rafflesia = new Rafflesia;
+		rafflesia->init("Rafflesia", PointMake(CENTER_X - 150, CENTER_Y + 30));
+		_vMinion.push_back(rafflesia);
 
+		Enemy* slime2;
+		slime2 = new Slime;
+		slime2->init("Slime", PointMake(CENTER_X - 50, CENTER_Y - 50));
+		_vMinion.push_back(slime2);
+	}break;
 
-	Enemy* rafflesia;
-	rafflesia = new Rafflesia;
-	rafflesia->init("Rafflesia", PointMake(CENTER_X - 150, CENTER_Y + 30));
-	_vMinion.push_back(rafflesia);
+	case 1: {
+		Enemy* slime;
+		slime = new Slime;
+		slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
+		_vMinion.push_back(slime);
+
+		Enemy* snake;
+		snake = new Snake;
+		snake->init("Snake", PointMake(CENTER_X - 100, CENTER_Y));
+		_vMinion.push_back(snake);
+	} break;
+
+	case 2: {
+		Enemy* snake;
+		snake = new Snake;
+		snake->init("Snake", PointMake(CENTER_X + 100, CENTER_Y));
+		_vMinion.push_back(snake);
+
+		Enemy* snake2;
+		snake2 = new Snake;
+		snake2->init("Snake", PointMake(CENTER_X - 100, CENTER_Y));
+		_vMinion.push_back(snake2);
+	} break;
+	}
 }
 
 void EnemyManager::setBoss(void)
@@ -135,9 +149,36 @@ void EnemyManager::setBoss(void)
 	_vMinion.push_back(kingslime);
 }
 
-void EnemyManager::setMiniBoss(void)
+void EnemyManager::setMiniBoss(int x, int y)
 {
+	Enemy* bigslime;
+	bigslime = new BigSlime;
+	bigslime->init("BigSlime", PointMake(x + 10, y));
+	bigslime->setHpY(0);
+	_vMinion.push_back(bigslime);
+
+	Enemy* bigslime2;
+	bigslime2 = new BigSlime;
+	bigslime2->init("BigSlime", PointMake(x - 10, y));
+	bigslime2->setHpY(35);
+	_vMinion.push_back(bigslime2);
 }
+
+void EnemyManager::setSlime(int x, int y)
+{
+	Enemy* slime;
+	slime = new Slime;
+	slime->init("Slime", PointMake(x + 10, y));
+	_vMinion.push_back(slime);
+	Enemy* slime2;
+
+	Enemy* slime3;
+	slime3 = new Slime;
+	slime3->init("Slime", PointMake(x - 10, y));
+	_vMinion.push_back(slime3);
+}
+
+
 
 void EnemyManager::removeMinion(int arrNum)
 {
@@ -154,10 +195,34 @@ void EnemyManager::checkActive(void)
 	{
 		if (!(*_viMinion)->getIsActive()) 
 		{
-			(*_viMinion)->release();
-			SAFE_DELETE(*_viMinion);
-			_viMinion = _vMinion.erase(_viMinion);
-			break;
+			if ((*_viMinion)->isBoss())
+			{
+				POINT temp = { (*_viMinion)->getRect().left + ((*_viMinion)->getRect().right - (*_viMinion)->getRect().left) / 2,
+					(*_viMinion)->getRect().top + ((*_viMinion)->getRect().bottom - (*_viMinion)->getRect().top )/2 };
+				(*_viMinion)->release();
+				SAFE_DELETE(*_viMinion);
+				_viMinion = _vMinion.erase(_viMinion);
+				setMiniBoss(temp.x, temp.y);
+				break;
+			}
+			else if ((*_viMinion)->isMiniBoss())
+			{
+				POINT temp = { (*_viMinion)->getRect().left + ((*_viMinion)->getRect().right - (*_viMinion)->getRect().left) / 2,
+								(*_viMinion)->getRect().top + ((*_viMinion)->getRect().bottom - (*_viMinion)->getRect().top) / 2 };
+				(*_viMinion)->release();
+				SAFE_DELETE(*_viMinion);
+				_viMinion = _vMinion.erase(_viMinion);
+				setSlime(temp.x, temp.y);
+				break;
+			}
+			else
+			{
+				_pPlayer->addExp((*_viMinion)->getExp());
+				(*_viMinion)->release();
+				SAFE_DELETE(*_viMinion);
+				_viMinion = _vMinion.erase(_viMinion);
+				break;
+			}
 		}
 	}
 }

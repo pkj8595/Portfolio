@@ -11,8 +11,8 @@ HRESULT ItemObject::init(void)
 
 HRESULT ItemObject::init(int x, int y, bool isCollider)
 {
-	_x = x;
-	_y = y;
+	_x = (float)x;
+	_y = (float)y;
 	_isCollider = isCollider;
 	_rc = RectMakeCenter(_x, _y, ITEM_OBJ_SIZE, ITEM_OBJ_SIZE);
 	_typeKey = ObservedType::ITEM;
@@ -20,7 +20,8 @@ HRESULT ItemObject::init(int x, int y, bool isCollider)
 	_itemIndex = RND->getInt(_itemManager->getItemSize());
 	_increaseY = false;
 	_isActive = true;
-	_responseTime = _worldTime = TIMEMANAGER->getWorldTime();
+	_moveOffsetTime =_responseTime = _worldTime = TIMEMANAGER->getWorldTime();
+	
 	
 	RECTOBSERVERMANAGER->registerObserved(this);
 	return S_OK;
@@ -33,19 +34,26 @@ void ItemObject::release(void)
 
 void ItemObject::update(void)
 {
-	if (TIMEMANAGER->getWorldTime() > _worldTime + 1.0f)
+	if (TIMEMANAGER->getWorldTime() > _moveOffsetTime)
 	{
-		_increaseY = !_increaseY;
-		_worldTime = TIMEMANAGER->getWorldTime();
+		_moveOffsetTime = TIMEMANAGER->getWorldTime() + MOVE_OFFSET_TIME;
+		if (_increaseY) { _y --; }
+		else { _y ++; }
+		_rc = RectMakeCenter(_x, _y, ITEM_OBJ_SIZE, ITEM_OBJ_SIZE+20);
+
+		if (TIMEMANAGER->getWorldTime() > _worldTime + CHANGE_DIRECTION)
+		{
+			_increaseY = !_increaseY;
+			_worldTime = TIMEMANAGER->getWorldTime();
+		}
 	}
-	if (_increaseY) { _y--; }
-	else { _y++; }
-	_rc = RectMakeCenter(_x, _y, ITEM_OBJ_SIZE, ITEM_OBJ_SIZE);
+	
 }
 
 void ItemObject::render(void)
 {
-	_itemManager->getBigItemIndexRender(getMemDC(), _itemIndex, _rc.left, _rc.right);
+	//RectangleMakeToRECT(getMemDC(), _rc);
+	_itemManager->getItemIndexRender(getMemDC(), _itemIndex, _rc.left, _rc.top);
 }
 
 STObservedData ItemObject::getRectUpdate()
@@ -53,7 +61,7 @@ STObservedData ItemObject::getRectUpdate()
 	STObservedData temp;
 	temp.typeKey = &_typeKey;
 	temp.number = &_itemIndex;
-	temp.isActive = &_isActive;
+	temp.isActive = &_isCollider;
 	temp.rc = &_rc;
 	temp.angle = &_responseTime;
 
@@ -82,7 +90,7 @@ HRESULT ItemSpawner::init(void)
 void ItemSpawner::release(void)
 {
 	_viItemObj = _vItemObj.begin();
-	for (; _viItemObj < _vItemObj.end(); ++_viItemObj)
+	for (; _viItemObj != _vItemObj.end(); ++_viItemObj)
 	{
 		(*_viItemObj)->release();
 	}
@@ -92,13 +100,14 @@ void ItemSpawner::release(void)
 void ItemSpawner::update(void)
 {
 	_viItemObj = _vItemObj.begin();
-	for (; _viItemObj < _vItemObj.end(); ++_viItemObj)
+	for (; _viItemObj != _vItemObj.end(); ++_viItemObj)
 	{
 		(*_viItemObj)->update();
 		if (!(*_viItemObj)->getIsActive())
 		{
 			(*_viItemObj)->release();
 			_vItemObj.erase(_viItemObj);
+			break;
 		}
 	}
 }
@@ -106,23 +115,24 @@ void ItemSpawner::update(void)
 void ItemSpawner::render(void)
 {
 	_viItemObj = _vItemObj.begin();
-	for (; _viItemObj < _vItemObj.end(); ++_viItemObj)
+	for (; _viItemObj != _vItemObj.end(); ++_viItemObj)
 	{
 		(*_viItemObj)->render();
 	}
 }
 
-void ItemSpawner::createItem(int x, int y, bool isCollider)
+int ItemSpawner::createItem(int x, int y, bool isCollider)
 {
 	ItemObject* itemObj = new ItemObject;
 	itemObj->init(x, y, isCollider);
 	_vItemObj.push_back(itemObj);
+	return itemObj->getItemIndex();
 }
 
 void ItemSpawner::clearItem(void)
 {
 	_viItemObj = _vItemObj.begin();
-	for (; _viItemObj < _vItemObj.end(); ++_viItemObj)
+	for (; _viItemObj != _vItemObj.end(); ++_viItemObj)
 	{
 		(*_viItemObj)->release();
 	}

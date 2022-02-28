@@ -47,8 +47,8 @@ HRESULT Player::init(void)
 	_status._critical = 10.0f;
 	_status._offencePower = 10.0f;
 	_status._magicPower = 10.0f;
-	//_status._speed = 2.0f;
-	_status._speed = 8.0f;
+	_status._speed = 2.0f;
+	//_status._speed = 8.0f;
 	_status._damageBalance = 0.0f;
 	_status._experience = 0.0f;
 	_status._maxExperience = 100.0f;
@@ -133,27 +133,14 @@ void Player::update(void)
 	if (_state != PLAYER_STATE::DODGE) _alreadyAddBowStack = false;
 	if (_hitAlpha > 0) _hitAlpha -= 16;
 	if (_dodgeAlpha > 0) _dodgeAlpha -= 16;
+
+	setLevelUp();
 }
 
 void Player::render(void)
 {
 	_image->frameRender(getMemDC(), _x, _y);
-
 	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
-	if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
-	{
-		showSwordStack();
-		_sword->render();
-	}
-	else if ((*_equipItem)->_type == EITEM_TYPE::EMPTY)_normal->render();
-
-	else if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
-	{
-		showBowStack();
-		_bow->render();
-	}
-	_inventory->render();
-
 }
 void Player::showSwordStack()
 {
@@ -251,37 +238,46 @@ STObservedData Player::getRectUpdate()
 
 void Player::collideObject(STObservedData obData)
 {
-	if (_swordSpecialAttack) return;
-	if (_state == PLAYER_STATE::DODGE)
-	{
-		if(_totalStatus._mana < _totalStatus._maxMana) _status._mana++;
-		if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
-		{
-			if (_bowStack < 5 && !_tripleshot && !_alreadyAddBowStack)
-			{
-				
-				_bowStack++;
-				
-			}
-		}
-		if(!_alreadyAddBowStack) _dodgeAlpha = 80;
-		_alreadyAddBowStack = true;
-	}
-	else if (!_hit)
-	{
-		_hitAlpha = 255;
-		_status._hp -= 1;
-		_hit = true;
-		_hitInvTime = 100;
-	}
 	//¾ÆÀÌÅÛ È¹µæ
 	if (*obData.typeKey == ObservedType::ITEM)
 	{
-		if (TIMEMANAGER->getWorldTime() > *obData.angle + 1.0f)
+		//*obData.isActive -> item -> isCollider
+		if (*obData.isActive)
 		{
-			_inventory->pushItem(*obData.number);
+			//*obData.angle -> item -> respoenseTime
+			if (TIMEMANAGER->getWorldTime() > *obData.angle + 1.0f)
+			{
+				_inventory->pushItem(*obData.number);
+			}
+		}
+	} 
+	else
+	{
+		if (_swordSpecialAttack) return;
+		if (_state == PLAYER_STATE::DODGE)
+		{
+			if (_totalStatus._mana < _totalStatus._maxMana) _status._mana++;
+			if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
+			{
+				if (_bowStack < 5 && !_tripleshot && !_alreadyAddBowStack)
+				{
+
+					_bowStack++;
+
+				}
+			}
+			if (!_alreadyAddBowStack) _dodgeAlpha = 80;
+			_alreadyAddBowStack = true;
+		}
+		else if (!_hit)
+		{
+			_hitAlpha = 255;
+			_status._hp -= 1;
+			_hit = true;
+			_hitInvTime = 100;
 		}
 	}
+
 }
 
 void Player::setFrame()
@@ -718,6 +714,10 @@ void Player::healStamina()
 	{
 		_status._stamina += 0.4f;
 	}
+	else if (_status._stamina > _totalStatus._maxStamina) 
+	{
+		_status._stamina = _totalStatus._maxStamina; 
+	}
 }
 
 void Player::checkLevelUp()
@@ -867,8 +867,38 @@ float Player::calculateMagicDamage()
 	return rndDamage;
 }
 
+void Player::setLevelUp()
+{
+	if (_status._experience >= _totalStatus._maxExperience)
+	{
+		_level++;
+		_status._experience -= _totalStatus._maxExperience;
+		_status._maxExperience *= 1.3f;
+		_status._offencePower += 1.0f;
+	}
+}
 void Player::printHitBG()
 {
 	if (_hitAlpha > 0) _hitBG->alphaRender(getMemDC(), _hitAlpha);
 	if (_dodgeAlpha > 0) _dodgeBG->alphaRender(getMemDC(), _dodgeAlpha);
+}
+void Player::printStack()
+{
+	if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
+	{
+		showSwordStack();
+		_sword->render();
+	}
+	else if ((*_equipItem)->_type == EITEM_TYPE::EMPTY)_normal->render();
+
+	else if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
+	{
+		showBowStack();
+		_bow->render();
+	}
+}
+
+void Player::printInventory()
+{
+	_inventory->render();
 }

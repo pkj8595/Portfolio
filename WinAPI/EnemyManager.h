@@ -27,7 +27,8 @@ public:
 
 	void setMinion(void);
 	void setBoss(void);
-	void setMiniBoss(void);
+	void setSlime(int x, int y);
+	void setMiniBoss(int x, int y);
 	void removeMinion(int arrNum);
 	void checkActive(void);
 
