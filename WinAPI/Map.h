@@ -23,7 +23,6 @@ protected:
 	//캐릭터 활동반경
 	RECT _mapRC;
 
-
 	bool _show;
 	bool _clear;
 	bool _connectedMap[4]; //Left, Up, Right, Down

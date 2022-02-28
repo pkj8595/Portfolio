@@ -35,6 +35,7 @@ HRESULT Slime::init(const char * imageName, POINT position)
 	_threeDirectionBullet = new ThreeDirectionMissile;
 	_threeDirectionBullet->init(3, 300);
 	_hp = 100.0f;
+	_exp = 30.0f;
 
 	_direction = SLIMEDIRECTION::SL_DOWN;
 	_state = SLIMESTATE::SL_IDLE;

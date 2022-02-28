@@ -39,6 +39,8 @@ private:
 	int _walkRndSet;		//플레이어를 향해 걸어오는 동작. (4~7 랜덤)
 	int _attackSet;
 	float _frameDelayTime;
+
+	int _deadCount;
 public:
 	HRESULT init(const char* imageName, POINT position);
 	void release(void);

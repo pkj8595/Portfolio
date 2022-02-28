@@ -86,7 +86,7 @@ void CRectObserverManager::getRectFromObserved()
 
 					}
 
-					break;
+					continue;
 				}
 			}
 
@@ -100,7 +100,7 @@ void CRectObserverManager::getRectFromObserved()
 					(*_viRect)->collideObject(obDataCompare);
 					(*_viRectCompare)->collideObject(obData);
 
-					break;
+					continue;
 				}
 			}
 
@@ -114,7 +114,7 @@ void CRectObserverManager::getRectFromObserved()
 					//sword인지 조건 추가
 					(*_viRectCompare)->collideObject(obData);	//각도 변환, type 변환
 
-					break;
+					continue;
 				}
 			}
 
@@ -128,7 +128,7 @@ void CRectObserverManager::getRectFromObserved()
 					(*_viRect)->collideObject(obDataCompare);
 					(*_viRectCompare)->collideObject(obData);
 
-					break;
+					continue;
 				}
 			}
 

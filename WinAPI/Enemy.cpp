@@ -30,7 +30,6 @@ HRESULT Enemy::init(const char* imageName, POINT position)
 
 	_image = IMAGEMANAGER->findImage(imageName);
 	_rc = RectMakeCenter(position.x, position.y, _image->getFrameWidth(), _image->getFrameHeight());
-
 	//_attack = 1;
 
 	//Observer code

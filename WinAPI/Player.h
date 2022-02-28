@@ -110,6 +110,8 @@ public:
 	float calculatePhysicalDamage();
 	float calculateMagicDamage();
 
+	void setLevelUp();
+
 public:
 	//접근자, 지정자
 
@@ -132,10 +134,15 @@ public:
 	}
 	PLAYER_STATE getState() { return _state;	 }
 	void printUI() { _statusUI->render(); }
+	void printStack();
+	void printInventory();
 	void printHitBG();
 	
 	bool _isTextShow;
 	bool isDead() { return _dead; }
+
+
+	void addExp(int exp) { _status._experience += exp; }
 };
 
 //검
