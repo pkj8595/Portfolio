@@ -111,6 +111,10 @@ public:
 		else return true;
 	}
 
+	vector<tagWeapon*> getWeapon() { return _vWeapon; }
+	POINT getPoint(int index) { return { (int)_vWeapon[index]->x, (int)_vWeapon[index]->y }; }
+	void removeBullet(int index);
+
 	BowWeapon() {}
 	~BowWeapon() {}
 };

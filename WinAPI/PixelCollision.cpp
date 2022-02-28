@@ -29,7 +29,19 @@ void PlayScene::pixelBulletCollision()
 			_player->getNormalWeapon()->removeBullet(i);
 		}
 	}
+	for (int i = 0; i < _player->getBowWeapon()->getWeapon().size(); i++)
+	{
+		COLORREF color = GetPixel(_mapManager->getCurrentMapPixel()->getMemDC(),
+			_player->getBowWeapon()->getPoint(i).x, _player->getBowWeapon()->getPoint(i).y);
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
 
+		if (!(r == 255 && g == 255 && b == 255))
+		{
+			_player->getBowWeapon()->removeBullet(i);
+		}
+	}
 }
 void PlayScene::changeMapFadeOut()
 {

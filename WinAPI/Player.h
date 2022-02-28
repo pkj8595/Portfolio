@@ -147,6 +147,7 @@ public:
 	void addExp(int exp) { _status._experience += exp; }
 	
 	NormalWeapon* getNormalWeapon() { return _normal; }
+	BowWeapon* getBowWeapon() { return _bow; }
 };
 
 //°Ë
