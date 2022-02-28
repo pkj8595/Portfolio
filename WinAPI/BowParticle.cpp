@@ -17,7 +17,7 @@ void BowParticle::update(void)
 	for (; _viParticle != _vParticle.end();)
 	{
 		_viParticle->x += cos(_viParticle->angle) * _viParticle->speed;
-		_viParticle->y += -sin(_viParticle->angle * _viParticle->speed);
+		_viParticle->y += -sin(_viParticle->angle) * _viParticle->speed;
 		_viParticle->rc = RectMakeCenter(_viParticle->x, _viParticle->y, 20, 20);
 		_viParticle->alpha -= _viParticle->disappearspeed;
 		if (_viParticle->alpha < 0)
@@ -47,7 +47,7 @@ void BowParticle::createParticle(float x, float y)
 	ZeroMemory(&temp, sizeof(Particle));
 	temp.alpha = 128;
 	temp.angle = RND->getFloat(PI * 2);
-	temp.speed = RND->getFromFloatTo(2.0f, 7.0f);
+	temp.speed = RND->getFromFloatTo(3.0f, 7.0f);
 	temp.disappearspeed = RND->getFromFloatTo(7.0f, 16.0f);
 	temp.x = x;
 	temp.y = y;
