@@ -17,6 +17,7 @@ public:
 
 	HRESULT init(void);
 	virtual HRESULT init(const char* imageName, RECT rc);
+	virtual HRESULT init(const char* imageName, RECT rc, float count);
 	void release(void);
 	void update(void);
 	void render(void);

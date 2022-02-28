@@ -33,6 +33,20 @@ HRESULT CEffect::init(const char* imageName, RECT rc)
 	return S_OK;
 }
 
+HRESULT CEffect::init(const char * imageName, RECT rc, float count)
+{
+	_worldTimeCount = TIMEMANAGER->getWorldTime();
+	_rndTimeCount = count;
+	_image = IMAGEMANAGER->findImage(imageName);
+	_x = rc.left + (rc.right - rc.left) / 2;
+	_y = rc.top;
+	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
+	_isActive = true;
+
+	return S_OK;
+}
+
+
 void CEffect::release(void)
 {
 }

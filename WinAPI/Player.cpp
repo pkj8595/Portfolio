@@ -869,7 +869,7 @@ void Player::setLevelUp()
 		_status._experience -= _totalStatus._maxExperience;
 		_status._maxExperience *= 1.3f;
 		_status._offencePower += 1.0f;
-		_efm->createEffect("Levelup", _rc);
+		_efm->createEffect("Levelup", {_rc.left, _rc.top - 50, _rc.right, _rc.bottom - 50 });
 	}
 }
 void Player::printHitBG()

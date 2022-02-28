@@ -52,6 +52,9 @@ HRESULT EnemyManager::init(void)
 	_bullet = new Bullet;
 	_bullet->init("bullet16",30,1000);
 
+	_efm = new EffectManager;
+	_efm->init();
+
 	return S_OK;
 }
 
@@ -79,6 +82,8 @@ void EnemyManager::update(void)
 
 	}
 	checkActive();
+
+	_efm->update();
 	//minionBulletFire();
 	//_bullet->update();
 }
@@ -91,6 +96,7 @@ void EnemyManager::render(void)
 		(*_viMinion)->render();
 	}
 	//_bullet->render();
+	_efm->render();
 }
 
 void EnemyManager::setMinion(void)
@@ -217,6 +223,7 @@ void EnemyManager::checkActive(void)
 			}
 			else
 			{
+				_efm->createEffect("Dead", (*_viMinion)->getRect(), 0.002f);
 				_pPlayer->addExp((*_viMinion)->getExp());
 				(*_viMinion)->release();
 				SAFE_DELETE(*_viMinion);
