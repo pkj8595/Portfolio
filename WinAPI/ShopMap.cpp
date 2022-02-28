@@ -25,7 +25,7 @@ HRESULT ShopMap::init(POINT location)
 
 	for (int i = 0; i < ITEM_SIZE; i++)
 	{
-		_itemIndex[i] =_itemSpawner->createItem(610+(i*42), 190, false);
+		_itemIndex[i] =_itemSpawner->createItemMapInit(610+(i*42), 190, false,this);
 	}
 	
 	_shopCollider = RectMake(_x, _y, 32, 32);
@@ -64,7 +64,6 @@ void ShopMap::update(void)
 		_x++;
 		cout << "x: " << _x << ", y: " << _y << endl;
 	}
-	_itemSpawner->update();
 
 	_shopCollider = RectMakeCenter(_x, _y, 32, 32);
 
@@ -81,7 +80,6 @@ void ShopMap::render(void)
 	_shopNPC->render(getMemDC(), 680, 140);
 	_shopBar->render(getMemDC(), 530, 40);
 
-	_itemSpawner->render();
 
 	RectangleMakeToRECT(getMemDC(),_shopCollider);
 

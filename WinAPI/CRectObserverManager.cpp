@@ -24,6 +24,7 @@ void CRectObserverManager::update(void)
 	_effectManager->update();
 	_damageManager->update();
 	getRectFromObserved();
+	getEventFormObserved();
 }
 
 void CRectObserverManager::render(void)
@@ -46,6 +47,56 @@ void CRectObserverManager::removeObserved(IRectObserved* observed)
 		{
 			_vRect.erase(_viRect);
 			break;
+		}
+	}
+}
+
+void CRectObserverManager::registerPlayer(Player* player)
+{
+	_player = player;
+}
+
+void CRectObserverManager::registerEventObserved(IEventObservered* observed)
+{
+	_vEvent.push_back(observed);
+}
+
+void CRectObserverManager::removeEventObserved(IEventObservered* observed)
+{
+	_viEvent = _vEvent.begin();
+	for (; _viEvent != _vEvent.end(); ++_viEvent)
+	{
+		if (*_viEvent == observed)
+		{
+			_vEvent.erase(_viEvent);
+			break;
+		}
+	}
+}
+
+void CRectObserverManager::getEventFormObserved()
+{
+	_viEvent = _vEvent.begin();
+	for (; _viEvent != _vEvent.end(); ++_viEvent)
+	{
+		STEventObservedData obData;
+		obData = (*_viEvent)->getEventUpdate();
+		RECT collisionRect;
+		if (*obData.isActive) continue;
+		if (IntersectRect(&collisionRect, &_player->getRect(), obData.rc))
+		{
+			if (*obData.typeKey == EventObservedType::SHOP)
+			{
+				(*_viEvent)->collideEventObject(obData);
+			}
+			else if (*obData.typeKey == EventObservedType::CHEST)
+			{
+				(*_viEvent)->collideEventObject(obData);
+			}
+			else if (*obData.typeKey == EventObservedType::ANVIL)
+			{
+				(*_viEvent)->collideEventObject(obData);
+			}
 		}
 	}
 }

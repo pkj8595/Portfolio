@@ -159,6 +159,7 @@
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="EventObject.cpp" />
     <ClCompile Include="ForestFairy.cpp" />
     <ClCompile Include="HpImgBar.cpp" />
     <ClCompile Include="Inventory.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="EventObject.h" />
     <ClInclude Include="ForestFairy.h" />
     <ClInclude Include="HpImgBar.h" />
     <ClInclude Include="Inventory.h" />

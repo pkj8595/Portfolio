@@ -278,6 +278,7 @@
     <ClCompile Include="ItemSpawner.cpp">
       <Filter>PKJ</Filter>
     </ClCompile>
+    <ClCompile Include="EventObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -465,6 +466,7 @@
     <ClInclude Include="ItemSpawner.h">
       <Filter>PKJ</Filter>
     </ClInclude>
+    <ClInclude Include="EventObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">

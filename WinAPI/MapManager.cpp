@@ -6,7 +6,7 @@ HRESULT MapManager::init(int mapAmount, int stage)
 	int i = 0;
 	IMAGEMANAGER->addImage("Minimap_Off", "Resource/Images/Lucie/CompleteImg/miniMap/minimap_cell_off.bmp", 30, 30, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Minimap_Current", "Resource/Images/Lucie/CompleteImg/miniMap/minimap_cell_shop.bmp", 30, 30, true, RGB(255, 0, 255));
-
+	_currentMap = nullptr;
 	_startPosition = { 5, 5 };
 	_mapAmount = mapAmount;
 	ZeroMemory(&_vTempMap, sizeof(_vTempMap));
@@ -19,16 +19,22 @@ HRESULT MapManager::init(int mapAmount, int stage)
 	_minimapAlpha = 0;
 	_isFadeInMinimap = true;
 
+	_itemSpawner = ItemSpawner::getSingleton();
+	_itemSpawner->setCurrentMap(&_currentMap);
+
 	return S_OK;
 }
 
 void MapManager::release(void)
 {
+	_itemSpawner->release();
+
 }
 
 void MapManager::update(void)
 {
 	_currentMap->update();
+	_itemSpawner->update();
 	if (KEYMANAGER->isOnceKeyDown(VK_TAB))
 	{
 		_tempMinimapToggle = !_tempMinimapToggle;
@@ -54,12 +60,12 @@ void MapManager::update(void)
 		}
 	}
 
-
 }
 
 void MapManager::render(void)
 {
 	_currentMap->render();
+	_itemSpawner->render();
 
 }
 
@@ -309,6 +315,9 @@ void MapManager::setMapData()
 			map->init(iter.location);
 			_vMap.push_back(map);
 			_currentMap = map;
+
+
+
 		} break;
 		case Map::MAPTYPE::DEFAULT:
 		{

@@ -7,6 +7,7 @@
 #include "ChestMap.h"
 #include "ShopMap.h"
 #include "RepairMap.h"
+#include "ItemSpawner.h"
 
 class MapManager : public GameNode
 {
@@ -28,6 +29,8 @@ private:
 	bool _tempMinimapToggle;
 	unsigned short _minimapAlpha;
 	bool _isFadeInMinimap;
+
+	ItemSpawner* _itemSpawner;
 
 public:
 	HRESULT init(int mapAmount, int stage);

@@ -244,6 +244,7 @@ void Player::collideObject(STObservedData obData)
 		//*obData.isActive -> item -> isCollider
 		if (*obData.isActive)
 		{
+			*obData.isActive = false;
 			//*obData.angle -> item -> respoenseTime
 			if (TIMEMANAGER->getWorldTime() > *obData.angle + 1.0f)
 			{
