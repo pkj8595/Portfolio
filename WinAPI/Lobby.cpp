@@ -80,9 +80,9 @@ void Lobby::render(void)
 	
 	_player->render();
 	Collision();
-	if (_fadeOutWhiteAlpha > 0) _WhitefadeOutImg->alphaRender(getMemDC(), _fadeOutWhiteAlpha);
-	if (_fadeOutBlackAlpha > 0) _BlackfadeOutImg->alphaRender(getMemDC(), _fadeOutBlackAlpha);
-	if (_startAlpha > 0) _BlackfadeOutImg->alphaRender(getMemDC(), _startAlpha);
+	if (_fadeOutWhiteAlpha > 0) { _WhitefadeOutImg->alphaRender(getMemDC(), _fadeOutWhiteAlpha); }
+	if (_fadeOutBlackAlpha > 0) { _BlackfadeOutImg->alphaRender(getMemDC(), _fadeOutBlackAlpha); }
+	if (_startAlpha > 0) { _BlackfadeOutImg->alphaRender(getMemDC(), _startAlpha); }
 
 }
 
@@ -97,7 +97,6 @@ void Lobby::animation(void)
 		{
 			_index = 0;
 		}
-
 		_bookImg->setFrameX(_index);
 	}
 }

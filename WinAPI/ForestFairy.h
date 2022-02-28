@@ -1,6 +1,8 @@
 #pragma once
+#include "Enemy.h"
+#include "Bullets.h"
 
-class ForestFairy
+class ForestFairy :public Enemy
 {
 public:
 	HRESULT init(const char* imageName, POINT position);

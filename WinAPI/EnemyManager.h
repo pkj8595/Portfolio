@@ -2,6 +2,7 @@
 #include "GameNode.h"
 #include "Enemy.h"
 #include "Bullets.h"
+#include "EffectManager.h"
 
 class Player;
 class EnemyManager: public GameNode
@@ -18,6 +19,7 @@ private:
 
 	Bullet* _bullet;
 	Player* _pPlayer;
+	EffectManager* _efm;
 
 public:
 	HRESULT init(void);

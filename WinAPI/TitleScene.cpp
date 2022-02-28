@@ -11,8 +11,8 @@ HRESULT TitleScene::init(void)
 	_changeScreen = IMAGEMANAGER->addImage("TitleBlackScreen", "Resource/Images/Lucie/CompleteImg/effect/changeScreen.bmp", 1104, 960);
 
 	_bgRc = RectMake(0, 0, _bg->getWidth(), _bg->getHeight());
-	_startRc = RectMake(CENTER_X, CENTER_Y, _start->getFrameWidth(), _start->getFrameHeight());
-	_exitRc = RectMake(CENTER_X, CENTER_Y + 100, _exit->getFrameWidth(), _exit->getFrameHeight());
+	_startRc = RectMake(CENTER_X - 170, CENTER_Y - 200, _start->getFrameWidth(), _start->getFrameHeight());
+	_exitRc = RectMake(CENTER_X - 170 , CENTER_Y - 100, _exit->getFrameWidth(), _exit->getFrameHeight());
 
 	changeScreenAlpha = 0.0f;
 
@@ -68,5 +68,5 @@ void TitleScene::render(void)
 	_gameName->render(getMemDC());
 	_start->frameRender(getMemDC(), _startRc.left, _startRc.top);
 	_exit->frameRender(getMemDC(), _exitRc.left, _exitRc.top);
-	if (changeScreenAlpha > 0) _changeScreen->alphaRender(getMemDC(), changeScreenAlpha);
+	if (changeScreenAlpha > 0) { _changeScreen->alphaRender(getMemDC(), changeScreenAlpha); }
 }

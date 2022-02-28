@@ -49,6 +49,10 @@ public:
 	void draw();
 	void move();
 
+	vector<tagWeapon*> getWeapon() { return _vWeapon; }
+	POINT getPoint(int index) { return { (int)_vWeapon[index]->x, (int)_vWeapon[index]->y }; }
+	void removeBullet(int index);
+
 	NormalWeapon(){}
 	~NormalWeapon(){}
 };
@@ -106,6 +110,10 @@ public:
 		if (_vWeapon.size() == 0) return false;
 		else return true;
 	}
+
+	vector<tagWeapon*> getWeapon() { return _vWeapon; }
+	POINT getPoint(int index) { return { (int)_vWeapon[index]->x, (int)_vWeapon[index]->y }; }
+	void removeBullet(int index);
 
 	BowWeapon() {}
 	~BowWeapon() {}

@@ -14,20 +14,28 @@ HRESULT Rafflesia::init(const char * imageName, POINT position)
 	Enemy::init(imageName, position);
 	_x = position.x;
 	_y = position.y;
+	_hp = 100;
 	_range = 250;
 	_deadForOb = false;
 	_state = RAFFLESIASTATE::RA_IDLE;
 
-	_bullet = new ThornBullet;
-	_bullet->init(5, 500);
+	_attackWorldTime = TIMEMANAGER->getWorldTime();
+	_attackPosCheckTime = TIMEMANAGER->getWorldTime();
+	_deadTimeCount = TIMEMANAGER->getWorldTime();
 
+	_bullet = new ThornBullet;
+	_bullet->init(1, 300);
+
+	IMAGEMANAGER->addImage("GenerateRange","Resource/Images/Lucie/CompleteImg/Enemy/Monster/check.bmp", 77, 74, true, RGB(255, 0, 255));
+	
 	return S_OK;
 }
 
 void Rafflesia::release(void)
 {
-	Enemy::release();
 	_bullet->release();
+	SAFE_DELETE(_bullet);
+	Enemy::release();
 }
 
 void Rafflesia::update(void)
@@ -35,22 +43,25 @@ void Rafflesia::update(void)
 	Enemy::update();
 	_bullet->update();
 
-	if (PlayerCheck())
+	if (!_deadForOb)
 	{
-		//공격
-		_state = RAFFLESIASTATE::RA_ATTACK;
+		if (PlayerCheck())
+		{
+			attackPosCheck();
+
+			//공격
+			_state = RAFFLESIASTATE::RA_ATTACK;
+
+		}
+		else
+			_state = RAFFLESIASTATE::RA_IDLE;
 	}
 	else
-		_state = RAFFLESIASTATE::RA_IDLE;
+	{
+		_state = RAFFLESIASTATE::RA_DEAD;
+	}
 
 	frame();
-
-	float angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
-
-	if (KEYMANAGER->isOnceKeyDown('1'))
-	{
-		_bullet->fire(_x, _y, angle);
-	}
 
 }
 
@@ -67,8 +78,9 @@ void Rafflesia::move(void)
 void Rafflesia::draw(void)
 {
 	_image->frameRender(getMemDC(), _rc.left, _rc.top,_currentFrameX,_currentFrameY);
-	IMAGEMANAGER->render("bulletCheck", getMemDC(), _rc.left, _rc.left);
-	_bullet->draw();
+
+	if (_attackPositionCheck)
+		IMAGEMANAGER->alphaRender("GenerateRange", getMemDC(),_playerPosX - 30, _playerPosY - 30,100);
 }
 
 void Rafflesia::animation(void)
@@ -76,12 +88,24 @@ void Rafflesia::animation(void)
 	if (0.6f + _worldTimeCount <= TIMEMANAGER->getWorldTime())
 	{
 		_worldTimeCount = TIMEMANAGER->getWorldTime();
+		
 		_currentFrameX++;
 		if (_currentFrameX > _image->getMaxFrameX())
 		{
 			_currentFrameX = 0;
 		}
 
+		if (_state == RAFFLESIASTATE::RA_DEAD)
+		{
+			_currentFrameX = 0;
+			_currentFrameY = 8;
+
+			if (6.f + _deadTimeCount < TIMEMANAGER->getWorldTime())
+			{
+				_isActive = false;
+			}
+		}
+		
 		_image->setFrameX(_currentFrameX);
 	}
 }
@@ -92,12 +116,11 @@ void Rafflesia::frame()
 	{
 	case RAFFLESIASTATE::RA_IDLE:
 		_currentFrameY = 0;
-		//cout << "IDLE" << endl;
 		break;
 
 	case RAFFLESIASTATE::RA_ATTACK:
 		_currentFrameY = 4;
-		//cout << "ATTACK" << endl;
+		attack();
 		break;
 
 	case RAFFLESIASTATE::RA_DEAD:
@@ -115,11 +138,32 @@ bool Rafflesia::PlayerCheck()
 		return true;
 	}
 
+	_attackPositionCheck = false;
 	return false;
 }
 
 void Rafflesia::attack()
 {
+	if (4.5f + _attackWorldTime <= TIMEMANAGER->getWorldTime())
+	{
+		_attackWorldTime = TIMEMANAGER->getWorldTime();
+		_bullet->fire(_playerPosX, _playerPosY);
+
+		_attackPositionCheck = false;
+	}
+}
+
+void Rafflesia::attackPosCheck()
+{
+	if (4.f + _attackPosCheckTime <= TIMEMANAGER->getWorldTime())
+	{
+		_attackPosCheckTime = TIMEMANAGER->getWorldTime();
+		_playerPosX = _playerPos.x + RAFFLESIA_BULLET_SIZE_X;
+		_playerPosY = _playerPos.y + RAFFLESIA_BULLET_SIZE_Y;
+
+		_attackPositionCheck = true;
+		return;
+	}
 }
 
 STObservedData Rafflesia::getRectUpdate()

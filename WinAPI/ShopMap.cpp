@@ -17,6 +17,8 @@ HRESULT ShopMap::init(POINT location)
 	_rightWall = IMAGEMANAGER->addImage("RightWall3", "Resource/Images/Lucie/CompleteImg/ground/wall/RightWall3.bmp", 240, 480, true, RGB(255, 0, 255));
 	_downWall = IMAGEMANAGER->addImage("DownWall2", "Resource/Images/Lucie/CompleteImg/ground/wall/downWall2.bmp", 288, 240, true, RGB(255, 0, 255));
 	_mapRC = { 168, 50, 750, 460 };
+	_outsideRcWidth = { 0, 576, WINSIZE_X, WINSIZE_Y };
+	_outsideRcLength = { 960, 0, WINSIZE_X, WINSIZE_Y };
 	_location = location;
 
 	//==================================================

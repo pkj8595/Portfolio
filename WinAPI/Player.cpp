@@ -77,6 +77,8 @@ HRESULT Player::init(void)
 	_inventory->setPTotalattribute(&_totalStatus);
 	_inventory->setPlayerAttribute(&_status);
 
+	_efm = new EffectManager;
+	_efm->init();
 
 	_equipItem = _inventory->getEquipWeapon();
 	
@@ -91,43 +93,48 @@ void Player::release(void)
 
 void Player::update(void)
 {
-	if (_state == PLAYER_STATE::WALK || _state == PLAYER_STATE::DODGE || _state == PLAYER_STATE::STOP)
+	if (!_dead)
 	{
-		if (_swordSpecialAttack) setDirectionByMouseInput();
-		else if (_bow->isFiring()) setDirectionByMouseInput();
-		else setDirectionByKeyInput();
-	}
-	else setDirectionByMouseInput();
-
-	changeState();
-
-	setFrame();
-	frameUpdate();
-	
-	setDodge();
-
-	if (!_inventory->getIsShowInven()) { setAttack(); }
-
-	checkBowStack();
-
-	healStamina();
-
-	if (!_attack || (*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
-	{	
-		if (!_isTextShow)
+		if (_state == PLAYER_STATE::WALK || _state == PLAYER_STATE::DODGE || _state == PLAYER_STATE::STOP)
 		{
-			move();
+			if (_swordSpecialAttack) setDirectionByMouseInput();
+			else if (_bow->isFiring()) setDirectionByMouseInput();
+			else setDirectionByKeyInput();
 		}
+		else setDirectionByMouseInput();
+
+		changeState();
+
+		setFrame();
+		frameUpdate();
+
+		setDodge();
+
+		if (!_inventory->getIsShowInven()) { setAttack(); }
+
+		checkBowStack();
+
+		healStamina();
+
+		if (!_attack || (*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
+		{
+			if (!_isTextShow)
+			{
+				move();
+			}
+		}
+		computeTotalAttribute(); // 합산
+		_sword->update();
+		_normal->update();
+		_bow->update();
+		_statusUI->update();
+		_inventory->update();
+		_efm->update();
+
+		_rc = RectMakeCenter(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2 + 20, 8, 5);
+
 	}
-	computeTotalAttribute(); // 합산
-	_sword->update();
-	_normal->update();
-	_bow->update();
-	_statusUI->update();
-	_inventory->update(); 
-
-	_rc = RectMakeCenter(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2 + 20, 8, 5);
-
+	
 	if (_hit) _hitInvTime--;
 	if (_hitInvTime <= 0) _hit = false;
 	if (_state != PLAYER_STATE::DODGE) _alreadyAddBowStack = false;
@@ -135,11 +142,18 @@ void Player::update(void)
 	if (_dodgeAlpha > 0) _dodgeAlpha -= 16;
 
 	setLevelUp();
+	setDead();
 }
 
 void Player::render(void)
 {
+	if (_dead)
+	{
+		_image->frameRender(getMemDC(), _x, _y, 5, 9);
+		return;
+	}
 	_image->frameRender(getMemDC(), _x, _y);
+	_efm->render();
 	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 }
 void Player::showSwordStack()
@@ -262,9 +276,11 @@ void Player::collideObject(STObservedData obData)
 			{
 				if (_bowStack < 5 && !_tripleshot && !_alreadyAddBowStack)
 				{
-
 					_bowStack++;
-
+					if (_bowStack == 5)
+					{
+						_efm->createEffect("WindEffect", &_rc);
+					}
 				}
 			}
 			if (!_alreadyAddBowStack) _dodgeAlpha = 80;
@@ -438,7 +454,7 @@ void Player::setAttack()
 			{
 				if (_attackCount < TIMEMANAGER->getWorldTime() - 0.3f)
 				{
-					float angle = MY_UTIL::getAngle(_x, _y, _ptMouse.x, _ptMouse.y);
+					float angle = MY_UTIL::getAngle(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight()/2, _ptMouse.x, _ptMouse.y);
 					_normal->fire(calculatePhysicalDamage(), _x + 50, _y + 50, angle);
 					_status._stamina -= 5.0f;
 					_attackCount = TIMEMANAGER->getWorldTime();
@@ -448,7 +464,7 @@ void Player::setAttack()
 			{
 				if (_attackCount < TIMEMANAGER->getWorldTime() - 0.3f)
 				{
-					float angle = MY_UTIL::getAngle(_x, _y, _ptMouse.x, _ptMouse.y);
+					float angle = MY_UTIL::getAngle(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2, _ptMouse.x, _ptMouse.y);
 					if (_tripleshot)
 					{
 						_bow->fire(calculatePhysicalDamage(), _x + 50, _y + 50, angle - 15 * PI / 180);
@@ -721,16 +737,6 @@ void Player::healStamina()
 	}
 }
 
-void Player::checkLevelUp()
-{
-	if (_status._experience >= _totalStatus._maxExperience)
-	{
-		_status._experience = 0;
-		_totalStatus._maxExperience *= 1.1f;
-
-	}
-}
-
 void Player::setCollision()
 {
 	switch (_direction)
@@ -876,7 +882,12 @@ void Player::setLevelUp()
 		_status._experience -= _totalStatus._maxExperience;
 		_status._maxExperience *= 1.3f;
 		_status._offencePower += 1.0f;
+		_efm->createEffect("Levelup", {_rc.left, _rc.top - 50, _rc.right, _rc.bottom - 50 });
 	}
+}
+void Player::setDead()
+{
+	if (_status._hp <= 0) _dead = true;
 }
 void Player::printHitBG()
 {

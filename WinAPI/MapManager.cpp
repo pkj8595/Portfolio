@@ -1,6 +1,5 @@
 #include "Stdafx.h"
 #include "MapManager.h"
-
 HRESULT MapManager::init(int mapAmount, int stage)
 {
 	int i = 0;
@@ -52,14 +51,13 @@ void MapManager::update(void)
 	{
 		for (Map* m : _vMap)
 		{
-			if (m->getType() == Map::MAPTYPE::BOSS)
+			if (m->getType() == Map::MAPTYPE::TREASURE)
 			{
 				_currentMap = m;
 				_currentMap->setShow(true);
 			}
 		}
 	}
-
 }
 
 void MapManager::render(void)

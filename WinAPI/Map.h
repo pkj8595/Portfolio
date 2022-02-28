@@ -1,6 +1,8 @@
 #pragma once
 #include "GameNode.h"
 
+class Player;
+
 class Map : public GameNode
 {
 public:
@@ -22,6 +24,10 @@ protected:
 
 	//Ä³¸¯ÅÍ È°µ¿¹Ý°æ
 	RECT _mapRC;
+
+	//¹Ù±ù ¸Ê
+	RECT _outsideRcWidth;
+	RECT _outsideRcLength;
 
 	bool _show;
 	bool _clear;
@@ -52,6 +58,7 @@ public:
 	bool isConnected(int map) { return _connectedMap[map]; }
 
 	RECT getMapRC() { return _mapRC; }
+	void printOutsideRC();
 
 	Map() : _mapRC({ 0,0,WINSIZE_X,WINSIZE_Y }) {}
 };
