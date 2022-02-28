@@ -281,7 +281,7 @@ void Player::collideObject(STObservedData obData)
 					_bowStack++;
 					if (_bowStack == 5)
 					{
-						_efm->createEffect("WindEffect", &_rc);
+						_efm->createEffect("WindEffect", &_rc, 0.2f, -100, -100);
 					}
 				}
 			}
@@ -884,7 +884,7 @@ void Player::setLevelUp()
 		_status._experience -= _totalStatus._maxExperience;
 		_status._maxExperience *= 1.3f;
 		_status._offencePower += 1.0f;
-		_efm->createEffect("Levelup", {_rc.left, _rc.top - 50, _rc.right, _rc.bottom - 50 });
+		_efm->createEffect("Levelup", &_rc, 0.1f, -90, -150);
 	}
 }
 void Player::setDead()

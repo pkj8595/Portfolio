@@ -56,16 +56,23 @@ void EffectManager::createEffect(const char* fileName, RECT rc)
 	_vEffect.push_back(effect);
 }
 
-void EffectManager::createEffect(const char * fileName, RECT* rc)
+void EffectManager::createEffect(const char* fileName, RECT* rc)
 {
 	CEffect* effect = new CEffect;
 	effect->init(fileName, *rc);
 	_vEffect.push_back(effect);
 }
 
-void EffectManager::createEffect(const char * fileName, RECT rc, float count)
+void EffectManager::createEffect(const char* fileName, RECT rc, float count)
 {
 	CEffect* effect = new CEffect;
 	effect->init(fileName, rc, count);
+	_vEffect.push_back(effect);
+}
+
+void EffectManager::createEffect(const char* fileName, RECT* rc, float count, float fixX, float fixY)
+{
+	CEffect* effect = new CEffect;
+	effect->init(fileName, rc, count, fixX, fixY);
 	_vEffect.push_back(effect);
 }

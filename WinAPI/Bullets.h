@@ -230,3 +230,59 @@ public:
 };
 
 //==================================
+// ### ForestFairy Bullets ###
+//==================================
+
+class FairyBullet : public AMissile
+{
+public:
+	virtual HRESULT init(int bulletMax, float range);
+	virtual void move(void);
+	virtual void fire(float x, float y, float angle);
+	virtual void draw(void);
+
+	FairyBullet() {}
+	~FairyBullet() {}
+};
+
+//==================================
+// ### Spread Bullets ###
+//==================================
+
+class SpreadBullet : public AMissile
+{
+private:
+	int _bulletCount;
+	float _firstAngle;
+	const float _offsetAngle = 60.f;
+
+public:
+	virtual HRESULT init(int bulletMax, float range);
+	virtual void move(void);
+	virtual void fire(float x, float y, float angle);
+	virtual void draw(void);
+
+	SpreadBullet() {}
+	~SpreadBullet() {}
+};
+
+//==================================
+// ### Sector Bullets ###
+//==================================
+
+class SectorBullet : public AMissile
+{
+private:
+	int _bulletCount;
+	float _firstAngle;
+	const float _offsetAngle = 60.f;
+
+public:
+	virtual HRESULT init(int bulletMax, float range);
+	virtual void move(void);
+	virtual void fire(float x, float y, float angle);
+	virtual void draw(void);
+
+	SectorBullet() {}
+	~SectorBullet() {}
+};

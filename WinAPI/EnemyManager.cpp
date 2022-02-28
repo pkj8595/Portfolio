@@ -7,6 +7,7 @@
 #include "BigSlime.h"
 #include "Snake.h"
 #include "Rafflesia.h"
+#include "ForestFairy.h"
 
 bool EnemyManager::checkClear()
 {
@@ -79,7 +80,6 @@ void EnemyManager::update(void)
 		(*_viMinion)->update();
 		(*_viMinion)->setPlayerPos(_pPlayer->getPosition());
 		(*_viMinion)->setPlayer(*_pPlayer);
-
 	}
 	checkActive();
 
@@ -145,6 +145,16 @@ void EnemyManager::setMinion(void)
 		_vMinion.push_back(snake2);
 	} break;
 	}
+
+	//Enemy* rafflesia;
+	//rafflesia = new Rafflesia;
+	//rafflesia->init("Rafflesia", PointMake(CENTER_X - 150, CENTER_Y + 30));
+	//_vMinion.push_back(rafflesia);
+
+	//Enemy* forestFairy;
+	//forestFairy = new ForestFairy;
+	//forestFairy->init("ForestFairy", PointMake(CENTER_X, CENTER_Y - 100));
+	//_vMinion.push_back(forestFairy);
 }
 
 void EnemyManager::setBoss(void)
