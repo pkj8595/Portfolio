@@ -443,7 +443,7 @@ void Player::setAttack()
 			{
 				if (_attackCount < TIMEMANAGER->getWorldTime() - 0.3f)
 				{
-					float angle = MY_UTIL::getAngle(_x, _y, _ptMouse.x, _ptMouse.y);
+					float angle = MY_UTIL::getAngle(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight()/2, _ptMouse.x, _ptMouse.y);
 					_normal->fire(calculatePhysicalDamage(), _x + 50, _y + 50, angle);
 					_status._stamina -= 5.0f;
 					_attackCount = TIMEMANAGER->getWorldTime();
@@ -453,7 +453,7 @@ void Player::setAttack()
 			{
 				if (_attackCount < TIMEMANAGER->getWorldTime() - 0.3f)
 				{
-					float angle = MY_UTIL::getAngle(_x, _y, _ptMouse.x, _ptMouse.y);
+					float angle = MY_UTIL::getAngle(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2, _ptMouse.x, _ptMouse.y);
 					if (_tripleshot)
 					{
 						_bow->fire(calculatePhysicalDamage(), _x + 50, _y + 50, angle - 15 * PI / 180);
