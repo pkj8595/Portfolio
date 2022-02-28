@@ -16,7 +16,7 @@ void Map::update(void)
 
 void Map::render(void)
 {
-
+	
 }
 
 void Map::showMinimapIcon(int x, int y)

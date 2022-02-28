@@ -5,6 +5,7 @@ HRESULT EffectManager::init(void)
 {
 	IMAGEMANAGER->addFrameImage("effect1", "Resource/Images/Project/effect1.bmp", 0.0f, 0.0f, 429, 193, 3, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("effect2", "Resource/Images/Project/effect2.bmp", 0.0f, 0.0f, 531, 187, 3, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Levelup", "Resource/Images/Lucie/CompleteImg/effect/levelup.bmp", 0.0f, 0.0f, 960, 576, 5, 3, true, RGB(255, 0, 255));
 	return S_OK;
 }
 

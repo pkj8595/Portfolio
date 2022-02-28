@@ -77,6 +77,8 @@ HRESULT Player::init(void)
 	_inventory->setPTotalattribute(&_totalStatus);
 	_inventory->setPlayerAttribute(&_status);
 
+	_efm = new EffectManager;
+	_efm->init();
 
 	_equipItem = _inventory->getEquipWeapon();
 	
@@ -125,6 +127,7 @@ void Player::update(void)
 	_bow->update();
 	_statusUI->update();
 	_inventory->update(); 
+	_efm->update();
 
 	_rc = RectMakeCenter(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2 + 20, 8, 5);
 
@@ -140,6 +143,7 @@ void Player::update(void)
 void Player::render(void)
 {
 	_image->frameRender(getMemDC(), _x, _y);
+	_efm->render();
 	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 }
 void Player::showSwordStack()
@@ -720,16 +724,6 @@ void Player::healStamina()
 	}
 }
 
-void Player::checkLevelUp()
-{
-	if (_status._experience >= _totalStatus._maxExperience)
-	{
-		_status._experience = 0;
-		_totalStatus._maxExperience *= 1.1f;
-
-	}
-}
-
 void Player::setCollision()
 {
 	switch (_direction)
@@ -875,6 +869,7 @@ void Player::setLevelUp()
 		_status._experience -= _totalStatus._maxExperience;
 		_status._maxExperience *= 1.3f;
 		_status._offencePower += 1.0f;
+		_efm->createEffect("Levelup", _rc);
 	}
 }
 void Player::printHitBG()

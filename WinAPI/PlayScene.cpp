@@ -1,9 +1,6 @@
 #include "Stdafx.h"
 #include "PlayScene.h"
 
-
-
-
 HRESULT PlayScene::init(void)
 {
 	_fadeoutImage = IMAGEMANAGER->addImage("Fadeout", "Resource/Images/Lucie/CompleteImg/effect/changeScreen.bmp", 1104, 960, true, RGB(255, 0, 255));
@@ -23,14 +20,13 @@ HRESULT PlayScene::init(void)
 
 	_player = new Player;
 	_player->init();
-	
+
 	_showBossEffect = false;
 	_frameCount = 0;
 	_bossEffectTime = TIMEMANAGER->getWorldTime();
 	_bossClearAlpha = 255;
 
 	_enemyManager->setRoketMemoryAddress(_player);
-
 
 	return S_OK;
 }
