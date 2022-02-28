@@ -1,5 +1,8 @@
 #include "Stdafx.h"
 #include "ShopMap.h"
+#include "ItemManager.h"
+#include "ItemSpawner.h"
+
 
 HRESULT ShopMap::init(POINT location)
 {
@@ -18,6 +21,14 @@ HRESULT ShopMap::init(POINT location)
 
 	//==================================================
 	_itemManager = ItemManager::getSingleton();
+	_itemSpawner = ItemSpawner::getSingleton();
+
+	for (int i = 0; i < ITEM_SIZE; i++)
+	{
+		_itemIndex[i] =_itemSpawner->createItem(610+(i*42), 190, false);
+	}
+	
+	_shopCollider = RectMake(_x, _y, 32, 32);
 
 	_shopBar = IMAGEMANAGER->addImage("shopBar", "Resource/Images/Lucie/CompleteImg/Shop/ShopBar1.bmp", 352, 192, true, RGB(255, 0, 255));
 	_shopNPC = IMAGEMANAGER->addImage("shopNPC", "Resource/Images/Lucie/CompleteImg/Shop/shop_NPC.bmp", 35, 43, true, RGB(255, 0, 255));
@@ -53,6 +64,10 @@ void ShopMap::update(void)
 		_x++;
 		cout << "x: " << _x << ", y: " << _y << endl;
 	}
+	_itemSpawner->update();
+
+	_shopCollider = RectMakeCenter(_x, _y, 32, 32);
+
 }
 
 void ShopMap::render(void)
@@ -66,5 +81,8 @@ void ShopMap::render(void)
 	_shopNPC->render(getMemDC(), 680, 140);
 	_shopBar->render(getMemDC(), 530, 40);
 
+	_itemSpawner->render();
+
+	RectangleMakeToRECT(getMemDC(),_shopCollider);
 
 }

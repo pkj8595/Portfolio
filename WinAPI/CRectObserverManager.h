@@ -14,7 +14,6 @@ class DamageEffectManager;
 class CRectObserverManager : public SingletonBase<CRectObserverManager>
 {
 private:
-	//map를 쓰는게 좋지않을까?
 	typedef vector<IRectObserved*> vRcObserved;
 	typedef vector<IRectObserved*>::iterator viRcObserved;
 

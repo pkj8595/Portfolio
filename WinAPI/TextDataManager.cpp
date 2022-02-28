@@ -162,7 +162,6 @@ vector<string> TextDataManager::loadFstream(const char* fileName)
 
 	vector<string> vArray;
 	char* separator = ",";
-	char* separator2 = "\n";
 	char* tokenA;
 	char* tokenB;
 

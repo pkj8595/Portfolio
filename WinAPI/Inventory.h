@@ -25,6 +25,10 @@ class Inventory : public GameNode
 		POINT pt;			//offset
 		RECT rc;
 		int frameX;
+		STInvenPosBtn()
+		{
+			frameX = 0;
+		}
 	}InvenPosBtn;
 
 	typedef struct STItemInfoWindow
@@ -53,11 +57,11 @@ class Inventory : public GameNode
 	my::Image* _inventoryBackground;
 	RECT _rc;
 	int _x, _y;
-	InvenPos _combineBackground;
+	//InvenPos _combineBackground;
+	//InvenPos _inventoryHintCorner;
+	//InvenPos _inventoryClickHelp;
+	//InvenPosBtn _combineBtnIcon2;
 	InvenPos _inventoryGoldIcon;
-	InvenPos _inventoryHintCorner;
-	InvenPos _inventoryClickHelp;
-	InvenPosBtn _combineBtnIcon2;
 	InvenPosBtn _inventoryCloseBtn;
 	RECT _rcCloseBtn;
 	InvenPos _inventorySlot;
@@ -129,6 +133,7 @@ public:
 
 	string changeItemTypeToStr(EITEM_TYPE type);
 	string changeAttributeToStr(CPlayer_Attribute attri);
+
 	//==========================
 	// ### Player Equipment ###
 	//==========================
@@ -137,7 +142,6 @@ public:
 	void pushItem(int num);
 	inline void updatePushItemMassege(Item* item);
 	void renderPushItemMassege();
-
 
 	void inventorydrawText(std::string &str, const RECT &massgeRc);
 

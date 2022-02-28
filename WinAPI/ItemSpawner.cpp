@@ -53,7 +53,7 @@ void ItemObject::update(void)
 void ItemObject::render(void)
 {
 	//RectangleMakeToRECT(getMemDC(), _rc);
-	_itemManager->getBigItemIndexRender(getMemDC(), _itemIndex, _rc.left, _rc.top);
+	_itemManager->getItemIndexRender(getMemDC(), _itemIndex, _rc.left, _rc.top);
 }
 
 STObservedData ItemObject::getRectUpdate()
@@ -121,11 +121,12 @@ void ItemSpawner::render(void)
 	}
 }
 
-void ItemSpawner::createItem(int x, int y, bool isCollider)
+int ItemSpawner::createItem(int x, int y, bool isCollider)
 {
 	ItemObject* itemObj = new ItemObject;
 	itemObj->init(x, y, isCollider);
 	_vItemObj.push_back(itemObj);
+	return itemObj->getItemIndex();
 }
 
 void ItemSpawner::clearItem(void)
