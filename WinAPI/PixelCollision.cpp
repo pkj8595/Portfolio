@@ -14,6 +14,23 @@ void PlayScene::pixelCollision()
 	}
 
 }
+void PlayScene::pixelBulletCollision()
+{
+	for (int i = 0; i < _player->getNormalWeapon()->getWeapon().size(); i++)
+	{
+		COLORREF color = GetPixel(_mapManager->getCurrentMapPixel()->getMemDC(), 
+											_player->getNormalWeapon()->getPoint(i).x, _player->getNormalWeapon()->getPoint(i).y);
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+
+		if (!(r == 255 && g == 255 && b == 255))
+		{
+			_player->getNormalWeapon()->removeBullet(i);
+		}
+	}
+
+}
 void PlayScene::changeMapFadeOut()
 {
 	if (_isChanging) return;
@@ -63,7 +80,7 @@ void PlayScene::changeMap()
 		spawnMonster();
 		if (_mapManager->getCurrentMap()->getMapType() == Map::MAPTYPE::SHOP)
 			_player->setPosition(600, 306);
-		else _player->setPosition(_mapManager->getCurrentMapPixel()->getWidth() - 350, _player->getPosition().y);
+		else _player->setPosition(450, 430);
 		_isChanging = false;
 	}
 	if (_changeScreenType == 1 && _isChanging && _fadeoutAlpha > 250)
@@ -72,7 +89,7 @@ void PlayScene::changeMap()
 		spawnMonster();
 		if (_mapManager->getCurrentMap()->getMapType() == Map::MAPTYPE::SHOP)
 			_player->setPosition(600, 306);
-		else _player->setPosition(350, _player->getPosition().y);
+		else _player->setPosition(450, 430);
 		_isChanging = false;
 	}
 	if (_changeScreenType == 2 && _isChanging && _fadeoutAlpha > 250)
@@ -81,7 +98,7 @@ void PlayScene::changeMap()
 		spawnMonster();
 		if (_mapManager->getCurrentMap()->getMapType() == Map::MAPTYPE::SHOP)
 			_player->setPosition(600, 306);
-		else _player->setPosition(_player->getPosition().x, _mapManager->getCurrentMapPixel()->getHeight() - 200);
+		else _player->setPosition(450, 430);
 		_isChanging = false;
 	}
 	if (_changeScreenType == 3 && _isChanging && _fadeoutAlpha > 250)
@@ -90,7 +107,7 @@ void PlayScene::changeMap()
 		spawnMonster();
 		if (_mapManager->getCurrentMap()->getMapType() == Map::MAPTYPE::SHOP)
 			_player->setPosition(600, 306);
-		else _player->setPosition(_player->getPosition().x, 200);
+		else _player->setPosition(450, 430);
 		_isChanging = false;
 	}
 

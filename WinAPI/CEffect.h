@@ -11,6 +11,8 @@ public:
 	int _currentFrameY;
 
 	float _x, _y;
+	float* _px;
+	float* _py;
 	float _rndTimeCount;
 	float _worldTimeCount;
 	float _isActive;

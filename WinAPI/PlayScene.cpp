@@ -53,6 +53,7 @@ void PlayScene::update(void)
 	}
 
 	pixelCollision();
+	pixelBulletCollision();
 	setFadeOutAlpha();
 	changeMapFadeOut();
 	changeMap();
@@ -79,9 +80,9 @@ void PlayScene::update(void)
 void PlayScene::render(void)
 {
 	_mapManager->render();
+	_enemyManager->render();
 	_player->render();
 	_player->printStack();
-	_enemyManager->render();
 	RECTOBSERVERMANAGER->render();
 
 	//UI

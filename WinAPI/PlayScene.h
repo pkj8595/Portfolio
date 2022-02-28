@@ -37,6 +37,7 @@ public:
 	void render(void);
 
 	void pixelCollision();
+	void pixelBulletCollision();
 
 	void changeMapFadeOut();
 	void setFadeOutAlpha();

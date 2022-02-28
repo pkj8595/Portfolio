@@ -27,6 +27,8 @@ HRESULT CEffect::init(const char* imageName, RECT rc)
 	_image = IMAGEMANAGER->findImage(imageName);
 	_x = rc.left + (rc.right - rc.left) / 2;
 	_y = rc.top;
+	_px = nullptr;
+	_py = nullptr;
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 	_isActive = true;
 

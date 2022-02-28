@@ -265,9 +265,11 @@ void Player::collideObject(STObservedData obData)
 			{
 				if (_bowStack < 5 && !_tripleshot && !_alreadyAddBowStack)
 				{
-
 					_bowStack++;
-
+					if (_bowStack == 5)
+					{
+						_efm->createEffect("WindEffect", &_rc);
+					}
 				}
 			}
 			if (!_alreadyAddBowStack) _dodgeAlpha = 80;
