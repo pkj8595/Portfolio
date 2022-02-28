@@ -57,8 +57,16 @@ void CEffect::animation(void)
 	if (_rndTimeCount + _worldTimeCount <= TIMEMANAGER->getWorldTime())
 	{
 		_worldTimeCount = TIMEMANAGER->getWorldTime();
-		_currentFrameX++;
-		if (_image->getMaxFrameX() < _currentFrameX)
+		if (_currentFrameX == _image->getMaxFrameX())
+		{
+			_currentFrameX = 0;
+			_currentFrameY++;
+		}
+		else
+		{
+			_currentFrameX++;
+		}
+		if (_image->getMaxFrameY() <_currentFrameY)
 		{
 			_isActive = false;
 		}

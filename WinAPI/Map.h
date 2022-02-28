@@ -1,6 +1,8 @@
 #pragma once
 #include "GameNode.h"
 
+class Player;
+
 class Map : public GameNode
 {
 public:

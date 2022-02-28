@@ -37,11 +37,13 @@ HRESULT EnemyManager::init(void)
 
 	IMAGEMANAGER->addFrameImage("Slime", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Slime2.bmp", 288, 2016, 3, 21, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Snake", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Snake.bmp", 144, 624, 3, 13, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("Rafflesia", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Rafflesia.bmp", 240, 549, 3, 9, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("ForestFairy", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Forestfairy.bmp", 168, 930, 3, 10, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addFrameImage("KingSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 1080, 7560, 3, 21, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("BigSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 576, 4032, 3, 21, true, RGB(255, 0, 255));
 	
-	IMAGEMANAGER->addFrameImage("Rafflesia", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Rafflesia.bmp", 240, 549, 3, 9, true, RGB(255, 0, 255));
+	
 	
 
 
@@ -102,11 +104,17 @@ void EnemyManager::setMinion(void)
 		slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
 		_vMinion.push_back(slime);
 
+		Enemy* rafflesia;
+		rafflesia = new Rafflesia;
+		rafflesia->init("Rafflesia", PointMake(CENTER_X - 150, CENTER_Y + 30));
+		_vMinion.push_back(rafflesia);
+
 		Enemy* slime2;
 		slime2 = new Slime;
 		slime2->init("Slime", PointMake(CENTER_X - 50, CENTER_Y - 50));
 		_vMinion.push_back(slime2);
 	}break;
+
 	case 1: {
 		Enemy* slime;
 		slime = new Slime;
@@ -118,6 +126,7 @@ void EnemyManager::setMinion(void)
 		snake->init("Snake", PointMake(CENTER_X - 100, CENTER_Y));
 		_vMinion.push_back(snake);
 	} break;
+
 	case 2: {
 		Enemy* snake;
 		snake = new Snake;
