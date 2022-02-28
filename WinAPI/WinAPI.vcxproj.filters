@@ -276,6 +276,9 @@
       <Filter>PKJ</Filter>
     </ClCompile>
     <ClCompile Include="EventObject.cpp" />
+    <ClCompile Include="BowParticle.cpp">
+      <Filter>MainGame\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -461,6 +464,9 @@
       <Filter>PKJ</Filter>
     </ClInclude>
     <ClInclude Include="EventObject.h" />
+    <ClInclude Include="BowParticle.h">
+      <Filter>MainGame\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">

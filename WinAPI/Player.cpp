@@ -279,7 +279,7 @@ void Player::collideObject(STObservedData obData)
 					_bowStack++;
 					if (_bowStack == 5)
 					{
-						_efm->createEffect("WindEffect", &_rc, 0.2f, -100, -100);
+						_efm->createEffect("WindEffect", &_rc, 0.1f, -100, -100);
 					}
 				}
 			}

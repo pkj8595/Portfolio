@@ -232,6 +232,12 @@ void SwordWeapon::updateFrame()
 
 HRESULT BowWeapon::init(int bulletMax, float range)
 {
+	_bowparticle = new BowParticle;
+	_bowparticle->init();
+
+	_particleDelay = 0.03f;
+	_createdTime = TIMEMANAGER->getWorldTime();
+
 	_bulletMax = bulletMax;
 	_range = range;
 	return S_OK;
@@ -249,11 +255,14 @@ void BowWeapon::release(void)
 
 void BowWeapon::update(void)
 {
+	_bowparticle->update();
 	move();
+	createParticle();
 }
 
 void BowWeapon::render(void)
 {
+	_bowparticle->render();
 	draw();
 }
 
@@ -309,6 +318,21 @@ void BowWeapon::move()
 			++_viWeapon;
 		}
 	}
+}
+
+void BowWeapon::createParticle()
+{
+	if (_vWeapon.size() == 0) return;
+	if (_createdTime + _particleDelay < TIMEMANAGER->getWorldTime())
+	{
+		_viWeapon = _vWeapon.begin();
+		for (; _viWeapon != _vWeapon.end(); ++_viWeapon)
+		{
+			_bowparticle->createParticle((*_viWeapon)->x, (*_viWeapon)->y);
+		}
+		_createdTime = TIMEMANAGER->getWorldTime();
+	}
+	else return;
 }
 
 void BowWeapon::removeBullet(int index)
