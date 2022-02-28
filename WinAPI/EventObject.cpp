@@ -7,6 +7,7 @@ void EventObject::init(EventObservedType typeKey, RECT rc, bool* isActive, int n
 	_rc = rc;
 	_isActive = isActive;
 	_num = num;
+	_isRemoveObserver = true;
 	RECTOBSERVERMANAGER->registerEventObserved(this);
 }
 
@@ -27,4 +28,6 @@ STEventObservedData EventObject::getEventUpdate()
 
 void EventObject::collideEventObject(STEventObservedData obEventData)
 {
+	RECTOBSERVERMANAGER->removeEventObserved(this);
+	_isRemoveObserver = false;
 }

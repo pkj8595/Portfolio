@@ -10,15 +10,12 @@ class ItemObject;
 class ShopMap : public Map
 {
 private:
-	my::Image* _shopBar;
-	my::Image* _shopNPC;
-	int _x, _y;
-
-
 	ItemManager* _itemManager;
 	ItemSpawner* _itemSpawner;
+	my::Image* _shopBar;
+	my::Image* _shopNPC;
 
-
+	
 	typedef struct tagEventObj
 	{
 		ItemObject* itemObj;
@@ -29,8 +26,9 @@ private:
 			eventObj = nullptr;
 		}
 	}ShopEventObj;
+	vector<ShopEventObj> _vObj;
+	vector<ShopEventObj>::iterator _viObj;
 
-	ShopEventObj _eventObj[ITEM_SIZE];
 	RECT _rcEvent[ITEM_SIZE];
 
 	

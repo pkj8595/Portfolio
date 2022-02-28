@@ -57,6 +57,7 @@ HRESULT Inventory::init(void)
 	_isExcuteEnchant = false;
 	_isEnchantSuccess = false;
 	_enchantStr = "";
+	_gold = 150;
 
 	return S_OK;
 }
@@ -90,6 +91,10 @@ void Inventory::render(void)
 		showInventoryItem();
 		renderInvenAttributeText();
 
+		RECT goldRc = RectMakeCenter(_rc.left + 198, _rc.top + 276, 32, 32);
+		string goldStr = to_string(_gold);
+		inventorydrawText(goldStr, goldRc, 20, RGB(0, 0, 0),false);
+
 		if (PtInRect(&_rcCloseBtn, _ptMouse))
 		{
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
@@ -108,7 +113,7 @@ void Inventory::render(void)
 		if (TIMEMANAGER->getWorldTime() < _enchantSuccessWorldTime + 1.0f)
 		{
 			RECT messageRc = RectMakeCenter(CENTER_X, CENTER_Y - 300, 32, 32);
-			inventorydrawText(_enchantStr, messageRc);
+			inventorydrawText(_enchantStr, messageRc, 50, RGB(255, 255, 255),true);
 		}
 		else
 		{
@@ -116,6 +121,9 @@ void Inventory::render(void)
 			_isExcuteEnchant = false;
 		}
 	}
+	//우측 상단 gold text
+	RECT goldRc = RectMake(WINSIZE_X-170, 0, 64, 32);
+	inventorydrawText(to_string(_gold), goldRc, 40, RGB(255,255, 255), false);
 
 	renderItemInfoWindow();
 	showAbilityItem();
@@ -166,6 +174,23 @@ void Inventory::computeItemTotalAttribute()
 	if (_equipHat) { temp = temp + _equipHat->_attribute; }
 
 	_itemTotalAttribute = temp;
+}
+
+bool Inventory::buyItem(int num)
+{
+	Item* item = _itemManager->getItemIndex(num);
+	if (item->_price < _gold)
+	{
+		_gold -= item->_price;
+		pushItem(item);
+		return true;
+	}
+	else
+	{
+		cout << "돈 부족" << endl;
+		return false;
+	}
+
 }
 
 void Inventory::pushItem(Item* item)
@@ -425,7 +450,7 @@ void Inventory::renderPushItemMassege()
 	}
 	RECT massageRc = RectMakeCenter(CENTER_X,CENTER_Y-300, str.size()*17,100);
 
-	inventorydrawText(str, massageRc);
+	inventorydrawText(str, massageRc,50,RGB(255,255,255),true);
 
 	IMAGEMANAGER->findImage("bigItemImg")->render(getMemDC(), massageRc.left - 64, massageRc.top - 10, x, y, 64, 64);
 	if (TIMEMANAGER->getWorldTime() > _worldTime + PUSH_ITEM_MESSEGE)
@@ -434,13 +459,20 @@ void Inventory::renderPushItemMassege()
 	}
 }
 
-void Inventory::inventorydrawText(std::string &str, const RECT &massgeRc)
+void Inventory::inventorydrawText(std::string &str, const RECT &massgeRc, int fontsize, COLORREF color,bool isCenter)
 {
 	char* cstr = new char[str.size() + 1];
 	copy(str.begin(), str.end(), cstr);
 	cstr[str.size()] = '\0';
 
-	FONTMANAGER->drawTextRectCenter(getMemDC(), massgeRc, "야놀자 야체 Regular", 50, 200, cstr, strlen(cstr), RGB(255, 255, 255));
+	if (isCenter)
+	{
+		FONTMANAGER->drawTextRectCenter(getMemDC(), massgeRc, "야놀자 야체 Regular", fontsize, 200, cstr, strlen(cstr), color);
+	}
+	else
+	{
+		FONTMANAGER->drawText(getMemDC(), massgeRc, "야놀자 야체 Regular", fontsize, 200, cstr, strlen(cstr), color);
+	}
 
 	delete[] cstr;
 }

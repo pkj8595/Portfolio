@@ -11,6 +11,7 @@ IRectObserved >> 플레이어 , 플미, 적미사일, 적
 class EffectManager;
 class DamageEffectManager;
 class Player;
+class ItemManager;
 
 class CRectObserverManager : public SingletonBase<CRectObserverManager>
 {
