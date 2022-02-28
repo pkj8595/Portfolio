@@ -48,7 +48,9 @@ void TextSystemManager::update(void)
 
 	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 	{
-
+		if (_textBufferCnt == 4) 
+		{
+		}
 	}
 
 	if (iscollBox)

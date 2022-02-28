@@ -76,6 +76,7 @@ void Lobby::Collision(void)
 		_collBox = false;
 		_tsm->iscollText = false;
 		_player->_isTextShow = false;
+		_tsm->iscollBox = false;
 	}
 }
 
