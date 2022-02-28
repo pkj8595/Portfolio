@@ -21,11 +21,13 @@ HRESULT TextSystemManager::init(void)
 	_text[2] = { L"", L"거울같이 생겼는데, 불투명해." };
 	_text[3] = { L"", L"...지금은 보고 싶지 않아." };
 	_text[4] = { L"", L"잠겨있어." };
-	
 
 	_chatRc = RectMake(WINSIZE_X*0.08, WINSIZE_Y*0.75, _chatImage->getWidth(), _chatImage->getHeight());
 	_boxChatRc = RectMake(WINSIZE_X*0.08, WINSIZE_Y*0.72, _chatImage->getWidth(), _chatImage->getHeight());
 	_nameRc = RectMake(WINSIZE_X*0.06, WINSIZE_Y*0.68, _nameImage->getWidth(), _nameImage->getHeight());
+
+	_shopsel_OneRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.82, _selImage->getWidth(), _selImage->getHeight());
+	_shopsel_TwoRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.88, _selImage->getWidth(), _selImage->getHeight());
 	_select_oneRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.79, _selImage->getWidth(), _selImage->getHeight());
 	_select_TwoRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.84, _selImage->getWidth(), _selImage->getHeight());
 	_select_ThrRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.89, _selImage->getWidth(), _selImage->getHeight());
@@ -42,39 +44,86 @@ void TextSystemManager::release(void)
 void TextSystemManager::update(void)
 {
 	
-	if (iscollText) { _textBufferCnt += 1; _textAlpha += 4.0f; }
-	if (!iscollText) { _textBufferCnt = 0; }
-	if (_textAlpha >= 230.0f) { _textAlpha = 230.0f; }
-
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+	if (iscollText) 
+	{ 
+		_textBufferCnt += 1; 
+		_textAlpha += 4.0f; 
+	}
+	if (!iscollText) 
 	{
-		if (_textBufferCnt == 4) 
+		_textBufferCnt = 0; 
+		_textindex = 0;
+	}
+	if (_textAlpha >= 230.0f) { _textAlpha = 230.0f; }
+	
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && iscollText)
+	{
+		if (_textBufferCnt < wcslen(Shop_talk[_textindex]))
 		{
+			_textBufferCnt = wcslen(Shop_talk[_textindex]);
+		}
+		else if (_textindex == 1)
+		{
+
+		}
+		else 
+		{ 
+			_textBufferCnt = 0;
+			_textindex++;
+			isShopcol = true;
 		}
 	}
+
 
 	if (iscollBox)
 	{
 		if (PtInRect(&_select_oneRc, _ptMouse))
 		{
 			_selectOneAlpha = 230.0f;
-			isWeaponSword = true;
 		}
-		else _selectOneAlpha = 0.0f;
+		else 
+		{ 
+			_selectOneAlpha = 0.0f; 
+		}
 
 		if (PtInRect(&_select_TwoRc, _ptMouse))
 		{
 			_selectTwoAlpha = 230.0f;
-			isWeaponBow = true;
 		}
-		else _selectTwoAlpha = 0.0f;
+		else
+		{
+			_selectTwoAlpha = 0.0f;
+		}
 		
 		if (PtInRect(&_select_ThrRc, _ptMouse))
 		{
 			_selectThreeAlpha = 230.0f;
-			isWeaponEmpty = true;
 		}
-		else _selectThreeAlpha = 0.0f;
+		else
+		{
+			_selectThreeAlpha = 0.0f;
+		}
+	}
+
+	if (isShopcol)
+	{
+		if (PtInRect(&_shopsel_OneRc, _ptMouse))
+		{
+			_selectOneAlpha = 230.0f;
+		}
+		else
+		{
+			_selectOneAlpha = 0.0f;
+		}
+
+		if (PtInRect(&_shopsel_TwoRc, _ptMouse))
+		{
+			_selectTwoAlpha = 230.0f;
+		}
+		else
+		{
+			_selectTwoAlpha = 0.0f;
+		}
 	}
 }
 
@@ -102,13 +151,15 @@ void TextSystemManager::ShopLog(wstring itemName, wstring iteminfo, wstring pric
 	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "둥근모꼴", 27, 15,
 		L"마리", wcslen(L"마리"), RGB(0, 0, 255));
 
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "둥근모꼴", 27, 15,
-		L"응.", wcslen(L"응."), RGB(0, 0, 255));
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "둥근모꼴", 27, 15,
-		L"아니.", wcslen(L"아니."), RGB(0, 0, 255));
-	IMAGEMANAGER->render("SelOne", getMemDC(), _select_oneRc.left, _select_oneRc.top);
-	IMAGEMANAGER->render("SelOne", getMemDC(), _select_TwoRc.left, _select_TwoRc.top);
-
+	if (isShopcol)
+	{
+		IMAGEMANAGER->alphaRender("SelOne", getMemDC(), _shopsel_OneRc.left, _shopsel_OneRc.top, _selectOneAlpha);
+		IMAGEMANAGER->alphaRender("SelOne", getMemDC(), _shopsel_TwoRc.left, _shopsel_TwoRc.top, _selectTwoAlpha);
+		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.11, WINSIZE_Y*0.83, "둥근모꼴", 27, 15,
+			L"응.", wcslen(L"응."), RGB(255, 255, 255));
+		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.11, WINSIZE_Y*0.89, "둥근모꼴", 27, 15,
+			L"아니.", wcslen(L"아니."), RGB(255, 255, 255));
+	}
 	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.14, WINSIZE_Y*0.78, "둥근모꼴", 27, 15,
 		Shop_talk[_textindex], ((_textBufferCnt / 4) > wcslen(Shop_talk[_textindex]) ? wcslen(Shop_talk[_textindex]) : (_textBufferCnt / 4)), RGB(255, 255, 255));
 

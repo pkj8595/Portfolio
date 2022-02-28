@@ -12,7 +12,7 @@ struct TagText
 class TextSystemManager :public GameNode
 {
 private:
-
+	
 	TagText _text[TEXT_MAX];
 	const int SCRIPT_MAX_LENGTH = 55;
 	wstring _itemName;
@@ -26,11 +26,11 @@ private:
 	float _selectTwoAlpha;
 	float _selectThreeAlpha;
 
-	
-
 	RECT _chatRc;			// ÆË¾÷ Ã¢ rc
 	RECT _boxChatRc;
 	RECT _nameRc;
+	RECT _shopsel_OneRc;
+	RECT _shopsel_TwoRc;
 	RECT _select_oneRc;
 	RECT _select_TwoRc;
 	RECT _select_ThrRc;
@@ -51,6 +51,7 @@ public:
 
 	bool iscollText;
 	bool iscollBox;
+	bool isShopcol;
 	bool isWeaponSword;
 	bool isWeaponBow;
 	bool isWeaponEmpty;

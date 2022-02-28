@@ -31,7 +31,6 @@ private:
 	float _frameSpeed;
 	float _index;
 
-	bool _collBox;
 	bool _bookOpen;
 
 	float _fadeOutWhiteAlpha;
@@ -47,6 +46,7 @@ public:
 	virtual void Collision(void);
 	void LobbyCollision(void);
 
+	bool _collBox;
 
 	Lobby() {}
 	~Lobby() {}

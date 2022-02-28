@@ -77,6 +77,7 @@ void Lobby::Collision(void)
 		_tsm->iscollText = false;
 		_player->_isTextShow = false;
 		_tsm->iscollBox = false;
+		_tsm->isShopcol = false;
 	}
 }
 
