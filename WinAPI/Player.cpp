@@ -50,7 +50,6 @@ HRESULT Player::init(void)
 	_status._offencePower = 10.0f;
 	_status._magicPower = 10.0f;
 	_status._speed = 2.0f;
-	//_status._speed = 8.0f;
 	_status._damageBalance = 0.0f;
 	_status._experience = 0.0f;
 	_status._maxExperience = 100.0f;
