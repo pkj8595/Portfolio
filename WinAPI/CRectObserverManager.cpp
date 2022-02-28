@@ -82,11 +82,12 @@ void CRectObserverManager::getEventFormObserved()
 		STEventObservedData obData;
 		obData = (*_viEvent)->getEventUpdate();
 		RECT collisionRect;
-		if (*obData.isActive) continue;
+		if (!*obData.isActive) continue;
 		if (IntersectRect(&collisionRect, &_player->getRect(), obData.rc))
 		{
 			if (*obData.typeKey == EventObservedType::SHOP)
 			{
+				cout << "CRectObserverManager : shop" << endl;
 				(*_viEvent)->collideEventObject(obData);
 			}
 			else if (*obData.typeKey == EventObservedType::CHEST)

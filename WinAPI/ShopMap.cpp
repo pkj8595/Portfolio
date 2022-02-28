@@ -28,14 +28,8 @@ HRESULT ShopMap::init(POINT location)
 	_x = CENTER_X;
 	_y = CENTER_Y;
 
-	
-	
-	_shopCollider = RectMake(_x, _y, 32, 32);
-
 	_shopBar = IMAGEMANAGER->addImage("shopBar", "Resource/Images/Lucie/CompleteImg/Shop/ShopBar1.bmp", 352, 192, true, RGB(255, 0, 255));
 	_shopNPC = IMAGEMANAGER->addImage("shopNPC", "Resource/Images/Lucie/CompleteImg/Shop/shop_NPC.bmp", 35, 43, true, RGB(255, 0, 255));
-
-	
 	
 	for (int i = 0; i < ITEM_SIZE; i++)
 	{
@@ -44,8 +38,8 @@ HRESULT ShopMap::init(POINT location)
 
 		_eventObj[i].itemObj =_itemSpawner->createItemMapInit(x, y, false,this);
 		_eventObj[i].eventObj = new EventObject;
-		_eventObj[i].eventObj->init(EventObservedType::SHOP, RectMakeCenter(x, y+100, 32, 32),false, _eventObj[i].itemObj->getItemIndex());
-		//todo isActiveMap
+		_eventObj[i].eventObj->init(EventObservedType::SHOP, RectMakeCenter(x, y+60, 32, 32),&_isActive, _eventObj[i].itemObj->getItemIndex());
+		_rcEvent[i] = RectMakeCenter(x, y + 60, 32, 32);
 	}
 
 	return S_OK;
@@ -58,28 +52,6 @@ void ShopMap::release(void)
 
 void ShopMap::update(void)
 {
-	if (KEYMANAGER->isStayKeyDown(VK_UP))
-	{
-		_y--;
-		cout << "x: " << _x << ", y: " << _y << endl;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-	{
-		_y++;
-		cout << "x: " << _x << ", y: " << _y << endl;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
-	{
-		_x--;
-		cout << "x: " << _x << ", y: " << _y << endl;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-	{
-		_x++;
-		cout << "x: " << _x << ", y: " << _y << endl;
-	}
-
-	_shopCollider = RectMakeCenter(_x, _y, 32, 32);
 
 }
 
@@ -95,6 +67,9 @@ void ShopMap::render(void)
 	_shopBar->render(getMemDC(), 530, 40);
 
 
-	RectangleMakeToRECT(getMemDC(),_shopCollider);
+	for (int i = 0; i < ITEM_SIZE; i++)
+	{
+		RectangleMakeToRECT(getMemDC(), _rcEvent[i]);
+	}
 
 }

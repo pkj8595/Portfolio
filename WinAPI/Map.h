@@ -34,6 +34,7 @@ protected:
 	bool _show;
 	bool _clear;
 	bool _connectedMap[4]; //Left, Up, Right, Down
+	bool _isActive;
 
 public:
 	virtual HRESULT init(POINT location);
@@ -46,7 +47,7 @@ public:
 	POINT getLocation() { return _location; }
 
 	void setCurrentMap(Map** currentMap) { _currentMap = currentMap; }
-	bool isActiveMap();
+	bool checkActiveMap();
 
 	bool isShow() { return _show; }
 	void setShow(bool show) { _show = show; }
@@ -65,6 +66,6 @@ public:
 	RECT getMapRC() { return _mapRC; }
 	void printOutsideRC();
 
-	Map() : _mapRC({ 0,0,WINSIZE_X,WINSIZE_Y }) {}
+	Map() : _mapRC({ 0,0,WINSIZE_X,WINSIZE_Y }), _isActive(false){}
 };
 

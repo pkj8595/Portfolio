@@ -12,7 +12,6 @@ class ShopMap : public Map
 private:
 	my::Image* _shopBar;
 	my::Image* _shopNPC;
-	RECT _shopCollider;
 	int _x, _y;
 
 
@@ -32,6 +31,7 @@ private:
 	}ShopEventObj;
 
 	ShopEventObj _eventObj[ITEM_SIZE];
+	RECT _rcEvent[ITEM_SIZE];
 
 	
 

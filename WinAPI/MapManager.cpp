@@ -42,6 +42,11 @@ void MapManager::update(void)
 	if (_minimapAlpha >= 180) _isFadeInMinimap = false;
 	else if (_minimapAlpha <= 0) _isFadeInMinimap = true;
 
+	for (Map* m : _vMap)
+	{
+		m->checkActiveMap();
+	}
+
 	if (KEYMANAGER->isOnceKeyDown('E'))
 	{
 		_currentMap->setClear(true);
@@ -326,7 +331,6 @@ void MapManager::setMapData()
 			map->setCurrentMap(&_currentMap);
 			_vMap.push_back(map);
 			_currentMap = map;
-
 		} break;
 		case Map::MAPTYPE::DEFAULT:
 		{

@@ -114,6 +114,7 @@ public:
 
 	void setLevelUp();
 	void setDead();
+	Inventory* getInventory() { return _inventory; }
 public:
 	//접근자, 지정자
 
