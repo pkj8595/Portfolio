@@ -1,10 +1,12 @@
 #pragma once
 #include "Map.h"
+#include "EventObject.h"
 
 #define ITEM_SIZE	5
 
 class ItemManager;
 class ItemSpawner;
+class ItemObject;
 class ShopMap : public Map
 {
 private:
@@ -13,10 +15,24 @@ private:
 	RECT _shopCollider;
 	int _x, _y;
 
-	int _itemIndex[ITEM_SIZE];
 
 	ItemManager* _itemManager;
 	ItemSpawner* _itemSpawner;
+
+
+	typedef struct tagEventObj
+	{
+		ItemObject* itemObj;
+		EventObject* eventObj;
+		tagEventObj()
+		{
+			itemObj = nullptr;
+		}
+	}ShopEventObj;
+
+	ShopEventObj _eventObj[ITEM_SIZE];
+
+	
 
 public:
 	HRESULT init(POINT location);

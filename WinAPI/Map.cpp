@@ -12,16 +12,24 @@ void Map::release(void)
 
 void Map::update(void)
 {
+
 }
 
 void Map::render(void)
 {
-	
+
 }
 
 void Map::showMinimapIcon(int x, int y)
 {
 	_minimapImage->render(getMemDC(), x + _minimapImage->getWidth() * _location.x, y + _minimapImage->getHeight() * _location.y);
+}
+
+bool Map::isActiveMap()
+{
+	if (*_currentMap != this) return false;
+
+	return true;
 }
 
 void Map::printOutsideRC()

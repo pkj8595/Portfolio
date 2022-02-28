@@ -1,6 +1,5 @@
 #pragma once
 #include "GameNode.h"
-#include "ItemManager.h"
 #include "IRectObserved.h"
 
 #define ITEM_OBJ_SIZE		32
@@ -8,6 +7,7 @@
 #define CHANGE_DIRECTION	1.0F
 
 class Map;
+class ItemManager;
 class ItemObject :public GameNode, public IRectObserved
 {
 private:
@@ -56,7 +56,8 @@ public:
 	void update(void);
 	void render(void);
 	int createItem(int x, int y, bool isCollider);
-	int createItemMapInit(int x, int y, bool isCollider, Map* map);
+	ItemObject* createItemMapInit(int x, int y, bool isCollider, Map* map);
+	void removeItem(ItemObject* itemObject);
 
 	void clearItem(void);
 	void setCurrentMap(Map** cmap);

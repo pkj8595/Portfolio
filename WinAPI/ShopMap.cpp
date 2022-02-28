@@ -25,23 +25,34 @@ HRESULT ShopMap::init(POINT location)
 	_itemManager = ItemManager::getSingleton();
 	_itemSpawner = ItemSpawner::getSingleton();
 
-	for (int i = 0; i < ITEM_SIZE; i++)
-	{
-		_itemIndex[i] =_itemSpawner->createItemMapInit(610+(i*42), 190, false,this);
-	}
+	_x = CENTER_X;
+	_y = CENTER_Y;
+
+	
 	
 	_shopCollider = RectMake(_x, _y, 32, 32);
 
 	_shopBar = IMAGEMANAGER->addImage("shopBar", "Resource/Images/Lucie/CompleteImg/Shop/ShopBar1.bmp", 352, 192, true, RGB(255, 0, 255));
 	_shopNPC = IMAGEMANAGER->addImage("shopNPC", "Resource/Images/Lucie/CompleteImg/Shop/shop_NPC.bmp", 35, 43, true, RGB(255, 0, 255));
-	_x = CENTER_X;
-	_y = CENTER_Y;
+
+	
+	
+	for (int i = 0; i < ITEM_SIZE; i++)
+	{
+		int x = 610 + (i * 42);
+		int y = 190;
+
+		_eventObj[i].itemObj =_itemSpawner->createItemMapInit(x, y, false,this);
+		_eventObj[i].eventObj = new EventObject;
+		_eventObj[i].eventObj->init(EventObservedType::SHOP, RectMakeCenter(x, y+100, 32, 32),false, _eventObj[i].itemObj->getItemIndex());
+	}
 
 	return S_OK;
 }
 
 void ShopMap::release(void)
 {
+
 }
 
 void ShopMap::update(void)

@@ -1,6 +1,7 @@
 #include "Stdafx.h"
 #include "ItemSpawner.h"
 #include "Map.h"
+#include "ItemManager.h"
 
 //============================
 //   ### ItemObject ###
@@ -160,13 +161,17 @@ void ItemSpawner::clearItem(void)
 	_vItemObj.clear();
 }
 
-int ItemSpawner::createItemMapInit(int x, int y, bool isCollider, Map* map)
+ItemObject* ItemSpawner::createItemMapInit(int x, int y, bool isCollider, Map* map)
 {
 	ItemObject* itemObj = new ItemObject;
 	itemObj->init(x, y, isCollider);
 	itemObj->setMap(map);
 	_vItemObj.push_back(itemObj);
-	return itemObj->getItemIndex();
+	return itemObj;
+}
+
+void ItemSpawner::removeItem(ItemObject * itemObject)
+{
 }
 
 void ItemSpawner::setCurrentMap(Map** cmap)

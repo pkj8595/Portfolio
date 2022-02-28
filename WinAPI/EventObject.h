@@ -10,7 +10,7 @@ public:
 	bool _isActive;
 	int _num;
 
-	void init(EventObservedType typeKey, RECT rc, bool isActive);
+	void init(EventObservedType typeKey, RECT rc, bool isActive,int num);
 	void release(void);
 	virtual STEventObservedData getEventUpdate();
 	virtual void collideEventObject(STEventObservedData obEventData);

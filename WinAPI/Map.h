@@ -19,6 +19,8 @@ protected:
 	my::Image* _rightWall;
 	my::Image* _pixelCollisionImage;
 
+	Map** _currentMap;
+
 	POINT _location;
 	MAPTYPE _type;
 
@@ -43,6 +45,8 @@ public:
 	MAPTYPE getType() { return _type; }
 	POINT getLocation() { return _location; }
 
+	void setCurrentMap(Map** currentMap) { _currentMap = currentMap; }
+	bool isActiveMap();
 	bool isShow() { return _show; }
 	void setShow(bool show) { _show = show; }
 	bool isClear() { return _clear; }

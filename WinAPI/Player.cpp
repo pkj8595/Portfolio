@@ -5,6 +5,8 @@
 HRESULT Player::init(void)
 {
 	RECTOBSERVERMANAGER->registerObserved(this);
+	RECTOBSERVERMANAGER->registerPlayer(this);
+
 	_type = ObservedType::ROCKET;
 	_image = IMAGEMANAGER->addFrameImage("Player", "Resource/Images/Lucie/CompleteImg/Player/Player.bmp", 600, 4100, 6, 41, true, RGB(255, 0, 255));
 	_swordStackImage = IMAGEMANAGER->addImage("SwordStack", "Resource/Images/Lucie/CompleteImg/system/ruby.bmp", 13, 14, true, RGB(255, 0, 255));

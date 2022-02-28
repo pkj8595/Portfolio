@@ -45,8 +45,8 @@ public:
 	virtual void registerPlayer(Player* player);
 	virtual void registerEventObserved(IEventObservered* observed);
 	virtual void removeEventObserved(IEventObservered* observed);
-	virtual void getEventFormObserved();
 
+	virtual void getEventFormObserved();
 	virtual void getRectFromObserved();
 
 	void registerEffectManagerAddress(EffectManager* ef) {

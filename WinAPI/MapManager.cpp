@@ -58,6 +58,18 @@ void MapManager::update(void)
 			}
 		}
 	}
+
+	if (KEYMANAGER->isOnceKeyDown('R'))
+	{
+		for (Map* m : _vMap)
+		{
+			if (m->getType() == Map::MAPTYPE::SHOP)
+			{
+				_currentMap = m;
+				_currentMap->setShow(true);
+			}
+		}
+	}
 }
 
 void MapManager::render(void)
@@ -311,10 +323,9 @@ void MapManager::setMapData()
 			Map* map;
 			map = new StartMap;
 			map->init(iter.location);
+			map->setCurrentMap(&_currentMap);
 			_vMap.push_back(map);
 			_currentMap = map;
-
-
 
 		} break;
 		case Map::MAPTYPE::DEFAULT:
@@ -322,6 +333,7 @@ void MapManager::setMapData()
 			Map* map;
 			map = new DefaultMap;
 			map->init(iter.location);
+			map->setCurrentMap(&_currentMap);
 			_vMap.push_back(map);
 		} break;
 		case Map::MAPTYPE::BOSS:
@@ -329,6 +341,7 @@ void MapManager::setMapData()
 			Map* map;
 			map = new BossMap;
 			map->init(iter.location);
+			map->setCurrentMap(&_currentMap);
 			_vMap.push_back(map);
 		} break;
 		case Map::MAPTYPE::TREASURE:
@@ -336,6 +349,7 @@ void MapManager::setMapData()
 			Map* map;
 			map = new ChestMap;
 			map->init(iter.location);
+			map->setCurrentMap(&_currentMap);
 			_vMap.push_back(map);
 		} break;
 		case Map::MAPTYPE::SHOP:
@@ -343,6 +357,7 @@ void MapManager::setMapData()
 			Map* map;
 			map = new ShopMap;
 			map->init(iter.location);
+			map->setCurrentMap(&_currentMap);
 			_vMap.push_back(map);
 		} break;
 		case Map::MAPTYPE::REPAIR:
@@ -350,6 +365,7 @@ void MapManager::setMapData()
 			Map* map;
 			map = new RepairMap;
 			map->init(iter.location);
+			map->setCurrentMap(&_currentMap);
 			_vMap.push_back(map);
 		} break;
 		default: break;
