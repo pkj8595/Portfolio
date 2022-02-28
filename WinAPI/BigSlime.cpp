@@ -9,7 +9,7 @@ HRESULT BigSlime::init(const char * imageName, POINT position)
 	_bossHpImage = IMAGEMANAGER->addImage("BossHPMain", "Resource/Images/Lucie/CompleteImg/system/Boss_HP_main.bmp", 485, 22, false, RGB(255, 0, 255));
 	_bossHpDamageImage = IMAGEMANAGER->addImage("BossHPDamage", "Resource/Images/Lucie/CompleteImg/system/Boss_HP_damage.bmp", 485, 22, false, RGB(255, 0, 255));
 	_bossHpAlpha = 0;
-	_hp = _maxHP = 500;
+	_hp = _maxHP = 300;
 	_hpWidth = _damageHpWidth = (_bossHpImage->getWidth() * (_hp / _maxHP));
 
 	_type = ObservedType::MINION;
