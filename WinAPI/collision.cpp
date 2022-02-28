@@ -3,14 +3,15 @@
 
 void Lobby::Collision(void)
 {
-	
-
+	//충돌 검사 -> Weapon Box와 충돌했을때
 	if (IntersectRect(&rc, &_player->getRect(), &_box_rc))
 	{
 		if (KEYMANAGER->isOnceKeyDown('E'))
 		{
+			//TextManager-> shopLog collBox bool true
 			_collBox = true;
 			_tsm->iscollText = true;
+			_tsm->iscollBox = true;
 			_player->_isTextShow = true;
 		}
 		if (_collBox) { _tsm->EventLog(0); }
@@ -24,7 +25,7 @@ void Lobby::Collision(void)
 			_tsm->iscollText = true;
 			_player->_isTextShow = true;
 		}
-		if (_collBox) { _tsm->EventLog(1); }
+		if (_collBox) { _tsm->ShopLog(L"로브", L"좋은 원단으로 만든 옷이야", L"250"); }
 	}
 
 	else if (IntersectRect(&rc, &_player->getRect(), &_mirror_rc))

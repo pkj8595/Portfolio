@@ -68,5 +68,5 @@ void TitleScene::render(void)
 	_gameName->render(getMemDC());
 	_start->frameRender(getMemDC(), _startRc.left, _startRc.top);
 	_exit->frameRender(getMemDC(), _exitRc.left, _exitRc.top);
-	if (changeScreenAlpha > 0) _changeScreen->alphaRender(getMemDC(), changeScreenAlpha);
+	if (changeScreenAlpha > 0) { _changeScreen->alphaRender(getMemDC(), changeScreenAlpha); }
 }
