@@ -47,6 +47,7 @@ public:
 
 	void setCurrentMap(Map** currentMap) { _currentMap = currentMap; }
 	bool isActiveMap();
+
 	bool isShow() { return _show; }
 	void setShow(bool show) { _show = show; }
 	bool isClear() { return _clear; }

@@ -27,6 +27,7 @@ private:
 		tagEventObj()
 		{
 			itemObj = nullptr;
+			eventObj = nullptr;
 		}
 	}ShopEventObj;
 
