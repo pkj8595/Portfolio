@@ -45,6 +45,7 @@ HRESULT ShopMap::init(POINT location)
 		_eventObj[i].itemObj =_itemSpawner->createItemMapInit(x, y, false,this);
 		_eventObj[i].eventObj = new EventObject;
 		_eventObj[i].eventObj->init(EventObservedType::SHOP, RectMakeCenter(x, y+100, 32, 32),false, _eventObj[i].itemObj->getItemIndex());
+		//todo isActiveMap
 	}
 
 	return S_OK;
