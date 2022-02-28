@@ -91,7 +91,7 @@ void Slime::update(void)
 	}
 
 
-	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
+	_rc = RectMakeCenter(_x + _image->getFrameWidth()/2, _y+_image->getFrameHeight()/2 + 20, _image->getFrameWidth() / 2, _image->getFrameHeight() / 2);
 
 }
 
@@ -113,7 +113,7 @@ void Slime::move(void)
 void Slime::draw(void)
 {
 	animation();
-	_image->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX, _currentFrameY);
+	_image->frameRender(getMemDC(), _x, _y, _currentFrameX, _currentFrameY);
 	_threeDirectionBullet->render();
 	_circleBullet->render();
 	////Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
@@ -384,7 +384,7 @@ void Slime::circleDirectionBullet()
 {
 	if (_attackParttern == SLIMEATTACK::SL_PARTTERN1 && _image->getMaxFrameX() == _currentFrameX)
 	{
-		_circleBullet->fire(_x, _y);
+		_circleBullet->fire(_rc.left + (_rc.right - _rc.left)/2, _rc.top + (_rc.bottom - _rc.top)/2);
 	}
 }
 
@@ -392,8 +392,8 @@ void Slime::threeDirectionBullet()
 {
 	if (_attackParttern == SLIMEATTACK::SL_PARTTERN2 && _image->getMaxFrameX() == _currentFrameX)
 	{
-		float angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
-		_threeDirectionBullet->fire(_x, _y, angle);
+		float angle = getAngle(_rc.left + (_rc.right - _rc.left) / 2, _rc.top + (_rc.bottom - _rc.top) / 2, _playerPos.x, _playerPos.y);
+		_threeDirectionBullet->fire(_rc.left + (_rc.right - _rc.left) / 2, _rc.top + (_rc.bottom - _rc.top) / 2, angle);
 	}
 }
 

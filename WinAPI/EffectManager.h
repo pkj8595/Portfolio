@@ -18,6 +18,8 @@ public:
 	void update(void);
 	void render(void);
 	void createEffect(const char* fileName,RECT rc);
+	void createEffect(const char* fileName,RECT* rc);
+	void createEffect(const char* fileName,RECT rc, float count);
 
 	EffectManager() {}
 	~EffectManager() {}

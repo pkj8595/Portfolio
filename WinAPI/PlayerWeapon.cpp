@@ -105,6 +105,7 @@ void NormalWeapon::move()
 		}
 		else if (!(*_viWeapon)->fire)
 		{
+			(*_viWeapon)->release();
 			SAFE_DELETE((*_viWeapon)->img);
 			_viWeapon = _vWeapon.erase(_viWeapon);
 		}
@@ -114,7 +115,14 @@ void NormalWeapon::move()
 		}
 
 	}
-} 
+}
+void NormalWeapon::removeBullet(int index)
+{
+	_vWeapon[index]->release();
+	SAFE_DELETE(_vWeapon[index]->img);
+	_vWeapon.erase(_vWeapon.begin() + index);
+}
+
 
 
 HRESULT SwordWeapon::init(float* x, float* y)
@@ -292,6 +300,7 @@ void BowWeapon::move()
 		}
 		else if (!(*_viWeapon)->fire)
 		{
+			(*_viWeapon)->release();
 			SAFE_DELETE((*_viWeapon)->img);
 			_viWeapon = _vWeapon.erase(_viWeapon);
 		}
@@ -300,5 +309,12 @@ void BowWeapon::move()
 			++_viWeapon;
 		}
 	}
+}
+
+void BowWeapon::removeBullet(int index)
+{
+	_vWeapon[index]->release();
+	SAFE_DELETE(_vWeapon[index]->img);
+	_vWeapon.erase(_vWeapon.begin() + index);
 }
 

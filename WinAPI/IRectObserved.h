@@ -1,6 +1,10 @@
 #pragma once
 #include "Stdafx.h"
 
+
+//=====================================
+//	## EventObserved ##
+//=====================================
 enum class ObservedType
 {
 	ROCKET = 0,
@@ -40,5 +44,42 @@ public:
 
 	IRectObserved() {}
 	virtual ~IRectObserved() {}
+};
+
+//=====================================
+//	## EventObserved ##
+//=====================================
+
+enum class EventObservedType
+{
+	SHOP =0,
+	CHEST,
+	ANVIL
+};
+
+typedef struct tagEventObservedInfo
+{
+	EventObservedType* typeKey;
+	RECT* rc;
+	bool* isActive;	
+	int* num;
+
+	tagEventObservedInfo()
+	{
+		typeKey = nullptr;
+		rc = nullptr;
+		isActive = nullptr;
+		num = nullptr;
+	}
+}STEventObservedData;
+
+class IEventObservered
+{
+public:
+	virtual STEventObservedData getEventUpdate() = 0;
+	virtual void collideEventObject(STEventObservedData obEventData) = 0;
+
+	IEventObservered() {}
+	~IEventObservered() {}
 };
 

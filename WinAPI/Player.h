@@ -5,10 +5,13 @@
 #include "PlayerStatusUI.h"
 #include "IRectObserved.h"
 #include "Inventory.h"
+#include "EffectManager.h"
 
 class Player : public GameNode, public IRectObserved
 {
 private:
+	EffectManager* _efm;
+
 	ObservedType _type;
 	//State, Frame
 	enum class PLAYER_STATE { STOP, WALK, DODGE, ATTACK_NONE, ATTACK_SWORD, ATTACK_BOW, DEAD};
@@ -100,7 +103,6 @@ public:
 	void move();
 
 	void healStamina();
-	void checkLevelUp();
 
 	void setCollision();
 
@@ -111,7 +113,7 @@ public:
 	float calculateMagicDamage();
 
 	void setLevelUp();
-
+	void setDead();
 public:
 	//접근자, 지정자
 
@@ -143,6 +145,9 @@ public:
 
 
 	void addExp(int exp) { _status._experience += exp; }
+	
+	NormalWeapon* getNormalWeapon() { return _normal; }
+	BowWeapon* getBowWeapon() { return _bow; }
 };
 
 //검

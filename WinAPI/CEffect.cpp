@@ -27,11 +27,27 @@ HRESULT CEffect::init(const char* imageName, RECT rc)
 	_image = IMAGEMANAGER->findImage(imageName);
 	_x = rc.left + (rc.right - rc.left) / 2;
 	_y = rc.top;
+	_px = nullptr;
+	_py = nullptr;
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 	_isActive = true;
 
 	return S_OK;
 }
+
+HRESULT CEffect::init(const char * imageName, RECT rc, float count)
+{
+	_worldTimeCount = TIMEMANAGER->getWorldTime();
+	_rndTimeCount = count;
+	_image = IMAGEMANAGER->findImage(imageName);
+	_x = rc.left + (rc.right - rc.left) / 2;
+	_y = rc.top;
+	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
+	_isActive = true;
+
+	return S_OK;
+}
+
 
 void CEffect::release(void)
 {
@@ -57,8 +73,16 @@ void CEffect::animation(void)
 	if (_rndTimeCount + _worldTimeCount <= TIMEMANAGER->getWorldTime())
 	{
 		_worldTimeCount = TIMEMANAGER->getWorldTime();
-		_currentFrameX++;
-		if (_image->getMaxFrameX() < _currentFrameX)
+		if (_currentFrameX == _image->getMaxFrameX())
+		{
+			_currentFrameX = 0;
+			_currentFrameY++;
+		}
+		else
+		{
+			_currentFrameX++;
+		}
+		if (_image->getMaxFrameY() <_currentFrameY)
 		{
 			_isActive = false;
 		}

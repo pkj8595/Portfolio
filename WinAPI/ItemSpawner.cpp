@@ -1,5 +1,6 @@
 #include "Stdafx.h"
 #include "ItemSpawner.h"
+#include "Map.h"
 
 //============================
 //   ### ItemObject ###
@@ -21,7 +22,7 @@ HRESULT ItemObject::init(int x, int y, bool isCollider)
 	_increaseY = false;
 	_isActive = true;
 	_moveOffsetTime =_responseTime = _worldTime = TIMEMANAGER->getWorldTime();
-	
+	_map = nullptr;
 	
 	RECTOBSERVERMANAGER->registerObserved(this);
 	return S_OK;
@@ -82,8 +83,21 @@ void ItemObject::collideObject(STObservedData obData)
 //============================
 //   ### ItemSpawner ###
 //============================
+
+ItemSpawner::ItemSpawner()
+{
+	init();
+}
+
+ItemSpawner::~ItemSpawner()
+{
+	release();
+}
+
+
 HRESULT ItemSpawner::init(void)
 {
+	_currentMap = nullptr;
 	return S_OK;
 }
 
@@ -102,12 +116,15 @@ void ItemSpawner::update(void)
 	_viItemObj = _vItemObj.begin();
 	for (; _viItemObj != _vItemObj.end(); ++_viItemObj)
 	{
-		(*_viItemObj)->update();
-		if (!(*_viItemObj)->getIsActive())
+		if (*_currentMap == (*_viItemObj)->getMap())
 		{
-			(*_viItemObj)->release();
-			_vItemObj.erase(_viItemObj);
-			break;
+			(*_viItemObj)->update();
+			if (!(*_viItemObj)->getIsActive())
+			{
+				(*_viItemObj)->release();
+				_vItemObj.erase(_viItemObj);
+				break;
+			}
 		}
 	}
 }
@@ -117,7 +134,10 @@ void ItemSpawner::render(void)
 	_viItemObj = _vItemObj.begin();
 	for (; _viItemObj != _vItemObj.end(); ++_viItemObj)
 	{
-		(*_viItemObj)->render();
+		if (*_currentMap == (*_viItemObj)->getMap())
+		{
+			(*_viItemObj)->render();
+		}
 	}
 }
 
@@ -125,6 +145,7 @@ int ItemSpawner::createItem(int x, int y, bool isCollider)
 {
 	ItemObject* itemObj = new ItemObject;
 	itemObj->init(x, y, isCollider);
+	itemObj->setMap(*_currentMap);
 	_vItemObj.push_back(itemObj);
 	return itemObj->getItemIndex();
 }
@@ -138,3 +159,18 @@ void ItemSpawner::clearItem(void)
 	}
 	_vItemObj.clear();
 }
+
+int ItemSpawner::createItemMapInit(int x, int y, bool isCollider, Map* map)
+{
+	ItemObject* itemObj = new ItemObject;
+	itemObj->init(x, y, isCollider);
+	itemObj->setMap(map);
+	_vItemObj.push_back(itemObj);
+	return itemObj->getItemIndex();
+}
+
+void ItemSpawner::setCurrentMap(Map** cmap)
+{
+	_currentMap = cmap;
+}
+

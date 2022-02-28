@@ -186,9 +186,6 @@
     <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="PlayScene.cpp" />
-    <ClCompile Include="OJHScene.cpp">
-      <Filter>OJH</Filter>
-    </ClCompile>
     <ClCompile Include="TextSystemManager.cpp">
       <Filter>OJH</Filter>
     </ClCompile>
@@ -278,6 +275,7 @@
     <ClCompile Include="ItemSpawner.cpp">
       <Filter>PKJ</Filter>
     </ClCompile>
+    <ClCompile Include="EventObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -382,9 +380,6 @@
     <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="PlayScene.h" />
-    <ClInclude Include="OJHScene.h">
-      <Filter>OJH</Filter>
-    </ClInclude>
     <ClInclude Include="TextSystemManager.h">
       <Filter>OJH</Filter>
     </ClInclude>
@@ -465,6 +460,7 @@
     <ClInclude Include="ItemSpawner.h">
       <Filter>PKJ</Filter>
     </ClInclude>
+    <ClInclude Include="EventObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">

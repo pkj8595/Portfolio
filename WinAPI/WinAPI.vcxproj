@@ -159,6 +159,7 @@
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="EventObject.cpp" />
     <ClCompile Include="ForestFairy.cpp" />
     <ClCompile Include="HpImgBar.cpp" />
     <ClCompile Include="Inventory.cpp" />
@@ -177,7 +178,6 @@
     <ClCompile Include="mGpImage.cpp" />
     <ClCompile Include="Minion.cpp" />
     <ClCompile Include="PixelCollision.cpp" />
-    <ClCompile Include="OJHScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerStatusUI.cpp" />
     <ClCompile Include="PlayerWeapon.cpp" />
@@ -230,6 +230,7 @@
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="EventObject.h" />
     <ClInclude Include="ForestFairy.h" />
     <ClInclude Include="HpImgBar.h" />
     <ClInclude Include="Inventory.h" />
@@ -248,7 +249,6 @@
     <ClInclude Include="mButton.h" />
     <ClInclude Include="mGpImage.h" />
     <ClInclude Include="Minion.h" />
-    <ClInclude Include="OJHScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerStatusUI.h" />
     <ClInclude Include="PlayerWeapon.h" />

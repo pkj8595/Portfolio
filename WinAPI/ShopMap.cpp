@@ -17,6 +17,8 @@ HRESULT ShopMap::init(POINT location)
 	_rightWall = IMAGEMANAGER->addImage("RightWall3", "Resource/Images/Lucie/CompleteImg/ground/wall/RightWall3.bmp", 240, 480, true, RGB(255, 0, 255));
 	_downWall = IMAGEMANAGER->addImage("DownWall2", "Resource/Images/Lucie/CompleteImg/ground/wall/downWall2.bmp", 288, 240, true, RGB(255, 0, 255));
 	_mapRC = { 168, 50, 750, 460 };
+	_outsideRcWidth = { 0, 576, WINSIZE_X, WINSIZE_Y };
+	_outsideRcLength = { 960, 0, WINSIZE_X, WINSIZE_Y };
 	_location = location;
 
 	//==================================================
@@ -25,7 +27,7 @@ HRESULT ShopMap::init(POINT location)
 
 	for (int i = 0; i < ITEM_SIZE; i++)
 	{
-		_itemIndex[i] =_itemSpawner->createItem(610+(i*42), 190, false);
+		_itemIndex[i] =_itemSpawner->createItemMapInit(610+(i*42), 190, false,this);
 	}
 	
 	_shopCollider = RectMake(_x, _y, 32, 32);
@@ -64,7 +66,6 @@ void ShopMap::update(void)
 		_x++;
 		cout << "x: " << _x << ", y: " << _y << endl;
 	}
-	_itemSpawner->update();
 
 	_shopCollider = RectMakeCenter(_x, _y, 32, 32);
 
@@ -81,7 +82,6 @@ void ShopMap::render(void)
 	_shopNPC->render(getMemDC(), 680, 140);
 	_shopBar->render(getMemDC(), 530, 40);
 
-	_itemSpawner->render();
 
 	RectangleMakeToRECT(getMemDC(),_shopCollider);
 
