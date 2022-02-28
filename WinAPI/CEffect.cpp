@@ -27,8 +27,7 @@ HRESULT CEffect::init(const char* imageName, RECT rc)
 	_image = IMAGEMANAGER->findImage(imageName);
 	_x = rc.left + (rc.right - rc.left) / 2;
 	_y = rc.top;
-	_px = nullptr;
-	_py = nullptr;
+	_prc = nullptr;
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 	_isActive = true;
 
@@ -42,8 +41,23 @@ HRESULT CEffect::init(const char * imageName, RECT rc, float count)
 	_image = IMAGEMANAGER->findImage(imageName);
 	_x = rc.left + (rc.right - rc.left) / 2;
 	_y = rc.top;
+	_prc = nullptr;
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 	_isActive = true;
+
+	return S_OK;
+}
+
+HRESULT CEffect::init(const char * imageName, RECT* rc, float count, float fixX, float fixY)
+{
+	_worldTimeCount = TIMEMANAGER->getWorldTime();
+	_rndTimeCount = RND->getFromFloatTo(0.04f, 0.08f);
+	_image = IMAGEMANAGER->findImage(imageName);
+	_prc = rc;
+	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
+	_isActive = true;
+	_fixX = fixX;
+	_fixY = fixY;
 
 	return S_OK;
 }
@@ -65,7 +79,8 @@ void CEffect::render(void)
 
 void CEffect::draw(void)
 {
-	_image->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX, _currentFrameY);
+	if(_prc == nullptr) _image->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX, _currentFrameY);
+	else _image->frameRender(getMemDC(), _prc->left + _fixX, _prc->top + _fixY, _currentFrameX, _currentFrameY);
 }
 
 void CEffect::animation(void)
