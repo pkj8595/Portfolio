@@ -25,7 +25,7 @@ HRESULT ChestMap::init(POINT location)
 	_location = location;
 
 	_chestEventObj = new EventObject;
-	_chestEventRc = RectMakeCenter(CENTER_X, CENTER_Y, 32, 32);
+	_chestEventRc = RectMakeCenter(CENTER_X - 48, CENTER_Y, 32, 32);
 	_chestEventObj->init(EventObservedType::CHEST, _chestEventRc, &_isActive, 0);
 
 
@@ -40,6 +40,7 @@ void ChestMap::release(void)
 void ChestMap::update(void)
 {
 	_chestRC = RectMake(CENTER_X - _chestImage->getFrameWidth(), CENTER_Y - _chestImage->getFrameHeight(), _chestImage->getFrameWidth(), _chestImage->getFrameHeight());
+	if (_chestEventObj->getIsExcute()) openChest();
 }
 
 void ChestMap::render(void)
@@ -47,11 +48,21 @@ void ChestMap::render(void)
 	_image->render(getMemDC());
 
 	_chestImage->frameRender(getMemDC(), CENTER_X - _chestImage->getFrameWidth(), CENTER_Y - _chestImage->getFrameHeight(), 0, _frameY);
-	RectangleMakeToRECT(getMemDC(), _chestEventRc);
 
 	if (!_connectedMap[0] || !_clear) _leftWall->render(getMemDC(), 0, 52);
 	if (!_connectedMap[1] || !_clear) _upWall->render(getMemDC(), CENTER_X - 180, -150);
 	if (!_connectedMap[2] || !_clear) _rightWall->render(getMemDC(), 728, 52);
 	if (!_connectedMap[3] || !_clear) _downWall->render(getMemDC(), CENTER_X - 170, _image->getHeight() - 240);
 
+}
+
+void ChestMap::openChest(void)
+{
+	if (_frameY == 3) return;
+	static float openTime = TIMEMANAGER->getWorldTime();
+	if (openTime + 0.1f < TIMEMANAGER->getWorldTime())
+	{
+		_frameY++;
+		openTime = TIMEMANAGER->getWorldTime();
+	}
 }

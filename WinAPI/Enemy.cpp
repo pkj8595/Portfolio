@@ -21,7 +21,6 @@ HRESULT Enemy::init(void)
 
 HRESULT Enemy::init(const char* imageName, POINT position)
 {
-	cout << "Enemy::init" << endl;
 	_worldTimeCount = TIMEMANAGER->getWorldTime();
 	_rndTimeCount = RND->getFromFloatTo(0.5f, 2.f);
 
