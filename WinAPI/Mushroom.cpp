@@ -9,13 +9,20 @@ Mushroom::~Mushroom()
 {
 }
 
-HRESULT Mushroom::init(const char* imageName, POINT position)
+HRESULT Mushroom::init(const char* imageName)
 {
-	Enemy::init(imageName,position);
-	//_x = position.x;
-	//_y = position.y;
+	_image = IMAGEMANAGER->findImage(imageName);
 	_hp = 30;
-	
+	_attackTime = TIMEMANAGER->getWorldTime();
+
+	//Observer code
+	_type = ObservedType::MINION;
+	_isActive = true;
+	_deadForOb = false;
+	RECTOBSERVERMANAGER->registerObserved(this);
+
+	_bullet = new CircleMissile;
+	_bullet->init(10, 200);
 	
 	return S_OK;
 }
@@ -23,11 +30,19 @@ HRESULT Mushroom::init(const char* imageName, POINT position)
 void Mushroom::release(void)
 {
 	Enemy::release();
+	_bullet->release();
+	SAFE_DELETE(_bullet);
 }
 
 void Mushroom::update(void)
 {
 	Enemy::update();
+	_bullet->update();
+
+
+	if (_deadForOb)
+		_isActive = false;
+
 
 	_rc = RectMakeCenter(_x, _y, _image->getWidth(), _image->getHeight());
 }
@@ -35,6 +50,7 @@ void Mushroom::update(void)
 void Mushroom::render(void)
 {
 	Enemy::render();
+	_bullet->render();
 }
 
 void Mushroom::move(void)
@@ -52,6 +68,11 @@ void Mushroom::animation(void)
 
 void Mushroom::fire()
 {
+	if (3.f + _attackTime <= TIMEMANAGER->getWorldTime())
+	{
+		_attackTime = TIMEMANAGER->getWorldTime();
+		_bullet->fire(_x, _y);
+	}
 }
 
 STObservedData Mushroom::getRectUpdate()

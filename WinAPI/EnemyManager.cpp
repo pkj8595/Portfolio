@@ -160,7 +160,7 @@ void EnemyManager::setMinion(void)
 
 	Enemy* mushman;
 	mushman = new MushMan;
-	mushman->init("MushMan", PointMake(CENTER_X, CENTER_Y));
+	mushman->init("MushMan", PointMake(CENTER_X, CENTER_Y - 100));
 	_vMinion.push_back(mushman);
 }
 

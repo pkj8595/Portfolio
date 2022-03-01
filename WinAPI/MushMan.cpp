@@ -22,12 +22,12 @@ HRESULT MushMan::init(const char * imageName, POINT position)
 	_direction = MUSHMANDIRECTION::MU_DOWN;
 	_deadForOb = false;
 	_mushroomCreateCheck = false;
+	_mushroomRenderCheck = false;
 	_moveWorldTime = TIMEMANAGER->getWorldTime();
 	_plantMushroomWorldTime = TIMEMANAGER->getWorldTime();
 	_mushroomLivingTime = TIMEMANAGER->getWorldTime();
+	_mushroomAttackTime= TIMEMANAGER->getWorldTime();
 
-	_mushroom = new Mushroom;
-	_mushroom->init("Mushroom",PointMake(_x-6, _y));
 
 	return S_OK;
 }
@@ -42,38 +42,51 @@ void MushMan::release(void)
 void MushMan::update(void)
 {
 	Enemy::update();
-	_mushroom->update();
 
+	if(_mushroomRenderCheck)
+		_mushroom->update();
 
+	/*
+	생존시간동안 공격을 한다.
+	공격은 3초에 한번씩 플레이어를 쫓아다니는 총알패턴.
+
+	10초가 지나면 버섯을 삭제? or 랜더X
+	
+	*/
 	if (!_deadForOb)
 	{
-		if (KEYMANAGER->isOnceKeyDown('1'))
-			_mushroomCreateCheck = false;
-
-		if (_mushroomCreateCheck)
-		{
-			//버섯 생존시간
-			if (15.f + _mushroomLivingTime < TIMEMANAGER->getWorldTime())
-			{
-				_mushroomLivingTime = TIMEMANAGER->getWorldTime();
-				//공격
-			}
-	
-		}
-
-		//이미 심어져 있는 경우를 제외하고 10초마다 한번씩 심는다 
-		if (10.f + _plantMushroomWorldTime < TIMEMANAGER->getWorldTime() && !_mushroomCreateCheck)
+		// 이미 심어져 있는 경우를 제외하고 10초마다 한번씩 심는다
+		if (10.f + _plantMushroomWorldTime <= TIMEMANAGER->getWorldTime() && !_mushroomCreateCheck)
 		{
 			_plantMushroomWorldTime = TIMEMANAGER->getWorldTime();
 			_state = MUSHMANSTATE::MU_ATTACK;
 		}
 
-		if(_state != MUSHMANSTATE::MU_ATTACK)
+		else if (_state != MUSHMANSTATE::MU_ATTACK)
 			randomPosCreate();
+
+		//버섯 생성
+		if (_mushroomCreateCheck)
+		{
+			//버섯 생존시간
+			if (10.f + _mushroomLivingTime <= TIMEMANAGER->getWorldTime())
+			{
+
+				_mushroomLivingTime = TIMEMANAGER->getWorldTime();
+			}
+			
+			if (_mushroom->getHp() < 10)
+			{
+				_mushroomRenderCheck = false;
+				_mushroomCreateCheck = false;
+			}
+			else
+				_mushroom->fire();
+		}
 	}
 	else
 	{
-
+		//_isActive = false;
 	}
 
 	frame();
@@ -85,7 +98,7 @@ void MushMan::render(void)
 {
 	Enemy::render();
 
-	if(_mushroomCreateCheck)
+	if (_mushroomRenderCheck)
 		_mushroom->render();
 }
 
@@ -241,19 +254,15 @@ void MushMan::randomMove()
 
 void MushMan::createBullet()
 {
-	//_state = MUSHMANSTATE::MU_ATTACK;
-
-	//if (5.f + _bulletFireCount <= TIMEMANAGER->getWorldTime())
-	//{
-	//	_bulletFireCount = TIMEMANAGER->getWorldTime();
-	if (_currentFrameX == _maxFrame)
+	if (_currentFrameX == _maxFrame && !_mushroomCreateCheck)
 	{
-		_mushroom->setPos(_x, _y +13);
+		_mushroom = new Mushroom;
+		_mushroom->init("Mushroom");
+		_mushroom->setPos(_x, _y + 13);
+		_mushroomHp =_mushroom->getHp();
+		_mushroomRenderCheck = true;
 		_mushroomCreateCheck = true; //버섯 심음
 	}
-
-	//}
-
 }
 
 STObservedData MushMan::getRectUpdate()

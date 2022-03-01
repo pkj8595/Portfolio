@@ -19,14 +19,17 @@ private:
 
 	int		_randomX, _randomY;
 	int		_maxFrame;
+	float	_mushroomHp;
 	
 	float _speed;				//이동 속도
 	float _moveWorldTime;
 	float _plantMushroomWorldTime;
 	float _mushroomLivingTime;
+	float _mushroomAttackTime;
 
-	bool	_mushroomCreateCheck; //버섯 생성 여부 체크
-	bool	_deadForOb;			  //사망 여부 [Enemy의 isActive는 몹 삭제 전용, deadForOb는 체력 0 여부]
+	bool _mushroomCreateCheck; //버섯 생성 여부 체크
+	bool _mushroomRenderCheck;    //버섯 랜더 여부 체크	
+	bool _deadForOb;			  //사망 여부 [Enemy의 isActive는 몹 삭제 전용, deadForOb는 체력 0 여부]
 
 public:
 	HRESULT init(const char* imageName, POINT position);

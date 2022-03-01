@@ -73,10 +73,11 @@ public:
 	void setPlayerPos(POINT playerPos) { _playerPos = playerPos; }
 	void setPlayer(Player& player) { _player = &player; }
 
-	void setHpY(int y) { _hpY = y;}
+	void setHpY(int y) { _hpY = y; }
 	float getExp() { return _exp; }
 	float getX() { return _x; }
 	float getY() { return _y; }
+	float getHp() { return _hp; }
 
 	Enemy(void);
 	virtual ~Enemy(void) {}

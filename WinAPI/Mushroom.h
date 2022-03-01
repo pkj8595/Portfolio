@@ -5,11 +5,14 @@
 class Mushroom:public Enemy
 {
 private:
+	CircleMissile* _bullet;
+
+	float _attackTime;
 
 	bool	_deadForOb;		//사망 여부 [Enemy의 isActive는 몹 삭제 전용, deadForOb는 체력 0 여부]
 
 public:
-	HRESULT init(const char* imageName, POINT position);
+	HRESULT init(const char* imageName);
 	void release(void);
 	void update(void);
 	void render(void);
@@ -22,6 +25,7 @@ public:
 
 public:
 	void setPos(float x, float y) { _x = x, _y = y;}
+
 
 public:
 	virtual STObservedData getRectUpdate();
