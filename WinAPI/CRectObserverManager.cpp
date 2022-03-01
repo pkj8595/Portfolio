@@ -126,10 +126,9 @@ void CRectObserverManager::getRectFromObserved()
 				RECT collisionRect;
 				if (IntersectRect(&collisionRect, obData.rc, obDataCompare.rc))
 				{
-					(*_viRect)->collideObject(obDataCompare);
 					(*_viRectCompare)->collideObject(obData);
-
-					continue;
+					(*_viRect)->collideObject(obDataCompare);
+					return;
 				}
 			}
 

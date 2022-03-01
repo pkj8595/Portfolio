@@ -259,7 +259,6 @@ void Player::collideObject(STObservedData obData)
 		//*obData.isActive -> item -> isCollider
 		if (*obData.isActive)
 		{
-			*obData.isActive = false;
 			//*obData.angle -> item -> respoenseTime
 			if (TIMEMANAGER->getWorldTime() > *obData.angle + 1.0f)
 			{
@@ -894,6 +893,12 @@ void Player::printHitBG()
 {
 	if (_hitAlpha > 0) _hitBG->alphaRender(getMemDC(), _hitAlpha);
 	if (_dodgeAlpha > 0) _dodgeBG->alphaRender(getMemDC(), _dodgeAlpha);
+}
+void Player::addExp(int exp)
+{
+	_status._experience += exp;
+	_inventory->decreaseDurability();
+	_inventory->setGold(_inventory->getGold() + 8);
 }
 void Player::printStack()
 {

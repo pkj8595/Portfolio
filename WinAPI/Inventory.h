@@ -101,6 +101,7 @@ class Inventory : public GameNode
 
 	//todo
 	int _gold;
+	RECT _goldRc;
 
 public:
 	HRESULT init(void);
@@ -136,6 +137,8 @@ public:
 
 	string changeItemTypeToStr(EITEM_TYPE type);
 	string changeAttributeToStr(CPlayer_Attribute attri);
+
+	void decreaseDurability(int dufault = 8);
 
 	//==========================
 	// ### Player Equipment ###

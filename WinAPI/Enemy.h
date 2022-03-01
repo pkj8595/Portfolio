@@ -75,6 +75,8 @@ public:
 
 	void setHpY(int y) { _hpY = y;}
 	float getExp() { return _exp; }
+	float getX() { return _x; }
+	float getY() { return _y; }
 
 	Enemy(void);
 	virtual ~Enemy(void) {}

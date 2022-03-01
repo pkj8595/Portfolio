@@ -8,6 +8,7 @@
 #include "Snake.h"
 #include "Rafflesia.h"
 #include "ForestFairy.h"
+#include "ItemSpawner.h"
 
 bool EnemyManager::checkClear()
 {
@@ -234,6 +235,7 @@ void EnemyManager::checkActive(void)
 			else
 			{
 				_efm->createEffect("Dead", (*_viMinion)->getRect(), 0.002f);
+				ItemSpawner::getSingleton()->createItem((*_viMinion)->getX(), (*_viMinion)->getY(), true);
 				_pPlayer->addExp((*_viMinion)->getExp());
 				(*_viMinion)->release();
 				SAFE_DELETE(*_viMinion);

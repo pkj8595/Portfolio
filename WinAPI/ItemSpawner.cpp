@@ -77,6 +77,7 @@ void ItemObject::collideObject(STObservedData obData)
 		if (TIMEMANAGER->getWorldTime() > _responseTime + 1.0f)
 		{
 			_isActive = false;
+			release();
 		}
 	}
 }
@@ -142,15 +143,6 @@ void ItemSpawner::render(void)
 	}
 }
 
-int ItemSpawner::createItem(int x, int y, bool isCollider)
-{
-	ItemObject* itemObj = new ItemObject;
-	itemObj->init(x, y, isCollider);
-	itemObj->setMap(*_currentMap);
-	_vItemObj.push_back(itemObj);
-	return itemObj->getItemIndex();
-}
-
 void ItemSpawner::clearItem(void)
 {
 	_viItemObj = _vItemObj.begin();
@@ -161,11 +153,29 @@ void ItemSpawner::clearItem(void)
 	_vItemObj.clear();
 }
 
+
+int ItemSpawner::createItem(int x, int y, bool isCollider)
+{
+	ItemObject* itemObj = new ItemObject;
+	itemObj->init(x, y, isCollider);
+	itemObj->setMap(*_currentMap);
+	_vItemObj.push_back(itemObj);
+	return itemObj->getItemIndex();
+}
 ItemObject* ItemSpawner::createItemMapInit(int x, int y, bool isCollider, Map* map)
 {
 	ItemObject* itemObj = new ItemObject;
 	itemObj->init(x, y, isCollider);
 	itemObj->setMap(map);
+	_vItemObj.push_back(itemObj);
+	return itemObj;
+}
+
+ItemObject* ItemSpawner::createItemMapInit(int x, int y, bool isCollider)
+{
+	ItemObject* itemObj = new ItemObject;
+	itemObj->init(x, y, isCollider);
+	itemObj->setMap(*_currentMap);
 	_vItemObj.push_back(itemObj);
 	return itemObj;
 }

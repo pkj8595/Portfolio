@@ -145,7 +145,7 @@ public:
 	bool isDead() { return _dead; }
 
 
-	void addExp(int exp) { _status._experience += exp; }
+	void addExp(int exp);
 	
 	NormalWeapon* getNormalWeapon() { return _normal; }
 	BowWeapon* getBowWeapon() { return _bow; }

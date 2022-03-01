@@ -57,6 +57,7 @@ public:
 	void render(void);
 	int createItem(int x, int y, bool isCollider);
 	ItemObject* createItemMapInit(int x, int y, bool isCollider, Map* map);
+	ItemObject* createItemMapInit(int x, int y, bool isCollider);
 	void removeItem(ItemObject* itemObject);
 
 	void clearItem(void);

@@ -29,6 +29,7 @@ HRESULT Inventory::init(void)
 	//_inventoryClickHelp.pt = PointMake(_rc.left + 100, _rc.top + 100);
 	//_inventorySlotA.pt = PointMake(_rc.left + 100, _rc.top + 100);
 	_inventoryGoldIcon.pt = PointMake(_rc.left + 160, _rc.top + 260);
+	_goldRc = RectMake(WINSIZE_X - 200, 0, 128, 32);
 	_inventoryCloseBtn.pt = PointMake(_rc.left + 205, _rc.top + 15);
 	_inventorySlot.pt = PointMake(_rc.left + 25, _rc.top + 50);
 	_inventorySlotB.pt = PointMake(_rc.left + 100, _rc.top + 100);
@@ -122,8 +123,8 @@ void Inventory::render(void)
 		}
 	}
 	//우측 상단 gold text
-	RECT goldRc = RectMake(WINSIZE_X-170, 0, 64, 32);
-	inventorydrawText(to_string(_gold), goldRc, 40, RGB(255,255, 255), false);
+	string goldStr = "Gold :" + to_string(_gold);
+	inventorydrawText(goldStr, _goldRc, 30, RGB(255,255, 255), false);
 
 	renderItemInfoWindow();
 	showAbilityItem();
@@ -635,7 +636,6 @@ void Inventory::removeItem(Item* item)
 				computeRect();
 				computeItemTotalAttribute();
 				break;
-				//todo 드랍아이템 생성
 			}
 		}
 	}
@@ -706,4 +706,17 @@ string Inventory::changeAttributeToStr(CPlayer_Attribute attri)
 	//if (attri._maxStamina	 != 0) str = str +" "+ to_string((int)attri._maxStamina	) +'\n';
 	
 	return str;
+}
+
+void Inventory::decreaseDurability(int dufault)
+{
+	if (_equipWeapon != _emptyItem)
+	{
+		(*_equipWeapon)._durability -= dufault;
+		if ((*_equipWeapon)._durability < 0)
+		{
+			removeItem(_equipWeapon);
+		}
+	}
+
 }
