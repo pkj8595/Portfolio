@@ -4,6 +4,9 @@
 class RepairMap : public Map
 {
 private:
+	my::Image* _anvilImage;
+	int _frameY;
+
 	EventObject* _repairEventObj;
 	RECT _repairEventRc;
 	

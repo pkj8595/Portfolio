@@ -56,7 +56,7 @@ void MapManager::update(void)
 	{
 		for (Map* m : _vMap)
 		{
-			if (m->getType() == Map::MAPTYPE::TREASURE)
+			if (m->getType() == Map::MAPTYPE::REPAIR)
 			{
 				_currentMap = m;
 				_currentMap->setShow(true);

@@ -22,7 +22,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("Lobby", new Lobby);
 	SCENEMANAGER->addScene("ShopScene", new ShopScene);
 
-	SCENEMANAGER->changeScene("TitleScene");
+	SCENEMANAGER->changeScene("PlayScene");
 
 	return S_OK;
 }
