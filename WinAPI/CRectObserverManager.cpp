@@ -217,8 +217,10 @@ void CRectObserverManager::getEventFormObserved()
 			{
 				if (KEYMANAGER->isOnceKeyDown('E'))
 				{
-					_player->getInventory()->repairWeapon(40);
-					(*_viEvent)->collideEventObject(obData);
+					if (_player->getInventory()->repairWeapon(40))
+					{
+						(*_viEvent)->collideEventObject(obData);
+					}
 					break;
 				}
 			}

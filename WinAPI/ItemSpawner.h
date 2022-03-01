@@ -3,6 +3,7 @@
 #include "IRectObserved.h"
 
 #define ITEM_OBJ_SIZE		32
+#define BIGITEM_OBJ_SIZE	64
 #define MOVE_OFFSET_TIME	0.2f	
 #define CHANGE_DIRECTION	1.0F
 

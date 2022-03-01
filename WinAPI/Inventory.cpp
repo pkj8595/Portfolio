@@ -774,10 +774,21 @@ void Inventory::decreaseDurability(int dufault)
 
 }
 
-void Inventory::repairWeapon(int gold)
+bool Inventory::repairWeapon(int gold)
 {
-	_gold -= gold;
-	_equipWeapon->_durability = _equipWeapon->_maxDurability;
-	_isRepair = true;
-	_messageWorldTime = TIMEMANAGER->getWorldTime();
+	if (_gold > gold)
+	{
+		_gold -= gold;
+		_equipWeapon->_durability = _equipWeapon->_maxDurability;
+		_isRepair = true;
+		_messageWorldTime = TIMEMANAGER->getWorldTime();
+		return true;
+	}
+	else
+	{
+		_isbuyItemfail = true;
+		_messageWorldTime = TIMEMANAGER->getWorldTime();
+		return false;
+	}
+	
 }

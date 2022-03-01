@@ -54,7 +54,7 @@ HRESULT ItemObject::initChest(int x, int y, bool isCollider, int itemIndex)
 	_x = (float)x;
 	_y = (float)y;
 	_isCollider = isCollider;
-	_rc = RectMakeCenter(_x, _y, ITEM_OBJ_SIZE, ITEM_OBJ_SIZE);
+	_rc = RectMakeCenter(_x, _y, BIGITEM_OBJ_SIZE, BIGITEM_OBJ_SIZE);
 	_typeKey = ObservedType::ITEM;
 	_itemManager = ItemManager::getSingleton();
 	_itemIndex = itemIndex;
@@ -80,7 +80,9 @@ void ItemObject::update(void)
 		_moveOffsetTime = TIMEMANAGER->getWorldTime() + MOVE_OFFSET_TIME;
 		if (_increaseY) { _y --; }
 		else { _y ++; }
-		_rc = RectMakeCenter(_x, _y, ITEM_OBJ_SIZE, ITEM_OBJ_SIZE+20);
+		
+		if (!_isChest)_rc = RectMakeCenter(_x, _y, ITEM_OBJ_SIZE, ITEM_OBJ_SIZE+20);
+		else  RectMakeCenter(_x, _y, BIGITEM_OBJ_SIZE, BIGITEM_OBJ_SIZE + 20);
 
 		if (TIMEMANAGER->getWorldTime() > _worldTime + CHANGE_DIRECTION)
 		{
@@ -213,7 +215,7 @@ int ItemSpawner::createItem(int x, int y, bool isCollider, int itemIndex)
 int ItemSpawner::createChestItem(int x, int y, bool isCollider)
 {
 	ItemObject* itemObj = new ItemObject;
-	itemObj->init(x, y, isCollider, RND->getFromIntTo(14,34));
+	itemObj->initChest(x, y, isCollider, RND->getFromIntTo(14,34));
 	itemObj->setMap(*_currentMap);
 	_vItemObj.push_back(itemObj);
 	return itemObj->getItemIndex();
