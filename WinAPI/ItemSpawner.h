@@ -3,6 +3,7 @@
 #include "IRectObserved.h"
 
 #define ITEM_OBJ_SIZE		32
+#define BIGITEM_OBJ_SIZE	64
 #define MOVE_OFFSET_TIME	0.2f	
 #define CHANGE_DIRECTION	1.0F
 
@@ -24,11 +25,13 @@ private:
 	float _worldTime;
 	float _responseTime;
 	float _moveOffsetTime;
+	bool _isChest;
 
 public:
 	HRESULT init(void);
 	HRESULT init(int x, int y, bool isCollider);
 	HRESULT init(int x, int y, bool isCollider,int itemIndex);
+	HRESULT initChest(int x, int y, bool isCollider, int itemIndex);
 	void release(void);
 	void update(void);
 	void render(void);

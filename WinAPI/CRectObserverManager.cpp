@@ -28,9 +28,9 @@ void CRectObserverManager::update(void)
 {
 	_effectManager->update();
 	_damageManager->update();
+	_textSystemManager->update();
 	getRectFromObserved();
 	getEventFormObserved();
-	_textSystemManager->update();
 }
 
 void CRectObserverManager::render(void)
@@ -196,23 +196,22 @@ void CRectObserverManager::getEventFormObserved()
 			{
 				if (KEYMANAGER->isOnceKeyDown('E'))
 				{
-					cout << "asd" << endl;
 					Item* item = ItemManager::getSingleton()->getItemIndex(*obData.num);
-					_textSystemManager->setShopdata(item->_name, item->_description, item->_price);
+					_textSystemManager->setShopdata(item->_name, item->_price);
 					_textSystemManager->isShopOpen = true;
 					_textSystemManager->isShowText = true;
 
 				}
-					if (_textSystemManager->isShopbuy)
+				if (_textSystemManager->isShopbuy)
+				{
+					if (_player->getInventory()->buyItem(*obData.num))
 					{
-						if (_player->getInventory()->buyItem(*obData.num))
-						{
-							(*_viEvent)->collideEventObject(obData);
-							_textSystemManager->isShopbuy = false;
-							break;
-						}
-						else { _textSystemManager->isShopbuy = false; }
+						(*_viEvent)->collideEventObject(obData);
+						_textSystemManager->isShopbuy = false;
+						break;
 					}
+					else { _textSystemManager->isShopbuy = false; }
+				}
 			}
 			else if (*obData.typeKey == EventObservedType::CHEST)
 			{
@@ -227,9 +226,21 @@ void CRectObserverManager::getEventFormObserved()
 			{
 				if (KEYMANAGER->isOnceKeyDown('E'))
 				{
-					_player->getInventory()->repairWeapon(40);
-					(*_viEvent)->collideEventObject(obData);
-					break;
+					_textSystemManager->AnvilLog(5);
+					_textSystemManager->isShowText = true;
+					_textSystemManager->isAnvilOpen = true;
+					_textSystemManager->isAnvilCol = true;
+				}
+				if (_textSystemManager->isrepairbuy)
+				{
+					if (_player->getInventory()->repairWeapon(40))
+					{
+						_textSystemManager->AnvilLog(6);
+						_textSystemManager->isrepairbuy = false;
+						_textSystemManager->isAnvilCol = false;
+
+						break;
+					}
 				}
 			}
 

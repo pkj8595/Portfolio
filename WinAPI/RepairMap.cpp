@@ -13,13 +13,16 @@ HRESULT RepairMap::init(POINT location)
 	_leftWall = IMAGEMANAGER->addImage("LeftWall2", "Resource/Images/Lucie/CompleteImg/ground/wall/LeftWall2.bmp", 288, 480, true, RGB(255, 0, 255));
 	_rightWall = IMAGEMANAGER->addImage("RightWall3", "Resource/Images/Lucie/CompleteImg/ground/wall/RightWall3.bmp", 240, 480, true, RGB(255, 0, 255));
 	_downWall = IMAGEMANAGER->addImage("DownWall1", "Resource/Images/Lucie/CompleteImg/ground/wall/downWall1.bmp", 240, 240, true, RGB(255, 0, 255));
+	
+	_anvilImage = IMAGEMANAGER->addFrameImage("Anvil", "Resource/Images/Lucie/CompleteImg/event/Anvil.bmp", 144, 384, 1, 4, true, RGB(255, 0, 255));
+	
 	_mapRC = { 200, 50, 700, 600 };
 	_outsideRcWidth = { 0, 670, WINSIZE_X, WINSIZE_Y };
 	_outsideRcLength = { 1008, 0, WINSIZE_X, WINSIZE_Y };
 	_location = location;
 
 	_repairEventObj = new EventObject;
-	_repairEventRc = RectMakeCenter(CENTER_X, CENTER_Y, 32, 32);
+	_repairEventRc = RectMakeCenter(CENTER_X - 50, CENTER_Y - 50, _anvilImage->getFrameWidth() / 2, 32);
 	_repairEventObj->init(EventObservedType::ANVIL, _repairEventRc, &_isActive, 0);
 
 	return S_OK;
@@ -37,7 +40,7 @@ void RepairMap::render(void)
 {
 	_image->render(getMemDC());
 
-	RectangleMakeToRECT(getMemDC(), _repairEventRc);
+	_anvilImage->frameRender(getMemDC(), CENTER_X - _anvilImage->getFrameWidth() + 20, CENTER_Y - _anvilImage->getFrameHeight() - 50, 0, _frameY);
 
 	if (!_connectedMap[0] || !_clear) _leftWall->render(getMemDC(), 0, 143);
 	if (!_connectedMap[1] || !_clear) _upWall->render(getMemDC(), CENTER_X - 180, -150);

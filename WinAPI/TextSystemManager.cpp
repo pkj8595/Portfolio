@@ -9,6 +9,7 @@ HRESULT TextSystemManager::init(void)
 	_BoxchatImage = IMAGEMANAGER->addImage("WP_BoxTextBox", "Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 850, 250, true, RGB(255, 0, 255));
 	_nameImage = IMAGEMANAGER->addImage("Namebox", "Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 125, 65, true, RGB(255, 0, 255));
 	_selImage = IMAGEMANAGER->addImage("SelOne", "Resource/Images/Lucie/CompleteImg/UI/SelectBox.bmp", 180, 50, true, RGB(255, 0, 255));
+	_anvilnameImage = IMAGEMANAGER->addImage("AnvilNamebox", "Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 170, 65, true, RGB(255, 0, 255));
 
 	_textBufferCnt = 0;
 	_textindex = 0;
@@ -19,25 +20,30 @@ HRESULT TextSystemManager::init(void)
 	isShopOpen = false;
 	isShopbuy = false;
 
-	_text1 = "";
-	_text2 = "";
+	_shopNameText = "";
+	_shopPriceText = "";
 
 	_text[0] = { L"", L"기본 무기 중 하나를 가져갈 수 있다. 어떤 종류를 가져갈까?" };
 	_text[1] = { L"", L"아무 것도 안 들어있겠지?" };
 	_text[2] = { L"", L"거울같이 생겼는데, 불투명해." };
 	_text[3] = { L"", L"...지금은 보고 싶지 않아." };
 	_text[4] = { L"", L"잠겨있어." };
+	_text[5] = { L"", L"지금 그 무기를 수리할텐가?" };
+	_text[6] = { L"", L"자, 수리가 완료되었네." };
 
 	_chatRc = RectMake(WINSIZE_X*0.08, WINSIZE_Y*0.75, _chatImage->getWidth(), _chatImage->getHeight());
 	_chatWriteRc = RectMake(WINSIZE_X*0.1, WINSIZE_Y*0.77, _chatImage->getWidth(), _chatImage->getHeight());
 	_boxChatRc = RectMake(WINSIZE_X*0.08, WINSIZE_Y*0.72, _chatImage->getWidth(), _chatImage->getHeight());
 	_nameRc = RectMake(WINSIZE_X*0.06, WINSIZE_Y*0.68, _nameImage->getWidth(), _nameImage->getHeight());
+	_anvilNameRc = RectMake(WINSIZE_X*0.06, WINSIZE_Y*0.68, _anvilnameImage->getWidth(), _anvilnameImage->getHeight());
 
 	_shopsel_OneRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.82, _selImage->getWidth(), _selImage->getHeight());
 	_shopsel_TwoRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.88, _selImage->getWidth(), _selImage->getHeight());
 	_select_oneRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.79, _selImage->getWidth(), _selImage->getHeight());
 	_select_TwoRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.84, _selImage->getWidth(), _selImage->getHeight());
 	_select_ThrRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.89, _selImage->getWidth(), _selImage->getHeight());
+	_anvilsel_oneRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.84, _selImage->getWidth(), _selImage->getHeight());
+	_anvilsel_TwoRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.89, _selImage->getWidth(), _selImage->getHeight());
 	
 	return S_OK;
 }
@@ -69,16 +75,25 @@ void TextSystemManager::update(void)
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN) && isShowText)
 	{
 		// _textBufferCnt과 _text1.size()를 비교했을 때 _text1.size()가 더 크다면
-		if (_textBufferCnt < _text1.size())
+		if (_textBufferCnt < _shopNameText.size())
 		{
 			// bufferCnt은 _text1.size의 값과 같은 값을 가지게 된다.
-			_textBufferCnt = _text1.size();
+			_textBufferCnt = _shopNameText.size();
 		}
 		// 저 조건에 충족하지 않는다면 _textindex를 1로 고정하고 버튼 렌더에 필요한 isShopcol을 호출한다.
 		else
 		{
-			_textindex = 1;
-			isShopcol = true;
+			if (isShopOpen)
+			{
+				_textindex = 1;
+				isShopCol = true;
+			}
+
+			if (isAnvilOpen)
+			{
+				isShowText = false;
+				isAnvilOpen = false;
+			}
 		}
 	}
 
@@ -114,7 +129,7 @@ void TextSystemManager::update(void)
 	}
 
 	//isShopcol이 true가 되면
-	if (isShopcol)
+	if (isShopCol)
 	{
 	// 상점 버튼 렉트 박스에 닿으면 알파값을 230.0f로 고정하고
 		if (PtInRect(&_shopsel_OneRc, _ptMouse))
@@ -124,7 +139,7 @@ void TextSystemManager::update(void)
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
 				isShopbuy = true;
-				isShopcol = false;
+				isShopCol = false;
 				isShopOpen = false;
 				isShowText = false;
 			}
@@ -142,8 +157,40 @@ void TextSystemManager::update(void)
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
 				isShowText = false;
-				isShopcol = false;
+				isShopCol = false;
 				isShopOpen = false;
+			}
+		}
+		else
+		{
+			_selectTwoAlpha = 0.0f;
+		}
+	}
+
+	if (isAnvilCol)
+	{
+		if (PtInRect(&_anvilsel_oneRc, _ptMouse))
+		{
+			_selectOneAlpha = 230.0f;
+			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			{
+				isrepairbuy = true;
+				isShowText = true;
+			}
+		}
+		else
+		{
+			_selectOneAlpha = 0.0f;
+		}
+
+		if (PtInRect(&_anvilsel_TwoRc, _ptMouse))
+		{
+			_selectTwoAlpha = 230.0f;
+			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			{
+				isAnvilCol = false;
+				isShowText = false;
+				isAnvilOpen = false;
 			}
 		}
 		else
@@ -157,28 +204,38 @@ void TextSystemManager::render(void)
 {
 	if (isShopOpen) 
 	{ 
-		ShopLog(_itemName, _iteminfo, _price); 
+		ShopLog(_itemName, _price); 
 	}
 
 	if (isEventOpen)
 	{
 		EventLog(_eventArrText);
 	}
+
+	if (isAnvilOpen)
+	{
+		AnvilLog(_anvilArrText);
+	}
 }
 
-void TextSystemManager::ShopLog(string itemName, string iteminfo, int price)
+void TextSystemManager::setShopdata(string itemName, int price)
 {
+	_itemName = itemName;
+	_price = price;
 
-	_text1 = "그건 " + _itemName + ". " + _iteminfo + "야.";
-	_text2 = "가격은 " + to_string(_price) + "인데, 살래?";
+	_shopNameText = "그건 " + _itemName + ". ";
+	_shopPriceText = "가격은 " + to_string(_price) + "골드인데, 살래?";
+}
 
-	char* shop_talk1 = new char[_text1.size() + 1];
-	copy(_text1.begin(), _text1.end(), shop_talk1);
-	shop_talk1[_text1.size()] = '\0';
+void TextSystemManager::ShopLog(string itemName, int price)
+{
+	char* shop_talk1 = new char[_shopNameText .size() + 1];
+	copy(_shopNameText.begin(), _shopNameText.end(), shop_talk1);
+	shop_talk1[_shopNameText.size()] = '\0';
 
-	char* shop_talk2 = new char[_text2.size() + 1];
-	copy(_text2.begin(), _text2.end(), shop_talk2);
-	shop_talk2[_text2.size()] = '\0';
+	char* shop_talk2 = new char[_shopPriceText.size() + 1];
+	copy(_shopPriceText.begin(), _shopPriceText.end(), shop_talk2);
+	shop_talk2[_shopPriceText.size()] = '\0';
 
 	//챗 로그 박스 설정, _chatRc의 값을 토대로 렌더함
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
@@ -200,7 +257,7 @@ void TextSystemManager::ShopLog(string itemName, string iteminfo, int price)
 	}
 
 	// isShopcol이 true일때 선택 박스 및 선택 박스 안에 들어갈 텍스트 출력
-	if (isShopcol)
+	if (isShopCol)
 	{
 		IMAGEMANAGER->alphaRender("SelOne", getMemDC(), _shopsel_OneRc.left, _shopsel_OneRc.top, _selectOneAlpha);
 		IMAGEMANAGER->alphaRender("SelOne", getMemDC(), _shopsel_TwoRc.left, _shopsel_TwoRc.top, _selectTwoAlpha);
@@ -213,11 +270,6 @@ void TextSystemManager::ShopLog(string itemName, string iteminfo, int price)
 	// shop_talk 1,2 삭제
 	delete[] shop_talk1;
 	delete[] shop_talk2;
-}
-
-void TextSystemManager::ShopLog(string itemName, int price)
-{
-
 }
 
 void TextSystemManager::EventLog(int arrText)
@@ -254,3 +306,27 @@ void TextSystemManager::EventLog(int arrText)
 		
 	}
 }
+
+void TextSystemManager::AnvilLog(int arrText)
+{
+	_anvilArrText = arrText;
+
+	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
+	IMAGEMANAGER->alphaRender("AnvilNamebox", getMemDC(), _anvilNameRc.left, _anvilNameRc.top, _textAlpha);
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "둥근모꼴", 27, 15,
+		L"말하는 모루할배", wcslen(L"말하는 모루할배"), RGB(0, 0, 255));
+
+	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.78, "둥근모꼴", 27, 15, _text[arrText].script,
+		((_textBufferCnt / 4) > wcslen(_text[arrText].script) ? wcslen(_text[arrText].script) : (_textBufferCnt / 4)), RGB(255, 255, 255));
+
+	if (isAnvilCol)
+	{
+		IMAGEMANAGER->alphaRender("SelOne", getMemDC(), _anvilsel_oneRc.left, _anvilsel_oneRc.top, _selectOneAlpha);
+		IMAGEMANAGER->alphaRender("SelOne", getMemDC(), _anvilsel_TwoRc.left, _anvilsel_TwoRc.top, _selectTwoAlpha);
+		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.11, WINSIZE_Y*0.85, "둥근모꼴", 27, 15,
+			L"수리한다.", wcslen(L"수리한다."), RGB(255, 255, 255));
+		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.11, WINSIZE_Y*0.90, "둥근모꼴", 27, 15,
+			L"무시한다.", wcslen(L"무시한다."), RGB(255, 255, 255));
+	}
+}
+

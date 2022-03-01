@@ -224,8 +224,6 @@ void Snake::attack()
 		{
 			_direction = SNAKEDIRECTION::SN_RIGHT;
 		}
-	
-		cout << _partternNum << endl;
 	}
 }
 
@@ -387,8 +385,11 @@ void Snake::collideObject(STObservedData obData)
 		else
 		{
 			_hp -= (*obData.damage);
-			_x += cos(*obData.angle) * 7;
-			_y += -sin(*obData.angle) * 7;
+			if ((*obData.typeKey) != ObservedType::ROCKET_MISSILE)
+			{
+				_x += cos(*obData.angle) * 7;
+				_y += -sin(*obData.angle) * 7;
+			}
 		}
 		(*obData.isActive) = false;
 	}

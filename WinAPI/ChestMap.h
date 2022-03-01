@@ -19,6 +19,7 @@ public:
 	void update(void);
 	void render(void);
 
+	void openChest(void);
 
 };
 
