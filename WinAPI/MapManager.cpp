@@ -21,6 +21,8 @@ HRESULT MapManager::init(int mapAmount, int stage)
 	_itemSpawner = ItemSpawner::getSingleton();
 	_itemSpawner->setCurrentMap(&_currentMap);
 
+	debugAroundMap();
+
 	return S_OK;
 }
 
@@ -417,6 +419,7 @@ void MapManager::changeMap(int pos)
 			{
 				_currentMap = m;
 				_currentMap->setShow(true);
+				debugAroundMap();
 				break;
 			}
 		}
@@ -429,6 +432,7 @@ void MapManager::changeMap(int pos)
 			{
 				_currentMap = m;
 				_currentMap->setShow(true);
+				debugAroundMap();
 				break;
 			}
 		}
@@ -441,6 +445,7 @@ void MapManager::changeMap(int pos)
 			{
 				_currentMap = m;
 				_currentMap->setShow(true);
+				debugAroundMap();
 				break;
 			}
 		}
@@ -453,6 +458,7 @@ void MapManager::changeMap(int pos)
 			{
 				_currentMap = m;
 				_currentMap->setShow(true);
+				debugAroundMap();
 				break;
 			}
 		}
@@ -502,4 +508,47 @@ bool MapManager::isNearCurrentMap(Map * currentmap, Map * targetMap)
 	else if (targetMap->getLocation().x == currentmap->getLocation().x  &&
 		targetMap->getLocation().y == currentmap->getLocation().y + 1) return true;
 	else return false;
+}
+
+void MapManager::debugAroundMap()
+{
+	cout << "-----------------------" << endl;
+	cout << "MapManager::debugAroundMap" << endl;
+	for (Map* m : _vMap)
+	{
+		if (m->getLocation().x == _currentMap->getLocation().x && m->getLocation().y + 1 == _currentMap->getLocation().y)
+		{
+			cout << "위쪽 : ";
+			printMap(m->getMapType());
+		}
+		if (m->getLocation().x == _currentMap->getLocation().x && m->getLocation().y - 1 == _currentMap->getLocation().y)
+		{
+			cout << "아래쪽 : ";
+			printMap(m->getMapType());
+		}
+		if (m->getLocation().x == _currentMap->getLocation().x + 1 && m->getLocation().y == _currentMap->getLocation().y)
+		{
+			cout << "오른쪽 : ";
+			printMap(m->getMapType());
+		}
+		if (m->getLocation().x == _currentMap->getLocation().x - 1 && m->getLocation().y == _currentMap->getLocation().y)
+		{
+			cout << "왼쪽 : ";
+			printMap(m->getMapType());
+		}
+	}
+	cout << "-----------------------" << endl;
+}
+
+void MapManager::printMap(Map::MAPTYPE type)
+{
+	switch (type)
+	{
+	case Map::MAPTYPE::DEFAULT: cout << "일반" << endl; break;
+	case Map::MAPTYPE::BOSS: cout << "보스" << endl; break;
+	case Map::MAPTYPE::SHOP: cout << "상점" << endl; break;
+	case Map::MAPTYPE::REPAIR: cout << "수리" << endl; break;
+	case Map::MAPTYPE::TREASURE: cout << "상자" << endl; break;
+	case Map::MAPTYPE::START: cout << "시작" << endl; break;
+	}
 }

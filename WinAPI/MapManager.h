@@ -57,5 +57,10 @@ public:
 	}
 
 	bool isMinimapToggle()	{ return _tempMinimapToggle; }
+
+public:
+	//debug 
+	void debugAroundMap();
+	void printMap(Map::MAPTYPE type);
 };
 
