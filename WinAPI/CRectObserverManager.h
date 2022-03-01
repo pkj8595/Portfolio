@@ -13,6 +13,7 @@ class DamageEffectManager;
 class Player;
 class ItemManager;
 class ItemSpawner;
+class TextSystemManager;
 
 class CRectObserverManager : public SingletonBase<CRectObserverManager>
 {
@@ -34,6 +35,7 @@ private:
 
 	EffectManager* _effectManager;
 	DamageEffectManager* _damageManager;
+	TextSystemManager* _textSystemManager;
 
 public:
 	HRESULT init(void);

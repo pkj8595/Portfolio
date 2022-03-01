@@ -351,7 +351,7 @@ HRESULT Skill::init(int bulletMax, float range)
 	_skillparticle = new SkillParticle;
 	_skillparticle->init();
 
-	_particleDelay = 0.08f;
+	_particleDelay = 0.045f;
 	_createdTime = TIMEMANAGER->getWorldTime();
 
 	_bulletMax = bulletMax;
@@ -391,7 +391,7 @@ void Skill::fire(float damage, float x, float y, float angle)
 	weapon->img->init("Resource/Images/Lucie/CompleteImg/effect/skillBullet.bmp", 53, 53, true, RGB(255, 0, 255));
 	weapon->fire = true;
 	weapon->magic = true;
-	weapon->speed = 5.0f;
+	weapon->speed = 0.0f;
 	weapon->angle = angle;
 	weapon->damage = damage;
 	weapon->x = weapon->fireX = x;
@@ -418,6 +418,7 @@ void Skill::move()
 		(*_viWeapon)->x += (*_viWeapon)->speed * cos((*_viWeapon)->angle);
 		(*_viWeapon)->y += -1 * (*_viWeapon)->speed * sin((*_viWeapon)->angle);
 		(*_viWeapon)->rc = RectMakeCenter((*_viWeapon)->x, (*_viWeapon)->y, (*_viWeapon)->img->getWidth(), (*_viWeapon)->img->getHeight());
+		(*_viWeapon)->speed += 0.6f;
 		if (_range < getDistance((*_viWeapon)->fireX, (*_viWeapon)->fireY, (*_viWeapon)->x, (*_viWeapon)->y + 100))
 		{
 			(*_viWeapon)->release();

@@ -13,6 +13,7 @@ private:
 	my::Image* _BlackfadeOutImg;
 	my::Image* _bookImg;
 
+
 	Animation* _anim;
 	LobbyPlayer* _player;
 

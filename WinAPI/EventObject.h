@@ -14,8 +14,8 @@ public:
 
 	void init(EventObservedType typeKey, RECT rc, bool* isMapActive,int num);
 	void release(void);
-	void setIsActive(bool* isMapActive) { _isMapActive = isMapActive; }
-	bool getIsActive() { return *_isMapActive; }
+	void setIsMapActive(bool* isMapActive) { _isMapActive = isMapActive; }
+	bool getIsMapActive() { return *_isMapActive; }
 
 	void setIsExcute(bool isExcute) { _isExcute = isExcute; }
 	bool getIsExcute() { return _isExcute; }

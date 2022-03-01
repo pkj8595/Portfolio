@@ -3,6 +3,7 @@
 #include "EffectManager.h"
 #include "PlayScene.h"
 #include "DamageEffectManager.h"
+#include "TextSystemManager.h"
 
 HRESULT CRectObserverManager::init()
 {
@@ -11,6 +12,10 @@ HRESULT CRectObserverManager::init()
 
 	_damageManager = new DamageEffectManager;
 	_damageManager->init();
+
+	_textSystemManager = new TextSystemManager;
+	_textSystemManager->init();
+
 	return S_OK;
 }
 
@@ -23,6 +28,7 @@ void CRectObserverManager::update(void)
 {
 	_effectManager->update();
 	_damageManager->update();
+	//_textSystemManager->update();
 	getRectFromObserved();
 	getEventFormObserved();
 }
@@ -31,6 +37,7 @@ void CRectObserverManager::render(void)
 {
 	_effectManager->render();
 	_damageManager->render();
+	//_textSystemManager->render();
 }
 
 void CRectObserverManager::registerObserved(IRectObserved* observed)
@@ -210,8 +217,10 @@ void CRectObserverManager::getEventFormObserved()
 			{
 				if (KEYMANAGER->isOnceKeyDown('E'))
 				{
-					_player->getInventory()->repairWeapon(40);
-					(*_viEvent)->collideEventObject(obData);
+					if (_player->getInventory()->repairWeapon(40))
+					{
+						(*_viEvent)->collideEventObject(obData);
+					}
 					break;
 				}
 			}

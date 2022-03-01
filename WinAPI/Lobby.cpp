@@ -4,6 +4,8 @@
 
 HRESULT Lobby::init(void)
 {
+	
+
 	IMAGEMANAGER->addImage("Lobby", "Resource/Images/Lucie/CompleteImg/ground/map/ground12.bmp", 1008, 1065);
 	IMAGEMANAGER->addImage("col_Lobby", "Resource/Images/Lucie/CompleteImg/ground/pixelmap/!m12_1.bmp", 1008, 1065);
 	_WhitefadeOutImg = IMAGEMANAGER->addImage("WhiteScreen", "Resource/Images/Lucie/CompleteImg/effect/BookchangeScreen.bmp", 1104, 960);
@@ -30,7 +32,7 @@ HRESULT Lobby::init(void)
 	_fadeOutBlackAlpha = 0;
 	_startAlpha = 255.0f;
 
-	_collBox = false;
+	_tsm->iscollBox = false;
 	_bookOpen = false;
 	return S_OK;
 }
@@ -68,13 +70,11 @@ void Lobby::update(void)
 
 	animation();
 	LobbyCollision();
-
 }
 
 void Lobby::render(void)
 {
 	IMAGEMANAGER->render("Lobby", getMemDC());
-	Rectangle(getMemDC(), _book_rc.left, _book_rc.top, _book_rc.right, _book_rc.bottom);
 
 	_bookImg->frameRender(getMemDC(),_Imgbook_rc.left, _Imgbook_rc.top, _bookImg->getFrameWidth(), _bookImg->getFrameHeight());
 	

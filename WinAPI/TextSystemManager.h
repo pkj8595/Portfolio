@@ -2,6 +2,7 @@
 #include "GameNode.h"
 #define TEXT_MAX 10
 
+
 struct TagText
 {
 	LPCWSTR name;
@@ -12,12 +13,13 @@ struct TagText
 class TextSystemManager :public GameNode
 {
 private:
-	
 	TagText _text[TEXT_MAX];
 	const int SCRIPT_MAX_LENGTH = 55;
-	wstring _itemName;
-	wstring _iteminfo;
-	wstring _price;
+	string _itemName;
+	string _iteminfo;
+	string _text1;
+	string _text2;
+	int _price;
 	int _eventArrText;
 	int _textBufferCnt;
 	int _textindex;
@@ -27,6 +29,7 @@ private:
 	float _selectThreeAlpha;
 
 	RECT _chatRc;			// 팝업 창 rc
+	RECT _chatWriteRc;
 	RECT _boxChatRc;
 	RECT _nameRc;
 	RECT _shopsel_OneRc;
@@ -34,8 +37,9 @@ private:
 	RECT _select_oneRc;
 	RECT _select_TwoRc;
 	RECT _select_ThrRc;
+	
 
-	LPCWSTR Shop_talk[2];	//wstring -> LPCWSTR로 변환할 변수
+
 	my::Image* _chatImage;
 	my::Image* _BoxchatImage;
 	my::Image* _nameImage;
@@ -46,16 +50,18 @@ public:
 	void release(void);
 	void update(void);
 	void render(void);
-	void ShopLog(wstring itemName, wstring iteminfo, wstring price);
+	void ShopLog(string itemName, string iteminfo, int price);
 	void ShopLog(string itemName, int price);
 	void EventLog(int arrText);
 
-	bool iscollText;
+	bool isEventText;
+	bool isShowText;
 	bool iscollBox;
 	bool isShopcol;
 	bool isWeaponSword;
 	bool isWeaponBow;
 	bool isWeaponEmpty;
+	bool isShopbuy;
 
 	TextSystemManager() {}
 	~TextSystemManager() {}

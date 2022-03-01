@@ -148,7 +148,7 @@ public:
 	string changeAttributeToStr(CPlayer_Attribute attri);
 
 	void decreaseDurability(int dufault = 30);
-	void repairWeapon(int gold);
+	bool repairWeapon(int gold);
 
 	//==========================
 	// ### Player Equipment ###

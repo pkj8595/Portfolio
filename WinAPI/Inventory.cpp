@@ -129,7 +129,7 @@ void Inventory::render(void)
 			}
 			else if (_isRepair)
 			{
-				_messageStr = "무기가 반짝인다.";
+				_messageStr = "무기가 반짝거린다.";
 			}
 			else if (_isInventoryFull)
 			{
@@ -774,10 +774,21 @@ void Inventory::decreaseDurability(int dufault)
 
 }
 
-void Inventory::repairWeapon(int gold)
+bool Inventory::repairWeapon(int gold)
 {
-	_gold -= gold;
-	_equipWeapon->_durability = _equipWeapon->_maxDurability;
-	_isRepair = true;
-	_messageWorldTime = TIMEMANAGER->getWorldTime();
+	if (_gold > gold)
+	{
+		_gold -= gold;
+		_equipWeapon->_durability = _equipWeapon->_maxDurability;
+		_isRepair = true;
+		_messageWorldTime = TIMEMANAGER->getWorldTime();
+		return true;
+	}
+	else
+	{
+		_isbuyItemfail = true;
+		_messageWorldTime = TIMEMANAGER->getWorldTime();
+		return false;
+	}
+	
 }
