@@ -25,7 +25,7 @@ HRESULT ChestMap::init(POINT location)
 	_location = location;
 
 	_chestEventObj = new EventObject;
-	_chestEventRc = RectMakeCenter(CENTER_X, CENTER_Y + 200, 32, 32);
+	_chestEventRc = RectMakeCenter(CENTER_X, CENTER_Y, 32, 32);
 	_chestEventObj->init(EventObservedType::CHEST, _chestEventRc, &_isActive, 0);
 
 
