@@ -23,6 +23,7 @@ STObservedData tagWeapon::getRectUpdate()
 	temp.isActive = &fire;
 	temp.angle = &angle;
 	temp.damage = &damage;
+	temp.magic = &magic;
 	return temp;
 }
 
@@ -70,6 +71,7 @@ void NormalWeapon::fire(float damage, float x, float y, float angle)
 	weapon->img = new my::Image;
 	weapon->img->init("Resource/Images/Lucie/CompleteImg/effect/NormalBullet_effect.bmp", 50, 50, true, RGB(255, 0, 255));
 	weapon->fire = true;
+	weapon->magic = false;
 	weapon->speed = 30.0f;
 	weapon->angle = angle;
 	weapon->damage = damage;
@@ -171,6 +173,7 @@ void SwordWeapon::fire(float damage, int combo, int direction)
 	effect->weaponTick = TIMEMANAGER->getWorldTime();
 	effect->img->setFrameX(0);
 	effect->sword = true;
+	effect->magic = false;
 	(combo == 0) ? effect->firstHit = true : effect->firstHit = false;
 	switch (direction)
 	{
@@ -276,6 +279,7 @@ void BowWeapon::fire(float damage, float x, float y, float angle)
 	weapon->fire = true;
 	weapon->speed = 30.0f;
 	weapon->angle = angle;
+	weapon->magic = false;
 	weapon->damage = damage;
 	weapon->x = weapon->fireX = x;
 	weapon->y = weapon->fireY = y;
@@ -342,3 +346,116 @@ void BowWeapon::removeBullet(int index)
 	_vWeapon.erase(_vWeapon.begin() + index);
 }
 
+HRESULT Skill::init(int bulletMax, float range)
+{
+	_skillparticle = new SkillParticle;
+	_skillparticle->init();
+
+	_particleDelay = 0.045f;
+	_createdTime = TIMEMANAGER->getWorldTime();
+
+	_bulletMax = bulletMax;
+	_range = range;
+	return S_OK;
+}
+
+void Skill::release(void)
+{
+	_viWeapon = _vWeapon.begin();
+	for (; _viWeapon != _vWeapon.end(); ++_viWeapon)
+	{
+		SAFE_DELETE((*_viWeapon)->img);
+	}
+	_vWeapon.clear();
+}
+
+void Skill::update(void)
+{
+	_skillparticle->update();
+	move();
+	createParticle();
+}
+
+void Skill::render(void)
+{
+	_skillparticle->render();
+	draw();
+}
+
+void Skill::fire(float damage, float x, float y, float angle)
+{
+	if (_bulletMax <= _vWeapon.size()) return;
+	tagWeapon* weapon = new tagWeapon;
+	weapon->type = ObservedType::ROCKET_MISSILE;
+	weapon->img = new my::Image;
+	weapon->img->init("Resource/Images/Lucie/CompleteImg/effect/skillBullet.bmp", 53, 53, true, RGB(255, 0, 255));
+	weapon->fire = true;
+	weapon->magic = true;
+	weapon->speed = 0.0f;
+	weapon->angle = angle;
+	weapon->damage = damage;
+	weapon->x = weapon->fireX = x;
+	weapon->y = weapon->fireY = y;
+	weapon->rc = RectMakeCenter(weapon->x, weapon->y, weapon->img->getWidth(), weapon->img->getHeight());
+	_vWeapon.push_back(weapon);
+	weapon->init();
+}
+
+void Skill::draw()
+{
+	_viWeapon = _vWeapon.begin();
+	for (; _viWeapon != _vWeapon.end(); ++_viWeapon)
+	{
+		(*_viWeapon)->img->render(getMemDC(), (*_viWeapon)->rc.left, (*_viWeapon)->rc.top);
+	}
+}
+
+void Skill::move()
+{
+	_viWeapon = _vWeapon.begin();
+	for (; _viWeapon != _vWeapon.end();)
+	{
+		(*_viWeapon)->x += (*_viWeapon)->speed * cos((*_viWeapon)->angle);
+		(*_viWeapon)->y += -1 * (*_viWeapon)->speed * sin((*_viWeapon)->angle);
+		(*_viWeapon)->rc = RectMakeCenter((*_viWeapon)->x, (*_viWeapon)->y, (*_viWeapon)->img->getWidth(), (*_viWeapon)->img->getHeight());
+		(*_viWeapon)->speed += 0.6f;
+		if (_range < getDistance((*_viWeapon)->fireX, (*_viWeapon)->fireY, (*_viWeapon)->x, (*_viWeapon)->y + 100))
+		{
+			(*_viWeapon)->release();
+			SAFE_DELETE((*_viWeapon)->img);
+			_viWeapon = _vWeapon.erase(_viWeapon);
+		}
+		else if (!(*_viWeapon)->fire)
+		{
+			(*_viWeapon)->release();
+			SAFE_DELETE((*_viWeapon)->img);
+			_viWeapon = _vWeapon.erase(_viWeapon);
+		}
+		else
+		{
+			++_viWeapon;
+		}
+	}
+}
+
+void Skill::createParticle()
+{
+	if (_vWeapon.size() == 0) return;
+	if (_createdTime + _particleDelay < TIMEMANAGER->getWorldTime())
+	{
+		_viWeapon = _vWeapon.begin();
+		for (; _viWeapon != _vWeapon.end(); ++_viWeapon)
+		{
+			_skillparticle->createParticle((*_viWeapon)->x - 15, (*_viWeapon)->y - 12);
+		}
+		_createdTime = TIMEMANAGER->getWorldTime();
+	}
+	else return;
+}
+
+void Skill::removeBullet(int index)
+{
+	_vWeapon[index]->release();
+	SAFE_DELETE(_vWeapon[index]->img);
+	_vWeapon.erase(_vWeapon.begin() + index);
+}

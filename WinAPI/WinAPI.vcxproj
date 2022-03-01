@@ -196,6 +196,7 @@
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="MainGame.cpp" />
+    <ClCompile Include="SkillParticle.cpp" />
     <ClCompile Include="Slime.cpp" />
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="StartMap.cpp" />
@@ -270,6 +271,7 @@
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="RandomFunction.h" />
     <ClInclude Include="SingletonBase.h" />
+    <ClInclude Include="SkillParticle.h" />
     <ClInclude Include="Slime.h" />
     <ClInclude Include="Snake.h" />
     <ClInclude Include="StartMap.h" />
