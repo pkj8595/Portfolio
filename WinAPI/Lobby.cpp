@@ -32,7 +32,7 @@ HRESULT Lobby::init(void)
 	_fadeOutBlackAlpha = 0;
 	_startAlpha = 255.0f;
 
-	_collBox = false;
+	_tsm->iscollBox = false;
 	_bookOpen = false;
 	return S_OK;
 }
@@ -70,7 +70,6 @@ void Lobby::update(void)
 
 	animation();
 	LobbyCollision();
-
 }
 
 void Lobby::render(void)

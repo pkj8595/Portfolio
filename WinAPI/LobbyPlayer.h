@@ -1,10 +1,10 @@
 #pragma once
 #pragma once
 #include "GameNode.h"
-	//#include "ItemClass.h"
 #include "PlayerWeapon.h"
 #include "PlayerStatusUI.h"
 #include "Inventory.h"
+#include "TextSystemManager.h"
 
 class LobbyPlayer : public GameNode
 {
@@ -15,7 +15,7 @@ private:
 	enum class PLAYER_DIRECTION { LEFTDOWN, DOWN, RIGHTDOWN, LEFT, RIGHT, LEFTUP, UP, RIGHTUP };
 	my::Image* _image;
 	int _level;
-
+	TextSystemManager* _tsm;
 	PLAYER_STATE _state;
 	PLAYER_DIRECTION _direction;
 	RECT _rc;

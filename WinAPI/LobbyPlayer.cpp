@@ -51,6 +51,10 @@ HRESULT LobbyPlayer::init(void)
 	_statusUI = new PlayerStatusUI;
 	_statusUI->init(&_totalStatus, &_level);
 
+	_tsm = new TextSystemManager;
+	_tsm->init();
+	_tsm->iscollBox = false;
+
 	_inventory = new Inventory;
 	_inventory->init();
 	_inventory->setPTotalattribute(&_totalStatus);
@@ -65,10 +69,12 @@ HRESULT LobbyPlayer::init(void)
 void LobbyPlayer::release(void)
 {
 	_inventory->release();
+	_tsm->release();
 }
 
 void LobbyPlayer::update(void)
 {
+
 	if (_state == PLAYER_STATE::WALK || _state == PLAYER_STATE::STOP)
 	{
 		setDirectionByKeyInput();
@@ -82,6 +88,7 @@ void LobbyPlayer::update(void)
 
 	healStamina();
 
+	_tsm->update();
 	if (!_isTextShow)
 	{
 		move();

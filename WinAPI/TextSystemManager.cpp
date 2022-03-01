@@ -2,6 +2,7 @@
 #include "Stdafx.h"
 #include "TextSystemManager.h"
 
+
 HRESULT TextSystemManager::init(void)
 {
 	_chatImage = IMAGEMANAGER->addImage("Talkbox","Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 850, 200, true, RGB(255, 0, 255));
@@ -13,8 +14,11 @@ HRESULT TextSystemManager::init(void)
 	_textindex = 0;
 	_eventArrText = 0;
 
-	iscollText = false;
+	isShowText = false;
 	iscollBox = false;
+
+	_text1 = "";
+	_text2 = "";
 
 	_text[0] = { L"", L"기본 무기 중 하나를 가져갈 수 있다. 어떤 종류를 가져갈까?" };
 	_text[1] = { L"", L"아무 것도 안 들어있겠지?" };
@@ -23,6 +27,7 @@ HRESULT TextSystemManager::init(void)
 	_text[4] = { L"", L"잠겨있어." };
 
 	_chatRc = RectMake(WINSIZE_X*0.08, WINSIZE_Y*0.75, _chatImage->getWidth(), _chatImage->getHeight());
+	_chatWriteRc = RectMake(WINSIZE_X*0.1, WINSIZE_Y*0.77, _chatImage->getWidth(), _chatImage->getHeight());
 	_boxChatRc = RectMake(WINSIZE_X*0.08, WINSIZE_Y*0.72, _chatImage->getWidth(), _chatImage->getHeight());
 	_nameRc = RectMake(WINSIZE_X*0.06, WINSIZE_Y*0.68, _nameImage->getWidth(), _nameImage->getHeight());
 
@@ -31,7 +36,6 @@ HRESULT TextSystemManager::init(void)
 	_select_oneRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.79, _selImage->getWidth(), _selImage->getHeight());
 	_select_TwoRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.84, _selImage->getWidth(), _selImage->getHeight());
 	_select_ThrRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.89, _selImage->getWidth(), _selImage->getHeight());
-
 	
 	return S_OK;
 }
@@ -43,33 +47,29 @@ void TextSystemManager::release(void)
 
 void TextSystemManager::update(void)
 {
-	
-	if (iscollText) 
+	if (isShowText)
 	{ 
-		_textBufferCnt += 1; 
+		_textBufferCnt += 1;
 		_textAlpha += 4.0f; 
 	}
-	if (!iscollText) 
+	if (!isShowText)
 	{
 		_textBufferCnt = 0; 
 		_textindex = 0;
 	}
 	if (_textAlpha >= 230.0f) { _textAlpha = 230.0f; }
 	
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && iscollText)
-	{
-		if (_textBufferCnt < wcslen(Shop_talk[_textindex]))
-		{
-			_textBufferCnt = wcslen(Shop_talk[_textindex]);
-		}
-		else if (_textindex == 1)
-		{
+	
 
+	if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && isShowText)
+	{
+		if (_textBufferCnt < _text1.size())
+		{
+			_textBufferCnt = _text1.size();
 		}
-		else 
-		{ 
-			_textBufferCnt = 0;
-			_textindex++;
+		else
+		{
+			_textindex = 1;
 			isShopcol = true;
 		}
 	}
@@ -80,10 +80,6 @@ void TextSystemManager::update(void)
 		if (PtInRect(&_select_oneRc, _ptMouse))
 		{
 			_selectOneAlpha = 230.0f;
-			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
-			{
-				
-			}
 		}
 		else 
 		{ 
@@ -114,6 +110,10 @@ void TextSystemManager::update(void)
 		if (PtInRect(&_shopsel_OneRc, _ptMouse))
 		{
 			_selectOneAlpha = 230.0f;
+			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			{
+				isShopbuy = true;
+			}
 		}
 		else
 		{
@@ -123,6 +123,11 @@ void TextSystemManager::update(void)
 		if (PtInRect(&_shopsel_TwoRc, _ptMouse))
 		{
 			_selectTwoAlpha = 230.0f;
+			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			{
+				isShowText = false;
+				isShopcol = false;
+			}
 		}
 		else
 		{
@@ -137,23 +142,37 @@ void TextSystemManager::render(void)
 	EventLog(_eventArrText);
 }
 
-void TextSystemManager::ShopLog(wstring itemName, wstring iteminfo, wstring price)
+void TextSystemManager::ShopLog(string itemName, string iteminfo, int price)
 {
 
 	_itemName = itemName;
 	_iteminfo = iteminfo;
 	_price = price;
 
-	wstring text = L"그건 " + _itemName + L". " + _iteminfo + L".";
-	wstring text2 = L"가격은 " + _price + L" 골드인데, 살래?";
-	
-	Shop_talk[0] = text.c_str();
-	Shop_talk[1] = text2.c_str();
+	_text1 = "그건 " + _itemName + ". " + _iteminfo + "야.";
+	_text2 = "가격은 " + to_string(_price) + "인데, 살래?";
+
+	char* shop_talk1 = new char[_text1.size() + 1];
+	copy(_text1.begin(), _text1.end(), shop_talk1);
+	shop_talk1[_text1.size()] = '\0';
+
+	char* shop_talk2 = new char[_text2.size() + 1];
+	copy(_text2.begin(), _text2.end(), shop_talk2);
+	shop_talk2[_text2.size()] = '\0';
 
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
 	IMAGEMANAGER->alphaRender("Namebox", getMemDC(), _nameRc.left, _nameRc.top, _textAlpha);
 	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "둥근모꼴", 27, 15,
 		L"마리", wcslen(L"마리"), RGB(0, 0, 255));
+
+	if (_textindex == 0)
+	{
+		FONTMANAGER->drawText(getMemDC(), _chatWriteRc, "둥근모꼴", 27, 15, shop_talk1, ((_textBufferCnt) > strlen(shop_talk1) ? strlen(shop_talk1) : (_textBufferCnt)), RGB(255, 255, 255));
+	}
+	else if (_textindex == 1)
+	{
+		FONTMANAGER->drawText(getMemDC(), _chatWriteRc, "둥근모꼴", 27, 15, shop_talk2, ((_textBufferCnt) > strlen(shop_talk2) ? strlen(shop_talk2) : (_textBufferCnt)), RGB(255, 255, 255));
+	}
 
 	if (isShopcol)
 	{
@@ -164,9 +183,9 @@ void TextSystemManager::ShopLog(wstring itemName, wstring iteminfo, wstring pric
 		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.11, WINSIZE_Y*0.89, "둥근모꼴", 27, 15,
 			L"아니.", wcslen(L"아니."), RGB(255, 255, 255));
 	}
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.14, WINSIZE_Y*0.78, "둥근모꼴", 27, 15,
-		Shop_talk[_textindex], ((_textBufferCnt / 4) > wcslen(Shop_talk[_textindex]) ? wcslen(Shop_talk[_textindex]) : (_textBufferCnt / 4)), RGB(255, 255, 255));
-
+	
+	delete[] shop_talk1;
+	delete[] shop_talk2;
 }
 
 void TextSystemManager::ShopLog(string itemName, int price)
