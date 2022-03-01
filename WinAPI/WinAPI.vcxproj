@@ -148,6 +148,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="BigSlime.cpp" />
     <ClCompile Include="BossMap.cpp" />
+    <ClCompile Include="BowParticle.cpp" />
     <ClCompile Include="Bullets.cpp" />
     <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="ChestMap.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="BigSlime.h" />
     <ClInclude Include="BossMap.h" />
+    <ClInclude Include="BowParticle.h" />
     <ClInclude Include="Bullets.h" />
     <ClInclude Include="CEffect.h" />
     <ClInclude Include="ChestMap.h" />

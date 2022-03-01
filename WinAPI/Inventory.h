@@ -101,6 +101,7 @@ class Inventory : public GameNode
 
 	//todo
 	int _gold;
+	RECT _goldRc;
 
 public:
 	HRESULT init(void);
@@ -131,19 +132,26 @@ public:
 		_pAttribute = att;
 	}
 
+	int getGold() { return _gold; }
+	void setGold(int gold) { _gold = gold; }
+
 	string changeItemTypeToStr(EITEM_TYPE type);
 	string changeAttributeToStr(CPlayer_Attribute attri);
+
+	void decreaseDurability(int dufault = 8);
+	void repairWeapon(int gold);
 
 	//==========================
 	// ### Player Equipment ###
 	//==========================
 	//인벤토리 아이템 추가
+	bool buyItem(int num);
 	void pushItem(Item* item);
 	void pushItem(int num);
 	inline void updatePushItemMassege(Item* item);
 	void renderPushItemMassege();
 
-	void inventorydrawText(std::string &str, const RECT &massgeRc);
+	void inventorydrawText(std::string &str, const RECT &massgeRc,int fontsize, COLORREF color,bool isCenter);
 
 	//총 아이템 능력치 합산
 	void computeItemTotalAttribute();

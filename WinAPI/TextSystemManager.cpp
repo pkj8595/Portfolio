@@ -165,6 +165,11 @@ void TextSystemManager::ShopLog(wstring itemName, wstring iteminfo, wstring pric
 
 }
 
+void TextSystemManager::ShopLog(string itemName, int price)
+{
+
+}
+
 void TextSystemManager::EventLog(int arrText)
 {
 	_eventArrText = arrText;

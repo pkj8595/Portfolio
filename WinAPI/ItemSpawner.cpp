@@ -1,6 +1,7 @@
 #include "Stdafx.h"
 #include "ItemSpawner.h"
 #include "Map.h"
+#include "ItemManager.h"
 
 //============================
 //   ### ItemObject ###
@@ -24,6 +25,24 @@ HRESULT ItemObject::init(int x, int y, bool isCollider)
 	_moveOffsetTime =_responseTime = _worldTime = TIMEMANAGER->getWorldTime();
 	_map = nullptr;
 	
+	RECTOBSERVERMANAGER->registerObserved(this);
+	return S_OK;
+}
+
+HRESULT ItemObject::init(int x, int y, bool isCollider, int itemIndex)
+{
+	_x = (float)x;
+	_y = (float)y;
+	_isCollider = isCollider;
+	_rc = RectMakeCenter(_x, _y, ITEM_OBJ_SIZE, ITEM_OBJ_SIZE);
+	_typeKey = ObservedType::ITEM;
+	_itemManager = ItemManager::getSingleton();
+	_itemIndex = itemIndex;
+	_increaseY = false;
+	_isActive = true;
+	_moveOffsetTime = _responseTime = _worldTime = TIMEMANAGER->getWorldTime();
+	_map = nullptr;
+
 	RECTOBSERVERMANAGER->registerObserved(this);
 	return S_OK;
 }
@@ -76,6 +95,7 @@ void ItemObject::collideObject(STObservedData obData)
 		if (TIMEMANAGER->getWorldTime() > _responseTime + 1.0f)
 		{
 			_isActive = false;
+			release();
 		}
 	}
 }
@@ -141,15 +161,6 @@ void ItemSpawner::render(void)
 	}
 }
 
-int ItemSpawner::createItem(int x, int y, bool isCollider)
-{
-	ItemObject* itemObj = new ItemObject;
-	itemObj->init(x, y, isCollider);
-	itemObj->setMap(*_currentMap);
-	_vItemObj.push_back(itemObj);
-	return itemObj->getItemIndex();
-}
-
 void ItemSpawner::clearItem(void)
 {
 	_viItemObj = _vItemObj.begin();
@@ -160,13 +171,52 @@ void ItemSpawner::clearItem(void)
 	_vItemObj.clear();
 }
 
-int ItemSpawner::createItemMapInit(int x, int y, bool isCollider, Map* map)
+
+int ItemSpawner::createItem(int x, int y, bool isCollider)
+{
+	ItemObject* itemObj = new ItemObject;
+	itemObj->init(x, y, isCollider);
+	itemObj->setMap(*_currentMap);
+	_vItemObj.push_back(itemObj);
+	return itemObj->getItemIndex();
+}
+int ItemSpawner::createItem(int x, int y, bool isCollider, int itemIndex)
+{
+	ItemObject* itemObj = new ItemObject;
+	itemObj->init(x, y, isCollider,itemIndex);
+	itemObj->setMap(*_currentMap);
+	_vItemObj.push_back(itemObj);
+	return itemObj->getItemIndex();
+}
+int ItemSpawner::createChestItem(int x, int y, bool isCollider)
+{
+	ItemObject* itemObj = new ItemObject;
+	itemObj->init(x, y, isCollider, RND->getFromIntTo(14,34));
+	itemObj->setMap(*_currentMap);
+	_vItemObj.push_back(itemObj);
+	return itemObj->getItemIndex();
+}
+
+ItemObject* ItemSpawner::createItemMapInit(int x, int y, bool isCollider, Map* map)
 {
 	ItemObject* itemObj = new ItemObject;
 	itemObj->init(x, y, isCollider);
 	itemObj->setMap(map);
 	_vItemObj.push_back(itemObj);
-	return itemObj->getItemIndex();
+	return itemObj;
+}
+
+ItemObject* ItemSpawner::createItemMapInit(int x, int y, bool isCollider)
+{
+	ItemObject* itemObj = new ItemObject;
+	itemObj->init(x, y, isCollider);
+	itemObj->setMap(*_currentMap);
+	_vItemObj.push_back(itemObj);
+	return itemObj;
+}
+
+void ItemSpawner::removeItem(ItemObject * itemObject)
+{
 }
 
 void ItemSpawner::setCurrentMap(Map** cmap)

@@ -20,6 +20,7 @@ public:
 	void createEffect(const char* fileName,RECT rc);
 	void createEffect(const char* fileName,RECT* rc);
 	void createEffect(const char* fileName,RECT rc, float count);
+	void createEffect(const char* fileName,RECT* rc, float count, float fixX, float fixY);
 
 	EffectManager() {}
 	~EffectManager() {}

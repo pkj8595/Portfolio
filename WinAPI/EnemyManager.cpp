@@ -10,7 +10,7 @@
 #include "ForestFairy.h"
 #include "MushMan.h"
 #include "Mushroom.h"
-
+#include "ItemSpawner.h"
 
 bool EnemyManager::checkClear()
 {
@@ -44,8 +44,7 @@ HRESULT EnemyManager::init(void)
 	IMAGEMANAGER->addFrameImage("Rafflesia", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Rafflesia.bmp", 240, 549, 3, 9, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ForestFairy", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Forestfairy.bmp", 168, 930, 3, 10, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("MushMan", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Mushman.bmp", 384, 550, 8, 10, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addImage("Mushroom", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Mushroom.bmp",13,13, true, RGB(255, 0, 255));
-
+	IMAGEMANAGER->addImage("Mushroom", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Mushroom.bmp", 13, 13, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addFrameImage("KingSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 1080, 7560, 3, 21, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("BigSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 576, 4032, 3, 21, true, RGB(255, 0, 255));
@@ -242,6 +241,7 @@ void EnemyManager::checkActive(void)
 			else
 			{
 				_efm->createEffect("Dead", (*_viMinion)->getRect(), 0.002f);
+				ItemSpawner::getSingleton()->createItem((*_viMinion)->getX(), (*_viMinion)->getY(), true);
 				_pPlayer->addExp((*_viMinion)->getExp());
 				(*_viMinion)->release();
 				SAFE_DELETE(*_viMinion);

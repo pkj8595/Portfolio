@@ -11,6 +11,8 @@ IRectObserved >> 플레이어 , 플미, 적미사일, 적
 class EffectManager;
 class DamageEffectManager;
 class Player;
+class ItemManager;
+class ItemSpawner;
 
 class CRectObserverManager : public SingletonBase<CRectObserverManager>
 {
@@ -45,8 +47,8 @@ public:
 	virtual void registerPlayer(Player* player);
 	virtual void registerEventObserved(IEventObservered* observed);
 	virtual void removeEventObserved(IEventObservered* observed);
-	virtual void getEventFormObserved();
 
+	virtual void getEventFormObserved();
 	virtual void getRectFromObserved();
 
 	void registerEffectManagerAddress(EffectManager* ef) {

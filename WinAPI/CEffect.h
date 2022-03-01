@@ -11,8 +11,8 @@ public:
 	int _currentFrameY;
 
 	float _x, _y;
-	float* _px;
-	float* _py;
+	float _fixX, _fixY;
+	RECT* _prc;
 	float _rndTimeCount;
 	float _worldTimeCount;
 	float _isActive;
@@ -20,6 +20,7 @@ public:
 	HRESULT init(void);
 	virtual HRESULT init(const char* imageName, RECT rc);
 	virtual HRESULT init(const char* imageName, RECT rc, float count);
+	virtual HRESULT init(const char* imageName, RECT* rc, float count, float fixX, float fixY);
 	void release(void);
 	void update(void);
 	void render(void);

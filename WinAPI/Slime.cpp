@@ -421,6 +421,8 @@ void Slime::collideObject(STObservedData obData)
 		else
 		{
 			_hp -= (*obData.damage);
+			_x += cos(*obData.angle) * 5;
+			_y += -sin(*obData.angle) * 5;
 		}
 		(*obData.isActive) = false;
 	}

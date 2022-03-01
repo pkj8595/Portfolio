@@ -23,9 +23,11 @@ HRESULT MushMan::init(const char * imageName, POINT position)
 	_deadForOb = false;
 	_mushroomCreateCheck = false;
 	_moveWorldTime = TIMEMANAGER->getWorldTime();
+	_plantMushroomWorldTime = TIMEMANAGER->getWorldTime();
+	_attackWorldTime = TIMEMANAGER->getWorldTime();
 
 	_mushroom = new Mushroom;
-	_mushroom->init("Mushroom",PointMake(_x-6, _y+6));
+	_mushroom->init("Mushroom",PointMake(_x-6, _y));
 
 	return S_OK;
 }
@@ -42,12 +44,30 @@ void MushMan::update(void)
 	Enemy::update();
 	_mushroom->update();
 
+
 	if (!_deadForOb)
 	{
-		randomPosCreate();
+		if (KEYMANAGER->isOnceKeyDown('1'))
+			_mushroomCreateCheck = false;
 
-		createBullet();
+		if (_mushroomCreateCheck)
+		{
+			if (15.f + _attackWorldTime < TIMEMANAGER->getWorldTime())
+			{
+				_attackWorldTime = TIMEMANAGER->getWorldTime();
+			}
+			
+		}
 
+		//이미 심어져 있는 경우를 제외하고 10초마다 한번씩 심는다 
+		if (10.f + _plantMushroomWorldTime < TIMEMANAGER->getWorldTime() && !_mushroomCreateCheck)
+		{
+			_plantMushroomWorldTime = TIMEMANAGER->getWorldTime();
+			_state = MUSHMANSTATE::MU_ATTACK;
+		}
+
+		if(_state != MUSHMANSTATE::MU_ATTACK)
+			randomPosCreate();
 	}
 	else
 	{
@@ -85,9 +105,14 @@ void MushMan::animation(void)
 
 		if (_currentFrameX > _maxFrame)
 		{
-			_currentFrameX = 0;
+			if (_state == MUSHMANSTATE::MU_ATTACK)
+			{
+				_currentFrameX = 6;
+				_state = MUSHMANSTATE::MU_MOVE;
+			}
+			//else
+				_currentFrameX = 0;
 		}
-
 		_image->setFrameX(_currentFrameX);
 	}
 }
@@ -142,8 +167,9 @@ void MushMan::frame()
 		break;
 
 	case MUSHMANSTATE::MU_ATTACK:
-			_currentFrameY = 9;
-			_maxFrame = 6;
+		_currentFrameY = 9;
+		_maxFrame = 6;
+		createBullet();
 		break;
 
 	case MUSHMANSTATE::MU_DEAD:
@@ -213,13 +239,19 @@ void MushMan::randomMove()
 
 void MushMan::createBullet()
 {
-	_state = MUSHMANSTATE::MU_ATTACK;
+	//_state = MUSHMANSTATE::MU_ATTACK;
+
 	//if (5.f + _bulletFireCount <= TIMEMANAGER->getWorldTime())
 	//{
 	//	_bulletFireCount = TIMEMANAGER->getWorldTime();
-		if (_currentFrameX == _maxFrame)
-			_mushroomCreateCheck = true;
+	if (_currentFrameX == _maxFrame)
+	{
+		_mushroom->setPos(_x, _y +13);
+		_mushroomCreateCheck = true; //버섯 심음
+	}
+
 	//}
+
 }
 
 STObservedData MushMan::getRectUpdate()

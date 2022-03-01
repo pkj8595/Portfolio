@@ -5,6 +5,8 @@
 HRESULT Player::init(void)
 {
 	RECTOBSERVERMANAGER->registerObserved(this);
+	RECTOBSERVERMANAGER->registerPlayer(this);
+
 	_type = ObservedType::ROCKET;
 	_image = IMAGEMANAGER->addFrameImage("Player", "Resource/Images/Lucie/CompleteImg/Player/Player.bmp", 600, 4100, 6, 41, true, RGB(255, 0, 255));
 	_swordStackImage = IMAGEMANAGER->addImage("SwordStack", "Resource/Images/Lucie/CompleteImg/system/ruby.bmp", 13, 14, true, RGB(255, 0, 255));
@@ -48,7 +50,6 @@ HRESULT Player::init(void)
 	_status._offencePower = 10.0f;
 	_status._magicPower = 10.0f;
 	_status._speed = 2.0f;
-	//_status._speed = 8.0f;
 	_status._damageBalance = 0.0f;
 	_status._experience = 0.0f;
 	_status._maxExperience = 100.0f;
@@ -258,7 +259,6 @@ void Player::collideObject(STObservedData obData)
 		//*obData.isActive -> item -> isCollider
 		if (*obData.isActive)
 		{
-			*obData.isActive = false;
 			//*obData.angle -> item -> respoenseTime
 			if (TIMEMANAGER->getWorldTime() > *obData.angle + 1.0f)
 			{
@@ -279,7 +279,7 @@ void Player::collideObject(STObservedData obData)
 					_bowStack++;
 					if (_bowStack == 5)
 					{
-						_efm->createEffect("WindEffect", &_rc);
+						_efm->createEffect("WindEffect", &_rc, 0.1f, -100, -100);
 					}
 				}
 			}
@@ -882,7 +882,7 @@ void Player::setLevelUp()
 		_status._experience -= _totalStatus._maxExperience;
 		_status._maxExperience *= 1.3f;
 		_status._offencePower += 1.0f;
-		_efm->createEffect("Levelup", {_rc.left, _rc.top - 50, _rc.right, _rc.bottom - 50 });
+		_efm->createEffect("Levelup", &_rc, 0.1f, -90, -150);
 	}
 }
 void Player::setDead()
@@ -893,6 +893,12 @@ void Player::printHitBG()
 {
 	if (_hitAlpha > 0) _hitBG->alphaRender(getMemDC(), _hitAlpha);
 	if (_dodgeAlpha > 0) _dodgeBG->alphaRender(getMemDC(), _dodgeAlpha);
+}
+void Player::addExp(int exp)
+{
+	_status._experience += exp;
+	_inventory->decreaseDurability();
+	_inventory->setGold(_inventory->getGold() + 8);
 }
 void Player::printStack()
 {

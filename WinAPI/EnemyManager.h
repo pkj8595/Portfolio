@@ -5,6 +5,7 @@
 #include "EffectManager.h"
 
 class Player;
+class ItemSpawner;
 class EnemyManager: public GameNode
 {
 private:

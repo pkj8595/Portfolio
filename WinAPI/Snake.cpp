@@ -387,6 +387,8 @@ void Snake::collideObject(STObservedData obData)
 		else
 		{
 			_hp -= (*obData.damage);
+			_x += cos(*obData.angle) * 7;
+			_y += -sin(*obData.angle) * 7;
 		}
 		(*obData.isActive) = false;
 	}

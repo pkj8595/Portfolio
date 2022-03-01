@@ -1,6 +1,7 @@
 #pragma once
 #include "GameNode.h"
 #include "IRectObserved.h"
+#include "BowParticle.h"
 
 class tagWeapon : public IRectObserved
 {
@@ -91,6 +92,10 @@ class BowWeapon : public GameNode
 private:
 	vector<tagWeapon*> _vWeapon;
 	vector<tagWeapon*>::iterator _viWeapon;
+	BowParticle* _bowparticle;
+
+	float _particleDelay;
+	float _createdTime;
 
 	float _range;
 	int _bulletMax;
@@ -104,6 +109,7 @@ public:
 	void fire(float damage, float x, float y, float angle);
 	void draw();
 	void move();
+	void createParticle();
 
 	bool isFiring()
 	{

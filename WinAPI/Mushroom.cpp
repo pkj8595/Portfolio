@@ -12,8 +12,8 @@ Mushroom::~Mushroom()
 HRESULT Mushroom::init(const char* imageName, POINT position)
 {
 	Enemy::init(imageName,position);
-	_x = position.x;
-	_y = position.y;
+	//_x = position.x;
+	//_y = position.y;
 	_hp = 30;
 	
 	
@@ -28,6 +28,8 @@ void Mushroom::release(void)
 void Mushroom::update(void)
 {
 	Enemy::update();
+
+	_rc = RectMakeCenter(_x, _y, _image->getWidth(), _image->getHeight());
 }
 
 void Mushroom::render(void)

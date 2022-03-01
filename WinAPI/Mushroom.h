@@ -19,6 +19,9 @@ public:
 	void animation(void);
 
 public:
+	void setPos(float x, float y) { _x = x, _y = y;}
+
+public:
 	virtual STObservedData getRectUpdate();
 	virtual void collideObject(STObservedData obData);
 

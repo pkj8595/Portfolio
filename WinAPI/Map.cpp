@@ -1,6 +1,7 @@
 #include "Stdafx.h"
 #include "Map.h"
 
+
 HRESULT Map::init(POINT location)
 {
 	return S_OK;
@@ -12,16 +13,30 @@ void Map::release(void)
 
 void Map::update(void)
 {
+
 }
 
 void Map::render(void)
 {
-	
+
 }
 
 void Map::showMinimapIcon(int x, int y)
 {
 	_minimapImage->render(getMemDC(), x + _minimapImage->getWidth() * _location.x, y + _minimapImage->getHeight() * _location.y);
+}
+
+bool Map::checkActiveMap()
+{
+	if (*_currentMap != this)
+	{
+		_isActive = false;
+	}
+	else
+	{
+		_isActive = true;;
+	}
+	return _isActive;
 }
 
 void Map::printOutsideRC()
