@@ -720,3 +720,9 @@ void Inventory::decreaseDurability(int dufault)
 	}
 
 }
+
+void Inventory::repairWeapon(int gold)
+{
+	_gold -= gold;
+	_equipWeapon->_durability = _equipWeapon->_maxDurability;
+}

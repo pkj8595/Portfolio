@@ -186,11 +186,20 @@ void CRectObserverManager::getEventFormObserved()
 			}
 			else if (*obData.typeKey == EventObservedType::CHEST)
 			{
-				(*_viEvent)->collideEventObject(obData);
+				if (KEYMANAGER->isOnceKeyDown('E'))
+				{
+					ItemSpawner::getSingleton()->createChestItem(CENTER_X, CENTER_Y,true);
+					(*_viEvent)->collideEventObject(obData);
+					break;
+				}
 			}
 			else if (*obData.typeKey == EventObservedType::ANVIL)
 			{
-				(*_viEvent)->collideEventObject(obData);
+				if (KEYMANAGER->isOnceKeyDown('E'))
+				{
+					_player->getInventory()->repairWeapon(40);
+					(*_viEvent)->collideEventObject(obData);
+				}
 			}
 		}
 	}

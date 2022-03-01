@@ -1,6 +1,7 @@
 #include "Stdafx.h"
 #include "Map.h"
 
+
 HRESULT Map::init(POINT location)
 {
 	return S_OK;

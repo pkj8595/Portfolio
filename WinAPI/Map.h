@@ -1,7 +1,15 @@
 #pragma once
 #include "GameNode.h"
+#include "ItemManager.h"
+#include "ItemSpawner.h"
+#include "EventObject.h"
+
 
 class Player;
+class ItemObject;
+class EventObject;
+class ItemManager;
+class ItemSpawner;
 
 class Map : public GameNode
 {

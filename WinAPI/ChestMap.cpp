@@ -23,12 +23,18 @@ HRESULT ChestMap::init(POINT location)
 	_outsideRcWidth = { 0, 768, WINSIZE_X, WINSIZE_Y };
 	_outsideRcLength = { 1008, 0, WINSIZE_X, WINSIZE_Y };
 	_location = location;
+
+	_chestEventObj = new EventObject;
+	_chestEventRc = RectMakeCenter(CENTER_X, CENTER_Y + 200, 32, 32);
+	_chestEventObj->init(EventObservedType::CHEST, _chestEventRc, &_isActive, 0);
+
+
 	return S_OK;
 }
 
 void ChestMap::release(void)
 {
-
+	SAFE_DELETE(_chestEventObj);
 }
 
 void ChestMap::update(void)
@@ -41,6 +47,7 @@ void ChestMap::render(void)
 	_image->render(getMemDC());
 
 	_chestImage->frameRender(getMemDC(), CENTER_X - _chestImage->getFrameWidth(), CENTER_Y - _chestImage->getFrameHeight(), 0, _frameY);
+	RectangleMakeToRECT(getMemDC(), _chestEventRc);
 
 	if (!_connectedMap[0] || !_clear) _leftWall->render(getMemDC(), 0, 52);
 	if (!_connectedMap[1] || !_clear) _upWall->render(getMemDC(), CENTER_X - 180, -150);

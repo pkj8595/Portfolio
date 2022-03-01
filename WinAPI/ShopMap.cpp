@@ -1,7 +1,5 @@
 #include "Stdafx.h"
 #include "ShopMap.h"
-#include "ItemManager.h"
-#include "ItemSpawner.h"
 
 
 HRESULT ShopMap::init(POINT location)

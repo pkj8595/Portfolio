@@ -29,6 +29,24 @@ HRESULT ItemObject::init(int x, int y, bool isCollider)
 	return S_OK;
 }
 
+HRESULT ItemObject::init(int x, int y, bool isCollider, int itemIndex)
+{
+	_x = (float)x;
+	_y = (float)y;
+	_isCollider = isCollider;
+	_rc = RectMakeCenter(_x, _y, ITEM_OBJ_SIZE, ITEM_OBJ_SIZE);
+	_typeKey = ObservedType::ITEM;
+	_itemManager = ItemManager::getSingleton();
+	_itemIndex = itemIndex;
+	_increaseY = false;
+	_isActive = true;
+	_moveOffsetTime = _responseTime = _worldTime = TIMEMANAGER->getWorldTime();
+	_map = nullptr;
+
+	RECTOBSERVERMANAGER->registerObserved(this);
+	return S_OK;
+}
+
 void ItemObject::release(void)
 {
 	RECTOBSERVERMANAGER->removeObserved(this);
@@ -162,6 +180,23 @@ int ItemSpawner::createItem(int x, int y, bool isCollider)
 	_vItemObj.push_back(itemObj);
 	return itemObj->getItemIndex();
 }
+int ItemSpawner::createItem(int x, int y, bool isCollider, int itemIndex)
+{
+	ItemObject* itemObj = new ItemObject;
+	itemObj->init(x, y, isCollider,itemIndex);
+	itemObj->setMap(*_currentMap);
+	_vItemObj.push_back(itemObj);
+	return itemObj->getItemIndex();
+}
+int ItemSpawner::createChestItem(int x, int y, bool isCollider)
+{
+	ItemObject* itemObj = new ItemObject;
+	itemObj->init(x, y, isCollider, RND->getFromIntTo(14,34));
+	itemObj->setMap(*_currentMap);
+	_vItemObj.push_back(itemObj);
+	return itemObj->getItemIndex();
+}
+
 ItemObject* ItemSpawner::createItemMapInit(int x, int y, bool isCollider, Map* map)
 {
 	ItemObject* itemObj = new ItemObject;

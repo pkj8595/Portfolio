@@ -12,6 +12,7 @@ class EffectManager;
 class DamageEffectManager;
 class Player;
 class ItemManager;
+class ItemSpawner;
 
 class CRectObserverManager : public SingletonBase<CRectObserverManager>
 {

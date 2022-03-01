@@ -8,8 +8,11 @@ private:
 
 	bool _open;
 	int _frameY;
-
 	RECT _chestRC;
+
+	EventObject* _chestEventObj;
+	RECT _chestEventRc;
+
 public:
 	HRESULT init(POINT location);
 	void release(void);

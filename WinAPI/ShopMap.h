@@ -1,12 +1,9 @@
 #pragma once
 #include "Map.h"
-#include "EventObject.h"
+
 
 #define ITEM_SIZE	5
 
-class ItemManager;
-class ItemSpawner;
-class ItemObject;
 class ShopMap : public Map
 {
 private:
