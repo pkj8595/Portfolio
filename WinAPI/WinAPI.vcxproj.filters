@@ -279,6 +279,9 @@
     <ClCompile Include="BowParticle.cpp">
       <Filter>MainGame\Player</Filter>
     </ClCompile>
+    <ClCompile Include="SkillParticle.cpp">
+      <Filter>MainGame\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -465,6 +468,9 @@
     </ClInclude>
     <ClInclude Include="EventObject.h" />
     <ClInclude Include="BowParticle.h">
+      <Filter>MainGame\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillParticle.h">
       <Filter>MainGame\Player</Filter>
     </ClInclude>
   </ItemGroup>

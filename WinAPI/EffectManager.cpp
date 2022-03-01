@@ -10,6 +10,7 @@ HRESULT EffectManager::init(void)
 	IMAGEMANAGER->addFrameImage("Dead", "Resource/Images/Lucie/CompleteImg/effect/dead.bmp", 0.0f, 0.0f, 480, 1920, 5, 20, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("BowHit", "Resource/Images/Lucie/CompleteImg/effect/bowHit.bmp", 0.0f, 0.0f, 192, 48, 4, 1, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("NormalHit", "Resource/Images/Lucie/CompleteImg/effect/normalHit.bmp", 0.0f, 0.0f, 384, 96, 4, 1, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("SkillHit", "Resource/Images/Lucie/CompleteImg/effect/skill_ms24@[40-3].bmp", 0.0f, 0.0f, 960, 1536, 5, 8, true, RGB(255, 0, 255));
 	return S_OK;
 }
 

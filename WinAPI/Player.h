@@ -14,7 +14,7 @@ private:
 
 	ObservedType _type;
 	//State, Frame
-	enum class PLAYER_STATE { STOP, WALK, DODGE, ATTACK_NONE, ATTACK_SWORD, ATTACK_BOW, DEAD};
+	enum class PLAYER_STATE { STOP, WALK, DODGE, ATTACK_NONE, ATTACK_SWORD, ATTACK_BOW, SKILL, DEAD};
 	enum class PLAYER_DIRECTION {LEFTDOWN, DOWN, RIGHTDOWN, LEFT, RIGHT, LEFTUP, UP, RIGHTUP };
 	my::Image* _image;
 	my::Image* _hitBG;
@@ -60,6 +60,7 @@ private:
 	SwordWeapon* _sword;
 	NormalWeapon* _normal;
 	BowWeapon* _bow;
+	Skill* _skillWeapon;
 	PlayerStatusUI* _statusUI;
 
 	Inventory* _inventory;
@@ -81,6 +82,10 @@ private:
 	void showSwordStack();
 	void showBowStack();
 	void checkBowStack();
+
+	float _skillCoolTime;
+	bool _skill;
+	
 
 public:
 	HRESULT init(void);

@@ -51,7 +51,7 @@ HRESULT CEffect::init(const char * imageName, RECT rc, float count)
 HRESULT CEffect::init(const char * imageName, RECT* rc, float count, float fixX, float fixY)
 {
 	_worldTimeCount = TIMEMANAGER->getWorldTime();
-	_rndTimeCount = RND->getFromFloatTo(0.04f, 0.08f);
+	_rndTimeCount = count;
 	_image = IMAGEMANAGER->findImage(imageName);
 	_prc = rc;
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
