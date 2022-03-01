@@ -28,7 +28,7 @@ void CRectObserverManager::update(void)
 {
 	_effectManager->update();
 	_damageManager->update();
-	_textSystemManager->update();
+	//_textSystemManager->update();
 	getRectFromObserved();
 	getEventFormObserved();
 }
@@ -37,7 +37,7 @@ void CRectObserverManager::render(void)
 {
 	_effectManager->render();
 	_damageManager->render();
-	_textSystemManager->render();
+	//_textSystemManager->render();
 }
 
 void CRectObserverManager::registerObserved(IRectObserved* observed)

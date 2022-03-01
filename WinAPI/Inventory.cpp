@@ -129,7 +129,7 @@ void Inventory::render(void)
 			}
 			else if (_isRepair)
 			{
-				_messageStr = "무기가 반짝인다.";
+				_messageStr = "무기가 반짝거린다.";
 			}
 			else if (_isInventoryFull)
 			{

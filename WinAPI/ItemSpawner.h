@@ -24,11 +24,13 @@ private:
 	float _worldTime;
 	float _responseTime;
 	float _moveOffsetTime;
+	bool _isChest;
 
 public:
 	HRESULT init(void);
 	HRESULT init(int x, int y, bool isCollider);
 	HRESULT init(int x, int y, bool isCollider,int itemIndex);
+	HRESULT initChest(int x, int y, bool isCollider, int itemIndex);
 	void release(void);
 	void update(void);
 	void render(void);
