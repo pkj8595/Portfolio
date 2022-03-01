@@ -28,7 +28,6 @@ HRESULT MushMan::init(const char * imageName, POINT position)
 	_mushroomLivingTime = TIMEMANAGER->getWorldTime();
 	_mushroomAttackTime= TIMEMANAGER->getWorldTime();
 
-
 	return S_OK;
 }
 

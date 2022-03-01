@@ -276,16 +276,14 @@
       <Filter>PKJ</Filter>
     </ClCompile>
     <ClCompile Include="EventObject.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Mushroom.cpp">
       <Filter>KGY</Filter>
     </ClCompile>
     <ClCompile Include="MushMan.cpp">
       <Filter>KGY</Filter>
-=======
+    </ClCompile>
     <ClCompile Include="BowParticle.cpp">
       <Filter>MainGame\Player</Filter>
->>>>>>> da11df1424900b2f6c01675613bbe50ff282db0f
     </ClCompile>
     <ClCompile Include="SkillParticle.cpp">
       <Filter>MainGame\Player</Filter>
@@ -475,16 +473,14 @@
       <Filter>PKJ</Filter>
     </ClInclude>
     <ClInclude Include="EventObject.h" />
-<<<<<<< HEAD
     <ClInclude Include="Mushroom.h">
       <Filter>KGY</Filter>
     </ClInclude>
     <ClInclude Include="MushMan.h">
       <Filter>KGY</Filter>
-=======
+    </ClInclude>
     <ClInclude Include="BowParticle.h">
       <Filter>MainGame\Player</Filter>
->>>>>>> da11df1424900b2f6c01675613bbe50ff282db0f
     </ClInclude>
     <ClInclude Include="SkillParticle.h">
       <Filter>MainGame\Player</Filter>

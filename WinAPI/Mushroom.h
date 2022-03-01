@@ -6,6 +6,7 @@ class Mushroom:public Enemy
 {
 private:
 	CircleMissile* _bullet;
+	GuidedBullet* _bullet2;
 
 	float _attackTime;
 

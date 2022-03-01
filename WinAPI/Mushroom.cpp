@@ -23,6 +23,9 @@ HRESULT Mushroom::init(const char* imageName)
 
 	_bullet = new CircleMissile;
 	_bullet->init(10, 200);
+
+	_bullet2 = new GuidedBullet;
+	_bullet2->init(1, 250);
 	
 	return S_OK;
 }
@@ -32,12 +35,15 @@ void Mushroom::release(void)
 	Enemy::release();
 	_bullet->release();
 	SAFE_DELETE(_bullet);
+
+	_bullet2->release();
+	SAFE_DELETE(_bullet2);
 }
 
 void Mushroom::update(void)
 {
 	Enemy::update();
-	_bullet->update();
+	_bullet2->update();
 
 
 	if (_deadForOb)
@@ -51,6 +57,7 @@ void Mushroom::render(void)
 {
 	Enemy::render();
 	_bullet->render();
+	_bullet2->render();
 }
 
 void Mushroom::move(void)
@@ -71,7 +78,9 @@ void Mushroom::fire()
 	if (3.f + _attackTime <= TIMEMANAGER->getWorldTime())
 	{
 		_attackTime = TIMEMANAGER->getWorldTime();
-		_bullet->fire(_x, _y);
+		//_bullet->fire(_x, _y);
+		float angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
+		_bullet2->fire(_x, _y, angle);
 	}
 }
 
