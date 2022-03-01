@@ -9,7 +9,9 @@
 #define	INVENTORY_IMG_OFFSETX		40
 #define	INVENTORY_IMG_OFFSETY		40
 
-#define PUSH_ITEM_MESSEGE		0.8f
+#define PUSH_ITEM_MESSAGE		0.8f
+#define MESSAGE_SHOW_TIME		1.0f
+#define INVENTORY_SIZE			15
 
 class Inventory : public GameNode
 {
@@ -57,10 +59,7 @@ class Inventory : public GameNode
 	my::Image* _inventoryBackground;
 	RECT _rc;
 	int _x, _y;
-	//InvenPos _combineBackground;
-	//InvenPos _inventoryHintCorner;
-	//InvenPos _inventoryClickHelp;
-	//InvenPosBtn _combineBtnIcon2;
+	
 	InvenPos _inventoryGoldIcon;
 	InvenPosBtn _inventoryCloseBtn;
 	RECT _rcCloseBtn;
@@ -90,7 +89,7 @@ class Inventory : public GameNode
 	POINT _statusTextPos;
 
 	InfoWindow _itemInfoWindow;
-	float _worldTime;
+	float _pushItmeWorldTime;
 	bool _isShowGetItem;
 	int _showGetItemImgNum;
 
@@ -102,6 +101,16 @@ class Inventory : public GameNode
 	//todo
 	int _gold;
 	RECT _goldRc;
+	string _goldStr;
+
+	bool _isbuyItemfail;
+	bool _isDestroy;
+	bool _againTakeAbilityItem;
+	bool _isRepair;
+	bool _isInventoryFull;
+	float _messageWorldTime;
+	RECT _messageRc;
+	string _messageStr;
 
 public:
 	HRESULT init(void);
@@ -138,7 +147,7 @@ public:
 	string changeItemTypeToStr(EITEM_TYPE type);
 	string changeAttributeToStr(CPlayer_Attribute attri);
 
-	void decreaseDurability(int dufault = 8);
+	void decreaseDurability(int dufault = 30);
 	void repairWeapon(int gold);
 
 	//==========================
@@ -146,8 +155,9 @@ public:
 	//==========================
 	//인벤토리 아이템 추가
 	bool buyItem(int num);
-	void pushItem(Item* item);
 	void pushItem(int num);
+	void pushItem(Item* item);
+	bool checkIsFullInventory();
 	inline void updatePushItemMassege(Item* item);
 	void renderPushItemMassege();
 

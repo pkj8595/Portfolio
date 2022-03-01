@@ -185,6 +185,11 @@ void CRectObserverManager::getEventFormObserved()
 			{
 				if (KEYMANAGER->isOnceKeyDown('E'))
 				{
+					Item* item = ItemManager::getSingleton()->getItemIndex(*obData.num);
+					item->_price;
+					item->_name;
+					item->_description;
+
 					if (_player->getInventory()->buyItem(*obData.num))
 					{
 						(*_viEvent)->collideEventObject(obData);
@@ -207,8 +212,10 @@ void CRectObserverManager::getEventFormObserved()
 				{
 					_player->getInventory()->repairWeapon(40);
 					(*_viEvent)->collideEventObject(obData);
+					break;
 				}
 			}
+
 		}
 	}
 }
