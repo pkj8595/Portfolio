@@ -50,6 +50,10 @@ void Mushroom::animation(void)
 {
 }
 
+void Mushroom::fire()
+{
+}
+
 STObservedData Mushroom::getRectUpdate()
 {
 	STObservedData temp;

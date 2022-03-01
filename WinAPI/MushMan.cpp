@@ -24,7 +24,7 @@ HRESULT MushMan::init(const char * imageName, POINT position)
 	_mushroomCreateCheck = false;
 	_moveWorldTime = TIMEMANAGER->getWorldTime();
 	_plantMushroomWorldTime = TIMEMANAGER->getWorldTime();
-	_attackWorldTime = TIMEMANAGER->getWorldTime();
+	_mushroomLivingTime = TIMEMANAGER->getWorldTime();
 
 	_mushroom = new Mushroom;
 	_mushroom->init("Mushroom",PointMake(_x-6, _y));
@@ -52,11 +52,13 @@ void MushMan::update(void)
 
 		if (_mushroomCreateCheck)
 		{
-			if (15.f + _attackWorldTime < TIMEMANAGER->getWorldTime())
+			//버섯 생존시간
+			if (15.f + _mushroomLivingTime < TIMEMANAGER->getWorldTime())
 			{
-				_attackWorldTime = TIMEMANAGER->getWorldTime();
+				_mushroomLivingTime = TIMEMANAGER->getWorldTime();
+				//공격
 			}
-			
+	
 		}
 
 		//이미 심어져 있는 경우를 제외하고 10초마다 한번씩 심는다 

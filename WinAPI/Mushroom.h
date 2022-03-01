@@ -17,6 +17,8 @@ public:
 	void move(void);
 	void draw(void);
 	void animation(void);
+	
+	void fire(); 
 
 public:
 	void setPos(float x, float y) { _x = x, _y = y;}

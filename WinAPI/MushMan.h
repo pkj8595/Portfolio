@@ -23,7 +23,7 @@ private:
 	float _speed;				//이동 속도
 	float _moveWorldTime;
 	float _plantMushroomWorldTime;
-	float _attackWorldTime;
+	float _mushroomLivingTime;
 
 	bool	_mushroomCreateCheck; //버섯 생성 여부 체크
 	bool	_deadForOb;			  //사망 여부 [Enemy의 isActive는 몹 삭제 전용, deadForOb는 체력 0 여부]
