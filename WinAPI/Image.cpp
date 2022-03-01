@@ -759,9 +759,48 @@ namespace my {
 
 	void Image::resizeRender(HDC hdc, int destX, int destY, int width, int height)
 	{
-		_blendFunc.SourceConstantAlpha = 128;
-		AlphaBlend(hdc, destX, destY, width, height, _imageInfo->hMemDc,
-			0, 0, _imageInfo->width, _imageInfo->height, _blendFunc);
+		//_blendFunc.SourceConstantAlpha = 255;
+		//AlphaBlend(hdc, destX, destY, width, height, _imageInfo->hMemDc,
+		//	0, 0, _imageInfo->width, _imageInfo->height, _blendFunc);
+		if (!_blendImage) initForAlphaBlend();
+		_blendFunc.SourceConstantAlpha = 120;
+
+		TransparentBlt
+		(
+			_blendImage->hMemDc,
+			0, 0,
+			_imageInfo->width,
+			_imageInfo->height,
+			hdc,
+			0, 0,
+			_imageInfo->width,
+			_imageInfo->height,
+			_transColor
+		);
+		TransparentBlt
+		(
+			_blendImage->hMemDc,
+			0, 0,
+			_imageInfo->width,
+			_imageInfo->height,
+			_imageInfo->hMemDc,
+			0, 0,
+			_imageInfo->width,
+			_imageInfo->height,
+			_transColor
+		);
+		AlphaBlend
+		(
+			hdc,
+			destX, destY,
+			width,
+			height,
+			_imageInfo->hMemDc,
+			0, 0,
+			_imageInfo->width,
+			_imageInfo->height,
+			_blendFunc
+		);
 	}
 
 }
