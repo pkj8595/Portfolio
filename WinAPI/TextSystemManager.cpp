@@ -74,12 +74,16 @@ void TextSystemManager::update(void)
 		}
 	}
 
-
+	// ¹öÆ° ·»´õ¸µ
 	if (iscollBox)
 	{
 		if (PtInRect(&_select_oneRc, _ptMouse))
 		{
 			_selectOneAlpha = 230.0f;
+			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			{
+				
+			}
 		}
 		else 
 		{ 

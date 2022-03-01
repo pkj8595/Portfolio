@@ -3,7 +3,7 @@
 
 HRESULT TitleScene::init(void)
 {
-	_bg = IMAGEMANAGER->addImage("TitleBG", "Resource/Images/Lucie/CompleteImg/title/TitleBackground.bmp", 960, 540);
+	_bg = IMAGEMANAGER->addImage("TitleBG", "Resource/Images/Lucie/CompleteImg/title/TitleBackground.bmp", WINSIZE_X, WINSIZE_Y);
 	_gameName = IMAGEMANAGER->addImage("TitleName", "Resource/Images/Lucie/CompleteImg/title/Title.bmp", 960, 540, true, RGB(255, 0, 255));
 	_start = IMAGEMANAGER->addFrameImage("Start", "Resource/Images/Lucie/CompleteImg/title/Command_0.bmp", 130, 60, 1, 2, true, RGB(255, 0, 255));
 	_continue = IMAGEMANAGER->addFrameImage("Continue", "Resource/Images/Lucie/CompleteImg/title/Command_1.bmp", 130, 60, 1, 2, true, RGB(255, 0, 255));
@@ -64,7 +64,7 @@ void TitleScene::update(void)
 
 void TitleScene::render(void)
 {
-	_bg->render(getMemDC(), _bgRc.left, _bgRc.top);
+	_bg->render(getMemDC());
 	_gameName->render(getMemDC());
 	_start->frameRender(getMemDC(), _startRc.left, _startRc.top);
 	_exit->frameRender(getMemDC(), _exitRc.left, _exitRc.top);
