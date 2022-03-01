@@ -47,7 +47,7 @@ void BowParticle::createParticle(float x, float y)
 	ZeroMemory(&temp, sizeof(Particle));
 	temp.alpha = 128;
 	temp.angle = RND->getFloat(PI * 2);
-	temp.speed = RND->getFromFloatTo(3.0f, 7.0f);
+	temp.speed = RND->getFromFloatTo(2.0f, 5.0f);
 	temp.disappearspeed = RND->getFromFloatTo(7.0f, 16.0f);
 	temp.x = x;
 	temp.y = y;

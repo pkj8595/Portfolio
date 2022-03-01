@@ -142,6 +142,7 @@ void Bullet::fire(float x, float y, float angle, float speed)
 	bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getFrameHeight(), bullet->img->getFrameHeight());
 	bullet->type = ObservedType::MINION_MISSILE;
 	bullet->fire = true;
+	bullet->magic = false;
 	bullet->count = RND->getFromIntTo(1, 16);
 	bullet->init();
 
@@ -228,6 +229,7 @@ void LinearMissile::fire(float x, float y)
 	bullet->y = bullet->fireY = y;
 	bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
 	bullet->fire = true;
+	bullet->magic = false;
 	bullet->init();
 
 	_vBullet.push_back(bullet);
@@ -280,6 +282,7 @@ void CaseShotMissile::fire(float x, float y)
 		bullet->angle = _firstAngle - (_bulletCount*_offsetAngle);
 		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
 		bullet->fire = true;
+		bullet->magic = false;
 		bullet->init();
 		_vBullet.push_back(bullet);
 
@@ -331,6 +334,7 @@ void BlackholeMissile::fire(float x, float y)
 	bullet->y = bullet->fireY = y;
 	bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getFrameWidth(), bullet->img->getFrameHeight());
 	bullet->fire = true;
+	bullet->magic = false;
 	bullet->init();
 
 	_vBullet.push_back(bullet);
@@ -357,6 +361,7 @@ STObservedData tagCBullet::getRectUpdate()
 	temp.isActive = &fire;
 	temp.damage = &damage;
 	temp.angle = &angle;
+	temp.magic = &magic;
 	return temp;
 }
 
@@ -416,6 +421,7 @@ void ThreeDirectionMissile::fire(float x, float y, float angle)
 		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
 		bullet->damage = 1.0f;
 		bullet->fire = true;
+		bullet->magic = false;
 		bullet->init();
 		_vBullet.push_back(bullet);
 
@@ -476,6 +482,7 @@ void CircleMissile::fire(float x, float y)
 		bullet->angle = _firstAngle - (_bulletCount*_offsetAngle);
 		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
 		bullet->fire = true;
+		bullet->magic = false;
 		bullet->damage = 1.0f;
 		bullet->init();
 		_vBullet.push_back(bullet);
@@ -537,6 +544,7 @@ void TwoDirectionMissile::fire(float x, float y, float angle)
 		bullet->angle = _firstAngle - (_bulletCount*_offsetAngle);
 		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
 		bullet->fire = true;
+		bullet->magic = false;
 		bullet->init();
 		_vBullet.push_back(bullet);
 
@@ -594,6 +602,7 @@ void NormalBullet::fire(float x, float y, float angle, float speed, float rotate
 	bullet->angle = angle;
 	bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
 	bullet->fire = true;
+	bullet->magic = false;
 	bullet->init();
 	bullet->rotateAngle = rotate;
 	_vBullet.push_back(bullet);
@@ -657,6 +666,7 @@ void BubbleBullet::fire(float x, float y, float angle, float speed, float rotate
 	bullet->damage = 1.0f;
 	bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
 	bullet->fire = true;
+	bullet->magic = false;
 	bullet->init();
 	bullet->rotateAngle = rotateAngle;
 	_vBullet.push_back(bullet);
@@ -713,6 +723,7 @@ void ThornBullet::fire(float x, float y)
 		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
 		bullet->damage = 1.0f;
 		bullet->fire = true;
+		bullet->magic = false;
 		bullet->init();
 		_vBullet.push_back(bullet);
 	}
@@ -760,6 +771,7 @@ void FairyBullet::fire(float x, float y, float angle)
 		bullet->angle = angle;
 		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
 		bullet->fire = true;
+		bullet->magic = false;
 		bullet->init();
 		_vBullet.push_back(bullet);
 	}
@@ -811,6 +823,7 @@ void SpreadBullet::fire(float x, float y, float angle)
 		bullet->angle = _firstAngle - (_bulletCount*_offsetAngle);
 		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
 		bullet->fire = true;
+		bullet->magic = false;
 		bullet->damage = 1.0f;
 		bullet->init();
 		_vBullet.push_back(bullet);
@@ -867,6 +880,7 @@ void SectorBullet::fire(float x, float y, float angle)
 		bullet->angle = _firstAngle - (_bulletCount*_offsetAngle);
 		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
 		bullet->fire = true;
+		bullet->magic = false;
 		bullet->damage = 1.0f;
 		bullet->init();
 		_vBullet.push_back(bullet);

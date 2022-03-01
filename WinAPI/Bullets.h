@@ -20,6 +20,7 @@ public:
 	float rotateAngle;
 	float speed;
 	bool fire;
+	bool magic;
 
 	void init(void);
 	void release(void);

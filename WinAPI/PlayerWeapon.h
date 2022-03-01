@@ -2,6 +2,7 @@
 #include "GameNode.h"
 #include "IRectObserved.h"
 #include "BowParticle.h"
+#include "SkillParticle.h"
 
 class tagWeapon : public IRectObserved
 {
@@ -19,6 +20,7 @@ public:
 	bool fire;
 	bool firstHit;
 	bool sword;
+	bool magic;
 
 	void init(void);
 	void release(void);
@@ -80,8 +82,6 @@ public:
 	void move();
 	void updateFrame();
 
-
-
 	SwordWeapon() {}
 	~SwordWeapon() {}
 };
@@ -123,4 +123,42 @@ public:
 
 	BowWeapon() {}
 	~BowWeapon() {}
+};
+
+class Skill : public GameNode
+{
+private:
+	vector<tagWeapon*> _vWeapon;
+	vector<tagWeapon*>::iterator _viWeapon;
+	SkillParticle* _skillparticle;
+
+	float _particleDelay;
+	float _createdTime;
+
+	float _range;
+	int _bulletMax;
+	int _fixX, _fixY;
+public:
+	HRESULT init(int bulletMax, float range);
+	void release(void);
+	void update(void);
+	void render(void);
+
+	void fire(float damage, float x, float y, float angle);
+	void draw();
+	void move();
+	void createParticle();
+
+	bool isFiring()
+	{
+		if (_vWeapon.size() == 0) return false;
+		else return true;
+	}
+
+	vector<tagWeapon*> getWeapon() { return _vWeapon; }
+	POINT getPoint(int index) { return { (int)_vWeapon[index]->x, (int)_vWeapon[index]->y }; }
+	void removeBullet(int index);
+
+	Skill() {}
+	~Skill() {}
 };

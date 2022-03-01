@@ -23,6 +23,7 @@ typedef struct tagObservedInfo
 	float* damage;
 	float* angle;
 	int* number;
+	bool* magic;
 
 	tagObservedInfo()
 	{
@@ -32,6 +33,7 @@ typedef struct tagObservedInfo
 		damage = nullptr;
 		angle = nullptr;
 		number = nullptr;
+		magic = nullptr;
 	}
 }STObservedData;
 

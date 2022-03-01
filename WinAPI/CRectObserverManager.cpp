@@ -76,12 +76,20 @@ void CRectObserverManager::getRectFromObserved()
 				{
 					if (*obData.isActive)
 					{
-						_damageManager->createDamage((int)(*obData.damage), false,
-							(*obDataCompare.rc).left + (((*obDataCompare.rc).right - (*obDataCompare.rc).left) / 2),
-							(*obDataCompare.rc).top + (((*obDataCompare.rc).bottom - (*obDataCompare.rc).top) / 2));
-
-						_effectManager->createEffect("effect2", (*obDataCompare.rc));
-
+						if (*obData.magic)
+						{
+							_effectManager->createEffect("SkillHit", obDataCompare.rc, 0.01f, -60, -55);
+							_damageManager->createDamage((int)(*obData.damage), true,
+								(*obDataCompare.rc).left + (((*obDataCompare.rc).right - (*obDataCompare.rc).left) / 2),
+								(*obDataCompare.rc).top + (((*obDataCompare.rc).bottom - (*obDataCompare.rc).top) / 2));
+						}
+						else
+						{
+							_effectManager->createEffect("effect2", (*obDataCompare.rc));
+							_damageManager->createDamage((int)(*obData.damage), false,
+								(*obDataCompare.rc).left + (((*obDataCompare.rc).right - (*obDataCompare.rc).left) / 2),
+								(*obDataCompare.rc).top + (((*obDataCompare.rc).bottom - (*obDataCompare.rc).top) / 2));
+						}
 						(*_viRectCompare)->collideObject(obData);			//받은 data의 Active가 false일 경우에만 체력 감소
 						(*_viRect)->collideObject(obDataCompare);			//Active를 false로 변환
 
@@ -177,6 +185,11 @@ void CRectObserverManager::getEventFormObserved()
 			{
 				if (KEYMANAGER->isOnceKeyDown('E'))
 				{
+					Item* item = ItemManager::getSingleton()->getItemIndex(*obData.num);
+					item->_price;
+					item->_name;
+					item->_description;
+
 					if (_player->getInventory()->buyItem(*obData.num))
 					{
 						(*_viEvent)->collideEventObject(obData);
@@ -199,8 +212,10 @@ void CRectObserverManager::getEventFormObserved()
 				{
 					_player->getInventory()->repairWeapon(40);
 					(*_viEvent)->collideEventObject(obData);
+					break;
 				}
 			}
+
 		}
 	}
 }

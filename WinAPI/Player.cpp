@@ -61,6 +61,8 @@ HRESULT Player::init(void)
 	_frameTick = TIMEMANAGER->getWorldTime();
 	_startFrame = _endFrame = 4;
 
+	_skillCoolTime = TIMEMANAGER->getWorldTime() - 10.0f;
+
 	_sword = new SwordWeapon;
 	_sword->init(&_x, &_y);
 
@@ -70,8 +72,11 @@ HRESULT Player::init(void)
 	_bow = new BowWeapon;
 	_bow->init(15, WINSIZE_X / 3 * 2);
 
+	_skillWeapon = new Skill;
+	_skillWeapon->init(1, WINSIZE_X / 3 * 2);
+
 	_statusUI = new PlayerStatusUI;
-	_statusUI->init(&_totalStatus, &_level);
+	_statusUI->init(&_totalStatus, &_level, &_skillCoolTime);
 
 	_inventory = new Inventory;
 	_inventory->init();
@@ -128,6 +133,7 @@ void Player::update(void)
 		_sword->update();
 		_normal->update();
 		_bow->update();
+		_skillWeapon->update();
 		_statusUI->update();
 		_inventory->update();
 		_efm->update();
@@ -155,6 +161,7 @@ void Player::render(void)
 	}
 	_image->frameRender(getMemDC(), _x, _y);
 	_efm->render();
+	_skillWeapon->render();
 	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 }
 void Player::showSwordStack()
@@ -329,6 +336,11 @@ void Player::setFrame()
 		_endFrame = _startFrame + 5;
 		_stateFrameTick = 0.08f;
 	}break;
+	case PLAYER_STATE::SKILL: {
+		_startFrame = directionIndex * 3 + 24;
+		_endFrame = _startFrame + 2;
+		_stateFrameTick = 0.08f;
+	}break;
 	}
 }
 
@@ -338,6 +350,10 @@ void Player::changeState()
 	if (_dead)
 	{
 		_state = PLAYER_STATE::DEAD;
+	}
+	else if (_skill)
+	{
+		_state = PLAYER_STATE::SKILL;
 	}
 	else if (_attack)
 	{
@@ -501,6 +517,21 @@ void Player::setAttack()
 			if (_totalStatus._stamina < 5.0f) return;
 			setSwordAttack();
 		}
+	}
+	else if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+	{
+		if (_skillCoolTime + 10.0f < TIMEMANAGER->getWorldTime() && _status._mana >= 2)
+		{
+			float angle = MY_UTIL::getAngle(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2, _ptMouse.x, _ptMouse.y);
+			_skillWeapon->fire(calculateMagicDamage() * 11, _x + 50, _y + 50, angle);
+			_skill = true;
+			_status._mana -= 2;
+			_skillCoolTime = TIMEMANAGER->getWorldTime();
+		}
+	}
+	if (_skillCoolTime <= TIMEMANAGER->getWorldTime() - 0.25f && _skill)
+	{
+		_skill = false;
 	}
 	if (_comboCooldown <= TIMEMANAGER->getWorldTime() - 0.35f && (*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD)
 	{
