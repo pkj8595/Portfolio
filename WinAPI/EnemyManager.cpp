@@ -8,6 +8,9 @@
 #include "Snake.h"
 #include "Rafflesia.h"
 #include "ForestFairy.h"
+#include "MushMan.h"
+#include "Mushroom.h"
+
 
 bool EnemyManager::checkClear()
 {
@@ -40,13 +43,13 @@ HRESULT EnemyManager::init(void)
 	IMAGEMANAGER->addFrameImage("Snake", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Snake.bmp", 144, 624, 3, 13, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Rafflesia", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Rafflesia.bmp", 240, 549, 3, 9, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ForestFairy", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Forestfairy.bmp", 168, 930, 3, 10, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("MushMan", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Mushman.bmp", 384, 550, 8, 10, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Mushroom", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Mushroom.bmp",13,13, true, RGB(255, 0, 255));
+
 
 	IMAGEMANAGER->addFrameImage("KingSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 1080, 7560, 3, 21, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("BigSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 576, 4032, 3, 21, true, RGB(255, 0, 255));
 	
-	
-	
-
 
 	//미니언 생성
 
@@ -151,10 +154,15 @@ void EnemyManager::setMinion(void)
 	//rafflesia->init("Rafflesia", PointMake(CENTER_X - 150, CENTER_Y + 30));
 	//_vMinion.push_back(rafflesia);
 
-	Enemy* forestFairy;
-	forestFairy = new ForestFairy;
-	forestFairy->init("ForestFairy", PointMake(CENTER_X, CENTER_Y - 100));
-	_vMinion.push_back(forestFairy);
+	//Enemy* forestFairy;
+	//forestFairy = new ForestFairy;
+	//forestFairy->init("ForestFairy", PointMake(CENTER_X, CENTER_Y - 100));
+	//_vMinion.push_back(forestFairy);
+
+	Enemy* mushman;
+	mushman = new MushMan;
+	mushman->init("MushMan", PointMake(CENTER_X, CENTER_Y));
+	_vMinion.push_back(mushman);
 }
 
 void EnemyManager::setBoss(void)

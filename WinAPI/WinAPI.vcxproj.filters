@@ -276,6 +276,12 @@
       <Filter>PKJ</Filter>
     </ClCompile>
     <ClCompile Include="EventObject.cpp" />
+    <ClCompile Include="Mushroom.cpp">
+      <Filter>KGY</Filter>
+    </ClCompile>
+    <ClCompile Include="MushMan.cpp">
+      <Filter>KGY</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -461,6 +467,12 @@
       <Filter>PKJ</Filter>
     </ClInclude>
     <ClInclude Include="EventObject.h" />
+    <ClInclude Include="Mushroom.h">
+      <Filter>KGY</Filter>
+    </ClInclude>
+    <ClInclude Include="MushMan.h">
+      <Filter>KGY</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">

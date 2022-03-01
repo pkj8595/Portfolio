@@ -177,6 +177,8 @@
     <ClCompile Include="mButton.cpp" />
     <ClCompile Include="mGpImage.cpp" />
     <ClCompile Include="Minion.cpp" />
+    <ClCompile Include="MushMan.cpp" />
+    <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="PixelCollision.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerStatusUI.cpp" />
@@ -249,6 +251,8 @@
     <ClInclude Include="mButton.h" />
     <ClInclude Include="mGpImage.h" />
     <ClInclude Include="Minion.h" />
+    <ClInclude Include="MushMan.h" />
+    <ClInclude Include="Mushroom.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerStatusUI.h" />
     <ClInclude Include="PlayerWeapon.h" />
