@@ -5,12 +5,6 @@ HRESULT Inventory::init(void)
 {
 	_itemManager = ItemManager::getSingleton();
 
-	//_combineBackground.img = IMAGEMANAGER->addImage("combineBackground", "Resource/Images/Lucie/CompleteImg/inventory/combineBackground.bmp", 180, 180, true, RGB(255, 0, 255));
-	//_inventoryHintCorner.img = IMAGEMANAGER->addImage("inventoryHintCorner", "Resource/Images/Lucie/CompleteImg/inventory/inventoryHintCorner.bmp", 21, 21, true, RGB(255, 0, 255));
-	//_combineBtnIcon2.img = IMAGEMANAGER->addFrameImage("combineBtnIcon2", "Resource/Images/Lucie/CompleteImg/inventory/combineBtnIcon2.bmp", 240, 27,3,1, true, RGB(255, 0, 255));
-	//_inventorySlotA.img = IMAGEMANAGER->addFrameImage("InventorySlotA", "Resource/Images/Lucie/CompleteImg/inventory/InventorySlotA.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
-	//_inventoryClickHelp.img = IMAGEMANAGER->addImage("inventoryClickHelp", "Resource/Images/Lucie/CompleteImg/inventory/inventoryClickHelp.bmp", 21, 21, true, RGB(255, 0, 255));
-
 	_inventoryBackground = IMAGEMANAGER->addImage("inventoryBackground", "Resource/Images/Lucie/CompleteImg/inventory/inventoryBackground.bmp", 240, 296, true, RGB(255, 0, 255));
 	_inventoryGoldIcon.img = IMAGEMANAGER->addImage("inventoryGoldIcon", "Resource/Images/Lucie/CompleteImg/inventory/inventoryGoldIcon.bmp", 22, 22, true, RGB(255, 0, 255));
 	_inventoryCloseBtn.img = IMAGEMANAGER->addFrameImage("inventoryCloseBtn", "Resource/Images/Lucie/CompleteImg/inventory/inventoryCloseBtn.bmp", 32, 16, 2, 1, true, RGB(255, 0, 255));
@@ -23,11 +17,7 @@ HRESULT Inventory::init(void)
 
 	_rc = RectMake(_x, _y, _inventoryBackground->getWidth(), _inventoryBackground->getHeight());
 
-	//_combineBackground.pt = PointMake(_rc.left - 178, _rc.top + 100);
-	//_combineBtnIcon2.pt = PointMake(_rc.left - 120, _rc.top + 240);
-	//_inventoryHintCorner.pt = PointMake(_rc.left + 100, _rc.top + 100);
-	//_inventoryClickHelp.pt = PointMake(_rc.left + 100, _rc.top + 100);
-	//_inventorySlotA.pt = PointMake(_rc.left + 100, _rc.top + 100);
+	
 	_inventoryGoldIcon.pt = PointMake(_rc.left + 160, _rc.top + 260);
 	_goldRc = RectMake(WINSIZE_X - 200, 0, 128, 32);
 	_inventoryCloseBtn.pt = PointMake(_rc.left + 205, _rc.top + 15);
@@ -51,14 +41,19 @@ HRESULT Inventory::init(void)
 	_ptotalAttribute = nullptr;
 	_pAttribute = nullptr;
 
-	_worldTime = TIMEMANAGER->getWorldTime();
+	_pushItmeWorldTime = TIMEMANAGER->getWorldTime();
 	_isShowGetItem = false;
 	
 	_enchantSuccessWorldTime = TIMEMANAGER->getWorldTime();
 	_isExcuteEnchant = false;
 	_isEnchantSuccess = false;
 	_enchantStr = "";
+
 	_gold = 150;
+	_isInventoryFull =_againTakeAbilityItem = _isDestroy = _isRepair = _isbuyItemfail = false;
+	_messageWorldTime = TIMEMANAGER->getWorldTime();
+
+	_messageRc = RectMakeCenter(CENTER_X, CENTER_Y - 300, 32, 32);
 
 	return S_OK;
 }
@@ -78,7 +73,7 @@ void Inventory::update(void)
 	if (KEYMANAGER->isOnceKeyDown(VK_F6))
 	{
 		int temp = RND->getInt(34);
-		_itemManager->getItemIndex(temp)->toString();
+		//_itemManager->getItemIndex(temp)->toString();
 		pushItem(_itemManager->getItemIndex(temp));
 	}
 }
@@ -113,8 +108,8 @@ void Inventory::render(void)
 	{
 		if (TIMEMANAGER->getWorldTime() < _enchantSuccessWorldTime + 1.0f)
 		{
-			RECT messageRc = RectMakeCenter(CENTER_X, CENTER_Y - 300, 32, 32);
-			inventorydrawText(_enchantStr, messageRc, 50, RGB(255, 255, 255),true);
+			
+			inventorydrawText(_enchantStr, _messageRc, 50, RGB(255, 255, 255),true);
 		}
 		else
 		{
@@ -122,9 +117,39 @@ void Inventory::render(void)
 			_isExcuteEnchant = false;
 		}
 	}
+	if (_isbuyItemfail || _isDestroy|| _againTakeAbilityItem|| _isRepair|| _isInventoryFull)
+	{
+		if (TIMEMANAGER->getWorldTime() < _messageWorldTime + MESSAGE_SHOW_TIME)
+		{
+			if (_isbuyItemfail) { _messageStr = "돈이.. 부족하다....."; }
+			else if (_isDestroy) { _messageStr = "내 무기가.. 부숴졌다..."; }
+			else if (_againTakeAbilityItem)
+			{
+				_messageStr = "이건.. 이미 있어.";
+			}
+			else if (_isRepair)
+			{
+				_messageStr = "무기가 반짝인다.";
+			}
+			else if (_isInventoryFull)
+			{
+				_messageStr = "가방이 가득 찼어.";
+			}
+			inventorydrawText(_messageStr, _messageRc, 50, RGB(255, 255, 255),true);
+		}
+		else
+		{
+			_isbuyItemfail = false;
+			_isDestroy = false;
+			_againTakeAbilityItem = false;
+			_isRepair = false;
+			_isInventoryFull = false;
+		}
+	}
+
 	//우측 상단 gold text
-	string goldStr = "Gold :" + to_string(_gold);
-	inventorydrawText(goldStr, _goldRc, 30, RGB(255,255, 255), false);
+	_goldStr = "Gold :" + to_string(_gold);
+	inventorydrawText(_goldStr, _goldRc, 30, RGB(255,255, 255), false);
 
 	renderItemInfoWindow();
 	showAbilityItem();
@@ -135,10 +160,7 @@ void Inventory::renderInventoryBase()
 {
 	_inventoryBackground->render(getMemDC(), _rc.left, _rc.top);
 	_inventoryGoldIcon.img->render(getMemDC(), _inventoryGoldIcon.pt.x, _inventoryGoldIcon.pt.y);
-	//frame render
-	//_inventoryHintCorner.img->render(getMemDC(), _inventoryHintCorner.pt.x, _inventoryHintCorner.pt.y);
-	//_combineBackground.img->render(getMemDC(), _combineBackground.pt.x, _combineBackground.pt.y);
-	//_combineBtnIcon2.img->frameRender(getMemDC(), _combineBtnIcon2.pt.x, _combineBtnIcon2.pt.y,1,1);
+	
 	_inventoryCloseBtn.img->frameRender(getMemDC(), _inventoryCloseBtn.pt.x, _inventoryCloseBtn.pt.y, 1, 1);
 	for (int i = 0; i < 3; i++)
 	{
@@ -152,9 +174,7 @@ void Inventory::renderInventoryBase()
 	
 	char str[32] = "인벤토리";
 	FONTMANAGER->drawText(getMemDC(), _rc.left +98, _rc.top + 18, "야놀자 야체 Regular", 20, 200, str, strlen(str), RGB(255, 255, 255));
-
-	//_inventorySlotA.img->frameRender(getMemDC(), _inventorySlotA.pt.x, _inventorySlotA.pt.y, 1, 1);
-	//_inventorySlotB.img->frameRender(getMemDC(), _inventorySlotB.pt.x, _inventorySlotB.pt.y, 1, 1);
+	
 }
 
 //아이템이 벡터에 들어올때마다 실행시켜서 총합산 데미지를 최신화한다.
@@ -189,6 +209,8 @@ bool Inventory::buyItem(int num)
 	else
 	{
 		cout << "돈 부족" << endl;
+		_isbuyItemfail = true;
+		_messageWorldTime = TIMEMANAGER->getWorldTime();
 		return false;
 	}
 
@@ -196,13 +218,17 @@ bool Inventory::buyItem(int num)
 
 void Inventory::pushItem(Item* item)
 {
-
 	if (item->_type == EITEM_TYPE::ABILITY)
 	{
 		_viItem = _vItem.begin();
 		for (; _viItem != _vItem.end(); ++_viItem)
 		{
-			if ((*_viItem).first->_index == item->_index) { return; }
+			if ((*_viItem).first->_index == item->_index)
+			{
+				_againTakeAbilityItem = true;
+				_messageWorldTime = TIMEMANAGER->getWorldTime();
+				return;
+			}
 		}
 		RECT temp = RectMake(
 			ABILITY_IMG_X + (_abilutyItemCount* ABILITY_IMG_OFFSET),
@@ -211,6 +237,10 @@ void Inventory::pushItem(Item* item)
 		_vItem.push_back(make_pair(item, temp));
 		updatePushItemMassege(item);
 		_abilutyItemCount++;
+	}
+	else if (checkIsFullInventory())
+	{
+		return;
 	}
 	else if (item->_type == EITEM_TYPE::EQUIP_WEAPON_BOW||
 			item->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD||
@@ -242,6 +272,26 @@ void Inventory::pushItem(Item* item)
 	computeItemTotalAttribute();
 }
 
+bool Inventory::checkIsFullInventory()
+{
+	int asize = 0;
+	_viItem = _vItem.begin();
+	for (; _viItem != _vItem.end(); ++_viItem)
+	{
+		if ((*_viItem).first->_type == EITEM_TYPE::ABILITY)
+		{
+			asize++;
+		}
+	}
+	if (_vItem.size() - asize > INVENTORY_SIZE - 1)
+	{
+		_isInventoryFull = true;
+		_messageWorldTime = TIMEMANAGER->getWorldTime();
+		return true;
+	}
+	return false;
+}
+
 void Inventory::pushItem(int num)
 {
 	pushItem(_itemManager->getItemIndex(num));
@@ -251,7 +301,7 @@ void Inventory::updatePushItemMassege(Item* item)
 {
 	_showGetItemImgNum = item->_imgNum;
 	_isShowGetItem = true;
-	_worldTime = TIMEMANAGER->getWorldTime();
+	_pushItmeWorldTime = TIMEMANAGER->getWorldTime();
 }
 
 void Inventory::showInventoryItem()
@@ -454,10 +504,11 @@ void Inventory::renderPushItemMassege()
 	inventorydrawText(str, massageRc,50,RGB(255,255,255),true);
 
 	IMAGEMANAGER->findImage("bigItemImg")->render(getMemDC(), massageRc.left - 64, massageRc.top - 10, x, y, 64, 64);
-	if (TIMEMANAGER->getWorldTime() > _worldTime + PUSH_ITEM_MESSEGE)
+	if (TIMEMANAGER->getWorldTime() > _pushItmeWorldTime + PUSH_ITEM_MESSAGE)
 	{
 		_isShowGetItem = false;
 	}
+
 }
 
 void Inventory::inventorydrawText(std::string &str, const RECT &massgeRc, int fontsize, COLORREF color,bool isCenter)
@@ -716,6 +767,8 @@ void Inventory::decreaseDurability(int dufault)
 		if ((*_equipWeapon)._durability < 0)
 		{
 			removeItem(_equipWeapon);
+			_isDestroy = true;
+			_messageWorldTime = TIMEMANAGER->getWorldTime();
 		}
 	}
 
@@ -725,4 +778,6 @@ void Inventory::repairWeapon(int gold)
 {
 	_gold -= gold;
 	_equipWeapon->_durability = _equipWeapon->_maxDurability;
+	_isRepair = true;
+	_messageWorldTime = TIMEMANAGER->getWorldTime();
 }

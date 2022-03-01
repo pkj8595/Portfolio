@@ -204,6 +204,7 @@ void CRectObserverManager::getEventFormObserved()
 				{
 					_player->getInventory()->repairWeapon(40);
 					(*_viEvent)->collideEventObject(obData);
+					break;
 				}
 			}
 
