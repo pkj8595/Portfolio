@@ -95,13 +95,14 @@ void PlayScene::render(void)
 	_player->printStack();
 	RECTOBSERVERMANAGER->render();
 	_effectManager->render();
-
 	_mapManager->getCurrentMap()->printOutsideRC();
+
 
 	//UI
 	if (_mapManager->isMinimapToggle()) _mapManager->printTempMinimap();
 	_player->printUI();
 	_player->printInventory();
+	RECTOBSERVERMANAGER->printTextUI();
 
 	//WINSIZE effect
 	_player->printHitBG();

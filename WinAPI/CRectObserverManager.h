@@ -53,6 +53,8 @@ public:
 	virtual void getEventFormObserved();
 	virtual void getRectFromObserved();
 
+	void printTextUI();
+
 	void registerEffectManagerAddress(EffectManager* ef) {
 		_effectManager = ef;
 	}
