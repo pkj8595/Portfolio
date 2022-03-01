@@ -913,6 +913,7 @@ void Player::setLevelUp()
 		_status._experience -= _totalStatus._maxExperience;
 		_status._maxExperience *= 1.3f;
 		_status._offencePower += 1.0f;
+		_status._magicPower += 1.0f;
 		_efm->createEffect("Levelup", &_rc, 0.1f, -90, -150);
 	}
 }
