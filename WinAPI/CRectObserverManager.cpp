@@ -24,6 +24,7 @@ void CRectObserverManager::update(void)
 	_effectManager->update();
 	_damageManager->update();
 	getRectFromObserved();
+	getEventFormObserved();
 }
 
 void CRectObserverManager::render(void)
@@ -125,10 +126,9 @@ void CRectObserverManager::getRectFromObserved()
 				RECT collisionRect;
 				if (IntersectRect(&collisionRect, obData.rc, obDataCompare.rc))
 				{
-					(*_viRect)->collideObject(obDataCompare);
 					(*_viRectCompare)->collideObject(obData);
-
-					continue;
+					(*_viRect)->collideObject(obDataCompare);
+					return;
 				}
 			}
 
@@ -138,3 +138,69 @@ void CRectObserverManager::getRectFromObserved()
 
 }
 
+
+void CRectObserverManager::registerPlayer(Player* player)
+{
+	_player = player;
+}
+
+void CRectObserverManager::registerEventObserved(IEventObservered* observed)
+{
+	_vEvent.push_back(observed);
+}
+
+void CRectObserverManager::removeEventObserved(IEventObservered* observed)
+{
+	_viEvent = _vEvent.begin();
+	for (; _viEvent != _vEvent.end(); ++_viEvent)
+	{
+		if (*_viEvent == observed)
+		{
+			_vEvent.erase(_viEvent);
+			break;
+		}
+	}
+}
+
+void CRectObserverManager::getEventFormObserved()
+{
+	_viEvent = _vEvent.begin();
+	for (; _viEvent != _vEvent.end(); ++_viEvent)
+	{
+		STEventObservedData obData;
+		obData = (*_viEvent)->getEventUpdate();
+		RECT collisionRect;
+		if (!*obData.isActive) continue;
+		if (IntersectRect(&collisionRect, &_player->getRect(), obData.rc))
+		{
+			if (*obData.typeKey == EventObservedType::SHOP)
+			{
+				if (KEYMANAGER->isOnceKeyDown('E'))
+				{
+					if (_player->getInventory()->buyItem(*obData.num))
+					{
+						(*_viEvent)->collideEventObject(obData);
+					}
+					break;
+				}
+			}
+			else if (*obData.typeKey == EventObservedType::CHEST)
+			{
+				if (KEYMANAGER->isOnceKeyDown('E'))
+				{
+					ItemSpawner::getSingleton()->createChestItem(CENTER_X, CENTER_Y,true);
+					(*_viEvent)->collideEventObject(obData);
+					break;
+				}
+			}
+			else if (*obData.typeKey == EventObservedType::ANVIL)
+			{
+				if (KEYMANAGER->isOnceKeyDown('E'))
+				{
+					_player->getInventory()->repairWeapon(40);
+					(*_viEvent)->collideEventObject(obData);
+				}
+			}
+		}
+	}
+}

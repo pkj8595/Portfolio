@@ -4,6 +4,7 @@
 #include "EnemyManager.h"
 #include "Player.h"
 #include "ItemSpawner.h"
+#include "EffectManager.h"
 
 class PlayScene : public GameNode
 {
@@ -16,6 +17,7 @@ private:
 	//my::Image* _clearBossImage3;
 	MapManager* _mapManager;
 	EnemyManager* _enemyManager;
+	EffectManager* _effectManager;
 	Player* _player;
 	ItemSpawner* _itemSpawner;
 	int _stageNum;

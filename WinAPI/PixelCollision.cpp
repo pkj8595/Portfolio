@@ -26,6 +26,9 @@ void PlayScene::pixelBulletCollision()
 
 		if (!(r == 255 && g == 255 && b == 255))
 		{
+			RECT temp = RectMakeCenter(_player->getNormalWeapon()->getPoint(i).x, _player->getNormalWeapon()->getPoint(i).y,
+				48, 48);
+			_effectManager->createEffect("NormalHit", temp, 0.05f);
 			_player->getNormalWeapon()->removeBullet(i);
 		}
 	}
@@ -39,6 +42,9 @@ void PlayScene::pixelBulletCollision()
 
 		if (!(r == 255 && g == 255 && b == 255))
 		{
+			RECT temp = RectMakeCenter(_player->getBowWeapon()->getPoint(i).x, _player->getBowWeapon()->getPoint(i).y,
+				48, 48);
+			_effectManager->createEffect("BowHit", temp, 0.05f);
 			_player->getBowWeapon()->removeBullet(i);
 		}
 	}

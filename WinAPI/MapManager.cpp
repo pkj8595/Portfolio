@@ -5,7 +5,7 @@ HRESULT MapManager::init(int mapAmount, int stage)
 	int i = 0;
 	IMAGEMANAGER->addImage("Minimap_Off", "Resource/Images/Lucie/CompleteImg/miniMap/minimap_cell_off.bmp", 30, 30, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Minimap_Current", "Resource/Images/Lucie/CompleteImg/miniMap/minimap_cell_shop.bmp", 30, 30, true, RGB(255, 0, 255));
-
+	_currentMap = nullptr;
 	_startPosition = { 5, 5 };
 	_mapAmount = mapAmount;
 	ZeroMemory(&_vTempMap, sizeof(_vTempMap));
@@ -18,16 +18,22 @@ HRESULT MapManager::init(int mapAmount, int stage)
 	_minimapAlpha = 0;
 	_isFadeInMinimap = true;
 
+	_itemSpawner = ItemSpawner::getSingleton();
+	_itemSpawner->setCurrentMap(&_currentMap);
+
 	return S_OK;
 }
 
 void MapManager::release(void)
 {
+	_itemSpawner->release();
+
 }
 
 void MapManager::update(void)
 {
 	_currentMap->update();
+	_itemSpawner->update();
 	if (KEYMANAGER->isOnceKeyDown(VK_TAB))
 	{
 		_tempMinimapToggle = !_tempMinimapToggle;
@@ -35,6 +41,11 @@ void MapManager::update(void)
 	(_isFadeInMinimap) ? _minimapAlpha += 10 : _minimapAlpha -= 10;
 	if (_minimapAlpha >= 180) _isFadeInMinimap = false;
 	else if (_minimapAlpha <= 0) _isFadeInMinimap = true;
+
+	for (Map* m : _vMap)
+	{
+		m->checkActiveMap();
+	}
 
 	if (KEYMANAGER->isOnceKeyDown('E'))
 	{
@@ -52,11 +63,24 @@ void MapManager::update(void)
 			}
 		}
 	}
+
+	if (KEYMANAGER->isOnceKeyDown('R'))
+	{
+		for (Map* m : _vMap)
+		{
+			if (m->getType() == Map::MAPTYPE::SHOP)
+			{
+				_currentMap = m;
+				_currentMap->setShow(true);
+			}
+		}
+	}
 }
 
 void MapManager::render(void)
 {
 	_currentMap->render();
+	_itemSpawner->render();
 
 }
 
@@ -304,6 +328,7 @@ void MapManager::setMapData()
 			Map* map;
 			map = new StartMap;
 			map->init(iter.location);
+			map->setCurrentMap(&_currentMap);
 			_vMap.push_back(map);
 			_currentMap = map;
 		} break;
@@ -312,6 +337,7 @@ void MapManager::setMapData()
 			Map* map;
 			map = new DefaultMap;
 			map->init(iter.location);
+			map->setCurrentMap(&_currentMap);
 			_vMap.push_back(map);
 		} break;
 		case Map::MAPTYPE::BOSS:
@@ -319,6 +345,7 @@ void MapManager::setMapData()
 			Map* map;
 			map = new BossMap;
 			map->init(iter.location);
+			map->setCurrentMap(&_currentMap);
 			_vMap.push_back(map);
 		} break;
 		case Map::MAPTYPE::TREASURE:
@@ -326,6 +353,7 @@ void MapManager::setMapData()
 			Map* map;
 			map = new ChestMap;
 			map->init(iter.location);
+			map->setCurrentMap(&_currentMap);
 			_vMap.push_back(map);
 		} break;
 		case Map::MAPTYPE::SHOP:
@@ -333,6 +361,7 @@ void MapManager::setMapData()
 			Map* map;
 			map = new ShopMap;
 			map->init(iter.location);
+			map->setCurrentMap(&_currentMap);
 			_vMap.push_back(map);
 		} break;
 		case Map::MAPTYPE::REPAIR:
@@ -340,6 +369,7 @@ void MapManager::setMapData()
 			Map* map;
 			map = new RepairMap;
 			map->init(iter.location);
+			map->setCurrentMap(&_currentMap);
 			_vMap.push_back(map);
 		} break;
 		default: break;

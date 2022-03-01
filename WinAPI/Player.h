@@ -114,6 +114,7 @@ public:
 
 	void setLevelUp();
 	void setDead();
+	Inventory* getInventory() { return _inventory; }
 public:
 	//접근자, 지정자
 
@@ -144,7 +145,7 @@ public:
 	bool isDead() { return _dead; }
 
 
-	void addExp(int exp) { _status._experience += exp; }
+	void addExp(int exp);
 	
 	NormalWeapon* getNormalWeapon() { return _normal; }
 	BowWeapon* getBowWeapon() { return _bow; }

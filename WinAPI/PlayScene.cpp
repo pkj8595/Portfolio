@@ -19,6 +19,9 @@ HRESULT PlayScene::init(void)
 	_enemyManager = new EnemyManager;
 	_enemyManager->init();
 
+	_effectManager = new EffectManager;
+	_effectManager->init();
+
 	_player = new Player;
 	_player->init();
 
@@ -50,10 +53,11 @@ void PlayScene::update(void)
 	_mapManager->update();
 	_enemyManager->update();
 	_player->update();
+	_effectManager->update();
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F7))
 	{
-		_itemSpawner->createItem(CENTER_X, CENTER_Y, false);
+		_itemSpawner->createItem(CENTER_X, CENTER_Y, true);
 	}
 
 	pixelCollision();
@@ -90,6 +94,7 @@ void PlayScene::render(void)
 	_player->render();
 	_player->printStack();
 	RECTOBSERVERMANAGER->render();
+	_effectManager->render();
 
 	_mapManager->getCurrentMap()->printOutsideRC();
 
