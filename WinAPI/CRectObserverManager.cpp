@@ -28,7 +28,7 @@ void CRectObserverManager::update(void)
 {
 	_effectManager->update();
 	_damageManager->update();
-	//_textSystemManager->update();
+	_textSystemManager->update();
 	getRectFromObserved();
 	getEventFormObserved();
 }
@@ -37,7 +37,6 @@ void CRectObserverManager::render(void)
 {
 	_effectManager->render();
 	_damageManager->render();
-	//_textSystemManager->render();
 }
 
 void CRectObserverManager::registerObserved(IRectObserved* observed)
@@ -153,6 +152,11 @@ void CRectObserverManager::getRectFromObserved()
 
 }
 
+void CRectObserverManager::printTextUI()
+{
+	_textSystemManager->render();
+}
+
 
 void CRectObserverManager::registerPlayer(Player* player)
 {
@@ -193,15 +197,20 @@ void CRectObserverManager::getEventFormObserved()
 				if (KEYMANAGER->isOnceKeyDown('E'))
 				{
 					Item* item = ItemManager::getSingleton()->getItemIndex(*obData.num);
-					item->_price;
-					item->_name;
-					item->_description;
+					_textSystemManager->setShopdata(item->_name, item->_price);
+					_textSystemManager->isShopOpen = true;
+					_textSystemManager->isShowText = true;
 
+				}
+				if (_textSystemManager->isShopbuy)
+				{
 					if (_player->getInventory()->buyItem(*obData.num))
 					{
 						(*_viEvent)->collideEventObject(obData);
+						_textSystemManager->isShopbuy = false;
+						break;
 					}
-					break;
+					else { _textSystemManager->isShopbuy = false; }
 				}
 			}
 			else if (*obData.typeKey == EventObservedType::CHEST)
@@ -217,11 +226,21 @@ void CRectObserverManager::getEventFormObserved()
 			{
 				if (KEYMANAGER->isOnceKeyDown('E'))
 				{
+					_textSystemManager->AnvilLog(5);
+					_textSystemManager->isShowText = true;
+					_textSystemManager->isAnvilOpen = true;
+					_textSystemManager->isAnvilCol = true;
+				}
+				if (_textSystemManager->isrepairbuy)
+				{
 					if (_player->getInventory()->repairWeapon(40))
 					{
-						(*_viEvent)->collideEventObject(obData);
+						_textSystemManager->AnvilLog(6);
+						_textSystemManager->isrepairbuy = false;
+						_textSystemManager->isAnvilCol = false;
+
+						break;
 					}
-					break;
 				}
 			}
 
