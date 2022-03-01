@@ -28,16 +28,15 @@ void CRectObserverManager::update(void)
 {
 	_effectManager->update();
 	_damageManager->update();
-	_textSystemManager->update();
 	getRectFromObserved();
 	getEventFormObserved();
+	_textSystemManager->update();
 }
 
 void CRectObserverManager::render(void)
 {
 	_effectManager->render();
 	_damageManager->render();
-	_textSystemManager->render();
 }
 
 void CRectObserverManager::registerObserved(IRectObserved* observed)
@@ -153,6 +152,11 @@ void CRectObserverManager::getRectFromObserved()
 
 }
 
+void CRectObserverManager::printTextUI()
+{
+	_textSystemManager->render();
+}
+
 
 void CRectObserverManager::registerPlayer(Player* player)
 {
@@ -192,17 +196,23 @@ void CRectObserverManager::getEventFormObserved()
 			{
 				if (KEYMANAGER->isOnceKeyDown('E'))
 				{
+					cout << "asd" << endl;
 					Item* item = ItemManager::getSingleton()->getItemIndex(*obData.num);
-					item->_price;
-					item->_name;
-					item->_description;
+					_textSystemManager->setShopdata(item->_name, item->_description, item->_price);
+					_textSystemManager->isShopOpen = true;
+					_textSystemManager->isShowText = true;
 
-					if (_player->getInventory()->buyItem(*obData.num))
-					{
-						(*_viEvent)->collideEventObject(obData);
-					}
-					break;
 				}
+					if (_textSystemManager->isShopbuy)
+					{
+						if (_player->getInventory()->buyItem(*obData.num))
+						{
+							(*_viEvent)->collideEventObject(obData);
+							_textSystemManager->isShopbuy = false;
+							break;
+						}
+						else { _textSystemManager->isShopbuy = false; }
+					}
 			}
 			else if (*obData.typeKey == EventObservedType::CHEST)
 			{

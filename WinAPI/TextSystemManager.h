@@ -54,6 +54,11 @@ public:
 	void ShopLog(string itemName, int price);
 	void EventLog(int arrText);
 
+	void setShopdata(string itemName, string itemInfo, int price) 
+	{ _itemName = itemName, _iteminfo = itemInfo, _price = price; }
+
+	bool isShopOpen;
+	bool isEventOpen;
 	bool isEventText;
 	bool isShowText;
 	bool iscollBox;

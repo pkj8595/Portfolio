@@ -10,6 +10,7 @@ void Lobby::Collision(void)
 		{
 			//TextManager-> shopLog collBox bool true
 			_tsm->iscollBox = true;
+			_tsm->isEventOpen = true;
 			_tsm->isShowText = true;
 			_player->_isTextShow = true;
 		}
@@ -21,10 +22,10 @@ void Lobby::Collision(void)
 		if (KEYMANAGER->isOnceKeyDown('E'))
 		{
 			_tsm->isShowText = true;
+			_tsm->isEventOpen = true;
 			_player->_isTextShow = true;
 		}
-		//if (_tsm->iscollBox) { _tsm->EventLog(1); }
-		if (_tsm->isShowText) { _tsm->ShopLog("로브", "탁월한 안감을 자랑하는 로브", 250); }
+		if (_tsm->isShowText) { _tsm->EventLog(1); }
 	}
 
 	else if (IntersectRect(&rc, &_player->getRect(), &_mirror_rc))
@@ -32,6 +33,7 @@ void Lobby::Collision(void)
 		if (KEYMANAGER->isOnceKeyDown('E'))
 		{
 			_tsm->isShowText = true;
+			_tsm->isEventOpen = true;
 			_player->_isTextShow = true;
 		}
 		if (_tsm->isShowText) { _tsm->EventLog(2); }
@@ -42,6 +44,7 @@ void Lobby::Collision(void)
 		if (KEYMANAGER->isOnceKeyDown('E'))
 		{
 			_tsm->isShowText = true;
+			_tsm->isEventOpen = true;
 			_player->_isTextShow = true;
 		}
 		if (_tsm->isShowText) { _tsm->EventLog(3); }
@@ -52,6 +55,7 @@ void Lobby::Collision(void)
 		if (KEYMANAGER->isOnceKeyDown('E'))
 		{
 			_tsm->isShowText = true;
+			_tsm->isEventOpen = true;
 			_player->_isTextShow = true;
 		}
 		if (_tsm->isShowText) { _tsm->EventLog(4); }
@@ -70,6 +74,7 @@ void Lobby::Collision(void)
 	if (KEYMANAGER->isOnceKeyDown('Z'))
 	{
 		_tsm->isShowText = false;
+		_tsm->isEventOpen = false;
 		_tsm->iscollBox = false;
 		_tsm->isShopcol = false;
 		_player->_isTextShow = false;

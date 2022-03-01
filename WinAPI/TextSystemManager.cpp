@@ -16,6 +16,8 @@ HRESULT TextSystemManager::init(void)
 
 	isShowText = false;
 	iscollBox = false;
+	isShopOpen = false;
+	isShopbuy = false;
 
 	_text1 = "";
 	_text2 = "";
@@ -47,26 +49,32 @@ void TextSystemManager::release(void)
 
 void TextSystemManager::update(void)
 {
+	//isShowText가 true가 되었을때 BufferCnt 및 _textAlpha 값 더하기
 	if (isShowText)
 	{ 
 		_textBufferCnt += 1;
 		_textAlpha += 4.0f; 
 	}
-	if (!isShowText)
+	//isShowText가 false가 되었을때 BufferCnt 및 _textAlpha 값 0으로 초기화
+	else if (!isShowText)
 	{
 		_textBufferCnt = 0; 
 		_textindex = 0;
 	}
+	//_textAlpha가 230 이상을 초과하면 230으로 고정해두기.
 	if (_textAlpha >= 230.0f) { _textAlpha = 230.0f; }
 	
 	
-
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE) && isShowText)
+	// 엔터를 눌렀을 경우
+	if (KEYMANAGER->isOnceKeyDown(VK_RETURN) && isShowText)
 	{
+		// _textBufferCnt과 _text1.size()를 비교했을 때 _text1.size()가 더 크다면
 		if (_textBufferCnt < _text1.size())
 		{
+			// bufferCnt은 _text1.size의 값과 같은 값을 가지게 된다.
 			_textBufferCnt = _text1.size();
 		}
+		// 저 조건에 충족하지 않는다면 _textindex를 1로 고정하고 버튼 렌더에 필요한 isShopcol을 호출한다.
 		else
 		{
 			_textindex = 1;
@@ -74,7 +82,7 @@ void TextSystemManager::update(void)
 		}
 	}
 
-	// 버튼 렌더링
+	// 버튼 렉트 박스에 충돌했을 경우 알파값을 230.0f로 고정, 아닐 경우 0으로 초기화
 	if (iscollBox)
 	{
 		if (PtInRect(&_select_oneRc, _ptMouse))
@@ -105,28 +113,37 @@ void TextSystemManager::update(void)
 		}
 	}
 
+	//isShopcol이 true가 되면
 	if (isShopcol)
 	{
+	// 상점 버튼 렉트 박스에 닿으면 알파값을 230.0f로 고정하고
 		if (PtInRect(&_shopsel_OneRc, _ptMouse))
 		{
 			_selectOneAlpha = 230.0f;
+			// 좌클릭할 경우 구매 버튼이 true된 후 isShopOpen과 isShowText가 false된다.
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
 				isShopbuy = true;
+				isShopcol = false;
+				isShopOpen = false;
+				isShowText = false;
 			}
 		}
 		else
 		{
 			_selectOneAlpha = 0.0f;
 		}
-
+		
+		// 상점 버튼 렉트 박스에 닿으면 알파값을 230.0f로 고정하고
 		if (PtInRect(&_shopsel_TwoRc, _ptMouse))
 		{
 			_selectTwoAlpha = 230.0f;
+			// 좌클릭할 경우 3개의 변수가 false가 된다.
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
 				isShowText = false;
 				isShopcol = false;
+				isShopOpen = false;
 			}
 		}
 		else
@@ -138,16 +155,19 @@ void TextSystemManager::update(void)
 
 void TextSystemManager::render(void)
 {
-	ShopLog(_itemName, _iteminfo, _price);
-	EventLog(_eventArrText);
+	if (isShopOpen) 
+	{ 
+		ShopLog(_itemName, _iteminfo, _price); 
+	}
+
+	if (isEventOpen)
+	{
+		EventLog(_eventArrText);
+	}
 }
 
 void TextSystemManager::ShopLog(string itemName, string iteminfo, int price)
 {
-
-	_itemName = itemName;
-	_iteminfo = iteminfo;
-	_price = price;
 
 	_text1 = "그건 " + _itemName + ". " + _iteminfo + "야.";
 	_text2 = "가격은 " + to_string(_price) + "인데, 살래?";
@@ -160,20 +180,26 @@ void TextSystemManager::ShopLog(string itemName, string iteminfo, int price)
 	copy(_text2.begin(), _text2.end(), shop_talk2);
 	shop_talk2[_text2.size()] = '\0';
 
+	//챗 로그 박스 설정, _chatRc의 값을 토대로 렌더함
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
+	//챗 이름 박스 설정, _nameRc의 값을 토대로 렌더함
 	IMAGEMANAGER->alphaRender("Namebox", getMemDC(), _nameRc.left, _nameRc.top, _textAlpha);
+	//챗 이름박스 안에 텍스트 출력
 	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "둥근모꼴", 27, 15,
 		L"마리", wcslen(L"마리"), RGB(0, 0, 255));
 
+	// _textindex가 0일때 _chatWriteRc에서부터 문구 출력
 	if (_textindex == 0)
 	{
 		FONTMANAGER->drawText(getMemDC(), _chatWriteRc, "둥근모꼴", 27, 15, shop_talk1, ((_textBufferCnt) > strlen(shop_talk1) ? strlen(shop_talk1) : (_textBufferCnt)), RGB(255, 255, 255));
 	}
+	// _textindex가 1일때 _chatWriteRc에서부터 문구 출력
 	else if (_textindex == 1)
 	{
 		FONTMANAGER->drawText(getMemDC(), _chatWriteRc, "둥근모꼴", 27, 15, shop_talk2, ((_textBufferCnt) > strlen(shop_talk2) ? strlen(shop_talk2) : (_textBufferCnt)), RGB(255, 255, 255));
 	}
 
+	// isShopcol이 true일때 선택 박스 및 선택 박스 안에 들어갈 텍스트 출력
 	if (isShopcol)
 	{
 		IMAGEMANAGER->alphaRender("SelOne", getMemDC(), _shopsel_OneRc.left, _shopsel_OneRc.top, _selectOneAlpha);
@@ -184,6 +210,7 @@ void TextSystemManager::ShopLog(string itemName, string iteminfo, int price)
 			L"아니.", wcslen(L"아니."), RGB(255, 255, 255));
 	}
 	
+	// shop_talk 1,2 삭제
 	delete[] shop_talk1;
 	delete[] shop_talk2;
 }
