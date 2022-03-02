@@ -107,6 +107,7 @@ void TextSystemManager::update(void)
 			_selectOneAlpha = 230.0f;
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 				weapon_Selectdata.clear();
 				weapon_Selectdata.push_back(_itoa(21, temp, 10));
 				TEXTDATAMANAGER->save("로비 무기 선택.text", weapon_Selectdata);
@@ -124,6 +125,7 @@ void TextSystemManager::update(void)
 			_selectTwoAlpha = 230.0f;
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 				weapon_Selectdata.clear();
 				weapon_Selectdata.push_back(_itoa(24, temp, 10));
 				TEXTDATAMANAGER->save("로비 무기 선택.text", weapon_Selectdata);
@@ -141,6 +143,7 @@ void TextSystemManager::update(void)
 			_selectThreeAlpha = 230.0f;
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 				weapon_Selectdata.clear();
 				isShowText = false;
 				iscollBox = false;
@@ -180,6 +183,7 @@ void TextSystemManager::update(void)
 			// 좌클릭할 경우 3개의 변수가 false가 된다.
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 				isShowText = false;
 				isShopCol = false;
 				isShopOpen = false;
@@ -198,6 +202,7 @@ void TextSystemManager::update(void)
 			_selectOneAlpha = 230.0f;
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 				isrepairbuy = true;
 				isShowText = true;
 			}
@@ -212,6 +217,7 @@ void TextSystemManager::update(void)
 			_selectTwoAlpha = 230.0f;
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 				isAnvilCol = false;
 				isShowText = false;
 				isAnvilOpen = false;

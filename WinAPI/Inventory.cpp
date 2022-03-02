@@ -268,7 +268,7 @@ void Inventory::pushItem(Item* item)
 		updatePushItemMassege(item);
 		_invenItemCount++;
 	}
-
+	TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/getItem.wav");
 	computeItemTotalAttribute();
 }
 

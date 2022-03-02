@@ -12,7 +12,6 @@ struct TagText
 class TextSystemManager :public GameNode
 {
 private:
-	Player* _player;
 
 	TagText _text[TEXT_MAX];
 	const int SCRIPT_MAX_LENGTH = 55;
