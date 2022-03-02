@@ -74,6 +74,7 @@ using namespace std;
 #include "CRectObserverManager.h"
 #include "TextDataManager.h"
 #include "SceneManager.h"
+#include "CameraManager.h"
 
 using namespace MY_UTIL;
 //===================================
@@ -92,6 +93,8 @@ using namespace MY_UTIL;
 #define RECTOBSERVERMANAGER CRectObserverManager::getSingleton()
 #define TEXTDATAMANAGER TextDataManager::getSingleton()
 #define SCENEMANAGER SceneManager::getSingleton()
+#define CAMERAMANAGER CameraManager::getSingleton()
+
 
 
 //===================================
@@ -100,7 +103,7 @@ using namespace MY_UTIL;
 
 #define WINNAME			(LPSTR)(TEXT("WindowAPI"))
 
-//#define FULLSCREEN
+#define FULLSCREEN
 
 #ifdef FULLSCREEN
 

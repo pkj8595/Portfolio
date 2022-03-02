@@ -120,6 +120,14 @@ int APIENTRY WinMain( HINSTANCE hInstance,
 
 	MSG message;
 
+	//==================================
+	SetMapMode(_mg->getHDC(), MM_ISOTROPIC);
+	RECT cameraRc = RectMake(0, 0, 0, 0);
+	GetClientRect(_hWnd, &cameraRc);
+	SetWindowExtEx(_mg->getHDC(), 960, 540, NULL);
+	SetViewportExtEx(_mg->getHDC(), cameraRc.right, cameraRc.bottom, NULL);
+	//==================================
+
 	while (true) 
 	{
 		

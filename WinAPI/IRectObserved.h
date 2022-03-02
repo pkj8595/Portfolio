@@ -3,7 +3,7 @@
 
 
 //=====================================
-//	## EventObserved ##
+//	## ObjectObserved ##
 //=====================================
 enum class ObservedType
 {

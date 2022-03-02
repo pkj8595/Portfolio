@@ -36,6 +36,8 @@ private:
 	int _deadAlpha;
 	float _deadTimer;
 
+	
+
 public:
 	HRESULT init(void);
 	void release(void);

@@ -122,7 +122,7 @@ void Inventory::render(void)
 		if (TIMEMANAGER->getWorldTime() < _messageWorldTime + MESSAGE_SHOW_TIME)
 		{
 			if (_isbuyItemfail) { _messageStr = "돈이.. 부족하다....."; }
-			else if (_isDestroy) { _messageStr = "내 무기가.. 부숴졌다..."; }
+			else if (_isDestroy) { _messageStr = "내 무기가.. 부서졌다..."; }
 			else if (_againTakeAbilityItem)
 			{
 				_messageStr = "이건.. 이미 있어.";

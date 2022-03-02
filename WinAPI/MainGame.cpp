@@ -23,6 +23,13 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("ShopScene", new ShopScene);
 
 	SCENEMANAGER->changeScene("PlayScene");
+	
+	/*SetMapMode(getHDC(), MM_ISOTROPIC);
+	RECT cameraRc = RectMake(0, 0, 0, 0);
+	GetClientRect(_hWnd, &cameraRc);
+	SetWindowExtEx(getHDC(), 960, 540, NULL);
+	SetViewportExtEx(getHDC(), cameraRc.right, cameraRc.bottom, NULL);
+	*/
 
 	return S_OK;
 }
@@ -51,4 +58,9 @@ void MainGame::render(void)
 	TIMEMANAGER->render(getMemDC());
 
 	this->getBackBuffer()->render(getHDC());
+}
+
+void MainGame::renderUI(void)
+{
+
 }

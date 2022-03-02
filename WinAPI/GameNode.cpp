@@ -27,10 +27,11 @@ HRESULT GameNode::init(bool managerInit)
 		TEXTDATAMANAGER->init();
 		RECTOBSERVERMANAGER->init();
 		SCENEMANAGER->init();
-
+		CAMERAMANAGER->init();
 	}
 
-	
+	//CAMERAMANAGER->startMappingMode(getHDC());
+	//CAMERAMANAGER->startMappingMode(_hdc);
 
 
 	return S_OK;
@@ -61,6 +62,9 @@ void GameNode::release(void)
 		RECTOBSERVERMANAGER->releaseSingleton();
 
 		SCENEMANAGER->release();
+
+		CAMERAMANAGER->release();
+		CAMERAMANAGER->releaseSingleton();
 
 	}
 
@@ -94,6 +98,7 @@ LRESULT GameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	case WM_PAINT:	
 		hdc = BeginPaint(hWnd, &ps);
 		//this->render();
+		cout << "WM_PAINT" << endl;
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_MOUSEMOVE:
@@ -112,6 +117,29 @@ LRESULT GameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 
 		case VK_ESCAPE:		
 			PostMessage(hWnd, WM_DESTROY, 0, 0);
+			break;
+		}
+		break;
+	case WM_COMMAND:
+		switch (wParam)
+		{
+			case 0x0001: 
+			{
+				RECT cameraRc = RectMake(0, 0, 0, 0);
+				GetClientRect(_hWnd, &cameraRc);
+				SetWindowExtEx(getHDC(), 960, 540, NULL);
+				SetViewportExtEx(getHDC(), cameraRc.right, cameraRc.bottom, NULL);
+				break;
+			}
+			case 0x0002: 
+			{
+				RECT cameraRc = RectMake(0, 0, 0, 0);
+				GetClientRect(_hWnd, &cameraRc);
+				SetWindowExtEx(getHDC(), cameraRc.right, cameraRc.bottom, NULL);
+				SetViewportExtEx(getHDC(), cameraRc.right, cameraRc.bottom, NULL);
+				break;
+			}
+		default:
 			break;
 		}
 		break;
