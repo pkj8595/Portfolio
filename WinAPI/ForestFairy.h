@@ -24,14 +24,11 @@ private:
 	float _attackDistance;
 	float _frameSpeed;
 	float _deadTimeCount;
-	float _attacWorldTime;
-	float _attackMoveWorldTime;
 
 	int   _randomX, _randomY;
 	int	  _range;
 	int	  _maxFrameX;
 
-	bool  _attackCheck;
 	bool  _deadForOb;		//사망 여부 [Enemy의 isActive는 몹 삭제 전용, deadForOb는 체력 0 여부]
 
 public:

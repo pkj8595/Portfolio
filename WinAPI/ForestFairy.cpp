@@ -26,17 +26,14 @@ HRESULT ForestFairy::init(const char * imageName, POINT position)
 	_randomX = _randomY = 0;
 	_deadTimeCount = TIMEMANAGER->getWorldTime();
 	_moveWorldTime = TIMEMANAGER->getWorldTime();
-	_attacWorldTime = TIMEMANAGER->getWorldTime();
-	_attackMoveWorldTime = TIMEMANAGER->getWorldTime();
-	_attackCheck = true;
 	_deadForOb = false;
 
 	_normalBullet = new NormalBullet;
-	_normalBullet->init(30, WINSIZE_X * 2 / 3);
+	_normalBullet->init(10, WINSIZE_X * 2 / 3);
 	_fairyBullet = new FairyBullet;
-	_fairyBullet->init(30, 0);
+	_fairyBullet->init(1, 500);
 	_bubbleBullet = new BubbleBullet;
-	_bubbleBullet->init(30, 0);
+	_bubbleBullet->init(1, 500);
 
 	return S_OK;
 }
@@ -189,7 +186,6 @@ void ForestFairy::frame()
 				_currentFrameY = 4;
 				break;
 			}
-			_attackCheck = false;
 			normalBullet();
 			break;
 
@@ -212,8 +208,6 @@ void ForestFairy::frame()
 				_currentFrameY = 4;
 				break;
 			}
-			_attackCheck = false;
-
 			fariyBullet();
 			break;
 
@@ -236,8 +230,6 @@ void ForestFairy::frame()
 				_currentFrameY = 4;
 				break;
 			}
-			_attackCheck = false;
-
 			bubbleBullet();
 			break;
 		}
@@ -324,10 +316,7 @@ void ForestFairy::normalBullet()
 	if (_attackParttern == FAIRYATTACK::FA_NORMAL&&_image->getMaxFrameX() - 1 == _currentFrameX)
 	{
 		float tempAngle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
-		for (int i = 0; i < 30; i++)
-		{
-			_normalBullet->fire(_x, _y, tempAngle, 4.0f, 0);
-		}
+		_normalBullet->fire(_x, _y, tempAngle, 5.0f, 0);
 		//더이상 다음 상태가 될 때까지 공격 X되게 하는 구문 필요
 	}
 }
@@ -336,7 +325,7 @@ void ForestFairy::fariyBullet()
 {
 	if (_attackParttern == FAIRYATTACK::FA_FAIRY&&_image->getMaxFrameX() - 1 == _currentFrameX)
 	{
-		_fairyBullet->fire(_x, _y, _angle);
+		_fairyBullet->fire(_x, _y, 300);
 	}
 }
 
@@ -344,10 +333,7 @@ void ForestFairy::bubbleBullet()
 {
 	if (_attackParttern == FAIRYATTACK::FA_BUBBLE&&_image->getMaxFrameX() - 1 == _currentFrameX)
 	{
-		for (int i = 0; i < 30; i++)
-		{
-			_bubbleBullet->fire(_x, _y,_angle, 4.0f, 0);
-		}
+		_bubbleBullet->fire(_x, _y, 300, 2.0f, 0);
 	}
 
 }
