@@ -328,7 +328,7 @@ void ForestFairy::normalBullet()
 		{
 			_normalBullet->fire(_x, _y, tempAngle, 4.0f, 0);
 		}
-		//더이상 다음 상태가 될 때까지 공격 X
+		//더이상 다음 상태가 될 때까지 공격 X되게 하는 구문 필요
 	}
 }
 
