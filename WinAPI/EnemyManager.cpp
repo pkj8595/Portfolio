@@ -103,8 +103,13 @@ void EnemyManager::render(void)
 
 void EnemyManager::setMinion(void)
 {
+<<<<<<< HEAD
 	/*int temp = RND->getInt(3);
 	switch (temp)
+=======
+	int temp = RND->getInt(3);
+	/*switch (temp)
+>>>>>>> 47635143141b8395f01b444126dc7aaeb1ba2205
 	{
 	case 0: {
 		Enemy* slime;
@@ -153,6 +158,7 @@ void EnemyManager::setMinion(void)
 	//rafflesia->init("Rafflesia", PointMake(CENTER_X - 150, CENTER_Y + 30));
 	//_vMinion.push_back(rafflesia);
 
+<<<<<<< HEAD
 	//Enemy* forestFairy;
 	//forestFairy = new ForestFairy;
 	//forestFairy->init("ForestFairy", PointMake(CENTER_X, CENTER_Y - 100));
@@ -162,6 +168,12 @@ void EnemyManager::setMinion(void)
 	mushman = new MushMan;
 	mushman->init("MushMan", PointMake(CENTER_X, CENTER_Y - 100));
 	_vMinion.push_back(mushman);
+=======
+	Enemy* forestFairy;
+	forestFairy = new ForestFairy;
+	forestFairy->init("ForestFairy", PointMake(CENTER_X, CENTER_Y - 100));
+	_vMinion.push_back(forestFairy);
+>>>>>>> 47635143141b8395f01b444126dc7aaeb1ba2205
 }
 
 void EnemyManager::setBoss(void)
