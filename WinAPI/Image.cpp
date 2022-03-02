@@ -704,7 +704,7 @@ namespace my {
 		int drawAreaY = drawArea->top;
 		int drawAreaW = drawArea->right - drawArea->left;
 		int drawAreaH = drawArea->bottom - drawArea->top;
-
+		
 
 		//세로 루프영역
 		for (int y = 0; y < drawAreaH; y += sourHeight)

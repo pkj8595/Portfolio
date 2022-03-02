@@ -97,7 +97,6 @@ void PlayScene::render(void)
 	_effectManager->render();
 	_mapManager->getCurrentMap()->printOutsideRC();
 
-
 	//UI
 	if (_mapManager->isMinimapToggle()) _mapManager->printTempMinimap();
 	_player->printUI();
