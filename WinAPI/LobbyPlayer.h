@@ -1,10 +1,8 @@
 #pragma once
-#pragma once
 #include "GameNode.h"
 #include "PlayerWeapon.h"
 #include "PlayerStatusUI.h"
 #include "Inventory.h"
-#include "TextSystemManager.h"
 
 class LobbyPlayer : public GameNode
 {
@@ -15,13 +13,13 @@ private:
 	enum class PLAYER_DIRECTION { LEFTDOWN, DOWN, RIGHTDOWN, LEFT, RIGHT, LEFTUP, UP, RIGHTUP };
 	my::Image* _image;
 	int _level;
-	TextSystemManager* _tsm;
 	PLAYER_STATE _state;
 	PLAYER_DIRECTION _direction;
 	RECT _rc;
 	float _x;
 	float _y;
 	int _stateFrameCount;
+	bool _isTextShow;
 
 	float _frameTick;
 	float _stateFrameTick;			//상태별 프레임 간격 딜레이
@@ -78,6 +76,11 @@ public:
 	float getY() { return _y; }
 	void setY(float y) { _y = y; }
 
+	void setisShowText(bool ShowText) 
+	{ 
+		_isTextShow = ShowText; 
+	}
+
 	RECT getRect() { return _rc; }
 
 	POINT getPosition()
@@ -93,7 +96,6 @@ public:
 	PLAYER_STATE getState() { return _state; }
 	void printUI() { _statusUI->render(); }
 
-	bool _isTextShow;
 	bool isDead() { return _dead; }
 };
 

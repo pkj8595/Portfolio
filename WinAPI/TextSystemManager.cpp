@@ -1,6 +1,8 @@
 #pragma once
 #include "Stdafx.h"
 #include "TextSystemManager.h"
+#include "Player.h"
+#include "LobbyPlayer.h"
 
 
 HRESULT TextSystemManager::init(void)
@@ -8,8 +10,8 @@ HRESULT TextSystemManager::init(void)
 	_chatImage = IMAGEMANAGER->addImage("Talkbox","Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 850, 200, true, RGB(255, 0, 255));
 	_BoxchatImage = IMAGEMANAGER->addImage("WP_BoxTextBox", "Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 850, 250, true, RGB(255, 0, 255));
 	_nameImage = IMAGEMANAGER->addImage("Namebox", "Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 125, 65, true, RGB(255, 0, 255));
+	_anvilnameImage = IMAGEMANAGER->addImage("AnvilNamebox", "Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 300, 60, true, RGB(255, 0, 255));
 	_selImage = IMAGEMANAGER->addImage("SelOne", "Resource/Images/Lucie/CompleteImg/UI/SelectBox.bmp", 180, 50, true, RGB(255, 0, 255));
-	_anvilnameImage = IMAGEMANAGER->addImage("AnvilNamebox", "Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 170, 65, true, RGB(255, 0, 255));
 
 	_textBufferCnt = 0;
 	_textindex = 0;
@@ -44,7 +46,7 @@ HRESULT TextSystemManager::init(void)
 	_select_ThrRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.89, _selImage->getWidth(), _selImage->getHeight());
 	_anvilsel_oneRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.84, _selImage->getWidth(), _selImage->getHeight());
 	_anvilsel_TwoRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.89, _selImage->getWidth(), _selImage->getHeight());
-	
+
 	return S_OK;
 }
 
@@ -103,6 +105,13 @@ void TextSystemManager::update(void)
 		if (PtInRect(&_select_oneRc, _ptMouse))
 		{
 			_selectOneAlpha = 230.0f;
+			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			{
+				weapon_Selectdata.push_back(_itoa(21, temp, 10));
+				TEXTDATAMANAGER->save("로비 무기 선택.text", weapon_Selectdata);
+				isShowText = false;
+				iscollBox = false;
+			}
 		}
 		else 
 		{ 
@@ -112,6 +121,11 @@ void TextSystemManager::update(void)
 		if (PtInRect(&_select_TwoRc, _ptMouse))
 		{
 			_selectTwoAlpha = 230.0f;
+			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			{
+				isShowText = false;
+				iscollBox = false;
+			}
 		}
 		else
 		{
@@ -121,6 +135,11 @@ void TextSystemManager::update(void)
 		if (PtInRect(&_select_ThrRc, _ptMouse))
 		{
 			_selectThreeAlpha = 230.0f;
+			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			{
+				isShowText = false;
+				iscollBox = false;
+			}
 		}
 		else
 		{

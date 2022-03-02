@@ -1,7 +1,7 @@
 #pragma once
 #include "GameNode.h"
+#include "ItemClass.h"
 #define TEXT_MAX 10
-
 
 struct TagText
 {
@@ -12,6 +12,8 @@ struct TagText
 class TextSystemManager :public GameNode
 {
 private:
+	Player* _player;
+
 	TagText _text[TEXT_MAX];
 	const int SCRIPT_MAX_LENGTH = 55;
 	string _itemName;
@@ -52,6 +54,9 @@ private:
 	my::Image* _nameImage;
 	my::Image* _selImage;
 	my::Image* _anvilnameImage;
+
+	char temp[32];
+	vector<string> weapon_Selectdata;
 
 public:
 	HRESULT init(void);

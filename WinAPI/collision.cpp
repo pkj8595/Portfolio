@@ -12,7 +12,7 @@ void Lobby::Collision(void)
 			_tsm->iscollBox = true;
 			_tsm->isEventOpen = true;
 			_tsm->isShowText = true;
-			_player->_isTextShow = true;
+			_player->setisShowText(true);
 		}
 		if (_tsm->iscollBox) { _tsm->EventLog(0); }
 	}
@@ -23,7 +23,7 @@ void Lobby::Collision(void)
 		{
 			_tsm->isShowText = true;
 			_tsm->isEventOpen = true;
-			_player->_isTextShow = true;
+			_player->setisShowText(true);
 		}
 		if (_tsm->isShowText) { _tsm->EventLog(1); }
 	}
@@ -34,7 +34,7 @@ void Lobby::Collision(void)
 		{
 			_tsm->isShowText = true;
 			_tsm->isEventOpen = true;
-			_player->_isTextShow = true;
+			_player->setisShowText(true);
 		}
 		if (_tsm->isShowText) { _tsm->EventLog(2); }
 	}
@@ -45,7 +45,7 @@ void Lobby::Collision(void)
 		{
 			_tsm->isShowText = true;
 			_tsm->isEventOpen = true;
-			_player->_isTextShow = true;
+			_player->setisShowText(true);
 		}
 		if (_tsm->isShowText) { _tsm->EventLog(3); }
 	}
@@ -56,7 +56,7 @@ void Lobby::Collision(void)
 		{
 			_tsm->isShowText = true;
 			_tsm->isEventOpen = true;
-			_player->_isTextShow = true;
+			_player->setisShowText(true);
 		}
 		if (_tsm->isShowText) { _tsm->EventLog(4); }
 	}
@@ -66,7 +66,7 @@ void Lobby::Collision(void)
 		if (KEYMANAGER->isOnceKeyDown('E'))
 		{
 			_bookOpen = true;
-			_player->_isTextShow = true;
+			_player->setisShowText(true);
 		}
 		if (_bookOpen) { _fadeOutWhiteAlpha += 3.0f; }
 	}
@@ -77,7 +77,11 @@ void Lobby::Collision(void)
 		_tsm->isEventOpen = false;
 		_tsm->iscollBox = false;
 		_tsm->isShopCol = false;
-		_player->_isTextShow = false;
+	}
+
+	if (!_tsm->isShowText)
+	{
+		_player->setisShowText(false);
 	}
 }
 

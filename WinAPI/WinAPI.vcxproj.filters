@@ -85,14 +85,14 @@
     <Filter Include="MainGame\Map\MapType">
       <UniqueIdentifier>{92d78c0a-56c1-44e0-824e-8f0def7cc963}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PKJ">
-      <UniqueIdentifier>{a1134bdf-b905-4b02-a048-ba775e56f202}</UniqueIdentifier>
-    </Filter>
     <Filter Include="KGY">
       <UniqueIdentifier>{3969682f-08ec-4009-864e-80830d80781d}</UniqueIdentifier>
     </Filter>
     <Filter Include="LHW">
       <UniqueIdentifier>{95633ec0-0fc8-4c24-8fd6-b875fb5a1e9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PKJ">
+      <UniqueIdentifier>{a1134bdf-b905-4b02-a048-ba775e56f202}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
