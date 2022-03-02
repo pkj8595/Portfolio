@@ -20,17 +20,38 @@ HRESULT ForestFairy::init(const char * imageName, POINT position)
 	_currentFrameY = 0;
 	_range = 220;
 	_frameSpeed = 0.3f;
-
+	_angle = 0.0f;
+	_playerDistance = 0.0f;
+	_attackDistance = 0.0f;
+	_randomX = _randomY = 0;
 	_deadTimeCount = TIMEMANAGER->getWorldTime();
 	_moveWorldTime = TIMEMANAGER->getWorldTime();
-
+	_attacWorldTime = TIMEMANAGER->getWorldTime();
+	_attackMoveWorldTime = TIMEMANAGER->getWorldTime();
+	_attackCheck = true;
 	_deadForOb = false;
+
+	_normalBullet = new NormalBullet;
+	_normalBullet->init(30, WINSIZE_X * 2 / 3);
+	_fairyBullet = new FairyBullet;
+	_fairyBullet->init(30, 0);
+	_bubbleBullet = new BubbleBullet;
+	_bubbleBullet->init(30, 0);
 
 	return S_OK;
 }
 
 void ForestFairy::release(void)
 {
+	_normalBullet->release();
+	SAFE_DELETE(_normalBullet);
+
+	_fairyBullet->release();
+	SAFE_DELETE(_fairyBullet);
+
+	_bubbleBullet->release();
+	SAFE_DELETE(_bubbleBullet);
+
 	Enemy::release();
 
 }
@@ -38,18 +59,23 @@ void ForestFairy::release(void)
 void ForestFairy::update(void)
 {
 	Enemy::update();
+	_normalBullet->update();
+	_fairyBullet->update();
+	_bubbleBullet->update();
 
 	if (!_deadForOb)
 	{
 		if (playerCheck())
-		{	
+		{
 			_state = FAIRYSTATE::FA_ATTAACK;
 		}
 		else
-		 randomPosCreate();
+
+			randomPosCreate();
 	}
 	else
 	{
+		_state = FAIRYSTATE::FA_DEAD;
 	}
 
 	frame();
@@ -60,6 +86,12 @@ void ForestFairy::update(void)
 void ForestFairy::render(void)
 {
 	Enemy::render();
+
+	if (_isActive)
+	{
+		frame();
+		draw();
+	}
 }
 
 void ForestFairy::move(void)
@@ -69,6 +101,9 @@ void ForestFairy::move(void)
 void ForestFairy::draw(void)
 {
 	_image->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX, _currentFrameY);
+	_normalBullet->render();
+	_fairyBullet->render();
+	_bubbleBullet->render();
 }
 
 void ForestFairy::animation(void)
@@ -97,6 +132,121 @@ void ForestFairy::animation(void)
 		}
 
 		_image->setFrameX(_currentFrameX);
+	}
+}
+
+void ForestFairy::attack()
+{
+
+}
+
+
+void ForestFairy::frame()
+{
+	switch (_state)
+	{
+	case FAIRYSTATE::FA_MOVE:
+		switch (_direction)
+		{
+		case FAIRYDIRECTION::FA_LEFT:
+			_currentFrameY = 1;
+			break;
+
+		case FAIRYDIRECTION::FA_RIGHT:
+			_currentFrameY = 2;
+			break;
+
+		case FAIRYDIRECTION::FA_UP:
+			_currentFrameY = 3;
+			break;
+
+		case FAIRYDIRECTION::FA_DOWN:
+			_currentFrameY = 0;
+			break;
+		}
+		randomMove();
+		break;
+
+	case FAIRYSTATE::FA_ATTAACK:
+		switch (_attackParttern)
+		{
+		case FAIRYATTACK::FA_NORMAL:
+			switch (_direction)
+			{
+			case FAIRYDIRECTION::FA_LEFT:
+				_currentFrameY = 5;
+				break;
+
+			case FAIRYDIRECTION::FA_RIGHT:
+				_currentFrameY = 6;
+				break;
+
+			case FAIRYDIRECTION::FA_UP:
+				_currentFrameY = 7;
+				break;
+
+			case FAIRYDIRECTION::FA_DOWN:
+				_currentFrameY = 4;
+				break;
+			}
+			_attackCheck = false;
+			normalBullet();
+			break;
+
+		case FAIRYATTACK::FA_FAIRY:
+			switch (_direction)
+			{
+			case FAIRYDIRECTION::FA_LEFT:
+				_currentFrameY = 5;
+				break;
+
+			case FAIRYDIRECTION::FA_RIGHT:
+				_currentFrameY = 6;
+				break;
+
+			case FAIRYDIRECTION::FA_UP:
+				_currentFrameY = 7;
+				break;
+
+			case FAIRYDIRECTION::FA_DOWN:
+				_currentFrameY = 4;
+				break;
+			}
+			_attackCheck = false;
+
+			fariyBullet();
+			break;
+
+		case FAIRYATTACK::FA_BUBBLE:
+			switch (_direction)
+			{
+			case FAIRYDIRECTION::FA_LEFT:
+				_currentFrameY = 5;
+				break;
+
+			case FAIRYDIRECTION::FA_RIGHT:
+				_currentFrameY = 6;
+				break;
+
+			case FAIRYDIRECTION::FA_UP:
+				_currentFrameY = 7;
+				break;
+
+			case FAIRYDIRECTION::FA_DOWN:
+				_currentFrameY = 4;
+				break;
+			}
+			_attackCheck = false;
+
+			bubbleBullet();
+			break;
+		}
+		break;
+
+	case FAIRYSTATE::FA_DEAD:
+		_currentFrameX = 0;
+		_currentFrameY = 8;
+		break;
 	}
 }
 
@@ -156,11 +306,6 @@ void ForestFairy::randomMove()
 	}
 }
 
-void ForestFairy::attack()
-{
-
-}
-
 bool ForestFairy::playerCheck()
 {
 	_playerDistance = getDistance(_x, _y, _playerPos.x, _playerPos.y);
@@ -173,59 +318,38 @@ bool ForestFairy::playerCheck()
 	return false;
 }
 
-void ForestFairy::frame()
+void ForestFairy::normalBullet()
 {
-	switch (_state)
+
+	if (_attackParttern == FAIRYATTACK::FA_NORMAL&&_image->getMaxFrameX() - 1 == _currentFrameX)
 	{
-	case FAIRYSTATE::FA_MOVE:
-		switch (_direction)
+		float tempAngle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
+		for (int i = 0; i < 30; i++)
 		{
-		case FAIRYDIRECTION::FA_LEFT:
-			_currentFrameY = 1;
-			break;
-
-		case FAIRYDIRECTION::FA_RIGHT:
-			_currentFrameY = 2;
-			break;
-
-		case FAIRYDIRECTION::FA_UP:
-			_currentFrameY = 3;
-			break;
-
-		case FAIRYDIRECTION::FA_DOWN:
-			_currentFrameY = 0;
-			break;
+			_normalBullet->fire(_x, _y, tempAngle, 4.0f, 0);
 		}
-		randomMove();
-		break;
-
-	case FAIRYSTATE::FA_ATTAACK:
-		switch (_direction)
-		{
-		case FAIRYDIRECTION::FA_LEFT:
-			_currentFrameY = 5;
-			break;
-
-		case FAIRYDIRECTION::FA_RIGHT:
-			_currentFrameY = 6;
-			break;
-
-		case FAIRYDIRECTION::FA_UP:
-			_currentFrameY = 7;
-			break;
-
-		case FAIRYDIRECTION::FA_DOWN:
-			_currentFrameY = 4;
-			break;
-		}
-		attack();
-		break;
-
-	case FAIRYSTATE::FA_DEAD:
-		_currentFrameX = 0;
-		_currentFrameY = 8;
-		break;
+		//더이상 다음 상태가 될 때까지 공격 X되게 하는 구문 필요
 	}
+}
+
+void ForestFairy::fariyBullet()
+{
+	if (_attackParttern == FAIRYATTACK::FA_FAIRY&&_image->getMaxFrameX() - 1 == _currentFrameX)
+	{
+		_fairyBullet->fire(_x, _y, _angle);
+	}
+}
+
+void ForestFairy::bubbleBullet()
+{
+	if (_attackParttern == FAIRYATTACK::FA_BUBBLE&&_image->getMaxFrameX() - 1 == _currentFrameX)
+	{
+		for (int i = 0; i < 30; i++)
+		{
+			_bubbleBullet->fire(_x, _y,_angle, 4.0f, 0);
+		}
+	}
+
 }
 
 STObservedData ForestFairy::getRectUpdate()
@@ -251,6 +375,7 @@ void ForestFairy::collideObject(STObservedData obData)
 		else
 		{
 			_hp -= (*obData.damage);
+
 		}
 		(*obData.isActive) = false;
 	}

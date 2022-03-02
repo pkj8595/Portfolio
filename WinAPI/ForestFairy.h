@@ -4,23 +4,34 @@
 
 enum class FAIRYSTATE {FA_MOVE, FA_ATTAACK, FA_DEAD, FA_END};
 enum class FAIRYDIRECTION {FA_LEFT, FA_RIGHT, FA_UP, FA_DOWN};
+enum class FAIRYATTACK {FA_NORMAL,FA_FAIRY,FA_BUBBLE};
 
 class ForestFairy :public Enemy
 {
 private:
+	NormalBullet* _normalBullet;
+	FairyBullet* _fairyBullet;
+	BubbleBullet* _bubbleBullet;
+
 	FAIRYSTATE _state;
 	FAIRYDIRECTION _direction;
+	FAIRYATTACK _attackParttern;
 
-	float _deadTimeCount;
-	float _moveWorldTime;
 	float _angle;
 	float _speed;
-	float _frameSpeed;
+	float _moveWorldTime;
 	float _playerDistance;
+	float _attackDistance;
+	float _frameSpeed;
+	float _deadTimeCount;
+	float _attacWorldTime;
+	float _attackMoveWorldTime;
 
 	int   _randomX, _randomY;
 	int	  _range;
+	int	  _maxFrameX;
 
+	bool  _attackCheck;
 	bool  _deadForOb;		//사망 여부 [Enemy의 isActive는 몹 삭제 전용, deadForOb는 체력 0 여부]
 
 public:
@@ -38,7 +49,9 @@ public:
 	void randomMove();
 	void attack();
 	bool playerCheck(); //플레이어 감지함수
-
+	void normalBullet();
+	void fariyBullet();
+	void bubbleBullet();
 public:
 	virtual STObservedData getRectUpdate();
 	virtual void collideObject(STObservedData obData);

@@ -107,6 +107,7 @@ void TextSystemManager::update(void)
 			_selectOneAlpha = 230.0f;
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
+				weapon_Selectdata.clear();
 				weapon_Selectdata.push_back(_itoa(21, temp, 10));
 				TEXTDATAMANAGER->save("로비 무기 선택.text", weapon_Selectdata);
 				isShowText = false;
@@ -123,6 +124,9 @@ void TextSystemManager::update(void)
 			_selectTwoAlpha = 230.0f;
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
+				weapon_Selectdata.clear();
+				weapon_Selectdata.push_back(_itoa(24, temp, 10));
+				TEXTDATAMANAGER->save("로비 무기 선택.text", weapon_Selectdata);
 				isShowText = false;
 				iscollBox = false;
 			}
@@ -137,6 +141,7 @@ void TextSystemManager::update(void)
 			_selectThreeAlpha = 230.0f;
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
+				weapon_Selectdata.clear();
 				isShowText = false;
 				iscollBox = false;
 			}

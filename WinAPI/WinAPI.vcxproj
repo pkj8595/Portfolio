@@ -178,8 +178,9 @@
     <ClCompile Include="mButton.cpp" />
     <ClCompile Include="mGpImage.cpp" />
     <ClCompile Include="Minion.cpp" />
-    <ClCompile Include="PixelCollision.cpp" />
+    <ClCompile Include="GameplayManager.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerAfterImage.cpp" />
     <ClCompile Include="PlayerStatusUI.cpp" />
     <ClCompile Include="PlayerWeapon.cpp" />
     <ClCompile Include="PlayScene.cpp" />
@@ -253,6 +254,7 @@
     <ClInclude Include="mGpImage.h" />
     <ClInclude Include="Minion.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerAfterImage.h" />
     <ClInclude Include="PlayerStatusUI.h" />
     <ClInclude Include="PlayerWeapon.h" />
     <ClInclude Include="PlayScene.h" />

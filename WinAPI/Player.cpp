@@ -63,6 +63,11 @@ HRESULT Player::init(void)
 
 	_skillCoolTime = TIMEMANAGER->getWorldTime() - 10.0f;
 
+	_pai = new PlayerAfterImage;
+	_pai->init();
+	_afterImageTimer = TIMEMANAGER->getWorldTime();
+	_afterImageStartFrame = 0;
+
 	_sword = new SwordWeapon;
 	_sword->init(&_x, &_y);
 
@@ -87,7 +92,7 @@ HRESULT Player::init(void)
 	_efm->init();
 
 	_equipItem = _inventory->getEquipWeapon();
-	
+
 	return S_OK;
 }
 
@@ -137,6 +142,7 @@ void Player::update(void)
 		_statusUI->update();
 		_inventory->update();
 		_efm->update();
+		_pai->update();
 
 		_rc = RectMakeCenter(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2 + 20, 8, 5);
 
@@ -156,9 +162,11 @@ void Player::render(void)
 {
 	if (_dead)
 	{
+
 		_image->frameRender(getMemDC(), _x, _y, 5, 9);
 		return;
 	}
+	_pai->render();
 	_image->frameRender(getMemDC(), _x, _y);
 	_efm->render();
 	_skillWeapon->render();
@@ -335,6 +343,13 @@ void Player::setFrame()
 		_startFrame = directionIndex * 6 + 84;
 		_endFrame = _startFrame + 5;
 		_stateFrameTick = 0.08f;
+		if (_afterImageTimer + 0.04f < TIMEMANAGER->getWorldTime())
+		{
+			_pai->createAfterImage(_x, _y, _afterImageStartFrame);
+			_afterImageTimer = TIMEMANAGER->getWorldTime();
+			_afterImageStartFrame++;
+			if (_afterImageStartFrame > 5) _afterImageStartFrame = 0;
+		}
 	}break;
 	case PLAYER_STATE::SKILL: {
 		_startFrame = directionIndex * 3 + 24;

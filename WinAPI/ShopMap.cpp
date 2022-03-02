@@ -78,11 +78,4 @@ void ShopMap::render(void)
 	//============================================
 	_shopNPC->render(getMemDC(), 680, 140);
 	_shopBar->render(getMemDC(), 530, 40);
-
-
-	for (int i = 0; i < ITEM_SIZE; i++)
-	{
-		RectangleMakeToRECT(getMemDC(), _rcEvent[i]);
-	}
-
 }
