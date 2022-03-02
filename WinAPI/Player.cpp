@@ -292,6 +292,7 @@ void Player::collideObject(STObservedData obData)
 				if (_bowStack < 5 && !_tripleshot && !_alreadyAddBowStack)
 				{
 					_bowStack++;
+					TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/stack.wav");
 					if (_bowStack == 5)
 					{
 						_efm->createEffect("WindEffect", &_rc, 0.1f, -100, -100);
@@ -300,6 +301,7 @@ void Player::collideObject(STObservedData obData)
 			}
 			if (!_alreadyAddBowStack) _dodgeAlpha = 80;
 			_alreadyAddBowStack = true;
+			TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/dodgesuccess.wav");
 		}
 		else if (!_hit)
 		{
@@ -463,6 +465,7 @@ void Player::setDodge()
 		{
 			_dodge = true;
 			_status._stamina -= 10.0f;
+			TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/dodge.wav");
 		}
 
 	}
@@ -489,6 +492,7 @@ void Player::setAttack()
 					_normal->fire(calculatePhysicalDamage(), _x + 50, _y + 50, angle);
 					_status._stamina -= 5.0f;
 					_attackCount = TIMEMANAGER->getWorldTime();
+					TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/bow.wav");
 				}
 			}
 			else if ((*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
@@ -506,6 +510,7 @@ void Player::setAttack()
 					{
 						_bow->fire(calculatePhysicalDamage(), _x + 50, _y + 50, angle);
 					}
+					TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/bow.wav");
 					_status._stamina -= 5.0f;
 					_attackCount = TIMEMANAGER->getWorldTime();
 				}
@@ -543,6 +548,7 @@ void Player::setAttack()
 			_skill = true;
 			_status._mana -= 2;
 			_skillCoolTime = TIMEMANAGER->getWorldTime();
+			TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/skill.wav");
 		}
 	}
 	if (_skillCoolTime <= TIMEMANAGER->getWorldTime() - 0.25f && _skill)
@@ -612,6 +618,7 @@ void Player::setSwordAttack()
 		_status._stamina -= 5.0f;
 		if(_swordStack < 3) _swordStack++;
 		TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/sword5.wav");
+		TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/stack.wav");
 	}break;
 	default: break;
 	}

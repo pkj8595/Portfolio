@@ -240,6 +240,7 @@ void EnemyManager::checkActive(void)
 				(*_viMinion)->release();
 				SAFE_DELETE(*_viMinion);
 				_viMinion = _vMinion.erase(_viMinion);
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/mobdead.wav");
 				break;
 			}
 		}
