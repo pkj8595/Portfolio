@@ -40,10 +40,6 @@ HRESULT PlayScene::init(void)
 	_itemmanager = new ItemManager;
 	_itemmanager->init();
 
-	vector<string> vLobbyWeaponNum = TEXTDATAMANAGER->load("로비 무기 선택");
-	int x = atoi(vLobbyWeaponNum[0].c_str());
-	_player->getInventory()->pushItem(_itemmanager->getItem(x));
-
 	return S_OK;
 }
 
@@ -61,7 +57,6 @@ void PlayScene::update(void)
 	_enemyManager->update();
 	_player->update();
 	_effectManager->update();
-	_itemmanager->update();
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F7))
 	{
@@ -104,7 +99,6 @@ void PlayScene::render(void)
 	RECTOBSERVERMANAGER->render();
 	_effectManager->render();
 	_mapManager->getCurrentMap()->printOutsideRC();
-	_itemmanager->render();
 
 	//UI
 	if (_mapManager->isMinimapToggle()) _mapManager->printTempMinimap();

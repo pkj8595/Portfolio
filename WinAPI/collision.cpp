@@ -65,10 +65,11 @@ void Lobby::Collision(void)
 	{
 		if (KEYMANAGER->isOnceKeyDown('E'))
 		{
-			_bookOpen = true;
+			_isbookOpen = true;
 			_player->setisShowText(true);
+			TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/bookflip.wav");
 		}
-		if (_bookOpen) { _fadeOutWhiteAlpha += 3.0f; }
+		if (_isbookOpen) { _fadeOutWhiteAlpha += 3.0f; }
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('Z'))

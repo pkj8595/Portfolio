@@ -33,7 +33,7 @@ HRESULT Lobby::init(void)
 	_startAlpha = 255.0f;
 
 	_tsm->iscollBox = false;
-	_bookOpen = false;
+	_isbookOpen = false;
 	return S_OK;
 }
 
@@ -68,7 +68,10 @@ void Lobby::update(void)
 	_tsm->update();
 	_player->update();
 
-	animation();
+	if (_isbookOpen) 
+	{ 
+		animation();
+	}
 	LobbyCollision();
 }
 
@@ -76,7 +79,7 @@ void Lobby::render(void)
 {
 	IMAGEMANAGER->render("Lobby", getMemDC());
 
-	_bookImg->frameRender(getMemDC(),_Imgbook_rc.left, _Imgbook_rc.top, _bookImg->getFrameWidth(), _bookImg->getFrameHeight());
+	_bookImg->frameRender(getMemDC(),_Imgbook_rc.left, _Imgbook_rc.top, _bookImg->getFrameX(), _bookImg->getFrameY());
 	
 	_player->render();
 	Collision();
@@ -84,6 +87,10 @@ void Lobby::render(void)
 	if (_fadeOutBlackAlpha > 0) { _BlackfadeOutImg->alphaRender(getMemDC(), _fadeOutBlackAlpha); }
 	if (_startAlpha > 0) { _BlackfadeOutImg->alphaRender(getMemDC(), _startAlpha); }
 
+	if (_isbookOpen) 
+	{ 
+		animation(); 
+	}
 }
 
 void Lobby::animation(void)
@@ -95,7 +102,7 @@ void Lobby::animation(void)
 
 		if (_index > _bookImg->getMaxFrameX())
 		{
-			_index = 0;
+			_index = 4;
 		}
 		_bookImg->setFrameX(_index);
 	}

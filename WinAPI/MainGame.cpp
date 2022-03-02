@@ -21,7 +21,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("Lobby", new Lobby);
 	SCENEMANAGER->addScene("ShopScene", new ShopScene);
 
-	SCENEMANAGER->changeScene("Lobby");
+	SCENEMANAGER->changeScene("TitleScene");
 
 	return S_OK;
 }

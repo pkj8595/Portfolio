@@ -32,7 +32,7 @@ private:
 	float _frameSpeed;
 	float _index;
 
-	bool _bookOpen;
+	bool _isbookOpen;
 
 	float _fadeOutWhiteAlpha;
 	float _fadeOutBlackAlpha;
