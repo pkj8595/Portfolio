@@ -12,7 +12,6 @@
 class MainGame : public GameNode
 {
 private:
-
 public:
 	virtual HRESULT init(void);
 	virtual void release(void);
@@ -21,4 +20,5 @@ public:
 
 	MainGame() {}
 	virtual ~MainGame() {}
+
 };

@@ -525,6 +525,7 @@ void Player::setAttack()
 				_comboCount = 0;
 				_sword->fire(calculatePhysicalDamage(), 0, static_cast<int>(_direction));
 				_status._stamina -= 5.0f;
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/sword1.wav");
 			}
 		}
 		else
@@ -580,6 +581,7 @@ void Player::setSwordAttack()
 		_stateFrameTick = 0.08f;
 		_comboCount++;
 		_sword->fire(calculatePhysicalDamage(), 1, static_cast<int>(_direction));
+		TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/sword2.wav");
 	}break;
 	case 1: {
 		_comboCooldown = TIMEMANAGER->getWorldTime();
@@ -589,6 +591,7 @@ void Player::setSwordAttack()
 		_comboCount++;
 		_sword->fire(calculatePhysicalDamage(), 2, static_cast<int>(_direction));
 		_status._stamina -= 5.0f;
+		TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/sword3.wav");
 	}break;
 	case 2: {
 		_comboCooldown = TIMEMANAGER->getWorldTime();
@@ -597,6 +600,7 @@ void Player::setSwordAttack()
 		_stateFrameTick = 0.08f;
 		_comboCount++;
 		_sword->fire(calculatePhysicalDamage(), 3, static_cast<int>(_direction));
+		TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/sword4.wav");
 	}break;
 	case 3: {
 		_comboCooldown = TIMEMANAGER->getWorldTime();
@@ -607,6 +611,7 @@ void Player::setSwordAttack()
 		_sword->fire(calculatePhysicalDamage(), 4, static_cast<int>(_direction));
 		_status._stamina -= 5.0f;
 		if(_swordStack < 3) _swordStack++;
+		TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/sword5.wav");
 	}break;
 	default: break;
 	}
@@ -620,6 +625,7 @@ void Player::setSwordSpecialAttack()
 	_sword->fire(calculatePhysicalDamage() * (1 + 0.5 *_swordStack), 4, static_cast<int>(_direction));
 	_swordSpecialAttack = true;
 	_swordStack = 0;
+	TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/sword5.wav");
 }
 
 
