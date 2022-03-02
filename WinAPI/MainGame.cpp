@@ -8,7 +8,6 @@
 #include "Lobby.h"
 #include "ShopScene.h"
 
-
 HRESULT MainGame::init(void)
 {
 	GameNode::init(TRUE);
