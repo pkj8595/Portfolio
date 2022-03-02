@@ -297,7 +297,7 @@ class GuidedBullet : public AMissile
 private:
 	int _bulletCount;
 	float _firstAngle;
-	const float _offsetAngle = 60.f;
+	const float _offsetAngle = 0.1f;
 	//time°ª ÇÊ¿ä
 
 public:

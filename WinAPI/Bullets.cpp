@@ -902,7 +902,7 @@ void SectorBullet::draw(void)
 HRESULT GuidedBullet::init(int bulletMax, float range)
 {
 	AMissile::init(bulletMax, range);
-
+	_firstAngle = (PI / 2) + (static_cast<float>(bulletMax / 2)*_offsetAngle);
 
 	return S_OK;
 }
@@ -911,8 +911,8 @@ void GuidedBullet::move(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		(*_viBullet)->x += cosf((*_viBullet)->angle)*(*_viBullet)->speed;
-		(*_viBullet)->y += -sinf((*_viBullet)->angle)*(*_viBullet)->speed;
+		(*_viBullet)->x = cosf((*_viBullet)->angle)*(*_viBullet)->speed + (*_viBullet)->x;
+		(*_viBullet)->y = -sinf((*_viBullet)->angle)*(*_viBullet)->speed + (*_viBullet)->y;
 		(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
 			(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
 	}
@@ -924,18 +924,17 @@ void GuidedBullet::fire(float x, float y, float angle)
 
 	for (int i = 0; i < _bulletMax; i++)
 	{
-		_firstAngle = angle + (static_cast<float>(_bulletMax / 2)*_offsetAngle);
 		tagCBullet* bullet = new tagCBullet;
 		bullet->img = new my::Image;
 		bullet->reflectImg = new my::Image;
 		//
-		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet4.bmp", 26, 26, true, RGB(255, 0, 255));
-		bullet->reflectImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectBullet.bmp", 26, 26, true, RGB(255, 0, 255));
+		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet4.bmp", 32, 32, true, RGB(255, 0, 255));
+		bullet->reflectImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectSmallBullet.bmp", 32, 32, true, RGB(255, 0, 255));
 		bullet->type = ObservedType::MINION_MISSILE;
 		bullet->speed = 1.0f;
 		bullet->x = bullet->fireX = x;
 		bullet->y = bullet->fireY = y;
-		bullet->angle = _firstAngle - (_bulletCount*_offsetAngle);
+		bullet->angle = angle;
 		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
 		bullet->damage = 1.0f;
 		bullet->fire = true;

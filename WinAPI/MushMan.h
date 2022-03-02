@@ -19,8 +19,8 @@ private:
 
 	int		_randomX, _randomY;
 	int		_maxFrame;
-	float	_mushroomHp;
 	
+	float _angle;
 	float _speed;				//이동 속도
 	float _moveWorldTime;
 	float _plantMushroomWorldTime;

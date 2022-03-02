@@ -22,7 +22,7 @@ public:
 	void draw(void);
 	void animation(void);
 	
-	void fire(); 
+	void fire(float angle);
 
 public:
 	void setPos(float x, float y) { _x = x, _y = y;}

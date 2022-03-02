@@ -73,13 +73,12 @@ void Mushroom::animation(void)
 {
 }
 
-void Mushroom::fire()
+void Mushroom::fire(float angle)
 {
 	if (3.f + _attackTime <= TIMEMANAGER->getWorldTime())
 	{
 		_attackTime = TIMEMANAGER->getWorldTime();
 		//_bullet->fire(_x, _y);
-		float angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
 		_bullet2->fire(_x, _y, angle);
 	}
 }

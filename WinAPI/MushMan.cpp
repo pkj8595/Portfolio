@@ -45,6 +45,7 @@ void MushMan::update(void)
 	if(_mushroomRenderCheck)
 		_mushroom->update();
 
+
 	/*
 	생존시간동안 공격을 한다.
 	공격은 3초에 한번씩 플레이어를 쫓아다니는 총알패턴.
@@ -67,20 +68,22 @@ void MushMan::update(void)
 		//버섯 생성
 		if (_mushroomCreateCheck)
 		{
+			_angle = getAngle(_mushroom->getX(), _mushroom->getY(), _playerPos.x, _playerPos.y);
 			//버섯 생존시간
 			if (10.f + _mushroomLivingTime <= TIMEMANAGER->getWorldTime())
 			{
-
 				_mushroomLivingTime = TIMEMANAGER->getWorldTime();
 			}
 			
-			if (_mushroom->getHp() < 10)
+			if (_mushroom->getHp() <= 10)
 			{
 				_mushroomRenderCheck = false;
 				_mushroomCreateCheck = false;
 			}
 			else
-				_mushroom->fire();
+				_mushroom->fire(_angle);
+
+			cout << _mushroom->getHp() << endl;
 		}
 	}
 	else
@@ -258,7 +261,6 @@ void MushMan::createBullet()
 		_mushroom = new Mushroom;
 		_mushroom->init("Mushroom");
 		_mushroom->setPos(_x, _y + 13);
-		_mushroomHp =_mushroom->getHp();
 		_mushroomRenderCheck = true;
 		_mushroomCreateCheck = true; //버섯 심음
 	}
