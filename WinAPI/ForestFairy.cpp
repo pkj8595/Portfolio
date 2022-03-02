@@ -32,7 +32,7 @@ HRESULT ForestFairy::init(const char * imageName, POINT position)
 	_deadForOb = false;
 
 	_normalBullet = new NormalBullet;
-	_normalBullet->init(30, 0);
+	_normalBullet->init(30, WINSIZE_X * 2 / 3);
 	_fairyBullet = new FairyBullet;
 	_fairyBullet->init(30, 0);
 	_bubbleBullet = new BubbleBullet;
@@ -86,10 +86,6 @@ void ForestFairy::update(void)
 void ForestFairy::render(void)
 {
 	Enemy::render();
-
-	_normalBullet->render();
-	_fairyBullet->render();
-	_bubbleBullet->render();
 
 	if (_isActive)
 	{
@@ -325,18 +321,20 @@ bool ForestFairy::playerCheck()
 void ForestFairy::normalBullet()
 {
 
-	if (_attackParttern == FAIRYATTACK::FA_NORMAL&&_image->getMaxFrameX() == _currentFrameX)
+	if (_attackParttern == FAIRYATTACK::FA_NORMAL&&_image->getMaxFrameX() - 1 == _currentFrameX)
 	{
+		float tempAngle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
 		for (int i = 0; i < 30; i++)
 		{
-			_normalBullet->fire(_x, _y, _angle, 4.0f, 0);
+			_normalBullet->fire(_x, _y, tempAngle, 4.0f, 0);
 		}
+		//더이상 다음 상태가 될 때까지 공격 X
 	}
 }
 
 void ForestFairy::fariyBullet()
 {
-	if (_attackParttern == FAIRYATTACK::FA_FAIRY&&_image->getMaxFrameX() == _currentFrameX)
+	if (_attackParttern == FAIRYATTACK::FA_FAIRY&&_image->getMaxFrameX() - 1 == _currentFrameX)
 	{
 		_fairyBullet->fire(_x, _y, _angle);
 	}
@@ -344,7 +342,7 @@ void ForestFairy::fariyBullet()
 
 void ForestFairy::bubbleBullet()
 {
-	if (_attackParttern == FAIRYATTACK::FA_BUBBLE&&_image->getMaxFrameX() == _currentFrameX)
+	if (_attackParttern == FAIRYATTACK::FA_BUBBLE&&_image->getMaxFrameX() - 1 == _currentFrameX)
 	{
 		for (int i = 0; i < 30; i++)
 		{
