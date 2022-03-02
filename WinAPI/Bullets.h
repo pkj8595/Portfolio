@@ -296,15 +296,18 @@ class GuidedBullet : public AMissile
 {
 private:
 	int _bulletCount;
-	float _firstAngle;
-	const float _offsetAngle = 0.1f;
+	float _angle;
 	//time°ª ÇÊ¿ä
+	float _moveTime;
+	int	_count;
 
 public:
 	virtual HRESULT init(int bulletMax, float range);
 	virtual void move(void);
 	virtual void fire(float x, float y, float angle);
 	virtual void draw(void);
+
+	void setAngle(float angle) { _angle = angle; }
 
 	GuidedBullet() {}
 	~GuidedBullet() {}

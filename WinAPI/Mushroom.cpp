@@ -25,7 +25,7 @@ HRESULT Mushroom::init(const char* imageName)
 	_bullet->init(10, 200);
 
 	_bullet2 = new GuidedBullet;
-	_bullet2->init(1, 250);
+	_bullet2->init(1, 200);
 	
 	return S_OK;
 }
@@ -75,6 +75,7 @@ void Mushroom::animation(void)
 
 void Mushroom::fire(float angle)
 {
+	_bullet2->setAngle(angle);
 	if (3.f + _attackTime <= TIMEMANAGER->getWorldTime())
 	{
 		_attackTime = TIMEMANAGER->getWorldTime();

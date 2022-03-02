@@ -56,7 +56,7 @@ void MushMan::update(void)
 	if (!_deadForOb)
 	{
 		// 이미 심어져 있는 경우를 제외하고 10초마다 한번씩 심는다
-		if (10.f + _plantMushroomWorldTime <= TIMEMANAGER->getWorldTime() && !_mushroomCreateCheck)
+		if (3.f + _plantMushroomWorldTime <= TIMEMANAGER->getWorldTime() && !_mushroomCreateCheck)
 		{
 			_plantMushroomWorldTime = TIMEMANAGER->getWorldTime();
 			_state = MUSHMANSTATE::MU_ATTACK;
@@ -82,8 +82,6 @@ void MushMan::update(void)
 			}
 			else
 				_mushroom->fire(_angle);
-
-			cout << _mushroom->getHp() << endl;
 		}
 	}
 	else

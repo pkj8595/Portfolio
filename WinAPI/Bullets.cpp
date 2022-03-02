@@ -902,19 +902,41 @@ void SectorBullet::draw(void)
 HRESULT GuidedBullet::init(int bulletMax, float range)
 {
 	AMissile::init(bulletMax, range);
-	_firstAngle = (PI / 2) + (static_cast<float>(bulletMax / 2)*_offsetAngle);
 
+	_moveTime = TIMEMANAGER->getWorldTime();
+	_count = 0;
 	return S_OK;
 }
 
 void GuidedBullet::move(void)
-{
+{	
+
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		(*_viBullet)->x = cosf((*_viBullet)->angle)*(*_viBullet)->speed + (*_viBullet)->x;
-		(*_viBullet)->y = -sinf((*_viBullet)->angle)*(*_viBullet)->speed + (*_viBullet)->y;
-		(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
-			(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
+		//2초동안 움직인다.
+		if (_count < 2)
+		{
+			(*_viBullet)->x = cosf(_angle)*(*_viBullet)->speed + (*_viBullet)->x;
+			(*_viBullet)->y = -sinf(_angle)*(*_viBullet)->speed + (*_viBullet)->y;
+			(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
+				(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
+		}
+		else if(_count > 4)
+		{
+			(*_viBullet)->x = cosf(_angle)*(*_viBullet)->speed + (*_viBullet)->x;
+			(*_viBullet)->y = -sinf(_angle)*(*_viBullet)->speed + (*_viBullet)->y;
+			(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
+				(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
+		}
+		else
+			(*_viBullet)->speed = 0;
+
+		if (1.f + _moveTime < TIMEMANAGER->getWorldTime())
+		{
+			_moveTime = TIMEMANAGER->getWorldTime();
+			_count++;
+			cout << _count << endl;
+		}
 	}
 }
 
