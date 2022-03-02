@@ -102,7 +102,7 @@ void EnemyManager::render(void)
 
 void EnemyManager::setMinion(void)
 {
-	int temp = RND->getInt(3);
+	/*int temp = RND->getInt(3);
 	switch (temp)
 	{
 	case 0: {
@@ -145,17 +145,17 @@ void EnemyManager::setMinion(void)
 		snake2->init("Snake", PointMake(CENTER_X - 100, CENTER_Y));
 		_vMinion.push_back(snake2);
 	} break;
-	}
+	}*/
 
 	//Enemy* rafflesia;
 	//rafflesia = new Rafflesia;
 	//rafflesia->init("Rafflesia", PointMake(CENTER_X - 150, CENTER_Y + 30));
 	//_vMinion.push_back(rafflesia);
 
-	//Enemy* forestFairy;
-	//forestFairy = new ForestFairy;
-	//forestFairy->init("ForestFairy", PointMake(CENTER_X, CENTER_Y - 100));
-	//_vMinion.push_back(forestFairy);
+	Enemy* forestFairy;
+	forestFairy = new ForestFairy;
+	forestFairy->init("ForestFairy", PointMake(CENTER_X, CENTER_Y - 100));
+	_vMinion.push_back(forestFairy);
 }
 
 void EnemyManager::setBoss(void)
@@ -240,6 +240,7 @@ void EnemyManager::checkActive(void)
 				(*_viMinion)->release();
 				SAFE_DELETE(*_viMinion);
 				_viMinion = _vMinion.erase(_viMinion);
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/mobdead.wav");
 				break;
 			}
 		}

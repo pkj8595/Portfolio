@@ -9,11 +9,26 @@
 #include "ShopScene.h"
 
 
+
+
+inline void MainGame::addSounds(void)
+{
+	TEMPSOUNDMANAGER->addWaveFileWithKey("Sword1", "Resource/Sound/Lucie/sword1.wav");
+	TEMPSOUNDMANAGER->addWaveFileWithKey("Sword2", "Resource/Sound/Lucie/sword2.wav");
+	TEMPSOUNDMANAGER->addWaveFileWithKey("Sword3", "Resource/Sound/Lucie/sword3.wav");
+	TEMPSOUNDMANAGER->addWaveFileWithKey("Sword4", "Resource/Sound/Lucie/sword4.wav");
+	TEMPSOUNDMANAGER->addWaveFileWithKey("Sword5", "Resource/Sound/Lucie/sword5.wav");
+	TEMPSOUNDMANAGER->addWaveFileWithKey("Skill", "Resource/Sound/Lucie/skill.wav");
+	TEMPSOUNDMANAGER->addWaveFileWithKey("Skillhit", "Resource/Sound/Lucie/skillhit.wav");
+	TEMPSOUNDMANAGER->addWaveFileWithKey("Mobhit", "Resource/Sound/Lucie/mobhit.wav");
+}
+
 HRESULT MainGame::init(void)
 {
 	GameNode::init(TRUE);
 	ItemManager::getSingleton()->init();
 	ItemSpawner::getSingleton()->init();
+	//addSounds();
 
 	SCENEMANAGER->addScene("TitleScene", new TitleScene);
 	SCENEMANAGER->addScene("LobbyScene", new LobbyScene);
