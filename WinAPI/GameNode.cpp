@@ -30,6 +30,23 @@ HRESULT GameNode::init(bool managerInit)
 
 	}
 
+	//확대된 이미지
+	LPRECT lpRect = &RectMake(0, 0, 0, 0);
+	SetMapMode(_hdc, MM_ISOTROPIC);
+	SetWindowExtEx(_hdc, 400, 300, NULL);
+	GetClientRect(_hWnd, lpRect);
+	SetViewportExtEx(_hdc, lpRect->right, lpRect->bottom, NULL);
+
+	//원래 이미지 
+	SetMapMode(_hdc, MM_TEXT);
+	GetClientRect(_hWnd, lpRect);
+	SetWindowExtEx(_hdc, lpRect->right, lpRect->bottom, NULL);
+	SetViewportExtEx(_hdc, lpRect->right, lpRect->bottom, NULL);
+
+
+	
+
+
 	return S_OK;
 }
 
