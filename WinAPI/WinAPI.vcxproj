@@ -150,6 +150,7 @@
     <ClCompile Include="BossMap.cpp" />
     <ClCompile Include="BowParticle.cpp" />
     <ClCompile Include="Bullets.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="ChestMap.cpp" />
     <ClCompile Include="collision.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="BossMap.h" />
     <ClInclude Include="BowParticle.h" />
     <ClInclude Include="Bullets.h" />
+    <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CEffect.h" />
     <ClInclude Include="ChestMap.h" />
     <ClInclude Include="CommonMacroFunction.h" />

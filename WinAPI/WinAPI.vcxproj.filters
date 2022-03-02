@@ -282,6 +282,7 @@
     <ClCompile Include="SkillParticle.cpp">
       <Filter>MainGame\Player</Filter>
     </ClCompile>
+    <ClCompile Include="CameraManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -473,6 +474,7 @@
     <ClInclude Include="SkillParticle.h">
       <Filter>MainGame\Player</Filter>
     </ClInclude>
+    <ClInclude Include="CameraManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">
