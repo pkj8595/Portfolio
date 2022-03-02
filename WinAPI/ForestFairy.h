@@ -25,6 +25,8 @@ private:
 	float _frameSpeed;
 	float _deadTimeCount;
 
+	float _attackCoolTime;
+
 	int   _randomX, _randomY;
 	int	  _range;
 	int	  _maxFrameX;

@@ -27,6 +27,7 @@ HRESULT ForestFairy::init(const char * imageName, POINT position)
 	_deadTimeCount = TIMEMANAGER->getWorldTime();
 	_moveWorldTime = TIMEMANAGER->getWorldTime();
 	_deadForOb = false;
+	_attackCoolTime = 0;
 
 	_normalBullet = new NormalBullet;
 	_normalBullet->init(10, WINSIZE_X * 2 / 3);
@@ -62,13 +63,11 @@ void ForestFairy::update(void)
 
 	if (!_deadForOb)
 	{
-		if (playerCheck())
+		if (playerCheck() && _attackCoolTime <= 0)
 		{
 			_state = FAIRYSTATE::FA_ATTAACK;
 		}
-		else
-
-			randomPosCreate();
+		else randomPosCreate();
 	}
 	else
 	{
@@ -244,6 +243,7 @@ void ForestFairy::frame()
 
 void ForestFairy::randomPosCreate()
 {
+	_attackCoolTime--;
 	_state = FAIRYSTATE::FA_MOVE;
 
 	if (_rndTimeCount + _moveWorldTime < TIMEMANAGER->getWorldTime())
@@ -315,8 +315,15 @@ void ForestFairy::normalBullet()
 
 	if (_attackParttern == FAIRYATTACK::FA_NORMAL&&_image->getMaxFrameX() - 1 == _currentFrameX)
 	{
-		float tempAngle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
-		_normalBullet->fire(_x, _y, tempAngle, 5.0f, 0);
+		float tempAngle = getAngle(_x, _y, _playerPos.x + 50, _playerPos.y + 50);
+
+		for (int i = 0; i < 20; i++)   
+		{
+			_normalBullet->fire(_x, _y, tempAngle, 5.0f, 0);
+		}
+		
+		_attackCoolTime = 200;
+
 		//더이상 다음 상태가 될 때까지 공격 X되게 하는 구문 필요
 	}
 }
@@ -326,6 +333,7 @@ void ForestFairy::fariyBullet()
 	if (_attackParttern == FAIRYATTACK::FA_FAIRY&&_image->getMaxFrameX() - 1 == _currentFrameX)
 	{
 		_fairyBullet->fire(_x, _y, 300);
+		_attackCoolTime = 100;
 	}
 }
 
@@ -334,6 +342,7 @@ void ForestFairy::bubbleBullet()
 	if (_attackParttern == FAIRYATTACK::FA_BUBBLE&&_image->getMaxFrameX() - 1 == _currentFrameX)
 	{
 		_bubbleBullet->fire(_x, _y, 300, 2.0f, 0);
+		_attackCoolTime = 100;
 	}
 
 }
