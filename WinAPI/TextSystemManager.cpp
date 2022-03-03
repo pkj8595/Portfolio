@@ -35,7 +35,7 @@ HRESULT TextSystemManager::init(void)
 
 	_textPosition = PointMake(CAMERAMANAGER->getCameraRect().right, CAMERAMANAGER->getCameraRect().bottom);
 	
-	_chatRc = RectMake(400, _textPosition.y*0.66, _chatImage->getWidth(), _chatImage->getHeight());
+	_chatRc = RectMake(_textPosition.x*0.13, _textPosition.y*0.66, _chatImage->getWidth(), _chatImage->getHeight());
 	_chatWriteRc = RectMake(_textPosition.x*0.13, _textPosition.y*0.75, _chatImage->getWidth(), _chatImage->getHeight());
 	_boxChatRc = RectMake(_textPosition.x*0.13, _textPosition.y*0.66, _chatImage->getWidth(), _chatImage->getHeight());
 	_nameRc = RectMake(_textPosition.x*0.13, _textPosition.y*0.68, _nameImage->getWidth(), _nameImage->getHeight());
