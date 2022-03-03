@@ -13,7 +13,7 @@ HRESULT DefaultMap::init(POINT location)
 	_minimapImage = IMAGEMANAGER->addImage("Minimap_On", "Resource/Images/Lucie/CompleteImg/miniMap/minimap_cell_on.bmp", 30, 30, true, RGB(255, 0, 255));
 	_downWall = IMAGEMANAGER->addImage("DownWall1", "Resource/Images/Lucie/CompleteImg/ground/wall/downWall1.bmp", 240, 240, true, RGB(255, 0, 255));
 	createRndMapImage();
-		
+
 	_pixel = false;
 	return S_OK;
 }
@@ -96,6 +96,8 @@ void DefaultMap::createRndMapImage()
 		_mapRC = { 200, 50, 700, 600 };
 		_outsideRcWidth = { 0, 768, WINSIZE_X, WINSIZE_Y };
 		_outsideRcLength = { 1008, 0, WINSIZE_X, WINSIZE_Y };
+		_mapRectSize = RectMake(0, 0, 1008, 768);
+
 	}break;
 	case 1:
 	{
@@ -111,6 +113,8 @@ void DefaultMap::createRndMapImage()
 		_mapRC = { 200, 50, 700, 600 };
 		_outsideRcWidth = { 0, 768, WINSIZE_X, WINSIZE_Y };
 		_outsideRcLength = { 1008, 0, WINSIZE_X, WINSIZE_Y };
+		_mapRectSize = RectMake(0, 0, 1008, 768);
+
 	}break;
 	case 2:
 	{
@@ -124,6 +128,8 @@ void DefaultMap::createRndMapImage()
 		_mapRC = { 200, 50, 700, 600 };
 		_outsideRcWidth = { 0, 768, WINSIZE_X, WINSIZE_Y };
 		_outsideRcLength = { 1008, 0, WINSIZE_X, WINSIZE_Y };
+		_mapRectSize = RectMake(0, 0, 1008, 768);
+
 	}break;
 	case 3:
 	{
@@ -140,6 +146,8 @@ void DefaultMap::createRndMapImage()
 		_mapRC = { 133, 20, 770, 505 };
 		_outsideRcWidth = { 0, 672, WINSIZE_X, WINSIZE_Y };
 		_outsideRcLength = { 1008, 0, WINSIZE_X, WINSIZE_Y };
+		_mapRectSize = RectMake(0, 0, 1008, 672);
+
 	}break;
 	case 4:
 	{
@@ -154,6 +162,8 @@ void DefaultMap::createRndMapImage()
 		_mapRC = { 200, 50, 700, 600 };
 		_outsideRcWidth = { 0, 768, WINSIZE_X, WINSIZE_Y };
 		_outsideRcLength = { 1008, 0, WINSIZE_X, WINSIZE_Y };
+		_mapRectSize = RectMake(0, 0, 1008, 768);
+
 	}break;
 	}
 }

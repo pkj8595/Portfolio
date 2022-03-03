@@ -12,6 +12,7 @@ HRESULT BossMap::init(POINT location)
 	_location = location;
 	_outsideRcWidth = { 0, 960, WINSIZE_X, WINSIZE_Y };
 	_outsideRcLength = { 1104, 0, WINSIZE_X, WINSIZE_Y };
+	_mapRectSize = RectMake(0, 0, 1104, 960);
 	return S_OK;
 }
 

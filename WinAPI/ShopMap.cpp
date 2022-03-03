@@ -19,6 +19,8 @@ HRESULT ShopMap::init(POINT location)
 	_outsideRcLength = { 960, 0, CAMERAMANAGER->getDisplayAreaRight(), CAMERAMANAGER->getDisplayAreaBottom() };
 	_location = location;
 
+	_mapRectSize = RectMake(0, 0, 960, 576);
+	
 	//==================================================
 	_itemManager = ItemManager::getSingleton();
 	_itemSpawner = ItemSpawner::getSingleton();
