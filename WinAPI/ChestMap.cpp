@@ -28,7 +28,7 @@ HRESULT ChestMap::init(POINT location)
 	_chestEventRc = RectMakeCenter(CAMERAMANAGER->getDisplayCenterX() - 48, CAMERAMANAGER->getDisplayCenterY(), 32, 32);
 	_chestEventObj->init(EventObservedType::CHEST, _chestEventRc, &_isActive, 0);
 
-
+	_mapRectSize = RectMake(0, 0, 1008, 768);
 	return S_OK;
 }
 

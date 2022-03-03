@@ -23,6 +23,9 @@ HRESULT StartMap::init(POINT location)
 
 	_showTextTime = 0;
 	_pixel = false;
+
+	_mapRectSize = RectMake(0,0,1008,816);
+
 	return S_OK;
 }
 
