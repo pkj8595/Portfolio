@@ -79,16 +79,16 @@ void ShopMap::render(void)
 	_image->render(getMemDC(),
 		-CAMERAMANAGER->getCameraRect().left,
 		-CAMERAMANAGER->getCameraRect().top);
-	/*if (!_connectedMap[0] || !_clear)*/ _leftWall->render(getMemDC(),
+	if (!_connectedMap[0] || !_clear) _leftWall->render(getMemDC(),
 		-28 - CAMERAMANAGER->getCameraRect().left,
 		122 - CAMERAMANAGER->getCameraRect().top);
-	/*if (!_connectedMap[1] || !_clear)*/ _upWall->render(getMemDC(),
+	if (!_connectedMap[1] || !_clear) _upWall->render(getMemDC(),
 		 510 - CAMERAMANAGER->getCameraRect().left,
 		-100 - CAMERAMANAGER->getCameraRect().top);
-	/*if (!_connectedMap[2] || !_clear)*/ _rightWall->render(getMemDC(),
+	if (!_connectedMap[2] || !_clear) _rightWall->render(getMemDC(),
 		758 - CAMERAMANAGER->getCameraRect().left,
 		35 - CAMERAMANAGER->getCameraRect().top);
-	/*if (!_connectedMap[3] || !_clear)*/ _downWall->render(getMemDC(),
+	if (!_connectedMap[3] || !_clear) _downWall->render(getMemDC(),
 		352 - CAMERAMANAGER->getCameraRect().left,
 		465 - CAMERAMANAGER->getCameraRect().top);
 	//============================================
