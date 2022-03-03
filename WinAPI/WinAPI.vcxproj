@@ -180,8 +180,9 @@
     <ClCompile Include="Minion.cpp" />
     <ClCompile Include="MushMan.cpp" />
     <ClCompile Include="Mushroom.cpp" />
-    <ClCompile Include="PixelCollision.cpp" />
+    <ClCompile Include="GameplayManager.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerAfterImage.cpp" />
     <ClCompile Include="PlayerStatusUI.cpp" />
     <ClCompile Include="PlayerWeapon.cpp" />
     <ClCompile Include="PlayScene.cpp" />
@@ -257,6 +258,7 @@
     <ClInclude Include="MushMan.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerAfterImage.h" />
     <ClInclude Include="PlayerStatusUI.h" />
     <ClInclude Include="PlayerWeapon.h" />
     <ClInclude Include="PlayScene.h" />

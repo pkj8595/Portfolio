@@ -13,11 +13,15 @@ HRESULT StartMap::init(POINT location)
 	_leftWall = IMAGEMANAGER->addImage("LeftWall4", "Resource/Images/Lucie/CompleteImg/ground/wall/LeftWall4.bmp", 281, 600, true, RGB(255, 0, 255));
 	_rightWall = IMAGEMANAGER->addImage("RightWall4", "Resource/Images/Lucie/CompleteImg/ground/wall/RightWall4.bmp", 281, 588, true, RGB(255, 0, 255));
 	_downWall = IMAGEMANAGER->addImage("DownWall1", "Resource/Images/Lucie/CompleteImg/ground/wall/downWall1.bmp", 240, 240, true, RGB(255, 0, 255));
+	_floorText = IMAGEMANAGER->addImage("MapName", "Resource/Images/Lucie/CompleteImg/pitures/mapName_forest.bmp", 284, 136, true, RGB(255, 0, 255));
+	_textAlpha = 0;
+	_textFadeIn = true;
 	_outsideRcWidth = { 0, 816, WINSIZE_X, WINSIZE_Y };
 	_outsideRcLength = { 1008, 0, WINSIZE_X, WINSIZE_Y };
 	_location = location;
 	_mapRC = { 200, 50, 700, 600 };
 
+	_showTextTime = 0;
 	_pixel = false;
 	return S_OK;
 }
@@ -32,6 +36,7 @@ void StartMap::update(void)
 	{
 		_pixel = !_pixel;
 	}
+	mapText();
 }
 
 void StartMap::render(void)
@@ -43,4 +48,17 @@ void StartMap::render(void)
 	if (!_connectedMap[1] || !_clear) _upWall->render(getMemDC(), CENTER_X - 180, -150);
 	if (!_connectedMap[2] || !_clear) _rightWall->render(getMemDC(), 728, 2);
 	if (!_connectedMap[3] || !_clear) _downWall->render(getMemDC(), CENTER_X - 170, _image->getHeight() - 240);
+
+	_floorText->alphaRender(getMemDC(), 330, 100, _textAlpha);
+}
+
+void StartMap::mapText(void)
+{
+	if (_textFadeIn) _textAlpha += 2;
+	else _textAlpha -= 2;
+	if (_textAlpha == 252) _showTextTime = TIMEMANAGER->getWorldTime();
+	if (_textAlpha >= 254) _textAlpha = 254;
+	if (_textAlpha < 0) _textAlpha = 0;
+
+	if (_showTextTime + 3.0f < TIMEMANAGER->getWorldTime()) _textFadeIn = false;
 }

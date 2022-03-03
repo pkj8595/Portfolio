@@ -5,11 +5,10 @@
 class Mushroom:public Enemy
 {
 private:
-	CircleMissile* _bullet;
-	GuidedBullet* _bullet2;
+	GuidedBullet* _bullet;
 
 	float _attackTime;
-
+	float _angle;
 	bool	_deadForOb;		//사망 여부 [Enemy의 isActive는 몹 삭제 전용, deadForOb는 체력 0 여부]
 
 public:
@@ -22,10 +21,11 @@ public:
 	void draw(void);
 	void animation(void);
 	
-	void fire(float angle);
+	void fire(float playerX, float playerY ,float angle);
 
 public:
 	void setPos(float x, float y) { _x = x, _y = y;}
+	void setAngle(float angle) { _angle = angle; }
 
 
 public:

@@ -6,11 +6,16 @@
 #include "IRectObserved.h"
 #include "Inventory.h"
 #include "EffectManager.h"
+#include "PlayerAfterImage.h"
 
 class Player : public GameNode, public IRectObserved
 {
 private:
 	EffectManager* _efm;
+
+	PlayerAfterImage* _pai;
+	float _afterImageTimer;
+	int _afterImageStartFrame;
 
 	ObservedType _type;
 	//State, Frame

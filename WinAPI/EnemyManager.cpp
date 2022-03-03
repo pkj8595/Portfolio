@@ -193,7 +193,6 @@ void EnemyManager::setSlime(int x, int y)
 	slime = new Slime;
 	slime->init("Slime", PointMake(x + 10, y));
 	_vMinion.push_back(slime);
-	Enemy* slime2;
 
 	Enemy* slime3;
 	slime3 = new Slime;

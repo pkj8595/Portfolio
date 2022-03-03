@@ -148,7 +148,7 @@ void Inventory::render(void)
 	}
 
 	//우측 상단 gold text
-	_goldStr = "Gold :" + to_string(_gold);
+	_goldStr =  to_string(_gold)+ " Gold" ;
 	inventorydrawText(_goldStr, _goldRc, 30, RGB(255,255, 255), false);
 
 	renderItemInfoWindow();

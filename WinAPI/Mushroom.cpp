@@ -21,11 +21,8 @@ HRESULT Mushroom::init(const char* imageName)
 	_deadForOb = false;
 	RECTOBSERVERMANAGER->registerObserved(this);
 
-	_bullet = new CircleMissile;
-	_bullet->init(10, 200);
-
-	_bullet2 = new GuidedBullet;
-	_bullet2->init(1, 200);
+	_bullet = new GuidedBullet;
+	_bullet->init(20, 200);
 	
 	return S_OK;
 }
@@ -35,16 +32,12 @@ void Mushroom::release(void)
 	Enemy::release();
 	_bullet->release();
 	SAFE_DELETE(_bullet);
-
-	_bullet2->release();
-	SAFE_DELETE(_bullet2);
 }
 
 void Mushroom::update(void)
 {
 	Enemy::update();
-	_bullet2->update();
-
+	_bullet->update();
 
 	if (_deadForOb)
 		_isActive = false;
@@ -57,7 +50,6 @@ void Mushroom::render(void)
 {
 	Enemy::render();
 	_bullet->render();
-	_bullet2->render();
 }
 
 void Mushroom::move(void)
@@ -73,15 +65,15 @@ void Mushroom::animation(void)
 {
 }
 
-void Mushroom::fire(float angle)
+void Mushroom::fire(float playerX, float playerY, float angle)
 {
-	_bullet2->setAngle(angle);
-	if (3.f + _attackTime <= TIMEMANAGER->getWorldTime())
-	{
-		_attackTime = TIMEMANAGER->getWorldTime();
-		//_bullet->fire(_x, _y);
-		_bullet2->fire(_x, _y, angle);
-	}
+	//if (3.f + _attackTime <= TIMEMANAGER->getWorldTime())
+	//{
+	//	_attackTime = TIMEMANAGER->getWorldTime();
+	for(int i =0 ; i < 20; i++)
+		_bullet->fire(_x + i * 50, _y, angle,PI /45.f);
+		//_bullet2->fire(_x, _y, angle);
+	//}
 }
 
 STObservedData Mushroom::getRectUpdate()

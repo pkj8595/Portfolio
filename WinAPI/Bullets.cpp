@@ -903,70 +903,105 @@ HRESULT GuidedBullet::init(int bulletMax, float range)
 {
 	AMissile::init(bulletMax, range);
 
-	_moveTime = TIMEMANAGER->getWorldTime();
-	_count = 0;
+	//_moveTime = TIMEMANAGER->getWorldTime();
+	//_count = 0;
 	return S_OK;
 }
 
 void GuidedBullet::move(void)
 {	
-
+	count++;
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		//2초동안 움직인다.
-		if (_count < 2)
+		if (count == 100)
 		{
-			(*_viBullet)->x = cosf(_angle)*(*_viBullet)->speed + (*_viBullet)->x;
-			(*_viBullet)->y = -sinf(_angle)*(*_viBullet)->speed + (*_viBullet)->y;
-			(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
-				(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
+			(*_viBullet)->angle = (*_viBullet)->rotateAngle;
 		}
-		else if(_count > 4)
-		{
-			(*_viBullet)->x = cosf(_angle)*(*_viBullet)->speed + (*_viBullet)->x;
-			(*_viBullet)->y = -sinf(_angle)*(*_viBullet)->speed + (*_viBullet)->y;
-			(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
-				(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
-		}
-		else
-			(*_viBullet)->speed = 0;
-
-		if (1.f + _moveTime < TIMEMANAGER->getWorldTime())
-		{
-			_moveTime = TIMEMANAGER->getWorldTime();
-			_count++;
-			cout << _count << endl;
-		}
+		(*_viBullet)->x += cosf((*_viBullet)->angle)*(*_viBullet)->speed;
+		(*_viBullet)->y += -sinf((*_viBullet)->angle)*(*_viBullet)->speed;
+		(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
+			(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
 	}
+
+	if (_vBullet.size() == 0) count = 0;
+
+	//for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
+	//{
+		////2초동안 움직인다.
+		//if (_count < 1.5f)
+		//{
+		//	(*_viBullet)->x = cosf((*_viBullet)->angle)*(*_viBullet)->speed + (*_viBullet)->x;
+		//	(*_viBullet)->y = -sinf((*_viBullet)->angle)*(*_viBullet)->speed + (*_viBullet)->y;
+		//	(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
+		//		(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
+		//}
+		//else if(_count > 1.5f && _count < 2)
+		//{
+		//	(*_viBullet)->speed = 0;
+		//}
+		//else if(_count > 2.2f)
+		//{
+		//	(*_viBullet)->x = cosf(_angle)*(*_viBullet)->speed + (*_viBullet)->x;
+		//	(*_viBullet)->y = -sinf(_angle)*(*_viBullet)->speed + (*_viBullet)->y;
+		//	(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
+		//		(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
+		//}
+
+		//if (1.f + _moveTime < TIMEMANAGER->getWorldTime())
+		//{
+		//	_moveTime = TIMEMANAGER->getWorldTime();
+		//	_count+= 0.5f;
+		//	cout << (float)_count << endl;
+		//}
+	//}
 }
 
-void GuidedBullet::fire(float x, float y, float angle)
+void GuidedBullet::fire(float x, float y ,float angle, float rotateAngle)
 {
-	if (_bulletMax <= _vBullet.size())return;
+	tagCBullet* bullet = new tagCBullet;
+	bullet->img = new my::Image;
+	bullet->reflectImg = new my::Image;
+	//
+	bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 26, 26, true, RGB(255, 0, 255));
+	bullet->reflectImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectBullet.bmp", 26, 26, true, RGB(255, 0, 255));
+	bullet->type = ObservedType::MINION_MISSILE;
+	bullet->speed = 1.0f;
+	bullet->x = bullet->fireX = x;
+	bullet->y = bullet->fireY = y;
+	bullet->angle = angle;
+	bullet->damage = 1.0f;
+	bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
+	bullet->fire = true;
+	bullet->magic = false;
+	bullet->init();
+	bullet->rotateAngle = rotateAngle;
+	_vBullet.push_back(bullet);
 
-	for (int i = 0; i < _bulletMax; i++)
-	{
-		tagCBullet* bullet = new tagCBullet;
-		bullet->img = new my::Image;
-		bullet->reflectImg = new my::Image;
-		//
-		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet4.bmp", 32, 32, true, RGB(255, 0, 255));
-		bullet->reflectImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectSmallBullet.bmp", 32, 32, true, RGB(255, 0, 255));
-		bullet->type = ObservedType::MINION_MISSILE;
-		bullet->speed = 1.0f;
-		bullet->x = bullet->fireX = x;
-		bullet->y = bullet->fireY = y;
-		bullet->angle = angle;
-		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
-		bullet->damage = 1.0f;
-		bullet->fire = true;
-		bullet->magic = false;
-		bullet->init();
-		_vBullet.push_back(bullet);
+	//if (_bulletMax <= _vBullet.size())return;
 
-		_bulletCount++;
-	}
-	_bulletCount = 0;
+	//for (int i = 0; i < _bulletMax; i++)
+	//{
+	//	tagCBullet* bullet = new tagCBullet;
+	//	bullet->img = new my::Image;
+	//	bullet->reflectImg = new my::Image;
+	//	//
+	//	bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet4.bmp", 32, 32, true, RGB(255, 0, 255));
+	//	bullet->reflectImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectSmallBullet.bmp", 32, 32, true, RGB(255, 0, 255));
+	//	bullet->type = ObservedType::MINION_MISSILE;
+	//	bullet->speed = 1.0f;
+	//	bullet->x = bullet->fireX = x;
+	//	bullet->y = bullet->fireY = y;
+	//	bullet->angle = angle;
+	//	bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
+	//	bullet->damage = 2.0f;
+	//	bullet->fire = true;
+	//	bullet->magic = false;
+	//	bullet->init();
+	//	_vBullet.push_back(bullet);
+
+	//	_bulletCount++;
+	//}
+	//_bulletCount = 0;
 }
 
 void GuidedBullet::draw(void)

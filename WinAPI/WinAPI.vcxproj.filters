@@ -76,15 +76,6 @@
     <Filter Include="OJH">
       <UniqueIdentifier>{c97959c3-a0de-4ea5-a870-7caa1bf8b583}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Map">
-      <UniqueIdentifier>{c483dc4f-bec1-4669-b67b-24839a8bdf83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainGame\Player">
-      <UniqueIdentifier>{638216ce-a769-4bd9-885c-ec4c909362f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainGame\Map\MapType">
-      <UniqueIdentifier>{92d78c0a-56c1-44e0-824e-8f0def7cc963}</UniqueIdentifier>
-    </Filter>
     <Filter Include="PKJ">
       <UniqueIdentifier>{a1134bdf-b905-4b02-a048-ba775e56f202}</UniqueIdentifier>
     </Filter>
@@ -93,6 +84,24 @@
     </Filter>
     <Filter Include="LHW">
       <UniqueIdentifier>{95633ec0-0fc8-4c24-8fd6-b875fb5a1e9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LHW\Map">
+      <UniqueIdentifier>{c483dc4f-bec1-4669-b67b-24839a8bdf83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LHW\Map\MapType">
+      <UniqueIdentifier>{92d78c0a-56c1-44e0-824e-8f0def7cc963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LHW\Player">
+      <UniqueIdentifier>{638216ce-a769-4bd9-885c-ec4c909362f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LHW\Monster">
+      <UniqueIdentifier>{d84465c9-5868-4706-b7d2-5e411fda3115}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LHW\Player\Weapon">
+      <UniqueIdentifier>{ddec733a-5192-4ef2-ada8-e64b2d56bb76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LHW\Effect">
+      <UniqueIdentifier>{3b29b3a8-3f17-42b6-b726-cd4a2dd93e44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -190,25 +199,25 @@
       <Filter>OJH</Filter>
     </ClCompile>
     <ClCompile Include="MapManager.cpp">
-      <Filter>MainGame\Map</Filter>
+      <Filter>LHW\Map</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>MainGame\Player</Filter>
+      <Filter>LHW\Player</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>MainGame\Map\MapType</Filter>
+      <Filter>LHW\Map\MapType</Filter>
     </ClCompile>
     <ClCompile Include="StartMap.cpp">
-      <Filter>MainGame\Map\MapType</Filter>
+      <Filter>LHW\Map\MapType</Filter>
     </ClCompile>
     <ClCompile Include="DefaultMap.cpp">
-      <Filter>MainGame\Map\MapType</Filter>
+      <Filter>LHW\Map\MapType</Filter>
     </ClCompile>
     <ClCompile Include="BossMap.cpp">
-      <Filter>MainGame\Map\MapType</Filter>
+      <Filter>LHW\Map\MapType</Filter>
     </ClCompile>
     <ClCompile Include="ChestMap.cpp">
-      <Filter>MainGame\Map\MapType</Filter>
+      <Filter>LHW\Map\MapType</Filter>
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <Filter>PKJ</Filter>
@@ -239,32 +248,17 @@
       <Filter>KGY</Filter>
     </ClCompile>
     <ClCompile Include="mButton.cpp" />
-    <ClCompile Include="PlayerWeapon.cpp">
-      <Filter>MainGame\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerStatusUI.cpp" />
-    <ClCompile Include="PixelCollision.cpp">
-      <Filter>MainGame</Filter>
-    </ClCompile>
-    <ClCompile Include="DamageEffectManager.cpp" />
-    <ClCompile Include="Damage.cpp" />
     <ClCompile Include="LobbyCollision.cpp">
       <Filter>OJH</Filter>
     </ClCompile>
     <ClCompile Include="RepairMap.cpp">
-      <Filter>MainGame\Map\MapType</Filter>
+      <Filter>LHW\Map\MapType</Filter>
     </ClCompile>
     <ClCompile Include="ShopMap.cpp">
-      <Filter>MainGame\Map\MapType</Filter>
+      <Filter>LHW\Map\MapType</Filter>
     </ClCompile>
     <ClCompile Include="LobbyPlayer.cpp">
       <Filter>OJH</Filter>
-    </ClCompile>
-    <ClCompile Include="KingSlime.cpp">
-      <Filter>LHW</Filter>
-    </ClCompile>
-    <ClCompile Include="BigSlime.cpp">
-      <Filter>LHW</Filter>
     </ClCompile>
     <ClCompile Include="ForestFairy.cpp">
       <Filter>KGY</Filter>
@@ -282,11 +276,35 @@
     <ClCompile Include="MushMan.cpp">
       <Filter>KGY</Filter>
     </ClCompile>
+    <ClCompile Include="BigSlime.cpp">
+      <Filter>LHW\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="KingSlime.cpp">
+      <Filter>LHW\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerWeapon.cpp">
+      <Filter>LHW\Player\Weapon</Filter>
+    </ClCompile>
     <ClCompile Include="BowParticle.cpp">
-      <Filter>MainGame\Player</Filter>
+      <Filter>LHW\Player\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="SkillParticle.cpp">
-      <Filter>MainGame\Player</Filter>
+      <Filter>LHW\Player\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Damage.cpp">
+      <Filter>LHW\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageEffectManager.cpp">
+      <Filter>LHW\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStatusUI.cpp">
+      <Filter>LHW\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameplayManager.cpp">
+      <Filter>MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAfterImage.cpp">
+      <Filter>LHW\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -396,25 +414,25 @@
       <Filter>OJH</Filter>
     </ClInclude>
     <ClInclude Include="MapManager.h">
-      <Filter>MainGame\Map</Filter>
+      <Filter>LHW\Map</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>MainGame\Player</Filter>
+      <Filter>LHW\Player</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
-      <Filter>MainGame\Map\MapType</Filter>
+      <Filter>LHW\Map\MapType</Filter>
     </ClInclude>
     <ClInclude Include="StartMap.h">
-      <Filter>MainGame\Map\MapType</Filter>
+      <Filter>LHW\Map\MapType</Filter>
     </ClInclude>
     <ClInclude Include="DefaultMap.h">
-      <Filter>MainGame\Map\MapType</Filter>
+      <Filter>LHW\Map\MapType</Filter>
     </ClInclude>
     <ClInclude Include="ChestMap.h">
-      <Filter>MainGame\Map\MapType</Filter>
+      <Filter>LHW\Map\MapType</Filter>
     </ClInclude>
     <ClInclude Include="BossMap.h">
-      <Filter>MainGame\Map\MapType</Filter>
+      <Filter>LHW\Map\MapType</Filter>
     </ClInclude>
     <ClInclude Include="Inventory.h">
       <Filter>PKJ</Filter>
@@ -442,26 +460,14 @@
       <Filter>KGY</Filter>
     </ClInclude>
     <ClInclude Include="mButton.h" />
-    <ClInclude Include="PlayerWeapon.h">
-      <Filter>MainGame\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerStatusUI.h" />
-    <ClInclude Include="DamageEffectManager.h" />
-    <ClInclude Include="Damage.h" />
     <ClInclude Include="RepairMap.h">
-      <Filter>MainGame\Map\MapType</Filter>
+      <Filter>LHW\Map\MapType</Filter>
     </ClInclude>
     <ClInclude Include="ShopMap.h">
-      <Filter>MainGame\Map\MapType</Filter>
+      <Filter>LHW\Map\MapType</Filter>
     </ClInclude>
     <ClInclude Include="LobbyPlayer.h">
       <Filter>OJH</Filter>
-    </ClInclude>
-    <ClInclude Include="KingSlime.h">
-      <Filter>LHW</Filter>
-    </ClInclude>
-    <ClInclude Include="BigSlime.h">
-      <Filter>LHW</Filter>
     </ClInclude>
     <ClInclude Include="ForestFairy.h">
       <Filter>KGY</Filter>
@@ -479,11 +485,32 @@
     <ClInclude Include="MushMan.h">
       <Filter>KGY</Filter>
     </ClInclude>
+    <ClInclude Include="BigSlime.h">
+      <Filter>LHW\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="KingSlime.h">
+      <Filter>LHW\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerWeapon.h">
+      <Filter>LHW\Player\Weapon</Filter>
+    </ClInclude>
     <ClInclude Include="BowParticle.h">
-      <Filter>MainGame\Player</Filter>
+      <Filter>LHW\Player\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="SkillParticle.h">
-      <Filter>MainGame\Player</Filter>
+      <Filter>LHW\Player\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Damage.h">
+      <Filter>LHW\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageEffectManager.h">
+      <Filter>LHW\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStatusUI.h">
+      <Filter>LHW\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAfterImage.h">
+      <Filter>LHW\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

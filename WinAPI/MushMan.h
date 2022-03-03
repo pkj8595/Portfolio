@@ -2,7 +2,9 @@
 #include "Mushroom.h"
 #include "Enemy.h"
 #include "Mushroom.h"
+#include "Bullets.h"
 
+class GuidedBullet;
 //머쉬룸을 부르는 애
 
 enum class MUSHMANSTATE { MU_IDLE, MU_MOVE, MU_ATTACK, MU_DEAD ,MU_END };
@@ -16,16 +18,19 @@ private:
 	MUSHMANDIRECTION _direction;
 
 	Mushroom* _mushroom;
+	GuidedBullet * _mushroomBullet;
 
 	int		_randomX, _randomY;
 	int		_maxFrame;
 	
+	float _playerX, _playerY;
 	float _angle;
 	float _speed;				//이동 속도
 	float _moveWorldTime;
 	float _plantMushroomWorldTime;
 	float _mushroomLivingTime;
 	float _mushroomAttackTime;
+	float _deadTime;
 
 	bool _mushroomCreateCheck; //버섯 생성 여부 체크
 	bool _mushroomRenderCheck;    //버섯 랜더 여부 체크	

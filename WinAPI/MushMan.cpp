@@ -27,15 +27,17 @@ HRESULT MushMan::init(const char * imageName, POINT position)
 	_plantMushroomWorldTime = TIMEMANAGER->getWorldTime();
 	_mushroomLivingTime = TIMEMANAGER->getWorldTime();
 	_mushroomAttackTime= TIMEMANAGER->getWorldTime();
+	_deadTime = TIMEMANAGER->getWorldTime();
 
+	_mushroomBullet = new GuidedBullet;
 	return S_OK;
 }
 
 void MushMan::release(void)
 {
-	Enemy::release();
 	_mushroom->release();
 	SAFE_DELETE(_mushroom);
+	Enemy::release();
 }
 
 void MushMan::update(void)
@@ -45,14 +47,6 @@ void MushMan::update(void)
 	if(_mushroomRenderCheck)
 		_mushroom->update();
 
-
-	/*
-	생존시간동안 공격을 한다.
-	공격은 3초에 한번씩 플레이어를 쫓아다니는 총알패턴.
-
-	10초가 지나면 버섯을 삭제? or 랜더X
-	
-	*/
 	if (!_deadForOb)
 	{
 		// 이미 심어져 있는 경우를 제외하고 10초마다 한번씩 심는다
@@ -69,6 +63,7 @@ void MushMan::update(void)
 		if (_mushroomCreateCheck)
 		{
 			_angle = getAngle(_mushroom->getX(), _mushroom->getY(), _playerPos.x, _playerPos.y);
+
 			//버섯 생존시간
 			if (10.f + _mushroomLivingTime <= TIMEMANAGER->getWorldTime())
 			{
@@ -81,12 +76,12 @@ void MushMan::update(void)
 				_mushroomCreateCheck = false;
 			}
 			else
-				_mushroom->fire(_angle);
+				_mushroom->fire(_playerX ,_playerY,_angle);
 		}
 	}
 	else
 	{
-		//_isActive = false;
+		_state = MUSHMANSTATE::MU_DEAD;
 	}
 
 	frame();
@@ -118,15 +113,28 @@ void MushMan::animation(void)
 		_worldTimeCount = TIMEMANAGER->getWorldTime();
 		_currentFrameX++;
 
-		if (_currentFrameX > _maxFrame)
+		if (_state == MUSHMANSTATE::MU_DEAD)
 		{
-			if (_state == MUSHMANSTATE::MU_ATTACK)
+			_currentFrameY = 8;
+			_maxFrame = 3;
+
+			if (6.f + _deadTime < TIMEMANAGER->getWorldTime())
 			{
-				_currentFrameX = 6;
-				_state = MUSHMANSTATE::MU_MOVE;
+				_isActive = false;
 			}
-			//else
+		}
+		else
+		{
+			if (_currentFrameX > _maxFrame)
+			{
+				if (_state == MUSHMANSTATE::MU_ATTACK)
+				{
+					_currentFrameX = 6;
+					_state = MUSHMANSTATE::MU_MOVE;
+				}
+				//else
 				_currentFrameX = 0;
+			}
 		}
 		_image->setFrameX(_currentFrameX);
 	}
@@ -259,6 +267,7 @@ void MushMan::createBullet()
 		_mushroom = new Mushroom;
 		_mushroom->init("Mushroom");
 		_mushroom->setPos(_x, _y + 13);
+		_mushroom->setAngle(getAngle(_mushroom->getX(), _mushroom->getY(), _playerPos.x, _playerPos.y));
 		_mushroomRenderCheck = true;
 		_mushroomCreateCheck = true; //버섯 심음
 	}
@@ -287,6 +296,11 @@ void MushMan::collideObject(STObservedData obData)
 		else
 		{
 			_hp -= (*obData.damage);
+			if ((*obData.typeKey) != ObservedType::ROCKET_MISSILE)
+			{
+				_x += cos(*obData.angle) * 7;
+				_y += -sin(*obData.angle) * 7;
+			}
 		}
 		(*obData.isActive) = false;
 	}
