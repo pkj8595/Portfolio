@@ -23,23 +23,19 @@ void CameraManager::update(void)
 
 		if (_computeCameraPt.x - _displayAreaRight * 0.5 < 0  )
 		{
-			cout << "left" << endl;
 			_computeCameraPt.x = _displayAreaRight * 0.5;
 		}
 		if (_computeCameraPt.x + _displayAreaRight * 0.5 > (*_currentMap)->getMapAreaRect().right)
 		{
-			cout << "right" << endl;
 			_computeCameraPt.x = (*_currentMap)->getMapAreaRect().right - (_displayAreaRight * 0.5);
 		}
 
 		if (_computeCameraPt.y - _displayAreaBottom * 0.5 < 0)
 		{
-			cout << "top" << endl;
 			_computeCameraPt.y = _displayAreaBottom * 0.5;
 		}
 		if (_computeCameraPt.y + _displayAreaBottom * 0.5 > (*_currentMap)->getMapAreaRect().bottom)
 		{
-			cout << "bottom" << endl;
 			_computeCameraPt.y = (*_currentMap)->getMapAreaRect().bottom - (_displayAreaBottom * 0.5);
 		}
 
