@@ -22,7 +22,7 @@ HRESULT RepairMap::init(POINT location)
 	_location = location;
 
 	_repairEventObj = new EventObject;
-	_repairEventRc = RectMakeCenter(CAMERAMANAGER->getDisplayCenterX() - 50, CAMERAMANAGER->getDisplayCenterY() - 50, _anvilImage->getFrameWidth() / 2, 32);
+	_repairEventRc = RectMakeCenter(490 - CAMERAMANAGER->getCameraRect().left, 400 - CAMERAMANAGER->getCameraRect().top, _anvilImage->getFrameWidth() - 10, 64);
 	_repairEventObj->init(EventObservedType::ANVIL, _repairEventRc, &_isActive, 0);
 
 	return S_OK;
