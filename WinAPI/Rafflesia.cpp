@@ -86,7 +86,7 @@ void Rafflesia::draw(void)
 	{
 		IMAGEMANAGER->alphaRender("GenerateRange", getMemDC(),
 			_playerPosX - 30 - CAMERAMANAGER->getCameraRect().left,
-			_playerPosY - 30 - CAMERAMANAGER->getCameraRect().left,100);
+			_playerPosY - 30 - CAMERAMANAGER->getCameraRect().top,100);
 	}
 }
 
@@ -151,7 +151,7 @@ bool Rafflesia::PlayerCheck()
 
 void Rafflesia::attack()
 {
-	if (4.5f + _attackWorldTime <= TIMEMANAGER->getWorldTime())
+	if (4.8f + _attackWorldTime < TIMEMANAGER->getWorldTime())
 	{
 		_attackWorldTime = TIMEMANAGER->getWorldTime();
 		_bullet->fire(_playerPosX, _playerPosY);
@@ -162,7 +162,7 @@ void Rafflesia::attack()
 
 void Rafflesia::attackPosCheck()
 {
-	if (4.f + _attackPosCheckTime <= TIMEMANAGER->getWorldTime())
+	if (4.f + _attackPosCheckTime < TIMEMANAGER->getWorldTime())
 	{
 		_attackPosCheckTime = TIMEMANAGER->getWorldTime();
 		_playerPosX = _playerPos.x + RAFFLESIA_BULLET_SIZE_X;
