@@ -297,7 +297,6 @@ class GuidedBullet : public AMissile
 private:
 	int _bulletCount;
 	float _angle;
-	int count = 0;
 
 	//time°ª ÇÊ¿ä
 	//float _moveTime;
@@ -307,7 +306,7 @@ private:
 public:
 	virtual HRESULT init(int bulletMax, float range);
 	virtual void move(void);
-	virtual void fire(float x, float y, float angle, float rotateAngle);
+	virtual void fire(float x, float y, float angle);
 	virtual void draw(void);
 
 	void setAngle(float angle) { _angle = angle; }

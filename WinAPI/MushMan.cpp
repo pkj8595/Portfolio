@@ -35,8 +35,11 @@ HRESULT MushMan::init(const char * imageName, POINT position)
 
 void MushMan::release(void)
 {
-	_mushroom->release();
-	SAFE_DELETE(_mushroom);
+	if (_mushroom != NULL)
+	{
+		_mushroom->release();
+		SAFE_DELETE(_mushroom);
+	}
 	Enemy::release();
 }
 
@@ -76,7 +79,7 @@ void MushMan::update(void)
 				_mushroomCreateCheck = false;
 			}
 			else
-				_mushroom->fire();
+				_mushroom->fire(_angle);
 		}
 	}
 	else
@@ -121,7 +124,7 @@ void MushMan::animation(void)
 			_currentFrameY = 8;
 			_maxFrame = 3;
 
-			if (8.f + _deadTime < TIMEMANAGER->getWorldTime())
+			if (3.f + _deadTime < TIMEMANAGER->getWorldTime())
 			{
 				_isActive = false;
 			}

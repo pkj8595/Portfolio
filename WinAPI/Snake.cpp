@@ -20,8 +20,8 @@ HRESULT Snake::init(const char * imageName, POINT position)
 	_attackMoveWorldTime = TIMEMANAGER->getWorldTime();
 	_deadTimeCount = TIMEMANAGER->getWorldTime();
 	_playerDistance = 0.0f;
-	_range = 250;
-	_attackRange = 200;
+	_range = 300;
+	_attackRange = 280;
 	_randomX = 0;
 	_randomY = 0;
 	_speed = 0.5f;
