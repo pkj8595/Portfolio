@@ -14,7 +14,7 @@ HRESULT ForestFairy::init(const char * imageName, POINT position)
 	Enemy::init(imageName, position);
 	_x = position.x;
 	_y = position.y;
-	_hp = 1.0f;
+	_hp = 100.0f;
 	_speed = 0.3f;
 	_currentFrameX = 0;
 	_currentFrameY = 0;
@@ -30,11 +30,11 @@ HRESULT ForestFairy::init(const char * imageName, POINT position)
 	_attackCoolTime = 0;
 
 	_normalBullet = new NormalBullet;
-	_normalBullet->init(10, WINSIZE_X * 2 / 3);
+	_normalBullet->init(10, 350);
 	_fairyBullet = new FairyBullet;
-	_fairyBullet->init(1, 500);
+	_fairyBullet->init(1, 300);
 	_bubbleBullet = new BubbleBullet;
-	_bubbleBullet->init(1, 500);
+	_bubbleBullet->init(30, 350);
 
 	return S_OK;
 }
@@ -65,7 +65,7 @@ void ForestFairy::update(void)
 	{
 		if (playerCheck() && _attackCoolTime <= 0)
 		{
-			_state = FAIRYSTATE::FA_ATTAACK;
+			_state = FAIRYSTATE::FA_ATTACK;
 		}
 		else randomPosCreate();
 	}
@@ -96,7 +96,7 @@ void ForestFairy::move(void)
 
 void ForestFairy::draw(void)
 {
-	_image->frameRender(getMemDC(), _rc.left -CAMERAMANAGER->getCameraRect().left, _rc.top - CAMERAMANAGER->getCameraRect().top, _currentFrameX, _currentFrameY);
+	_image->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX, _currentFrameY);
 	_normalBullet->render();
 	_fairyBullet->render();
 	_bubbleBullet->render();
@@ -163,7 +163,7 @@ void ForestFairy::frame()
 		randomMove();
 		break;
 
-	case FAIRYSTATE::FA_ATTAACK:
+	case FAIRYSTATE::FA_ATTACK:
 		switch (_attackParttern)
 		{
 		case FAIRYATTACK::FA_NORMAL:
@@ -317,12 +317,27 @@ void ForestFairy::normalBullet()
 	{
 		float tempAngle = getAngle(_x, _y, _playerPos.x + 50, _playerPos.y + 50);
 
-		for (int i = 0; i < 20; i++)   
+		for (int i = 0; i < 12; i++)
 		{
-			_normalBullet->fire(_x, _y, tempAngle, 5.0f, 0);
+			_normalBullet->fire(_x, _y, (0.5*tempAngle) * i * PI / 180, 2.0f, 0);
 		}
-		
-		_attackCoolTime = 200;
+		for (int i = 0; i < 4; i++)
+		{
+			_normalBullet->fire(_x, _y, ((0.5*tempAngle) * i * PI / 180) - 50, 1.94f, 0);
+			_normalBullet->fire(_x, _y, (0.5*tempAngle) * i * PI / 180, 1.94f, 0);
+		}
+		for (int i = 0; i < 2; i++)
+		{
+			_normalBullet->fire(_x, _y, ((0.5*tempAngle) * i * PI / 180) - 50, 1.9f, 0);
+			_normalBullet->fire(_x, _y - 25, (0.5*tempAngle) * i * PI / 180, 1.9f, 0);
+		}
+		for (int i = 0; i < 1; i++)
+		{
+			_normalBullet->fire(_x, _y, ((0.5*tempAngle) * i * PI / 180) - 50, 1.86f, 0);
+			_normalBullet->fire(_x, _y - 25, (0.5*tempAngle) * i * PI / 180, 1.86f, 0);
+		}
+
+		_attackCoolTime = 300;
 
 		//더이상 다음 상태가 될 때까지 공격 X되게 하는 구문 필요
 	}
@@ -330,10 +345,15 @@ void ForestFairy::normalBullet()
 
 void ForestFairy::fariyBullet()
 {
+	//_attackCoolTime = 500;
+
 	if (_attackParttern == FAIRYATTACK::FA_FAIRY&&_image->getMaxFrameX() - 1 == _currentFrameX)
 	{
-		_fairyBullet->fire(_x, _y, 300);
+		//for (int i = 0; i < 1; i++)
+
+		_fairyBullet->fire(_x, _y, 30 * PI / 180);
 		_attackCoolTime = 100;
+
 	}
 }
 
@@ -341,8 +361,13 @@ void ForestFairy::bubbleBullet()
 {
 	if (_attackParttern == FAIRYATTACK::FA_BUBBLE&&_image->getMaxFrameX() - 1 == _currentFrameX)
 	{
-		_bubbleBullet->fire(_x, _y, 300, 2.0f, 0);
-		_attackCoolTime = 100;
+		float tempAngle = getAngle(_x, _y, _playerPos.x + 50, _playerPos.y + 50);
+
+		for (int i = 0; i < 30; i++)
+		{
+			_bubbleBullet->fire(_x, _y, tempAngle * i * PI / 180, 2.0f, 30 * PI / 180);
+			_attackCoolTime = 100;
+		}
 	}
 
 }
