@@ -96,7 +96,7 @@ void ItemObject::update(void)
 void ItemObject::render(void)
 {
 	//RectangleMakeToRECT(getMemDC(), _rc);
-	if(!_isChest)_itemManager->getItemIndexRender(getMemDC(), _itemIndex, _rc.left, _rc.top);
+	if(!_isChest)_itemManager->getItemIndexRender(getMemDC(),_itemIndex, _rc.left, _rc.top);
 	else _itemManager->getBigItemIndexRender(getMemDC(), _itemIndex, _rc.left, _rc.top);
 }
 

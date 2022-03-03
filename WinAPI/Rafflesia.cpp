@@ -77,10 +77,17 @@ void Rafflesia::move(void)
 
 void Rafflesia::draw(void)
 {
-	_image->frameRender(getMemDC(), _rc.left, _rc.top,_currentFrameX,_currentFrameY);
+	_image->frameRender(getMemDC(),
+		_rc.left - CAMERAMANAGER->getCameraRect().left,
+		_rc.top - CAMERAMANAGER->getCameraRect().top,
+		_currentFrameX,_currentFrameY);
 
-	if (_attackPositionCheck)
-		IMAGEMANAGER->alphaRender("GenerateRange", getMemDC(),_playerPosX - 30, _playerPosY - 30,100);
+	if (_attackPositionCheck) 
+	{
+		IMAGEMANAGER->alphaRender("GenerateRange", getMemDC(),
+			_playerPosX - 30 - CAMERAMANAGER->getCameraRect().left,
+			_playerPosY - 30 - CAMERAMANAGER->getCameraRect().left,100);
+	}
 }
 
 void Rafflesia::animation(void)

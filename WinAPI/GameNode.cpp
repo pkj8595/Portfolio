@@ -104,6 +104,8 @@ LRESULT GameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	case WM_MOUSEMOVE:
 		_ptMouse.x = LOWORD(lParam);
 		_ptMouse.y = HIWORD(lParam);
+		DPtoLP(getHDC(), &_ptMouse, 1);
+
 		break;
 	case WM_LBUTTONDOWN:	
 

@@ -70,12 +70,26 @@ void ShopMap::update(void)
 
 void ShopMap::render(void)
 {
-	_image->render(getMemDC());
-	if (!_connectedMap[0] || !_clear) _leftWall->render(getMemDC(), -28, 122);
-	if (!_connectedMap[1] || !_clear) _upWall->render(getMemDC(), CENTER_X - 180, -150);
-	if (!_connectedMap[2] || !_clear) _rightWall->render(getMemDC(), 758, 35);
-	if (!_connectedMap[3] || !_clear) _downWall->render(getMemDC(), 352, 465);
+	_image->render(getMemDC(),
+		-CAMERAMANAGER->getCameraRect().left,
+		-CAMERAMANAGER->getCameraRect().top);
+	if (!_connectedMap[0] || !_clear) _leftWall->render(getMemDC(),
+		-28 - CAMERAMANAGER->getCameraRect().left,
+		122 - CAMERAMANAGER->getCameraRect().top);
+	if (!_connectedMap[1] || !_clear) _upWall->render(getMemDC(),
+		CAMERAMANAGER->getDisplayCenterX() - 180 - CAMERAMANAGER->getCameraRect().left,
+		-150 - CAMERAMANAGER->getCameraRect().top);
+	if (!_connectedMap[2] || !_clear) _rightWall->render(getMemDC(),
+		758 - CAMERAMANAGER->getCameraRect().left,
+		35 - CAMERAMANAGER->getCameraRect().top);
+	if (!_connectedMap[3] || !_clear) _downWall->render(getMemDC(),
+		352 - CAMERAMANAGER->getCameraRect().left,
+		465 - CAMERAMANAGER->getCameraRect().top);
 	//============================================
-	_shopNPC->render(getMemDC(), 680, 140);
-	_shopBar->render(getMemDC(), 530, 40);
+	_shopNPC->render(getMemDC(),
+		680 - CAMERAMANAGER->getCameraRect().left,
+		140 - CAMERAMANAGER->getCameraRect().top);
+	_shopBar->render(getMemDC(),
+		530 - CAMERAMANAGER->getCameraRect().left,
+		40 - CAMERAMANAGER->getCameraRect().top);
 }

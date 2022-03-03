@@ -32,14 +32,29 @@ void DefaultMap::update(void)
 
 void DefaultMap::render(void)
 {
-	_image->render(getMemDC());
+	_image->render(getMemDC(),
+		-CAMERAMANAGER->getCameraRect().left,
+		-CAMERAMANAGER->getCameraRect().top);
 
-	if(!_connectedMap[0] || !_clear) _leftWall->render(getMemDC(), 0 + _leftWallImageFixX, 50 + _leftWallImageFixY);
-	if(!_connectedMap[1] || !_clear) _upWall->render(getMemDC(), CENTER_X - 180, -150);
-	if (!_connectedMap[2] || !_clear) _rightWall->render(getMemDC(), 728 + _rightWallImageFixX, 50 + _rightWallImageFixY);
-	if(!_connectedMap[3] || !_clear) _downWall->render(getMemDC(), CENTER_X - 170, _image->getHeight() - 240);
+	if(!_connectedMap[0] || !_clear) _leftWall->render(getMemDC(),
+		0 + _leftWallImageFixX -CAMERAMANAGER->getCameraRect().left,
+		50 + _leftWallImageFixY -CAMERAMANAGER->getCameraRect().top);
 
-	if (_pixel) _pixelCollisionImage->render(getMemDC());
+	if(!_connectedMap[1] || !_clear) _upWall->render(getMemDC(),
+		CAMERAMANAGER->getDisplayCenterX() - 180 - CAMERAMANAGER->getCameraRect().left,
+		-150 - CAMERAMANAGER->getCameraRect().top);
+
+	if (!_connectedMap[2] || !_clear) _rightWall->render(getMemDC(),
+		728 + _rightWallImageFixX - CAMERAMANAGER->getCameraRect().left,
+		50 + _rightWallImageFixY - CAMERAMANAGER->getCameraRect().top);
+
+	if(!_connectedMap[3] || !_clear) _downWall->render(getMemDC(),
+		CAMERAMANAGER->getDisplayCenterX() - 170 - CAMERAMANAGER->getCameraRect().left,
+		_image->getHeight() - 240 - CAMERAMANAGER->getCameraRect().top);
+
+	if (_pixel) _pixelCollisionImage->render(getMemDC(),
+		-CAMERAMANAGER->getCameraRect().left,
+		-CAMERAMANAGER->getCameraRect().top);
 }
 
 void DefaultMap::createRndMapImage()

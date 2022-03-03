@@ -6,6 +6,7 @@ HRESULT Player::init(void)
 {
 	RECTOBSERVERMANAGER->registerObserved(this);
 	RECTOBSERVERMANAGER->registerPlayer(this);
+	CAMERAMANAGER->setPlayerPosition(&_x, &_y);
 
 	_type = ObservedType::ROCKET;
 	_image = IMAGEMANAGER->addFrameImage("Player", "Resource/Images/Lucie/CompleteImg/Player/Player.bmp", 600, 4100, 6, 41, true, RGB(255, 0, 255));
@@ -20,8 +21,8 @@ HRESULT Player::init(void)
 	_dodgeAlpha = 0;
 	_direction = PLAYER_DIRECTION::DOWN;
 	
-	_x = CENTER_X;
-	_y = CENTER_Y;
+	_x = CAMERAMANAGER->getDisplayCenterX();
+	_y = CAMERAMANAGER->getDisplayCenterY();
 
 	_stateFrameCount = 0;
 	_comboCooldown = 0;
@@ -162,12 +163,15 @@ void Player::render(void)
 {
 	if (_dead)
 	{
-
-		_image->frameRender(getMemDC(), _x, _y, 5, 9);
+		_image->frameRender(getMemDC(),
+			_x-CAMERAMANAGER->getCameraRect().left,
+			_y-CAMERAMANAGER->getCameraRect().top, 5, 9);
 		return;
 	}
 	_pai->render();
-	_image->frameRender(getMemDC(), _x, _y);
+	_image->frameRender(getMemDC(),
+		_x - CAMERAMANAGER->getCameraRect().left,
+		_y- CAMERAMANAGER->getCameraRect().top);
 	_efm->render();
 	_skillWeapon->render();
 	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);

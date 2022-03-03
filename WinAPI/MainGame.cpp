@@ -61,6 +61,7 @@ void MainGame::release(void)
 
 void MainGame::update(void)
 {
+	
 	SCENEMANAGER->update();	
 }
 
@@ -75,7 +76,3 @@ void MainGame::render(void)
 	this->getBackBuffer()->render(getHDC());
 }
 
-void MainGame::renderUI(void)
-{
-
-}

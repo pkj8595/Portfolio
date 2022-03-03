@@ -79,8 +79,12 @@ void CEffect::render(void)
 
 void CEffect::draw(void)
 {
-	if(_prc == nullptr) _image->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX, _currentFrameY);
-	else _image->frameRender(getMemDC(), _prc->left + _fixX, _prc->top + _fixY, _currentFrameX, _currentFrameY);
+	if(_prc == nullptr) _image->frameRender(getMemDC(),
+		_rc.left-CAMERAMANAGER->getCameraRect().left,
+		_rc.top - CAMERAMANAGER->getCameraRect().top, _currentFrameX, _currentFrameY);
+	else _image->frameRender(getMemDC(),
+		_prc->left + _fixX - CAMERAMANAGER->getCameraRect().left,
+		_prc->top + _fixY -CAMERAMANAGER->getCameraRect().top, _currentFrameX, _currentFrameY);
 }
 
 void CEffect::animation(void)

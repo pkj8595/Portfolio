@@ -21,8 +21,8 @@ HRESULT KgyScene::init(void)
 	_player = new Player;
 	_player->init();
 
-	_playerpos.x = CENTER_X - 200;
-	_playerpos.y = CENTER_Y;
+	_playerpos.x = CAMERAMANAGER->getDisplayCenterX() - 200;
+	_playerpos.y = CAMERAMANAGER->getDisplayCenterY();
 
 	_em->setRoketMemoryAddress(_player);
 	return S_OK;

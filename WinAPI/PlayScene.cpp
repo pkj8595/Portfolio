@@ -54,10 +54,9 @@ void PlayScene::update(void)
 	_enemyManager->update();
 	_player->update();
 	_effectManager->update();
-
 	if (KEYMANAGER->isOnceKeyDown(VK_F7))
 	{
-		_itemSpawner->createItem(CENTER_X, CENTER_Y, true);
+		_itemSpawner->createItem(CAMERAMANAGER->getDisplayCenterX(), CAMERAMANAGER->getDisplayCenterY(), true);
 	}
 
 	pixelCollision();
@@ -85,6 +84,7 @@ void PlayScene::update(void)
 	//}
 
 	checkDead();
+	CAMERAMANAGER->update();
 }
 
 void PlayScene::render(void)

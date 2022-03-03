@@ -91,7 +91,7 @@ void KingSlime::render(void)
 	_bubbleBullet->render();
 
 	hpRender(280, 100);
-	if (_bossNameFadeIn || (!_bossNameFadeIn && _bossNameAlpha > 0))_bossNameImage->alphaRender(getMemDC(), CENTER_X - 75, 50, _bossNameAlpha);
+	if (_bossNameFadeIn || (!_bossNameFadeIn && _bossNameAlpha > 0))_bossNameImage->alphaRender(getMemDC(), CAMERAMANAGER->getDisplayCenterX() - 75, 50, _bossNameAlpha);
 }
 
 STObservedData KingSlime::getRectUpdate()

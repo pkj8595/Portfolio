@@ -26,7 +26,9 @@ public:
 	Item* getItem(int imgIndex);
 	Item* getItemIndex(int index);
 	void getItemImgRender(HDC hdc,int imgIndex, int x, int y);
+	void getItemInvenImgRender(HDC hdc,int imgIndex, int x, int y);
 	void getBigItemImgRender(HDC hdc,int imgIndex, int x, int y);
+	void getBigItemInvenImgRender(HDC hdc,int imgIndex, int x, int y);
 	void getItemIndexRender(HDC hdc, int index, int x, int y);
 	void getBigItemIndexRender(HDC hdc, int index, int x, int y);
 

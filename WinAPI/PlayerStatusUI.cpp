@@ -18,8 +18,8 @@ HRESULT PlayerStatusUI::init(CPlayer_Attribute* status, int* level, float* skill
 	_level = level;
 	_skillCool = skillCool;
 
-	_pos.x = CENTER_X - 115;
-	_pos.y = WINSIZE_Y - 150;
+	_pos.x = CAMERAMANAGER->getDisplayCenterX() - 115;
+	_pos.y = CAMERAMANAGER->getDisplayAreaBottom() - 150;
 
 	return S_OK;
 };
@@ -40,8 +40,8 @@ HRESULT PlayerStatusUI::init(CPlayer_Attribute* status, int* level)
 	_status = status;
 	_level = level;
 
-	_pos.x = CENTER_X - 115;
-	_pos.y = WINSIZE_Y - 150;
+	_pos.x = CAMERAMANAGER->getDisplayCenterX() - 115;
+	_pos.y = CAMERAMANAGER->getDisplayAreaBottom() - 150;
 
 	return S_OK;
 };

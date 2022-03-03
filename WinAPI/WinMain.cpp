@@ -9,6 +9,7 @@ HINSTANCE _hInstance;
 HWND _hWnd;
 POINT _ptMouse = { 0,0 };
 MainGame* _mg;
+LPRECT _cameraRc;
 
 //================
 //#함수 전방 선언#
@@ -122,15 +123,15 @@ int APIENTRY WinMain( HINSTANCE hInstance,
 
 	//==================================
 	SetMapMode(_mg->getHDC(), MM_ISOTROPIC);
-	RECT cameraRc = RectMake(0, 0, 0, 0);
-	GetClientRect(_hWnd, &cameraRc);
+	_cameraRc = &RectMake(0, 0, 0, 0);
+	GetClientRect(_hWnd, _cameraRc);
 	SetWindowExtEx(_mg->getHDC(), 960, 540, NULL);
-	SetViewportExtEx(_mg->getHDC(), cameraRc.right, cameraRc.bottom, NULL);
+	SetViewportExtEx(_mg->getHDC(), _cameraRc->right, _cameraRc->bottom, NULL);
+	
 	//==================================
 
 	while (true) 
 	{
-		
 		if (PeekMessage(&message, NULL, 0, 0, PM_REMOVE)) 
 		{
 			if (message.message == WM_QUIT) break;

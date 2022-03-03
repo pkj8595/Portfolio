@@ -36,12 +36,30 @@ void PlayerAfterImage::render(void)
 	{
 		switch (ai.frame)
 		{
-		case 0: _image0->alphaRender(getMemDC(), ai.x, ai.y, ai.alpha); break;
-		case 1: _image1->alphaRender(getMemDC(), ai.x, ai.y, ai.alpha); break;
-		case 2: _image2->alphaRender(getMemDC(), ai.x, ai.y, ai.alpha); break;
-		case 3: _image3->alphaRender(getMemDC(), ai.x, ai.y, ai.alpha); break;
-		case 4: _image4->alphaRender(getMemDC(), ai.x, ai.y, ai.alpha); break;
-		case 5: _image5->alphaRender(getMemDC(), ai.x, ai.y, ai.alpha); break;
+		case 0: _image0->alphaRender(getMemDC(),
+			ai.x - CAMERAMANAGER->getCameraRect().left,
+			ai.y - CAMERAMANAGER->getCameraRect().top, ai.alpha);
+			break;
+		case 1: _image1->alphaRender(getMemDC(),
+			ai.x - CAMERAMANAGER->getCameraRect().left,
+			ai.y - CAMERAMANAGER->getCameraRect().top, ai.alpha); 
+			break;
+		case 2: _image2->alphaRender(getMemDC(),
+			ai.x - CAMERAMANAGER->getCameraRect().left,
+			ai.y - CAMERAMANAGER->getCameraRect().top, ai.alpha); 
+			break;
+		case 3: _image3->alphaRender(getMemDC(),
+			ai.x - CAMERAMANAGER->getCameraRect().left,
+			ai.y - CAMERAMANAGER->getCameraRect().top, ai.alpha); 
+			break;
+		case 4: _image4->alphaRender(getMemDC(),
+			ai.x - CAMERAMANAGER->getCameraRect().left,
+			ai.y - CAMERAMANAGER->getCameraRect().top, ai.alpha); 
+			break;
+		case 5: _image5->alphaRender(getMemDC(),
+			ai.x - CAMERAMANAGER->getCameraRect().left,
+			ai.y - CAMERAMANAGER->getCameraRect().top, ai.alpha); 
+			break;
 		}
 		
 	}
