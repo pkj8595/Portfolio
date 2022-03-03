@@ -13,6 +13,7 @@ private:
 	int _displayAreaBottom;
 	int _ratio;
 	RECT _cameraRc;
+	RECT _clientRect;
 
 public:
 	HRESULT init(void);

@@ -9,6 +9,7 @@ HRESULT CameraManager::init(void)
 	_cameraRc = RectMake(0, 0, 960, 540);
 	_currentMap = nullptr;
 	_ratio = 100;
+	//GetClientRect(_hWnd, &_clientRect);
 
 	return S_OK;
 }
