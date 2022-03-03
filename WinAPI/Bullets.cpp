@@ -1007,9 +1007,12 @@ void GuidedBullet::move(void)
 	count++;
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		if (count == 100)
+		if (count < 300)
 		{
-			(*_viBullet)->angle = (*_viBullet)->rotateAngle;
+			if ((*_viBullet)->x > (*_viBullet)->targetX) (*_viBullet)->x -= (*_viBullet)->speed;
+			if ((*_viBullet)->x < (*_viBullet)->targetX) (*_viBullet)->x += (*_viBullet)->speed;
+			if ((*_viBullet)->y > (*_viBullet)->targetY) (*_viBullet)->y -= (*_viBullet)->speed;
+			if ((*_viBullet)->y < (*_viBullet)->targetY) (*_viBullet)->y += (*_viBullet)->speed;
 		}
 		(*_viBullet)->x += cosf((*_viBullet)->angle)*(*_viBullet)->speed;
 		(*_viBullet)->y += -sinf((*_viBullet)->angle)*(*_viBullet)->speed;
@@ -1098,15 +1101,46 @@ void GuidedBullet::fire(float x, float y ,float angle, float rotateAngle)
 	//_bulletCount = 0;
 }
 
+void GuidedBullet::fire(float x, float y, POINT player)
+{
+	tagCBullet* bullet = new tagCBullet;
+	bullet->img = new my::Image;
+	bullet->reflectImg = new my::Image;
+	//
+	bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 26, 26, true, RGB(255, 0, 255));
+	bullet->reflectImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectBullet.bmp", 26, 26, true, RGB(255, 0, 255));
+	bullet->type = ObservedType::MINION_MISSILE;
+	bullet->speed = 3.0f;
+	bullet->x = bullet->fireX = x;
+	bullet->y = bullet->fireY = y;
+	bullet->angle = RND->getFromFloatTo(0, PI*2);
+	bullet->damage = 1.0f;
+	bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
+	bullet->targetX = player.x;
+	bullet->targetY = player.y;
+	bullet->fire = true;
+	bullet->magic = false;
+	bullet->init();
+	bullet->rotateAngle = 0;
+	_vBullet.push_back(bullet);
+}
+
 void GuidedBullet::draw(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		if ((*_viBullet)->type == ObservedType::MINION_MISSILE) (*_viBullet)->img->render(getMemDC(), 
-			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left, 
-			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+		if ((*_viBullet)->type == ObservedType::MINION_MISSILE)
+		{
+			(*_viBullet)->img->render(getMemDC(),
+				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+		}
+		else
+		{
+			(*_viBullet)->reflectImg->render(getMemDC(),
+				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
 
-		else (*_viBullet)->reflectImg->render(getMemDC(), (*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left, 
-			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+		}
 	}
 }

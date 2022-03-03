@@ -16,6 +16,7 @@ public:
 	float damage;
 	float x, y;
 	float fireX, fireY;
+	float targetX, targetY;
 	float angle;
 	float rotateAngle;
 	float speed;
@@ -308,6 +309,7 @@ public:
 	virtual HRESULT init(int bulletMax, float range);
 	virtual void move(void);
 	virtual void fire(float x, float y, float angle, float rotateAngle);
+	virtual void fire(float x, float y, POINT player);
 	virtual void draw(void);
 
 	void setAngle(float angle) { _angle = angle; }

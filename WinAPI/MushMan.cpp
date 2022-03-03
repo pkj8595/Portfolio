@@ -47,6 +47,8 @@ void MushMan::update(void)
 	if(_mushroomRenderCheck)
 		_mushroom->update();
 
+	_mushroomBullet->update();
+
 	if (!_deadForOb)
 	{
 		// 이미 심어져 있는 경우를 제외하고 10초마다 한번씩 심는다
@@ -268,7 +270,7 @@ void MushMan::createBullet()
 	if (_currentFrameX == _maxFrame && !_mushroomCreateCheck)
 	{
 		_mushroom = new Mushroom;
-		_mushroom->init("Mushroom");
+		_mushroom->init("Mushroom", &_playerPos);
 		_mushroom->setPos(_x, _y + 13);
 		_mushroomRenderCheck = true;
 		_mushroomCreateCheck = true; //버섯 심음

@@ -117,17 +117,11 @@ void EnemyManager::setMinion(void)
 		rafflesia->init("Rafflesia", PointMake(CAMERAMANAGER->getDisplayCenterX() - 150, CAMERAMANAGER->getDisplayCenterY() + 30));
 		_vMinion.push_back(rafflesia);
 
-		Enemy* slime2;
-		slime2 = new Slime;
-		slime2->init("Slime", PointMake(CAMERAMANAGER->getDisplayCenterX() - 50, CAMERAMANAGER->getDisplayCenterY() - 50));
-		_vMinion.push_back(slime2);
-
-		Enemy* forestFairy;
-		forestFairy = new ForestFairy;
-		forestFairy->init("ForestFairy",
-			PointMake(CAMERAMANAGER->getDisplayCenterX() + 70,
-				CAMERAMANAGER->getDisplayCenterY()));
-		_vMinion.push_back(forestFairy);
+		Enemy* mushman;
+		mushman = new MushMan;
+		mushman->init("MushMan", PointMake(CAMERAMANAGER->getDisplayCenterX() - 30,
+			CAMERAMANAGER->getDisplayCenterY() + 150));
+		_vMinion.push_back(mushman);
 	}break;
 
 	case 1: {
@@ -141,12 +135,12 @@ void EnemyManager::setMinion(void)
 		snake->init("Snake", PointMake(CAMERAMANAGER->getDisplayCenterX() - 100, CAMERAMANAGER->getDisplayCenterY()));
 		_vMinion.push_back(snake);
 
-		Enemy* forestFairy;
-		forestFairy = new ForestFairy;
-		forestFairy->init("ForestFairy",
-			PointMake(CAMERAMANAGER->getDisplayCenterX() + 70,
-				CAMERAMANAGER->getDisplayCenterY()));
-		_vMinion.push_back(forestFairy);
+		Enemy* mushman;
+		mushman = new MushMan;
+		mushman->init("MushMan", PointMake(CAMERAMANAGER->getDisplayCenterX() - 30,
+			CAMERAMANAGER->getDisplayCenterY() + 150));
+		_vMinion.push_back(mushman);
+
 	} break;
 
 	case 2: {
@@ -160,12 +154,12 @@ void EnemyManager::setMinion(void)
 		snake2->init("Snake", PointMake(CAMERAMANAGER->getDisplayCenterX() - 100, CAMERAMANAGER->getDisplayCenterY()));
 		_vMinion.push_back(snake2);
 
-		Enemy* forestFairy;
-		forestFairy = new ForestFairy;
-		forestFairy->init("ForestFairy",
-			PointMake(CAMERAMANAGER->getDisplayCenterX() + 70,
-				CAMERAMANAGER->getDisplayCenterY()));
-		_vMinion.push_back(forestFairy);
+		Enemy* mushman;
+		mushman = new MushMan;
+		mushman->init("MushMan", PointMake(CAMERAMANAGER->getDisplayCenterX() - 30,
+			CAMERAMANAGER->getDisplayCenterY() + 150));
+		_vMinion.push_back(mushman);
+
 	} break;
 
 	case 3: {

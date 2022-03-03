@@ -9,12 +9,13 @@ Mushroom::~Mushroom()
 {
 }
 
-HRESULT Mushroom::init(const char* imageName)
+HRESULT Mushroom::init(const char* imageName, POINT* pos)
 {
+	Enemy::init(imageName, { 0,0 });
 	_image = IMAGEMANAGER->findImage(imageName);
 	_hp = 30;
 	_attackTime = TIMEMANAGER->getWorldTime();
-
+	_playerPosition = pos;
 	//Observer code
 	_type = ObservedType::MINION;
 	_isActive = true;
@@ -71,6 +72,7 @@ void Mushroom::fire()
 	{
 		_attackTime = TIMEMANAGER->getWorldTime();
 		_bullet->fire(_x, _y);
+		cout << (*_playerPosition).x << "," << (*_playerPosition).y << endl;
 	}
 }
 
