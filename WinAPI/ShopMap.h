@@ -12,6 +12,8 @@ private:
 	my::Image* _shopBar;
 	my::Image* _shopNPC;
 
+	RECT tempRc;
+
 	
 	typedef struct tagEventObj
 	{
