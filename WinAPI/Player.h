@@ -161,11 +161,3 @@ public:
 	BowWeapon* getBowWeapon() { return _bow; }
 };
 
-//검
-//setAttack의 else if ~~EQUIP TYPE 부분에서 1타 처리
-//setSwordAttack에서 2, 3, 4, 5타부분 처리
-//맨 위쪽에서 패리 공격 추가
-//case 3에서 집중스택 쌓기 추가
-
-//활,일반공격
-//

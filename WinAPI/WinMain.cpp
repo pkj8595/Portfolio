@@ -157,9 +157,7 @@ int APIENTRY WinMain( HINSTANCE hInstance,
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
-	
 	return _mg->MainProc(hWnd, iMessage, wParam, lParam);
-
 }
 
 //윈도우 화면 맞추기

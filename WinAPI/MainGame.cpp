@@ -2,7 +2,6 @@
 #include "MainGame.h"
 #include "ItemManager.h"
 #include "TitleScene.h"
-#include "LobbyScene.h"
 #include "PlayScene.h"
 #include "KgyScene.h"
 #include "Lobby.h"
@@ -32,7 +31,6 @@ HRESULT MainGame::init(void)
 	//addSounds();
 
 	SCENEMANAGER->addScene("TitleScene", new TitleScene);
-	SCENEMANAGER->addScene("LobbyScene", new LobbyScene);
 	SCENEMANAGER->addScene("PlayScene", new PlayScene);
 	SCENEMANAGER->addScene("kgy", new KgyScene);
 	SCENEMANAGER->addScene("Lobby", new Lobby);
