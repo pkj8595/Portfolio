@@ -35,11 +35,11 @@ HRESULT TextSystemManager::init(void)
 
 	_textPosition = PointMake(CAMERAMANAGER->getCameraRect().right, CAMERAMANAGER->getCameraRect().bottom);
 	
-	_chatRc = RectMake(_textPosition.x*0.13, _textPosition.y*0.66, _chatImage->getWidth(), _chatImage->getHeight());
-	_chatWriteRc = RectMake(_textPosition.x*0.09, _textPosition.y*0.75, _chatImage->getWidth(), _chatImage->getHeight());
-	_boxChatRc = RectMake(_textPosition.x*0.08, _textPosition.y*0.66, _chatImage->getWidth(), _chatImage->getHeight());
+	_chatRc = RectMake(400, _textPosition.y*0.66, _chatImage->getWidth(), _chatImage->getHeight());
+	_chatWriteRc = RectMake(_textPosition.x*0.13, _textPosition.y*0.75, _chatImage->getWidth(), _chatImage->getHeight());
+	_boxChatRc = RectMake(_textPosition.x*0.13, _textPosition.y*0.66, _chatImage->getWidth(), _chatImage->getHeight());
 	_nameRc = RectMake(_textPosition.x*0.13, _textPosition.y*0.68, _nameImage->getWidth(), _nameImage->getHeight());
-	_anvilNameRc = RectMake(_textPosition.x*0.05, _textPosition.y*0.66, _anvilnameImage->getWidth(), _anvilnameImage->getHeight());
+	_anvilNameRc = RectMake(_textPosition.x*0.13, _textPosition.y*0.66, _anvilnameImage->getWidth(), _anvilnameImage->getHeight());
 
 	_shopsel_OneRc = RectMake(_textPosition.x*0.09, _textPosition.y*0.80, _selImage->getWidth(), _selImage->getHeight());
 	_shopsel_TwoRc = RectMake(_textPosition.x*0.09, _textPosition.y*0.86, _selImage->getWidth(), _selImage->getHeight());
@@ -269,11 +269,8 @@ void TextSystemManager::ShopLog(string itemName, int price)
 	copy(_shopPriceText.begin(), _shopPriceText.end(), shop_talk2);
 	shop_talk2[_shopPriceText.size()] = '\0';
 
-	//챗 로그 박스 설정, _chatRc의 값을 토대로 렌더함
-	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
-	//챗 이름 박스 설정, _nameRc의 값을 토대로 렌더함
+	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);																																				
 	IMAGEMANAGER->alphaRender("Namebox", getMemDC(), _nameRc.left, _nameRc.top, _textAlpha);
-	//챗 이름박스 안에 텍스트 출력
 	FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.1, _textPosition.y*0.7, "둥근모꼴", 18, 15,
 		L"마리", wcslen(L"마리"), RGB(0, 0, 255));
 
