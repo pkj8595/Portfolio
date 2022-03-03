@@ -349,6 +349,7 @@ void Inventory::checkMouseEvent(void)
 				{
 				case EITEM_TYPE::POTION:
 					*_pAttribute = *_pAttribute + (*_viItem).first->_attribute;
+					TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/potion.wav");
 					_vItem.erase(_viItem);
 					computeRect();
 					break;
@@ -395,6 +396,7 @@ void Inventory::checkMouseEvent(void)
 					if (_isEnchantSuccess)
 					{
 						_enchantStr = "강화 성공";
+						TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/enchant.wav");
 						_vItem.erase(_viItem);
 						computeRect();
 					}

@@ -133,6 +133,7 @@ void Player::update(void)
 		{
 			if (!_tsm->isShowText)
 			{
+				cout << _tsm->isShowText << endl;
 				move();
 			}
 		}
