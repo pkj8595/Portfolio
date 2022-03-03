@@ -6,8 +6,8 @@ HRESULT Lobby::init(void)
 {
 	
 
-	IMAGEMANAGER->addImage("Lobby", "Resource/Images/Lucie/CompleteImg/ground/map/ground12.bmp", 1008, 1065);
-	IMAGEMANAGER->addImage("col_Lobby", "Resource/Images/Lucie/CompleteImg/ground/pixelmap/!m12_1.bmp", 1008, 1065);
+	_lobbyMapImg = IMAGEMANAGER->addImage("Lobby", "Resource/Images/Lucie/CompleteImg/ground/map/ground12.bmp", 1008, 1065);
+	_lobbyColMapImg = IMAGEMANAGER->addImage("col_Lobby", "Resource/Images/Lucie/CompleteImg/ground/pixelmap/!m12_1.bmp", 1008, 1065);
 	_WhitefadeOutImg = IMAGEMANAGER->addImage("WhiteScreen", "Resource/Images/Lucie/CompleteImg/effect/BookchangeScreen.bmp", 1104, 960);
 	_BlackfadeOutImg = IMAGEMANAGER->addImage("BlackScreen", "Resource/Images/Lucie/CompleteImg/effect/changeScreen.bmp", 1104, 960);
 	_bookImg = IMAGEMANAGER->addFrameImage("Book", "Resource/Images/Lucie/CompleteImg/1stScene/diary_open.bmp", 384, 36, 8, 1, true, RGB(255, 0, 255));
@@ -15,13 +15,17 @@ HRESULT Lobby::init(void)
 	_player = new LobbyPlayer;
 	_player->init();
 
-	_Imgbook_rc = RectMake(CENTER_X - 70, CENTER_Y + 40, _bookImg->getFrameWidth(), _bookImg->getFrameHeight());
-	_book_rc = RectMake(CENTER_X - 60, CENTER_Y + 80, 30, 30);
-	_box_rc = RectMake(CENTER_X - 240, CENTER_Y, 50, 100);
-	_closet_rc = RectMake(CENTER_X + 75, CENTER_Y - 50, 70, 50);
-	_mirror_rc = RectMake(CENTER_X - 70, CENTER_Y - 50, 40, 20);
-	_window_rc = RectMake(CENTER_X - 140, CENTER_Y - 50, 40, 20);
-	_door_rc = RectMake(CENTER_X - 210, CENTER_Y - 50, 40, 20);
+	_basePt = PointMake(500, 280);
+
+	_lobbyMap_rc = RectMake(CAMERAMANAGER->getCameraRect().left - 50, CAMERAMANAGER->getCameraRect().top - 200, _lobbyMapImg->getWidth(), _lobbyMapImg->getHeight());
+	_lobbyColMap_rc = RectMake(CAMERAMANAGER->getCameraRect().left - 50, CAMERAMANAGER->getCameraRect().top - 200, _lobbyColMapImg->getWidth(), _lobbyColMapImg->getHeight());
+	_Imgbook_rc = RectMake(_basePt.x - 70, _basePt.y + 40, _bookImg->getFrameWidth(), _bookImg->getFrameHeight());
+	_book_rc = RectMake(_basePt.x - 60, _basePt.y + 80, 30, 30);
+	_box_rc = RectMake(_basePt.x - 240, _basePt.y + 30, 50, 80);
+	_closet_rc = RectMake(_basePt.x + 75, _basePt.y - 50, 70, 50);
+	_mirror_rc = RectMake(_basePt.x - 70, _basePt.y - 50, 40, 20);
+	_window_rc = RectMake(_basePt.x - 140, _basePt.y - 50, 40, 20);
+	_door_rc = RectMake(_basePt.x - 210, _basePt.y - 50, 40, 20);
 
 	_tsm = new TextSystemManager;
 	_tsm->init();
@@ -47,6 +51,7 @@ void Lobby::release(void)
 
 void Lobby::update(void)
 {
+
 	_startAlpha -= 3.0f;
 
 	if (_startAlpha == 0.0f)
@@ -77,9 +82,17 @@ void Lobby::update(void)
 
 void Lobby::render(void)
 {
-	IMAGEMANAGER->render("Lobby", getMemDC(), CAMERAMANAGER->getDisplayAreaRight(), CAMERAMANAGER->getDisplayAreaBottom());
+	IMAGEMANAGER->render("Lobby", getMemDC(), _lobbyMap_rc.left, _lobbyMap_rc.top);
 
 	_bookImg->frameRender(getMemDC(),_Imgbook_rc.left, _Imgbook_rc.top, _bookImg->getFrameX(), _bookImg->getFrameY());
+
+	/*RectangleMakeToRECT(getMemDC(), _book_rc);
+	RectangleMakeToRECT(getMemDC(), _Imgbook_rc);
+	RectangleMakeToRECT(getMemDC(), _box_rc);
+	RectangleMakeToRECT(getMemDC(), _closet_rc);
+	RectangleMakeToRECT(getMemDC(), _mirror_rc);
+	RectangleMakeToRECT(getMemDC(), _window_rc);
+	RectangleMakeToRECT(getMemDC(), _door_rc);*/
 	
 	_player->render();
 	Collision();

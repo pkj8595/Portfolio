@@ -12,12 +12,17 @@ private:
 	my::Image* _WhitefadeOutImg;
 	my::Image* _BlackfadeOutImg;
 	my::Image* _bookImg;
+	my::Image* _lobbyMapImg;
+	my::Image* _lobbyColMapImg;
 
+	POINT _basePt;
 
 	Animation* _anim;
 	LobbyPlayer* _player;
 
-	RECT rc;
+	RECT _lobbyMap_rc;
+	RECT _lobbyColMap_rc;
+	RECT _collision_rc;
 	RECT _p_rc;
 	RECT _Imgbook_rc;
 	RECT _book_rc;

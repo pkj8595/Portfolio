@@ -32,6 +32,8 @@ private:
 	float _selectTwoAlpha;
 	float _selectThreeAlpha;
 
+	POINT _textPosition;
+
 	RECT _chatRc;			// ÆË¾÷ Ã¢ rc
 	RECT _chatWriteRc;
 	RECT _boxChatRc;
