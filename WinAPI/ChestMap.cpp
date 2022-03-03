@@ -25,7 +25,8 @@ HRESULT ChestMap::init(POINT location)
 	_location = location;
 
 	_chestEventObj = new EventObject;
-	_chestEventRc = RectMakeCenter(CAMERAMANAGER->getDisplayCenterX() - 48, CAMERAMANAGER->getDisplayCenterY(), 32, 32);
+	_chestEventRc = RectMake(450 - CAMERAMANAGER->getCameraRect().left, 400 - CAMERAMANAGER->getCameraRect().top,
+		_chestImage->getFrameWidth(), _chestImage->getFrameHeight());
 	_chestEventObj->init(EventObservedType::CHEST, _chestEventRc, &_isActive, 0);
 
 
@@ -41,7 +42,7 @@ void ChestMap::update(void)
 {
 	_outsideRcWidth = { 0, 768 - CAMERAMANAGER->getCameraRect().top, WINSIZE_X, WINSIZE_Y };
 	_outsideRcLength = { 1008 - CAMERAMANAGER->getCameraRect().left, 0, WINSIZE_X, WINSIZE_Y };
-	_chestRC = RectMake(CAMERAMANAGER->getDisplayCenterX() - _chestImage->getFrameWidth(), CAMERAMANAGER->getDisplayCenterY() - _chestImage->getFrameHeight(), _chestImage->getFrameWidth(), _chestImage->getFrameHeight());
+
 	if (_chestEventObj->getIsExcute()) openChest();
 }
 
@@ -50,6 +51,8 @@ void ChestMap::render(void)
 	_image->render(getMemDC(),
 		- CAMERAMANAGER->getCameraRect().left,
 		-CAMERAMANAGER->getCameraRect().top);
+
+	Rectangle(getMemDC(), _chestEventRc.left, _chestEventRc.top, _chestEventRc.right, _chestEventRc.bottom);
 
 	_chestImage->frameRender(getMemDC(),
 		CAMERAMANAGER->getDisplayCenterX() - _chestImage->getFrameWidth() - CAMERAMANAGER->getCameraRect().left + 65,
