@@ -2,9 +2,9 @@
 #include "Enemy.h"
 #include "Bullets.h"
 
-enum class FAIRYSTATE {FA_MOVE, FA_ATTAACK, FA_DEAD, FA_END};
-enum class FAIRYDIRECTION {FA_LEFT, FA_RIGHT, FA_UP, FA_DOWN};
-enum class FAIRYATTACK {FA_NORMAL,FA_FAIRY,FA_BUBBLE};
+enum class FAIRYSTATE { FA_MOVE, FA_ATTACK, FA_DEAD, FA_END };
+enum class FAIRYDIRECTION { FA_LEFT, FA_RIGHT, FA_UP, FA_DOWN };
+enum class FAIRYATTACK { FA_NORMAL, FA_FAIRY, FA_BUBBLE };
 
 class ForestFairy :public Enemy
 {
@@ -30,6 +30,7 @@ private:
 	int   _randomX, _randomY;
 	int	  _range;
 	int	  _maxFrameX;
+	int	  _frameX, _frameY;
 
 	bool  _deadForOb;		//사망 여부 [Enemy의 isActive는 몹 삭제 전용, deadForOb는 체력 0 여부]
 
