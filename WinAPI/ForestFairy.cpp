@@ -76,7 +76,7 @@ void ForestFairy::update(void)
 
 	frame();
 
-	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
+	_rc = RectMakeCenter(_x - CAMERAMANAGER->getCameraRect().left, _y - CAMERAMANAGER->getCameraRect().top, _image->getFrameWidth(), _image->getFrameHeight());
 }
 
 void ForestFairy::render(void)
@@ -316,25 +316,25 @@ void ForestFairy::normalBullet()
 	if (_attackParttern == FAIRYATTACK::FA_NORMAL&&_image->getMaxFrameX() - 1 == _currentFrameX)
 	{
 		float tempAngle = getAngle(_x, _y, _playerPos.x + 50, _playerPos.y + 50);
-
 		for (int i = 0; i < 12; i++)
 		{
-			_normalBullet->fire(_x, _y, (0.5*tempAngle) * i * PI / 180, 2.0f, 0);
+			cout << (0.5*tempAngle) * i * PI / 180 << endl;
+			_normalBullet->fire(_x, _y, (tempAngle) + (i * PI / 180), 2.0f, 0);
 		}
 		for (int i = 0; i < 4; i++)
 		{
-			_normalBullet->fire(_x, _y, ((0.5*tempAngle) * i * PI / 180) - 50, 1.94f, 0);
-			_normalBullet->fire(_x, _y, (0.5*tempAngle) * i * PI / 180, 1.94f, 0);
+			_normalBullet->fire(_x, _y, ((tempAngle) + (i * PI / 180)) - 50, 1.94f, 0);
+			_normalBullet->fire(_x, _y, (tempAngle) + (i * PI / 180), 1.94f, 0);
 		}
 		for (int i = 0; i < 2; i++)
 		{
-			_normalBullet->fire(_x, _y, ((0.5*tempAngle) * i * PI / 180) - 50, 1.9f, 0);
-			_normalBullet->fire(_x, _y - 25, (0.5*tempAngle) * i * PI / 180, 1.9f, 0);
+			_normalBullet->fire(_x, _y, ((tempAngle) + (i * PI / 180)) - 50, 1.9f, 0);
+			_normalBullet->fire(_x, _y - 25, (tempAngle) + (i * PI / 180), 1.9f, 0);
 		}
 		for (int i = 0; i < 1; i++)
 		{
-			_normalBullet->fire(_x, _y, ((0.5*tempAngle) * i * PI / 180) - 50, 1.86f, 0);
-			_normalBullet->fire(_x, _y - 25, (0.5*tempAngle) * i * PI / 180, 1.86f, 0);
+			_normalBullet->fire(_x, _y, ((tempAngle) + (i * PI / 180)) - 50, 1.86f, 0);
+			_normalBullet->fire(_x, _y - 25, (tempAngle) + (i * PI / 180), 1.86f, 0);
 		}
 
 		_attackCoolTime = 300;

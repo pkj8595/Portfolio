@@ -39,7 +39,6 @@ HRESULT ShopMap::init(POINT location)
 
 		_vObj.push_back(eventObj);
 	}
-	tempRc = RectMake(0, 0, 32, 32);
 
 	return S_OK;
 }
