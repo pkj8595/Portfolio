@@ -103,7 +103,7 @@ using namespace MY_UTIL;
 
 #define WINNAME			(LPSTR)(TEXT("WindowAPI"))
 
-#define FULLSCREEN
+//#define FULLSCREEN
 
 #ifdef FULLSCREEN
 
@@ -119,10 +119,10 @@ using namespace MY_UTIL;
 
 #else
 
-#define WINSTART_X		550
-#define WINSTART_Y		0
-#define WINSIZE_X		1104
-#define WINSIZE_Y		960
+#define WINSTART_X		200
+#define WINSTART_Y		100
+#define WINSIZE_X		1280
+#define WINSIZE_Y		720 
 //#define WINSIZE_Y		700
 //WS SYSMENU >> 오른쪽 상단 컨트롤 박스 
 //WINSTYLE WS_CAPTION ? 
