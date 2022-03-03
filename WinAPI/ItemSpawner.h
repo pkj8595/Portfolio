@@ -22,6 +22,7 @@ private:
 	bool _isActive;
 	bool _increaseY;
 	bool _isCollider;
+	bool _isCurrentMap;
 	float _worldTime;
 	float _responseTime;
 	float _moveOffsetTime;
@@ -36,6 +37,11 @@ public:
 	void update(void);
 	void render(void);
 
+	bool getIsCurrentMap() { return _isCurrentMap; }
+	void setIsCurrentMap(bool isCurrentMap)
+	{
+		_isCurrentMap = isCurrentMap;
+	}
 	int getItemIndex(void) { return _itemIndex; }
 	bool getIsActive(void) { return _isActive; }
 	void setIsActive(bool isActive) { _isActive = isActive; }

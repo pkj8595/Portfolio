@@ -139,6 +139,8 @@ void CRectObserverManager::getRectFromObserved()
 			if ((*obData.typeKey) == ObservedType::ITEM &&
 				(*obDataCompare.typeKey) == ObservedType::ROCKET)
 			{
+				// obData.magic >> itemobject -> isCurrentMap
+				if (!*obData.magic) continue;
 				RECT collisionRect;
 				if (IntersectRect(&collisionRect, obData.rc, obDataCompare.rc))
 				{

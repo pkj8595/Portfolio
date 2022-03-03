@@ -25,6 +25,7 @@ HRESULT ItemObject::init(int x, int y, bool isCollider)
 	_isChest = false;
 	_moveOffsetTime =_responseTime = _worldTime = TIMEMANAGER->getWorldTime();
 	_map = nullptr;
+	_isCurrentMap = false;
 	
 	RECTOBSERVERMANAGER->registerObserved(this);
 	return S_OK;
@@ -44,6 +45,7 @@ HRESULT ItemObject::init(int x, int y, bool isCollider, int itemIndex)
 	_isChest = false;
 	_moveOffsetTime = _responseTime = _worldTime = TIMEMANAGER->getWorldTime();
 	_map = nullptr;
+	_isCurrentMap = false;
 
 	RECTOBSERVERMANAGER->registerObserved(this);
 	return S_OK;
@@ -63,6 +65,7 @@ HRESULT ItemObject::initChest(int x, int y, bool isCollider, int itemIndex)
 	_isChest = true;
 	_moveOffsetTime = _responseTime = _worldTime = TIMEMANAGER->getWorldTime();
 	_map = nullptr;
+	_isCurrentMap = false;
 
 	RECTOBSERVERMANAGER->registerObserved(this);
 	return S_OK;
@@ -108,13 +111,14 @@ STObservedData ItemObject::getRectUpdate()
 	temp.isActive = &_isCollider;
 	temp.rc = &_rc;
 	temp.angle = &_responseTime;
+	temp.magic = &_isCurrentMap;
 
 	return temp;
 }
 
 void ItemObject::collideObject(STObservedData obData)
 {
-	if (_isCollider)
+	if (_isCollider && _isCurrentMap)
 	{
 		if (TIMEMANAGER->getWorldTime() > _responseTime + 1.0f)
 		{
@@ -162,6 +166,7 @@ void ItemSpawner::update(void)
 	{
 		if (*_currentMap == (*_viItemObj)->getMap())
 		{
+			(*_viItemObj)->setIsCurrentMap(true);
 			(*_viItemObj)->update();
 			if (!(*_viItemObj)->getIsActive())
 			{
@@ -169,6 +174,10 @@ void ItemSpawner::update(void)
 				_vItemObj.erase(_viItemObj);
 				break;
 			}
+		}
+		else
+		{
+			(*_viItemObj)->setIsCurrentMap(false);
 		}
 	}
 }

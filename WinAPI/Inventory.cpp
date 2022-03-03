@@ -117,7 +117,7 @@ void Inventory::render(void)
 		}
 	}
 	if (_isbuyItemfail || _isDestroy|| _againTakeAbilityItem|| _isRepair|| _isInventoryFull)
-	{
+	{			
 		if (TIMEMANAGER->getWorldTime() < _messageWorldTime + MESSAGE_SHOW_TIME)
 		{
 			if (_isbuyItemfail) { _messageStr = "돈이.. 부족하다....."; }
@@ -753,7 +753,7 @@ string Inventory::changeAttributeToStr(CPlayer_Attribute attri)
 	if (attri._maxStamina != 0) str = str + " 스테미나 회복률" + (attri._maxStamina > 0 ? "-" : "") + to_string((int)attri._maxStamina) + "%\n";
 	//if (attri._maxExperience != 0) str = str +" "+ to_string((int)attri._maxExperience)+'\n';
 	//if (attri._attackSpeed	 != 0) str = str +" 공격속도"+ to_string((int)attri._attackSpeed	) +'\n';
-	//if (attri._maxStamina	 != 0) str = str +" "+ to_string((int)attri._maxStamina	) +'\n';
+	//if (attri._maxStamina	 TextSystemManager!= 0) str = str +" "+ to_string((int)attri._maxStamina	) +'\n';
 	
 	return str;
 }
