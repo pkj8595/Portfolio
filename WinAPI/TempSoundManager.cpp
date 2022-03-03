@@ -59,3 +59,33 @@ void TempSoundManager::stopMp3WithKey(string key)
 	const char* str = finalQuery.c_str();
 	mciSendString(str, NULL, 0, NULL);
 }
+
+void TempSoundManager::closeMp3WithKey(string key)
+{
+	string first = "close ";
+	string finalQuery = "";
+	finalQuery = first + key;
+
+	const char* str = finalQuery.c_str();
+	mciSendString(str, NULL, 0, NULL);
+}
+
+void TempSoundManager::resumeMp3WithKey(string key)
+{
+	string first = "resume ";
+	string finalQuery = "";
+	finalQuery = first + key;
+
+	const char* str = finalQuery.c_str();
+	mciSendString(str, NULL, 0, NULL);
+}
+
+void TempSoundManager::undoMp3WithKey(string key)
+{
+	string first = "undo ";
+	string finalQuery = "";
+	finalQuery = first + key;
+
+	const char* str = finalQuery.c_str();
+	mciSendString(str, NULL, 0, NULL);
+}
