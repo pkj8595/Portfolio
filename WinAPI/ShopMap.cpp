@@ -39,13 +39,14 @@ HRESULT ShopMap::init(POINT location)
 
 		_vObj.push_back(eventObj);
 	}
+	tempRc = RectMake(0, 0, 32, 32);
 
 	return S_OK;
 }
 
 void ShopMap::release(void)
 {
-	_viObj = _vObj.begin();
+	
 	for (; _viObj != _vObj.end(); ++_viObj)
 	{
 		SAFE_DELETE((*_viObj).eventObj);
@@ -66,6 +67,11 @@ void ShopMap::update(void)
 		}
 	}
 
+	_outsideRcWidth = { 0 - CAMERAMANAGER->getCameraRect().left, 576 - CAMERAMANAGER->getCameraRect().top, 1104, 960 };
+
+	_outsideRcLength = { 960 - CAMERAMANAGER->getCameraRect().left, 0 - CAMERAMANAGER->getCameraRect().top, 1104,960 };
+
+
 }
 
 void ShopMap::render(void)
@@ -73,16 +79,16 @@ void ShopMap::render(void)
 	_image->render(getMemDC(),
 		-CAMERAMANAGER->getCameraRect().left,
 		-CAMERAMANAGER->getCameraRect().top);
-	if (!_connectedMap[0] || !_clear) _leftWall->render(getMemDC(),
+	/*if (!_connectedMap[0] || !_clear)*/ _leftWall->render(getMemDC(),
 		-28 - CAMERAMANAGER->getCameraRect().left,
 		122 - CAMERAMANAGER->getCameraRect().top);
-	if (!_connectedMap[1] || !_clear) _upWall->render(getMemDC(),
-		CAMERAMANAGER->getDisplayCenterX() - 180 - CAMERAMANAGER->getCameraRect().left,
-		-150 - CAMERAMANAGER->getCameraRect().top);
-	if (!_connectedMap[2] || !_clear) _rightWall->render(getMemDC(),
+	/*if (!_connectedMap[1] || !_clear)*/ _upWall->render(getMemDC(),
+		 510 - CAMERAMANAGER->getCameraRect().left,
+		-100 - CAMERAMANAGER->getCameraRect().top);
+	/*if (!_connectedMap[2] || !_clear)*/ _rightWall->render(getMemDC(),
 		758 - CAMERAMANAGER->getCameraRect().left,
 		35 - CAMERAMANAGER->getCameraRect().top);
-	if (!_connectedMap[3] || !_clear) _downWall->render(getMemDC(),
+	/*if (!_connectedMap[3] || !_clear)*/ _downWall->render(getMemDC(),
 		352 - CAMERAMANAGER->getCameraRect().left,
 		465 - CAMERAMANAGER->getCameraRect().top);
 	//============================================
@@ -92,4 +98,5 @@ void ShopMap::render(void)
 	_shopBar->render(getMemDC(),
 		530 - CAMERAMANAGER->getCameraRect().left,
 		40 - CAMERAMANAGER->getCameraRect().top);
+
 }
