@@ -15,6 +15,8 @@ private:
 	RECT _cameraRc;
 	//RECT _clientRect;
 
+	POINT _computeCameraPt;
+
 public:
 	HRESULT init(void);
 	void update(void);

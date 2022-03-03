@@ -39,6 +39,8 @@ protected:
 	RECT _outsideRcWidth;
 	RECT _outsideRcLength;
 
+	RECT _mapRectSize;
+
 	bool _show;
 	bool _clear;
 	bool _connectedMap[4]; //Left, Up, Right, Down
@@ -61,6 +63,7 @@ public:
 	void setShow(bool show) { _show = show; }
 	bool isClear() { return _clear; }
 	void setClear(bool clear) { _clear = clear; }
+	RECT getMapAreaRect(){return _mapRectSize;}
 
 	void setConnectedMap(int arrayNum, bool connected)
 	{
@@ -74,6 +77,6 @@ public:
 	RECT getMapRC() { return _mapRC; }
 	void printOutsideRC();
 
-	Map() : _mapRC({ 0,0,WINSIZE_X,WINSIZE_Y }), _isActive(false){}
+	Map() :_mapRectSize({ 0,0,WINSIZE_X,WINSIZE_Y }), _mapRC({ 0,0,WINSIZE_X,WINSIZE_Y }), _isActive(false) {}
 };
 

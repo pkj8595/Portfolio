@@ -29,7 +29,7 @@ HRESULT ChestMap::init(POINT location)
 		_chestImage->getFrameWidth(), _chestImage->getFrameHeight());
 	_chestEventObj->init(EventObservedType::CHEST, _chestEventRc, &_isActive, 0);
 
-
+	_mapRectSize = RectMake(0, 0, 1008, 768);
 	return S_OK;
 }
 

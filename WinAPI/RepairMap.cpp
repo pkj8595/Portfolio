@@ -25,6 +25,8 @@ HRESULT RepairMap::init(POINT location)
 	_repairEventRc = RectMakeCenter(490 - CAMERAMANAGER->getCameraRect().left, 400 - CAMERAMANAGER->getCameraRect().top, _anvilImage->getFrameWidth() - 10, 64);
 	_repairEventObj->init(EventObservedType::ANVIL, _repairEventRc, &_isActive, 0);
 
+	_mapRectSize = RectMake(0, 0, 1008, 670);
+
 	return S_OK;
 }
 
