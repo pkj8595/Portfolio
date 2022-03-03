@@ -173,7 +173,6 @@ void Player::render(void)
 		_y - CAMERAMANAGER->getCameraRect().top);
 	_efm->render();
 	_skillWeapon->render();
-	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 }
 void Player::showSwordStack()
 {

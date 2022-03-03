@@ -218,7 +218,6 @@ void CRectObserverManager::getEventFormObserved()
 			}
 			else if (*obData.typeKey == EventObservedType::CHEST)
 			{
-				cout << "Ãæµ¹" << endl;
 				if (KEYMANAGER->isOnceKeyDown('E'))
 				{
 					ItemSpawner::getSingleton()->createChestItem(CAMERAMANAGER->getDisplayCenterX(),

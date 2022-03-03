@@ -2,7 +2,7 @@
 #include "GameNode.h"
 #include "ItemManager.h"
 
-#define	ABILITY_IMG_OFFSET		50
+#define	ABILITY_IMG_OFFSET		40
 #define	ABILITY_IMG_X			280
 #define	ABILITY_IMG_Y			500
 

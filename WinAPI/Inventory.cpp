@@ -60,7 +60,6 @@ HRESULT Inventory::init(void)
 
 void Inventory::release(void)
 {
-	SAFE_DELETE(_itemManager);
 	SAFE_DELETE(_emptyItem);
 
 }
@@ -150,9 +149,9 @@ void Inventory::render(void)
 	//우측 상단 gold text
 	_goldStr =  to_string(_gold)+ " Gold" ;
 	inventorydrawText(_goldStr, _goldRc, 30, RGB(255,255, 255), false);
-
-	renderItemInfoWindow();
 	showAbilityItem();
+	renderItemInfoWindow();
+
 
 }
 
@@ -208,7 +207,6 @@ bool Inventory::buyItem(int num)
 	}
 	else
 	{
-		cout << "돈 부족" << endl;
 		_isbuyItemfail = true;
 		_messageWorldTime = TIMEMANAGER->getWorldTime();
 		return false;
@@ -593,7 +591,7 @@ void Inventory::renderItemInfoWindow()
 			int rcY;
 			if ((*_viItem).first->_type == EITEM_TYPE::ABILITY)
 			{
-				rcX = (*_viItem).second.left - 300;
+				rcX = (*_viItem).second.left;
 				rcY = (*_viItem).second.top - 175;
 			}
 			else
@@ -672,7 +670,6 @@ void Inventory::removeItem(Item* item)
 		{
 			if ((*_viItem).first->_type != EITEM_TYPE::ABILITY)
 			{
-				cout << (*_viItem).first->_name << endl;
 				if ((*_viItem).first->_type == EITEM_TYPE::EQUIP_WEAPON_BOW ||
 					(*_viItem).first->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD ||
 					(*_viItem).first->_type == EITEM_TYPE::EQUIP_HAT ||
