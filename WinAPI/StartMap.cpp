@@ -16,8 +16,8 @@ HRESULT StartMap::init(POINT location)
 	_floorText = IMAGEMANAGER->addImage("MapName", "Resource/Images/Lucie/CompleteImg/pitures/mapName_forest.bmp", 284, 136, true, RGB(255, 0, 255));
 	_textAlpha = 0;
 	_textFadeIn = true;
-	_outsideRcWidth = { 0, 816, WINSIZE_X, WINSIZE_Y };
-	_outsideRcLength = { 1008, 0, WINSIZE_X, WINSIZE_Y };
+	_outsideRcWidth = { 0, 816, 1104, 960 };
+	_outsideRcLength = { 1008, 0, 1104, 960 };
 	_location = location;
 	_mapRC = { 200, 50, 700, 600 };
 
@@ -32,6 +32,8 @@ void StartMap::release(void)
 
 void StartMap::update(void)
 {
+	_outsideRcWidth = { 0, 816 - CAMERAMANAGER->getCameraRect().top, 1104, 960 };
+	_outsideRcLength = { 1008 - CAMERAMANAGER->getCameraRect().left, 0, 1104, 960 };
 	if (KEYMANAGER->isOnceKeyDown('Z'))
 	{
 		_pixel = !_pixel;
@@ -54,15 +56,15 @@ void StartMap::render(void)
 		2 - CAMERAMANAGER->getCameraRect().top);
 
 	if (!_connectedMap[1] || !_clear) _upWall->render(getMemDC(),
-		CAMERAMANAGER->getDisplayCenterX() - 180 - CAMERAMANAGER->getCameraRect().left,
-		-150 - CAMERAMANAGER->getCameraRect().top);
+		380 - CAMERAMANAGER->getCameraRect().left,
+		-130 - CAMERAMANAGER->getCameraRect().top);
 
 	if (!_connectedMap[2] || !_clear) _rightWall->render(getMemDC(),
 		728 - CAMERAMANAGER->getCameraRect().left,
 		2 - CAMERAMANAGER->getCameraRect().top);
 
 	if (!_connectedMap[3] || !_clear) _downWall->render(getMemDC(),
-		CAMERAMANAGER->getDisplayCenterX() - 170 - CAMERAMANAGER->getCameraRect().left,
+		390 - CAMERAMANAGER->getCameraRect().left,
 		_image->getHeight() - 240 - CAMERAMANAGER->getCameraRect().top);
 
 	_floorText->alphaRender(getMemDC(), 330, 100, _textAlpha);

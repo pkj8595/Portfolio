@@ -14,7 +14,7 @@ HRESULT ForestFairy::init(const char * imageName, POINT position)
 	Enemy::init(imageName, position);
 	_x = position.x;
 	_y = position.y;
-	_hp = 100.0f;
+	_hp = 1.0f;
 	_speed = 0.3f;
 	_currentFrameX = 0;
 	_currentFrameY = 0;
