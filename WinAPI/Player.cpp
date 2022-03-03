@@ -189,7 +189,7 @@ void Player::showSwordStack()
 	}
 	for (int i = 0; i < _swordStack; i++)
 	{
-		_swordStackImage->render(getMemDC(), _x + fixX + i*14, _y + fixY);
+		_swordStackImage->render(getMemDC(), _x + fixX + i*14 - CAMERAMANAGER->getCameraRect().left, _y + fixY - CAMERAMANAGER->getCameraRect().top);
 	}
 
 }
@@ -208,6 +208,8 @@ void Player::showBowStack()
 	case 5: fixX = 28; break;
 	default: fixX = 42; break;
 	}
+	fixX -= CAMERAMANAGER->getCameraRect().left;
+	fixY -= CAMERAMANAGER->getCameraRect().top;
 	if (_bowStack <= 3)
 	{
 		for (int i = 0; i < _bowStack; i++)

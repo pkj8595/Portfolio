@@ -58,7 +58,7 @@ void MapManager::update(void)
 	{
 		for (Map* m : _vMap)
 		{
-			if (m->getType() == Map::MAPTYPE::REPAIR)
+			if (m->getType() == Map::MAPTYPE::BOSS)
 			{
 				_currentMap = m;
 				_currentMap->setShow(true);
@@ -474,7 +474,7 @@ void MapManager::printTempMinimap()
 		{
 			if ((*_viMap)->isShow())
 			{
-				(*_viMap)->showMinimapIcon(350, 300);
+				(*_viMap)->showMinimapIcon(350, 70);
 			}
 			else
 			{
@@ -484,7 +484,7 @@ void MapManager::printTempMinimap()
 					{
 						IMAGEMANAGER->findImage("Minimap_Off")->alphaRender(getMemDC(),
 							350 + (*_viMap)->getLocation().x * IMAGEMANAGER->findImage("Minimap_Off")->getWidth(),
-							300 + (*_viMap)->getLocation().y * IMAGEMANAGER->findImage("Minimap_Off")->getHeight(), 180);
+							70 + (*_viMap)->getLocation().y * IMAGEMANAGER->findImage("Minimap_Off")->getHeight(), 180);
 					}
 				}
 			}
@@ -492,7 +492,7 @@ void MapManager::printTempMinimap()
 	}
 	IMAGEMANAGER->findImage("Minimap_Current")->alphaRender(getMemDC(),
 		350 + _currentMap->getLocation().x * IMAGEMANAGER->findImage("Minimap_Current")->getWidth(),
-		300 + _currentMap->getLocation().y * IMAGEMANAGER->findImage("Minimap_Current")->getHeight(), _minimapAlpha);
+		70 + _currentMap->getLocation().y * IMAGEMANAGER->findImage("Minimap_Current")->getHeight(), _minimapAlpha);
 }
 
 bool MapManager::isNearCurrentMap(Map * currentmap, Map * targetMap)

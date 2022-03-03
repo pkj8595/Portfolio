@@ -39,6 +39,8 @@ void ChestMap::release(void)
 
 void ChestMap::update(void)
 {
+	_outsideRcWidth = { 0, 768 - CAMERAMANAGER->getCameraRect().top, WINSIZE_X, WINSIZE_Y };
+	_outsideRcLength = { 1008 - CAMERAMANAGER->getCameraRect().left, 0, WINSIZE_X, WINSIZE_Y };
 	_chestRC = RectMake(CAMERAMANAGER->getDisplayCenterX() - _chestImage->getFrameWidth(), CAMERAMANAGER->getDisplayCenterY() - _chestImage->getFrameHeight(), _chestImage->getFrameWidth(), _chestImage->getFrameHeight());
 	if (_chestEventObj->getIsExcute()) openChest();
 }
@@ -50,20 +52,20 @@ void ChestMap::render(void)
 		-CAMERAMANAGER->getCameraRect().top);
 
 	_chestImage->frameRender(getMemDC(),
-		CAMERAMANAGER->getDisplayCenterX() - _chestImage->getFrameWidth() - CAMERAMANAGER->getCameraRect().left,
-		CAMERAMANAGER->getDisplayCenterY() - _chestImage->getFrameHeight()- CAMERAMANAGER->getCameraRect().top, 0, _frameY);
+		CAMERAMANAGER->getDisplayCenterX() - _chestImage->getFrameWidth() - CAMERAMANAGER->getCameraRect().left + 65,
+		CAMERAMANAGER->getDisplayCenterY() - _chestImage->getFrameHeight()- CAMERAMANAGER->getCameraRect().top + 210, 0, _frameY);
 
 	if (!_connectedMap[0] || !_clear) _leftWall->render(getMemDC(),
 		0 - CAMERAMANAGER->getCameraRect().left,
 		52 - CAMERAMANAGER->getCameraRect().top);
 	if (!_connectedMap[1] || !_clear) _upWall->render(getMemDC(),
-		CAMERAMANAGER->getDisplayCenterX() - 180- -CAMERAMANAGER->getCameraRect().left,
+		CAMERAMANAGER->getDisplayCenterX() - 80 - CAMERAMANAGER->getCameraRect().left,
 		-150 -CAMERAMANAGER->getCameraRect().top);
 	if (!_connectedMap[2] || !_clear) _rightWall->render(getMemDC(),
 		728 - CAMERAMANAGER->getCameraRect().left,
 		52 -CAMERAMANAGER->getCameraRect().top);
 	if (!_connectedMap[3] || !_clear) _downWall->render(getMemDC(),
-		CAMERAMANAGER->getDisplayCenterX() - 170 - CAMERAMANAGER->getCameraRect().left,
+		CAMERAMANAGER->getDisplayCenterX() - 92 - CAMERAMANAGER->getCameraRect().left,
 		_image->getHeight() - 240 -CAMERAMANAGER->getCameraRect().top);
 
 }
