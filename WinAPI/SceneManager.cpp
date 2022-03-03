@@ -78,7 +78,7 @@ void SceneManager::render(void)
 	if (_currentScene) _currentScene->render();
 }
 
-GameNode * SceneManager::addScene(string sceneName, GameNode * scene)
+GameNode* SceneManager::addScene(string sceneName, GameNode * scene)
 {
 	//씬이 없다면 리턴
 	if (!scene) return nullptr;

@@ -87,7 +87,9 @@ void NormalWeapon::draw()
 	_viWeapon = _vWeapon.begin();
 	for (; _viWeapon != _vWeapon.end(); ++_viWeapon)
 	{
-		(*_viWeapon)->img->render(getMemDC(), (*_viWeapon)->rc.left, (*_viWeapon)->rc.top);
+		(*_viWeapon)->img->render(getMemDC(),
+			(*_viWeapon)->rc.left - CAMERAMANAGER->getCameraRect().left,
+			(*_viWeapon)->rc.top - CAMERAMANAGER->getCameraRect().top);
 	}
 }
 
@@ -201,7 +203,9 @@ void SwordWeapon::draw()
 {
 	for (_viWeapon = _vWeapon.begin(); _viWeapon != _vWeapon.end(); ++_viWeapon)
 	{
-		(*_viWeapon)->img->frameRender(getMemDC(), (*_viWeapon)->imageRc.left, (*_viWeapon)->imageRc.top);
+		(*_viWeapon)->img->frameRender(getMemDC(),
+			(*_viWeapon)->imageRc.left - CAMERAMANAGER->getCameraRect().left,
+			(*_viWeapon)->imageRc.top - CAMERAMANAGER->getCameraRect().top);
 	}
 }
 
@@ -294,7 +298,9 @@ void BowWeapon::draw()
 	_viWeapon = _vWeapon.begin();
 	for (; _viWeapon != _vWeapon.end(); ++_viWeapon)
 	{
-		(*_viWeapon)->img->render(getMemDC(), (*_viWeapon)->rc.left, (*_viWeapon)->rc.top);
+		(*_viWeapon)->img->render(getMemDC(),
+			(*_viWeapon)->rc.left - CAMERAMANAGER->getCameraRect().left,
+			(*_viWeapon)->rc.top - CAMERAMANAGER->getCameraRect().top);
 	}
 }
 
@@ -407,7 +413,9 @@ void Skill::draw()
 	_viWeapon = _vWeapon.begin();
 	for (; _viWeapon != _vWeapon.end(); ++_viWeapon)
 	{
-		(*_viWeapon)->img->render(getMemDC(), (*_viWeapon)->rc.left, (*_viWeapon)->rc.top);
+		(*_viWeapon)->img->render(getMemDC(),
+			(*_viWeapon)->rc.left - CAMERAMANAGER->getCameraRect().left,
+			(*_viWeapon)->rc.top - CAMERAMANAGER->getCameraRect().top);
 	}
 }
 

@@ -140,7 +140,19 @@ void ItemManager::getItemImgRender(HDC hdc,int imgIndex, int x, int y)
 	destY = (imgIndex-1) / 10;
 	destX = (imgIndex-1) % 10;
 
-	_itemImg->frameRender(hdc, x, y, destX, destY);
+	_itemImg->frameRender(hdc,
+		x - CAMERAMANAGER->getCameraRect().left,
+		y - CAMERAMANAGER->getCameraRect().top, destX, destY);
+}
+
+void ItemManager::getItemInvenImgRender(HDC hdc, int imgIndex, int x, int y)
+{
+	int destY = 0;
+	int destX = 0;
+	destY = (imgIndex - 1) / 10;
+	destX = (imgIndex - 1) % 10;
+
+	_itemImg->frameRender(hdc,x,y, destX, destY);
 }
 
 void ItemManager::getBigItemImgRender(HDC hdc,int imgIndex, int x, int y)
@@ -150,7 +162,19 @@ void ItemManager::getBigItemImgRender(HDC hdc,int imgIndex, int x, int y)
 	destY = (imgIndex - 1) / 10;
 	destX = (imgIndex - 1) % 10;
 
-	_bigItemImg->frameRender(hdc, x, y, destX, destY);
+	_bigItemImg->frameRender(hdc,
+		x - CAMERAMANAGER->getCameraRect().left,
+		y - CAMERAMANAGER->getCameraRect().top, destX, destY);
+}
+
+void ItemManager::getBigItemInvenImgRender(HDC hdc, int imgIndex, int x, int y)
+{
+	int destY = 0;
+	int destX = 0;
+	destY = (imgIndex - 1) / 10;
+	destX = (imgIndex - 1) % 10;
+
+	_bigItemImg->frameRender(hdc,x,y, destX, destY);
 }
 
 void ItemManager::getItemIndexRender(HDC hdc, int index, int x, int y)
@@ -162,7 +186,9 @@ void ItemManager::getItemIndexRender(HDC hdc, int index, int x, int y)
 	destY = (imgIndex - 1) / 10;
 	destX = (imgIndex - 1) % 10;
 
-	_itemImg->frameRender(hdc, x, y, destX, destY);
+	_itemImg->frameRender(hdc,
+		x - CAMERAMANAGER->getCameraRect().left,
+		y - CAMERAMANAGER->getCameraRect().top, destX, destY);
 }
 
 void ItemManager::getBigItemIndexRender(HDC hdc, int index, int x, int y)
@@ -174,7 +200,9 @@ void ItemManager::getBigItemIndexRender(HDC hdc, int index, int x, int y)
 	destY = (imgIndex - 1) / 10;
 	destX = (imgIndex - 1) % 10;
 
-	_bigItemImg->frameRender(hdc, x, y, destX, destY);
+	_bigItemImg->frameRender(hdc,
+		x - CAMERAMANAGER->getCameraRect().left,
+		y - CAMERAMANAGER->getCameraRect().top, destX, destY);
 }
 
 EnchantItem* ItemManager::getEnchantItem()

@@ -77,7 +77,7 @@ void Lobby::update(void)
 
 void Lobby::render(void)
 {
-	IMAGEMANAGER->render("Lobby", getMemDC());
+	IMAGEMANAGER->render("Lobby", getMemDC(), CAMERAMANAGER->getDisplayAreaRight(), CAMERAMANAGER->getDisplayAreaBottom());
 
 	_bookImg->frameRender(getMemDC(),_Imgbook_rc.left, _Imgbook_rc.top, _bookImg->getFrameX(), _bookImg->getFrameY());
 	

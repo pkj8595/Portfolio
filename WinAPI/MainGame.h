@@ -21,5 +21,4 @@ public:
 
 	MainGame() {}
 	virtual ~MainGame() {}
-
 };

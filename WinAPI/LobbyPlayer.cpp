@@ -13,8 +13,8 @@ HRESULT LobbyPlayer::init(void)
 	_level = 1;
 	_direction = PLAYER_DIRECTION::DOWN;
 
-	_x = CENTER_X;
-	_y = CENTER_Y;
+	_x = CAMERAMANAGER->getDisplayCenterX();
+	_y = CAMERAMANAGER->getDisplayCenterY();
 
 	_stateFrameCount = 0;
 
@@ -99,7 +99,9 @@ void LobbyPlayer::update(void)
 
 void LobbyPlayer::render(void)
 {
-	_image->frameRender(getMemDC(), _x, _y);
+	_image->frameRender(getMemDC(),
+		_x - CAMERAMANAGER->getCameraRect().left,
+		_y - CAMERAMANAGER->getCameraRect().top);
 	_inventory->render();
 }
 

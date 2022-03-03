@@ -2,7 +2,7 @@
 #include "MapManager.h"
 HRESULT MapManager::init(int mapAmount, int stage)
 {
-	int i = 0;
+	CAMERAMANAGER->setCurrentMap(&_currentMap);
 	IMAGEMANAGER->addImage("Minimap_Off", "Resource/Images/Lucie/CompleteImg/miniMap/minimap_cell_off.bmp", 30, 30, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Minimap_Current", "Resource/Images/Lucie/CompleteImg/miniMap/minimap_cell_shop.bmp", 30, 30, true, RGB(255, 0, 255));
 	_currentMap = nullptr;
@@ -417,6 +417,7 @@ void MapManager::changeMap(int pos)
 
 			if (m->getLocation().x + 1 == _currentMap->getLocation().x && m->getLocation().y == _currentMap->getLocation().y)
 			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/clearRoom.wav");
 				_currentMap = m;
 				_currentMap->setShow(true);
 				debugAroundMap();
@@ -430,6 +431,7 @@ void MapManager::changeMap(int pos)
 		{
 			if (m->getLocation().x - 1 == _currentMap->getLocation().x && m->getLocation().y == _currentMap->getLocation().y)
 			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/clearRoom.wav");
 				_currentMap = m;
 				_currentMap->setShow(true);
 				debugAroundMap();
@@ -443,6 +445,7 @@ void MapManager::changeMap(int pos)
 		{
 			if (m->getLocation().x == _currentMap->getLocation().x && m->getLocation().y + 1 == _currentMap->getLocation().y)
 			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/clearRoom.wav");
 				_currentMap = m;
 				_currentMap->setShow(true);
 				debugAroundMap();
@@ -456,6 +459,7 @@ void MapManager::changeMap(int pos)
 		{
 			if (m->getLocation().x == _currentMap->getLocation().x && m->getLocation().y - 1 == _currentMap->getLocation().y)
 			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/clearRoom.wav");
 				_currentMap = m;
 				_currentMap->setShow(true);
 				debugAroundMap();

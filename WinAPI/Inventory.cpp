@@ -12,14 +12,14 @@ HRESULT Inventory::init(void)
 	_inventorySlotB.img = IMAGEMANAGER->addFrameImage("inventorySlotB", "Resource/Images/Lucie/CompleteImg/inventory/inventorySlotB.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
 	_itemInfoWindow.img = IMAGEMANAGER->addImage("ItemInfoWindow", "Resource/Images/Lucie/CompleteImg/inventory/ItemInfoWindow.bmp", 300,210);
 
-	_x = WINSIZE_X - _inventoryBackground->getWidth()-30;
-	_y = WINSIZE_Y * 0.5 - 200;
+	_x = CAMERAMANAGER->getDisplayAreaRight() - _inventoryBackground->getWidth()-30;
+	_y = CAMERAMANAGER->getDisplayAreaBottom() * 0.5 - 200;
 
 	_rc = RectMake(_x, _y, _inventoryBackground->getWidth(), _inventoryBackground->getHeight());
 
 	
 	_inventoryGoldIcon.pt = PointMake(_rc.left + 160, _rc.top + 260);
-	_goldRc = RectMake(WINSIZE_X - 200, 0, 128, 32);
+	_goldRc = RectMake(CAMERAMANAGER->getDisplayAreaRight() - 200, 0, 128, 32);
 	_inventoryCloseBtn.pt = PointMake(_rc.left + 205, _rc.top + 15);
 	_inventorySlot.pt = PointMake(_rc.left + 25, _rc.top + 50);
 	_inventorySlotB.pt = PointMake(_rc.left + 100, _rc.top + 100);
@@ -53,7 +53,7 @@ HRESULT Inventory::init(void)
 	_isInventoryFull =_againTakeAbilityItem = _isDestroy = _isRepair = _isbuyItemfail = false;
 	_messageWorldTime = TIMEMANAGER->getWorldTime();
 
-	_messageRc = RectMakeCenter(CENTER_X, CENTER_Y - 300, 32, 32);
+	_messageRc = RectMakeCenter(CAMERAMANAGER->getDisplayCenterX(), -(CAMERAMANAGER->getDisplayCenterY()*0.4), 32, 32);
 
 	return S_OK;
 }
@@ -122,7 +122,7 @@ void Inventory::render(void)
 		if (TIMEMANAGER->getWorldTime() < _messageWorldTime + MESSAGE_SHOW_TIME)
 		{
 			if (_isbuyItemfail) { _messageStr = "돈이.. 부족하다....."; }
-			else if (_isDestroy) { _messageStr = "내 무기가.. 부숴졌다..."; }
+			else if (_isDestroy) { _messageStr = "내 무기가.. 부서졌다..."; }
 			else if (_againTakeAbilityItem)
 			{
 				_messageStr = "이건.. 이미 있어.";
@@ -311,7 +311,7 @@ void Inventory::showInventoryItem()
 	for (; _viItem != _vItem.end(); ++_viItem)
 	{
 		if ((*_viItem).first->_type == EITEM_TYPE::ABILITY) continue;
-		_itemManager->getItemImgRender(getMemDC(),(*_viItem).first->_imgNum,
+		_itemManager->getItemInvenImgRender(getMemDC(),(*_viItem).first->_imgNum,
 			_inventorySlot.pt.x +3+ (INVENTORY_IMG_OFFSETX * (countInven % 5)),
 			_inventorySlot.pt.y +3+ (INVENTORY_IMG_OFFSETY * (countInven / 5)));
 		countInven++;
@@ -467,8 +467,8 @@ void Inventory::computeRect(void)
 		if ((*_viItem).first->_type == EITEM_TYPE::ABILITY) 
 		{
 			RECT temp = RectMake(
-				ABILITY_IMG_X + (_abilutyItemCount* ABILITY_IMG_OFFSET),
-				ABILITY_IMG_Y,
+				(CAMERAMANAGER->getDisplayAreaRight()*0.2) + (_abilutyItemCount* ABILITY_IMG_OFFSET),
+				CAMERAMANAGER->getDisplayAreaBottom()-100,
 				32, 32);
 			(*_viItem).second = temp;
 			_abilutyItemCount++;
@@ -501,7 +501,7 @@ void Inventory::renderPushItemMassege()
 			break;
 		}
 	}
-	RECT massageRc = RectMakeCenter(CENTER_X,CENTER_Y-300, str.size()*17,100);
+	RECT massageRc = RectMakeCenter(CAMERAMANAGER->getDisplayCenterX(), CAMERAMANAGER->getDisplayCenterY() - (CAMERAMANAGER->getDisplayCenterY()*0.4), str.size()*17,100);
 
 	inventorydrawText(str, massageRc,50,RGB(255,255,255),true);
 

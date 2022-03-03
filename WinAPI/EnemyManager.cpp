@@ -102,67 +102,71 @@ void EnemyManager::render(void)
 
 void EnemyManager::setMinion(void)
 {
-	int temp = RND->getInt(3);
+	/*int temp = RND->getInt(3);
 	switch (temp)
 	{
 	case 0: {
 		Enemy* slime;
 		slime = new Slime;
-		slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
+		slime->init("Slime", PointMake(CAMERAMANAGER->getDisplayCenterX(), CAMERAMANAGER->getDisplayCenterY()));
 		_vMinion.push_back(slime);
 
 		Enemy* rafflesia;
 		rafflesia = new Rafflesia;
-		rafflesia->init("Rafflesia", PointMake(CENTER_X - 150, CENTER_Y + 30));
+		rafflesia->init("Rafflesia", PointMake(CAMERAMANAGER->getDisplayCenterX() - 150, CAMERAMANAGER->getDisplayCenterY() + 30));
 		_vMinion.push_back(rafflesia);
 
 		Enemy* slime2;
 		slime2 = new Slime;
-		slime2->init("Slime", PointMake(CENTER_X - 50, CENTER_Y - 50));
+		slime2->init("Slime", PointMake(CAMERAMANAGER->getDisplayCenterX() - 50, CAMERAMANAGER->getDisplayCenterY() - 50));
 		_vMinion.push_back(slime2);
 	}break;
 
 	case 1: {
 		Enemy* slime;
 		slime = new Slime;
-		slime->init("Slime", PointMake(CENTER_X, CENTER_Y));
+		slime->init("Slime", PointMake(CAMERAMANAGER->getDisplayCenterX(), CAMERAMANAGER->getDisplayCenterY()));
 		_vMinion.push_back(slime);
 
 		Enemy* snake;
 		snake = new Snake;
-		snake->init("Snake", PointMake(CENTER_X - 100, CENTER_Y));
+		snake->init("Snake", PointMake(CAMERAMANAGER->getDisplayCenterX() - 100, CAMERAMANAGER->getDisplayCenterY()));
 		_vMinion.push_back(snake);
 	} break;
 
 	case 2: {
 		Enemy* snake;
 		snake = new Snake;
-		snake->init("Snake", PointMake(CENTER_X + 100, CENTER_Y));
+		snake->init("Snake", PointMake(CAMERAMANAGER->getDisplayCenterX() + 100, CAMERAMANAGER->getDisplayCenterY()));
 		_vMinion.push_back(snake);
 
 		Enemy* snake2;
 		snake2 = new Snake;
-		snake2->init("Snake", PointMake(CENTER_X - 100, CENTER_Y));
+		snake2->init("Snake", PointMake(CAMERAMANAGER->getDisplayCenterX() - 100, CAMERAMANAGER->getDisplayCenterY()));
 		_vMinion.push_back(snake2);
 	} break;
-	}
+	}*/
 
 	//Enemy* rafflesia;
 	//rafflesia = new Rafflesia;
-	//rafflesia->init("Rafflesia", PointMake(CENTER_X - 150, CENTER_Y + 30));
+	//rafflesia->init("Rafflesia", PointMake(CAMERAMANAGER->getDisplayCenterX() - 150, CAMERAMANAGER->getDisplayCenterY() + 30));
 	//_vMinion.push_back(rafflesia);
 
-	//Enemy* forestFairy;
-	//forestFairy = new ForestFairy;
-	//forestFairy->init("ForestFairy", PointMake(CENTER_X, CENTER_Y - 100));
-	//_vMinion.push_back(forestFairy);
+	Enemy* forestFairy;
+	forestFairy = new ForestFairy;
+	forestFairy->init("ForestFairy",
+		PointMake(CAMERAMANAGER->getDisplayCenterX(),
+			CAMERAMANAGER->getDisplayCenterY() - 100));
+	_vMinion.push_back(forestFairy);
 }
 
 void EnemyManager::setBoss(void)
 {
 	Enemy* kingslime;
 	kingslime = new KingSlime;
-	kingslime->init("KingSlime", PointMake(CENTER_X, CENTER_Y));
+	kingslime->init("KingSlime",
+		PointMake(CAMERAMANAGER->getDisplayCenterX(),
+			CAMERAMANAGER->getDisplayCenterX()));
 	_vMinion.push_back(kingslime);
 }
 

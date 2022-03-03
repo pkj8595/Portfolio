@@ -113,7 +113,10 @@ void Slime::move(void)
 void Slime::draw(void)
 {
 	animation();
-	_image->frameRender(getMemDC(), _x, _y, _currentFrameX, _currentFrameY);
+	_image->frameRender(getMemDC(),
+		_x - CAMERAMANAGER->getCameraRect().left,
+		_y - CAMERAMANAGER->getCameraRect().top,
+		_currentFrameX, _currentFrameY);
 	_threeDirectionBullet->render();
 	_circleBullet->render();
 	////Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
@@ -271,13 +274,13 @@ void Slime::pursuePlayer()
 	}
 
 	////À§
-	//if (_playerPos.y > CENTER_Y && _playerPos.y > _y)
+	//if (_playerPos.y > CAMERAMANAGER->getDisplayCenterY() && _playerPos.y > _y)
 	//{
 	//	_direction = SLIMEDIRECTION::SM_UP;
 	//}
 
 	////¾Æ·¡
-	//if (_playerPos.y < CENTER_Y && _playerPos.y < _y)
+	//if (_playerPos.y < CAMERAMANAGER->getDisplayCenterY() && _playerPos.y < _y)
 	//{
 	//	_direction = SLIMEDIRECTION::SM_DOWN;
 	//}

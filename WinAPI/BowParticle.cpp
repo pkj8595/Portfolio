@@ -37,7 +37,10 @@ void BowParticle::render(void)
 	_viParticle = _vParticle.begin();
 	for (; _viParticle != _vParticle.end(); ++_viParticle)
 	{
-		_particle->alphaRender(getMemDC(), _viParticle->rc.left, _viParticle->rc.top, _viParticle->alpha);
+		_particle->alphaRender(getMemDC(),
+			_viParticle->rc.left - CAMERAMANAGER->getCameraRect().left,
+			_viParticle->rc.top - CAMERAMANAGER->getCameraRect().top,
+			_viParticle->alpha);
 	}
 }
 
