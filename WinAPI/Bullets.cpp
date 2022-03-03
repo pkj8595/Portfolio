@@ -110,7 +110,7 @@ HRESULT Bullet::init(const char* imageName, int bulletMax, float range)
 	_imageName = imageName;
 	_range = range;
 	_bulletMax = bulletMax;
-	
+
 	return S_OK;
 }
 
@@ -134,7 +134,7 @@ void Bullet::fire(float x, float y, float angle, float speed)
 {
 	//최대 발사갯수 막는다.
 	if (_bulletMax <= _vBullet.size()) return;
-	
+
 	tagCBullet* bullet = new tagCBullet;
 	bullet->img = IMAGEMANAGER->findImage(_imageName);
 	bullet->speed = speed;
@@ -153,12 +153,12 @@ void Bullet::fire(float x, float y, float angle, float speed)
 
 void Bullet::draw(void)
 {
-	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet) 
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
 		(*_viBullet)->img->frameRender(getMemDC(),
 			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
 			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top,
-			(*_viBullet)->count,1);
+			(*_viBullet)->count, 1);
 	}
 }
 
@@ -166,7 +166,7 @@ void Bullet::draw(void)
 
 void Bullet::move(void)
 {
-	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end();) 
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end();)
 	{
 		(*_viBullet)->x += cosf((*_viBullet)->angle)*(*_viBullet)->speed;
 		(*_viBullet)->y += -sinf((*_viBullet)->angle)*(*_viBullet)->speed;
@@ -214,7 +214,7 @@ HRESULT LinearMissile::init(int bulletMax, float range)
 
 void LinearMissile::move(void)
 {
-	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end();++_viBullet)
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
 		(*_viBullet)->y -= (*_viBullet)->speed;
 		(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
@@ -228,7 +228,7 @@ void LinearMissile::fire(float x, float y)
 	tagCBullet* bullet = new tagCBullet;
 	bullet->img = new my::Image;
 	bullet->type = ObservedType::ROCKET_MISSILE;
-	bullet->img->init("Resource/Images/Project/playerBullet3.bmp", 14, 18,  true, RGB(255, 0, 255));
+	bullet->img->init("Resource/Images/Project/playerBullet3.bmp", 14, 18, true, RGB(255, 0, 255));
 	bullet->speed = 15.0f;
 	bullet->x = bullet->fireX = x;
 	bullet->y = bullet->fireY = y;
@@ -258,7 +258,7 @@ HRESULT CaseShotMissile::init(int bulletMax, float range)
 {
 	AMissile::init(bulletMax, range);
 	_bulletCount = 0;
-	_firstAngle = (PI/2)+(static_cast<float>(bulletMax / 2)*_offsetAngle);
+	_firstAngle = (PI / 2) + (static_cast<float>(bulletMax / 2)*_offsetAngle);
 	return S_OK;
 }
 
@@ -281,7 +281,7 @@ void CaseShotMissile::fire(float x, float y)
 	{
 		tagCBullet* bullet = new tagCBullet;
 		bullet->img = new my::Image;
-		bullet->img->init("Resource/Images/Project/playerBullet1.bmp",14, 15,true, RGB(255, 0, 255));
+		bullet->img->init("Resource/Images/Project/playerBullet1.bmp", 14, 15, true, RGB(255, 0, 255));
 		bullet->type = ObservedType::ROCKET_MISSILE;
 		bullet->speed = 4.0f;
 		bullet->x = bullet->fireX = x;
@@ -296,7 +296,7 @@ void CaseShotMissile::fire(float x, float y)
 		_bulletCount++;
 	}
 	_bulletCount = 0;
-	
+
 }
 void CaseShotMissile::draw(void)
 {
@@ -320,7 +320,7 @@ HRESULT BlackholeMissile::init(int bulletMax, float range)
 
 void BlackholeMissile::move(void)
 {
-	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end();++_viBullet)
+	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
 		(*_viBullet)->y -= (*_viBullet)->speed;
 		(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
@@ -334,7 +334,7 @@ void BlackholeMissile::fire(float x, float y)
 	if (_bulletMax <= _vBullet.size())return;
 
 	//메모리 블록 크기 만큼 
-	tagCBullet* bullet= new tagCBullet;
+	tagCBullet* bullet = new tagCBullet;
 	bullet->type = ObservedType::ROCKET_MISSILE;
 	bullet->img = new my::Image;
 	bullet->img->init("Resource/Images/Rocket/Missile.BMP", 0.0f, 0.0f, 416, 64, 13, 1, true, RGB(255, 0, 255));
@@ -446,14 +446,14 @@ void ThreeDirectionMissile::draw(void)
 		if ((*_viBullet)->type == ObservedType::MINION_MISSILE)
 		{
 			(*_viBullet)->img->render(getMemDC(),
-			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
-			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
 		}
-		else 
+		else
 		{
-		(*_viBullet)->reflectImg->render(getMemDC(),
-			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
-			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+			(*_viBullet)->reflectImg->render(getMemDC(),
+				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
 
 		}
 	}
@@ -516,17 +516,17 @@ void CircleMissile::draw(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		if ((*_viBullet)->type == ObservedType::MINION_MISSILE) 
+		if ((*_viBullet)->type == ObservedType::MINION_MISSILE)
 		{
-		(*_viBullet)->img->render(getMemDC(),
-			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
-			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
-		} 
-		else 
+			(*_viBullet)->img->render(getMemDC(),
+				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+		}
+		else
 		{
-		(*_viBullet)->reflectImg->render(getMemDC(),
-			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
-			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+			(*_viBullet)->reflectImg->render(getMemDC(),
+				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
 		}
 	}
 }
@@ -587,18 +587,18 @@ void TwoDirectionMissile::draw(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		if ((*_viBullet)->type == ObservedType::MINION_MISSILE) 
+		if ((*_viBullet)->type == ObservedType::MINION_MISSILE)
 		{
-		(*_viBullet)->img->render(getMemDC(),
-			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
-			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
-		
+			(*_viBullet)->img->render(getMemDC(),
+				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+
 		}
-		else 
+		else
 		{
-		(*_viBullet)->reflectImg->render(getMemDC(),
-			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
-			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+			(*_viBullet)->reflectImg->render(getMemDC(),
+				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
 		}
 	}
 }
@@ -653,17 +653,17 @@ void NormalBullet::draw(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		if ((*_viBullet)->type == ObservedType::MINION_MISSILE) 
+		if ((*_viBullet)->type == ObservedType::MINION_MISSILE)
 		{
-		(*_viBullet)->img->render(getMemDC(),
-			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
-			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+			(*_viBullet)->img->render(getMemDC(),
+				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
 		}
-		else 
+		else
 		{
-		(*_viBullet)->reflectImg->render(getMemDC(),
-			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
-			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+			(*_viBullet)->reflectImg->render(getMemDC(),
+				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
 		}
 	}
 }
@@ -729,33 +729,33 @@ void BubbleBullet::draw(void)
 	{
 		if (count < 100)
 		{
-			if ((*_viBullet)->type == ObservedType::MINION_MISSILE) 
+			if ((*_viBullet)->type == ObservedType::MINION_MISSILE)
 			{
-			_bigImg->render(getMemDC(),
-				(*_viBullet)->rc.left - 13 - CAMERAMANAGER->getCameraRect().left,
-				(*_viBullet)->rc.top - 13 - CAMERAMANAGER->getCameraRect().top);
-			
+				_bigImg->render(getMemDC(),
+					(*_viBullet)->rc.left - 13 - CAMERAMANAGER->getCameraRect().left,
+					(*_viBullet)->rc.top - 13 - CAMERAMANAGER->getCameraRect().top);
+
 			}
-			else 
+			else
 			{
-			_reflectbigImg->render(getMemDC(),
-				(*_viBullet)->rc.left - 13 - CAMERAMANAGER->getCameraRect().left,
-				(*_viBullet)->rc.top - 13 - CAMERAMANAGER->getCameraRect().top);
+				_reflectbigImg->render(getMemDC(),
+					(*_viBullet)->rc.left - 13 - CAMERAMANAGER->getCameraRect().left,
+					(*_viBullet)->rc.top - 13 - CAMERAMANAGER->getCameraRect().top);
 			}
 		}
 		else
 		{
-			if ((*_viBullet)->type == ObservedType::MINION_MISSILE) 
+			if ((*_viBullet)->type == ObservedType::MINION_MISSILE)
 			{
-			(*_viBullet)->img->render(getMemDC(),
-				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
-				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+				(*_viBullet)->img->render(getMemDC(),
+					(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+					(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
 			}
-			else 
+			else
 			{
-			(*_viBullet)->reflectImg->render(getMemDC(),
-				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
-				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+				(*_viBullet)->reflectImg->render(getMemDC(),
+					(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+					(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
 			}
 		}
 	}
@@ -824,7 +824,7 @@ void FairyBullet::move(void)
 	{
 		(*_viBullet)->x += cosf((*_viBullet)->angle)*(*_viBullet)->speed;
 		(*_viBullet)->y += -sinf((*_viBullet)->angle)*(*_viBullet)->speed;
-		(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y, (*_viBullet)->img->getFrameWidth(), (*_viBullet)->img->getFrameHeight());	
+		(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y, (*_viBullet)->img->getFrameWidth(), (*_viBullet)->img->getFrameHeight());
 	}
 }
 
@@ -913,11 +913,11 @@ void SpreadBullet::draw(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		if ((*_viBullet)->type == ObservedType::MINION_MISSILE) 
+		if ((*_viBullet)->type == ObservedType::MINION_MISSILE)
 		{
-		(*_viBullet)->img->render(getMemDC(),
-			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
-			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+			(*_viBullet)->img->render(getMemDC(),
+				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
 		}
 		else (*_viBullet)->reflectImg->render(getMemDC(),
 			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
@@ -977,18 +977,18 @@ void SectorBullet::draw(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		if ((*_viBullet)->type == ObservedType::MINION_MISSILE) 
+		if ((*_viBullet)->type == ObservedType::MINION_MISSILE)
 		{
-		(*_viBullet)->img->render(getMemDC(),
-			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
-			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+			(*_viBullet)->img->render(getMemDC(),
+				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
 		}
-		else 
+		else
 		{
-		(*_viBullet)->reflectImg->render(getMemDC(), 
-			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
-			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
-		
+			(*_viBullet)->reflectImg->render(getMemDC(),
+				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+
 		}
 	}
 }
@@ -1003,144 +1003,54 @@ HRESULT GuidedBullet::init(int bulletMax, float range)
 }
 
 void GuidedBullet::move(void)
-{	
-	count++;
+{
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		if (count < 300)
-		{
-			if ((*_viBullet)->x > (*_viBullet)->targetX) (*_viBullet)->x -= (*_viBullet)->speed;
-			if ((*_viBullet)->x < (*_viBullet)->targetX) (*_viBullet)->x += (*_viBullet)->speed;
-			if ((*_viBullet)->y > (*_viBullet)->targetY) (*_viBullet)->y -= (*_viBullet)->speed;
-			if ((*_viBullet)->y < (*_viBullet)->targetY) (*_viBullet)->y += (*_viBullet)->speed;
-		}
-		(*_viBullet)->x += cosf((*_viBullet)->angle)*(*_viBullet)->speed;
-		(*_viBullet)->y += -sinf((*_viBullet)->angle)*(*_viBullet)->speed;
+		(*_viBullet)->x = cosf((*_viBullet)->angle)*(*_viBullet)->speed + (*_viBullet)->x;
+		(*_viBullet)->y = -sinf((*_viBullet)->angle)*(*_viBullet)->speed + (*_viBullet)->y;
 		(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
 			(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
 	}
-
-	if (_vBullet.size() == 0) count = 0;
-
-	//for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
-	//{
-		////2초동안 움직인다.
-		//if (_count < 1.5f)
-		//{
-		//	(*_viBullet)->x = cosf((*_viBullet)->angle)*(*_viBullet)->speed + (*_viBullet)->x;
-		//	(*_viBullet)->y = -sinf((*_viBullet)->angle)*(*_viBullet)->speed + (*_viBullet)->y;
-		//	(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
-		//		(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
-		//}
-		//else if(_count > 1.5f && _count < 2)
-		//{
-		//	(*_viBullet)->speed = 0;
-		//}
-		//else if(_count > 2.2f)
-		//{
-		//	(*_viBullet)->x = cosf(_angle)*(*_viBullet)->speed + (*_viBullet)->x;
-		//	(*_viBullet)->y = -sinf(_angle)*(*_viBullet)->speed + (*_viBullet)->y;
-		//	(*_viBullet)->rc = RectMakeCenter((*_viBullet)->x, (*_viBullet)->y,
-		//		(*_viBullet)->img->getWidth(), (*_viBullet)->img->getHeight());
-		//}
-
-		//if (1.f + _moveTime < TIMEMANAGER->getWorldTime())
-		//{
-		//	_moveTime = TIMEMANAGER->getWorldTime();
-		//	_count+= 0.5f;
-		//	cout << (float)_count << endl;
-		//}
-	//}
 }
 
-void GuidedBullet::fire(float x, float y ,float angle, float rotateAngle)
+void GuidedBullet::fire(float x, float y, float angle)
 {
-	tagCBullet* bullet = new tagCBullet;
-	bullet->img = new my::Image;
-	bullet->reflectImg = new my::Image;
-	//
-	bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 26, 26, true, RGB(255, 0, 255));
-	bullet->reflectImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectBullet.bmp", 26, 26, true, RGB(255, 0, 255));
-	bullet->type = ObservedType::MINION_MISSILE;
-	bullet->speed = 1.0f;
-	bullet->x = bullet->fireX = x;
-	bullet->y = bullet->fireY = y;
-	bullet->angle = angle;
-	bullet->damage = 1.0f;
-	bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
-	bullet->fire = true;
-	bullet->magic = false;
-	bullet->init();
-	bullet->rotateAngle = rotateAngle;
-	_vBullet.push_back(bullet);
+	if (_bulletMax <= _vBullet.size())return;
 
-	//if (_bulletMax <= _vBullet.size())return;
+	for (int i = 0; i < _bulletMax; i++)
+	{
+		tagCBullet* bullet = new tagCBullet;
+		bullet->img = new my::Image;
+		bullet->reflectImg = new my::Image;
+		//
+		bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet4.bmp", 32, 32, true, RGB(255, 0, 255));
+		bullet->reflectImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectSmallBullet.bmp", 32, 32, true, RGB(255, 0, 255));
+		bullet->type = ObservedType::MINION_MISSILE;
+		bullet->speed = 1.0f;
+		bullet->x = bullet->fireX = x;
+		bullet->y = bullet->fireY = y;
+		bullet->angle = angle;
+		bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
+		bullet->damage = 2.0f;
+		bullet->fire = true;
+		bullet->magic = false;
+		bullet->init();
+		_vBullet.push_back(bullet);
 
-	//for (int i = 0; i < _bulletMax; i++)
-	//{
-	//	tagCBullet* bullet = new tagCBullet;
-	//	bullet->img = new my::Image;
-	//	bullet->reflectImg = new my::Image;
-	//	//
-	//	bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet4.bmp", 32, 32, true, RGB(255, 0, 255));
-	//	bullet->reflectImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectSmallBullet.bmp", 32, 32, true, RGB(255, 0, 255));
-	//	bullet->type = ObservedType::MINION_MISSILE;
-	//	bullet->speed = 1.0f;
-	//	bullet->x = bullet->fireX = x;
-	//	bullet->y = bullet->fireY = y;
-	//	bullet->angle = angle;
-	//	bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
-	//	bullet->damage = 2.0f;
-	//	bullet->fire = true;
-	//	bullet->magic = false;
-	//	bullet->init();
-	//	_vBullet.push_back(bullet);
-
-	//	_bulletCount++;
-	//}
-	//_bulletCount = 0;
-}
-
-void GuidedBullet::fire(float x, float y, POINT player)
-{
-	tagCBullet* bullet = new tagCBullet;
-	bullet->img = new my::Image;
-	bullet->reflectImg = new my::Image;
-	//
-	bullet->img->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/Bullet.bmp", 26, 26, true, RGB(255, 0, 255));
-	bullet->reflectImg->init("Resource/Images/Lucie/CompleteImg/Enemy/Monster/ReflectBullet.bmp", 26, 26, true, RGB(255, 0, 255));
-	bullet->type = ObservedType::MINION_MISSILE;
-	bullet->speed = 3.0f;
-	bullet->x = bullet->fireX = x;
-	bullet->y = bullet->fireY = y;
-	bullet->angle = RND->getFromFloatTo(0, PI*2);
-	bullet->damage = 1.0f;
-	bullet->rc = RectMakeCenter(bullet->x, bullet->y, bullet->img->getWidth(), bullet->img->getHeight());
-	bullet->targetX = player.x;
-	bullet->targetY = player.y;
-	bullet->fire = true;
-	bullet->magic = false;
-	bullet->init();
-	bullet->rotateAngle = 0;
-	_vBullet.push_back(bullet);
+		_bulletCount++;
+	}
+	_bulletCount = 0;
 }
 
 void GuidedBullet::draw(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		if ((*_viBullet)->type == ObservedType::MINION_MISSILE)
-		{
-			(*_viBullet)->img->render(getMemDC(),
-				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
-				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
-		}
-		else
-		{
-			(*_viBullet)->reflectImg->render(getMemDC(),
-				(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
-				(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+		if ((*_viBullet)->type == ObservedType::MINION_MISSILE) (*_viBullet)->img->render(getMemDC(),
+			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
 
-		}
+		else (*_viBullet)->reflectImg->render(getMemDC(), (*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left,
+			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
 	}
 }

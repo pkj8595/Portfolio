@@ -25,13 +25,13 @@ HRESULT Slime::init(const char * imageName, POINT position)
 	_moveWorldTime = TIMEMANAGER->getWorldTime();
 	_attacWorldTime = TIMEMANAGER->getWorldTime();
 	_playerDistance = 0.0f;
-	_range = 300.f;
+	_range = 250.f;
 	_moveCheck = true;
-	_attackRange = 150;
+	_attackRange = 180;
 	_deadForOb = false;
 	_deadTimeCount = TIMEMANAGER->getWorldTime() + 9999.999f;
 	_circleBullet = new CircleMissile;
-	_circleBullet->init(10, 300);
+	_circleBullet->init(11, 300);
 	_threeDirectionBullet = new ThreeDirectionMissile;
 	_threeDirectionBullet->init(3, 300);
 	_hp = 100.0f;
@@ -164,7 +164,7 @@ void Slime::frame()
 			_currentFrameY = 4;
 			break;
 		}
-		//if (!playerCheck())
+		if (!playerCheck())
 			randomMove();
 		_moveCheck = true;
 		break;
