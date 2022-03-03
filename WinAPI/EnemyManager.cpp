@@ -185,7 +185,12 @@ void EnemyManager::setMinion(void)
 		_vMinion.push_back(forestFairy);
 	} break;
 	}*/
-
+	Enemy* forestFairy;
+	forestFairy = new ForestFairy;
+	forestFairy->init("ForestFairy",
+		PointMake(CAMERAMANAGER->getDisplayCenterX() + 70,
+			CAMERAMANAGER->getDisplayCenterY()));
+	_vMinion.push_back(forestFairy);
 
 	Enemy* mushman;
 	mushman = new MushMan;

@@ -76,7 +76,7 @@ void ForestFairy::update(void)
 
 	frame();
 
-	_rc = RectMakeCenter(_x - CAMERAMANAGER->getCameraRect().left, _y - CAMERAMANAGER->getCameraRect().top, _image->getFrameWidth(), _image->getFrameHeight());
+	_rc = RectMakeCenter(_x , _y , _image->getFrameWidth(), _image->getFrameHeight());
 }
 
 void ForestFairy::render(void)
@@ -96,7 +96,7 @@ void ForestFairy::move(void)
 
 void ForestFairy::draw(void)
 {
-	_image->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX, _currentFrameY);
+	_image->frameRender(getMemDC(), _rc.left - CAMERAMANAGER->getCameraRect().left, _rc.top - CAMERAMANAGER->getCameraRect().top, _currentFrameX, _currentFrameY);
 	_normalBullet->render();
 	_fairyBullet->render();
 	_bubbleBullet->render();
