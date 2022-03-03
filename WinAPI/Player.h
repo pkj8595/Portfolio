@@ -12,7 +12,6 @@ class Player : public GameNode, public IRectObserved
 {
 private:
 	EffectManager* _efm;
-	TextSystemManager* _tsm;
 	PlayerAfterImage* _pai;
 	float _afterImageTimer;
 	int _afterImageStartFrame;
@@ -52,7 +51,7 @@ private:
 	int _endFrame;
 
 	bool _dead;
-
+	bool _isActiveMove;
 private:
 	//Item, UI
 	CPlayer_Attribute _status;
@@ -132,6 +131,8 @@ public:
 	void setX(float x) { _x = x; }
 	float getY() { return _y; }
 	void setY(float y) { _y = y; }
+	bool getIsActiveMove() { return _isActiveMove; }
+	void setIsActiveMove(bool isActiveMove) { _isActiveMove = isActiveMove; }
 
 	RECT getRect() { return _rc; }
 

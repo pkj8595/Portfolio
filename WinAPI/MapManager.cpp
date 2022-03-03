@@ -417,7 +417,6 @@ void MapManager::changeMap(int pos)
 
 			if (m->getLocation().x + 1 == _currentMap->getLocation().x && m->getLocation().y == _currentMap->getLocation().y)
 			{
-				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/clearRoom.wav");
 				_currentMap = m;
 				_currentMap->setShow(true);
 				debugAroundMap();
@@ -431,7 +430,6 @@ void MapManager::changeMap(int pos)
 		{
 			if (m->getLocation().x - 1 == _currentMap->getLocation().x && m->getLocation().y == _currentMap->getLocation().y)
 			{
-				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/clearRoom.wav");
 				_currentMap = m;
 				_currentMap->setShow(true);
 				debugAroundMap();
@@ -445,7 +443,6 @@ void MapManager::changeMap(int pos)
 		{
 			if (m->getLocation().x == _currentMap->getLocation().x && m->getLocation().y + 1 == _currentMap->getLocation().y)
 			{
-				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/clearRoom.wav");
 				_currentMap = m;
 				_currentMap->setShow(true);
 				debugAroundMap();
@@ -459,7 +456,6 @@ void MapManager::changeMap(int pos)
 		{
 			if (m->getLocation().x == _currentMap->getLocation().x && m->getLocation().y - 1 == _currentMap->getLocation().y)
 			{
-				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/clearRoom.wav");
 				_currentMap = m;
 				_currentMap->setShow(true);
 				debugAroundMap();

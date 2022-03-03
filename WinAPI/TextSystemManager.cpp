@@ -97,6 +97,7 @@ void TextSystemManager::update(void)
 			{
 				isShowText = false;
 				isAnvilOpen = false;
+				isrepairbuy = false;
 			}
 		}
 	}
@@ -111,7 +112,7 @@ void TextSystemManager::update(void)
 			{
 				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 				weapon_Selectdata.clear();
-				weapon_Selectdata.push_back(_itoa(21, temp, 10));
+				weapon_Selectdata.push_back(_itoa(20, temp, 10));
 				TEXTDATAMANAGER->save("로비 무기 선택.text", weapon_Selectdata);
 				isShowText = false;
 				iscollBox = false;
@@ -129,7 +130,7 @@ void TextSystemManager::update(void)
 			{
 				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 				weapon_Selectdata.clear();
-				weapon_Selectdata.push_back(_itoa(24, temp, 10));
+				weapon_Selectdata.push_back(_itoa(23, temp, 10));
 				TEXTDATAMANAGER->save("로비 무기 선택.text", weapon_Selectdata);
 				isShowText = false;
 				iscollBox = false;

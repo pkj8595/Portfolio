@@ -1,6 +1,5 @@
 #include "Stdafx.h"
 #include "Player.h"
-#include "TextSystemManager.h"
 
 HRESULT Player::init(void)
 {
@@ -56,10 +55,6 @@ HRESULT Player::init(void)
 	_status._maxExperience = 100.0f;
 	_status._stamina = _status._maxStamina = 100.0f;
 	_totalStatus = _status;
-	
-	_tsm = new TextSystemManager;
-	_tsm->init();
-
 
 	_frameTick = TIMEMANAGER->getWorldTime();
 	_startFrame = _endFrame = 4;
@@ -96,6 +91,9 @@ HRESULT Player::init(void)
 
 	_equipItem = _inventory->getEquipWeapon();
 
+	vector<string> vtemp = TEXTDATAMANAGER->load("로비 무기 선택.text");
+	_inventory->pushItem(atoi(vtemp[0].c_str()));
+
 	return S_OK;
 }
 
@@ -121,7 +119,6 @@ void Player::update(void)
 
 		setFrame();
 		frameUpdate();
-		_tsm->update();
 		setDodge();
 
 		if (!_inventory->getIsShowInven()) { setAttack(); }
@@ -132,9 +129,8 @@ void Player::update(void)
 
 		if (!_attack || (*_equipItem)->_type == EITEM_TYPE::EQUIP_WEAPON_BOW)
 		{
-			if (!_tsm->isShowText)
+			if (!_isActiveMove)
 			{
-				cout << _tsm->isShowText << endl;
 				move();
 			}
 		}

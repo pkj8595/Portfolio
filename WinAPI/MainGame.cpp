@@ -38,7 +38,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("Lobby", new Lobby);
 	SCENEMANAGER->addScene("ShopScene", new ShopScene);
 
-	SCENEMANAGER->changeScene("Lobby");
+	SCENEMANAGER->changeScene("TitleScene");
 	
 	/*SetMapMode(getHDC(), MM_ISOTROPIC);
 	RECT cameraRc = RectMake(0, 0, 0, 0);

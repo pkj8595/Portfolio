@@ -3,7 +3,7 @@
 
 HRESULT TitleScene::init(void)
 {
-	_bg = IMAGEMANAGER->addImage("TitleBG", "Resource/Images/Lucie/CompleteImg/title/TitleBackground.bmp", WINSIZE_X, WINSIZE_Y);
+	_bg = IMAGEMANAGER->addImage("TitleBG", "Resource/Images/Lucie/CompleteImg/title/TitleBackground.bmp", 960, 540);
 	_gameName = IMAGEMANAGER->addImage("TitleName", "Resource/Images/Lucie/CompleteImg/title/Title.bmp", 960, 540, true, RGB(255, 0, 255));
 	_start = IMAGEMANAGER->addFrameImage("Start", "Resource/Images/Lucie/CompleteImg/title/Command_0.bmp", 130, 60, 1, 2, true, RGB(255, 0, 255));
 	_continue = IMAGEMANAGER->addFrameImage("Continue", "Resource/Images/Lucie/CompleteImg/title/Command_1.bmp", 130, 60, 1, 2, true, RGB(255, 0, 255));
@@ -11,10 +11,10 @@ HRESULT TitleScene::init(void)
 	_changeScreen = IMAGEMANAGER->addImage("TitleBlackScreen", "Resource/Images/Lucie/CompleteImg/effect/changeScreen.bmp", 1104, 960);
 
 	_bgRc = RectMake(0, 0, _bg->getWidth(), _bg->getHeight());
-	_startRc = RectMake(CAMERAMANAGER->getDisplayCenterX() - 170,
-		CAMERAMANAGER->getDisplayCenterY() - 200,
+	_startRc = RectMake(CAMERAMANAGER->getDisplayCenterX() - 100,
+		CAMERAMANAGER->getDisplayCenterY() + 50,
 		_start->getFrameWidth(), _start->getFrameHeight());
-	_exitRc = RectMake(CAMERAMANAGER->getDisplayCenterX() - 170 , CAMERAMANAGER->getDisplayCenterY() - 100, _exit->getFrameWidth(), _exit->getFrameHeight());
+	_exitRc = RectMake(CAMERAMANAGER->getDisplayCenterX() - 100, CAMERAMANAGER->getDisplayCenterY() + 100, _exit->getFrameWidth(), _exit->getFrameHeight());
 
 	changeScreenAlpha = 0.0f;
 
@@ -29,6 +29,7 @@ void TitleScene::release(void)
 
 void TitleScene::update(void)
 {
+
 	if (PtInRect(&_startRc, _ptMouse))
 	{
 		_start->setFrameY(1);
