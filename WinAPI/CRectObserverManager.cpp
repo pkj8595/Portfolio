@@ -139,6 +139,8 @@ void CRectObserverManager::getRectFromObserved()
 			if ((*obData.typeKey) == ObservedType::ITEM &&
 				(*obDataCompare.typeKey) == ObservedType::ROCKET)
 			{
+				// obData.magic >> itemobject -> isCurrentMap
+				if (!*obData.magic) continue;
 				RECT collisionRect;
 				if (IntersectRect(&collisionRect, obData.rc, obDataCompare.rc))
 				{
@@ -232,14 +234,17 @@ void CRectObserverManager::getEventFormObserved()
 			}
 			else if (*obData.typeKey == EventObservedType::ANVIL)
 			{
-				if (KEYMANAGER->isOnceKeyDown('E'))
+				if (!_textSystemManager->isShowText)
 				{
-					_textSystemManager->AnvilLog(5);
-					_textSystemManager->isShowText = true;
-					_textSystemManager->isAnvilOpen = true;
-					_textSystemManager->isAnvilCol = true;
-					_player->setIsActiveMove(true);
+					if (KEYMANAGER->isOnceKeyDown('E'))
+					{
+						_textSystemManager->AnvilLog(5);
+						_textSystemManager->isShowText = true;
+						_textSystemManager->isAnvilOpen = true;
+						_textSystemManager->isAnvilCol = true;
+						_player->setIsActiveMove(true);
 
+					}
 				}
 				if (_textSystemManager->isrepairbuy)
 				{
@@ -258,7 +263,6 @@ void CRectObserverManager::getEventFormObserved()
 						_textSystemManager->isAnvilOpen = false;
 						_textSystemManager->isShowText = false;
 						_player->setIsActiveMove(false);
-
 					}
 				}
 				else if (!_textSystemManager->isAnvilOpen)
@@ -266,7 +270,6 @@ void CRectObserverManager::getEventFormObserved()
 					_player->setIsActiveMove(false);
 				}
 			}
-
 		}
 	}
 }

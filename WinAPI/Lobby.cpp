@@ -54,7 +54,7 @@ void Lobby::update(void)
 
 	_startAlpha -= 3.0f;
 
-	if (_startAlpha == 0.0f)
+	if (_startAlpha < 0.0f)
 	{
 		_startAlpha = 0.0f;
 	}

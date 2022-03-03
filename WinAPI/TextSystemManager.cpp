@@ -76,7 +76,7 @@ void TextSystemManager::update(void)
 	
 	
 	// 엔터를 눌렀을 경우
-	if (KEYMANAGER->isOnceKeyDown('Z') && isShowText)
+	if (KEYMANAGER->isOnceKeyDown(VK_RETURN) && isShowText)
 	{
 		// _textBufferCnt과 _text1.size()를 비교했을 때 _text1.size()가 더 크다면
 		if (_textBufferCnt < _shopNameText.size())

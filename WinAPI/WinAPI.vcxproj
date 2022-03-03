@@ -159,6 +159,7 @@
     <ClCompile Include="DamageEffectManager.cpp" />
     <ClCompile Include="DefaultMap.cpp" />
     <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="EndingScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="EventObject.cpp" />
@@ -234,6 +235,7 @@
     <ClInclude Include="DamageEffectManager.h" />
     <ClInclude Include="DefaultMap.h" />
     <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="EndingScene.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="EventObject.h" />

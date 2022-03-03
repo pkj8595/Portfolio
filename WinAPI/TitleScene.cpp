@@ -16,7 +16,7 @@ HRESULT TitleScene::init(void)
 		_start->getFrameWidth(), _start->getFrameHeight());
 	_exitRc = RectMake(CAMERAMANAGER->getDisplayCenterX() - 100, CAMERAMANAGER->getDisplayCenterY() + 100, _exit->getFrameWidth(), _exit->getFrameHeight());
 
-	changeScreenAlpha = 0.0f;
+	_changeScreenAlpha = 0.0f;
 
 	_isStart = false;
 
@@ -54,15 +54,15 @@ void TitleScene::update(void)
 	}
 	else _exit->setFrameY(0);
 
-	if (changeScreenAlpha > 252)
+	if (_changeScreenAlpha > 252)
 	{
-		changeScreenAlpha = 252;
+		_changeScreenAlpha = 252;
 		SCENEMANAGER->changeScene("Lobby");
 	}
 
 	if (_isStart)
 	{
-		changeScreenAlpha += 3.0f;
+		_changeScreenAlpha += 3.0f;
 	}
 	
 
@@ -74,5 +74,5 @@ void TitleScene::render(void)
 	_gameName->render(getMemDC());
 	_start->frameRender(getMemDC(), _startRc.left, _startRc.top);
 	_exit->frameRender(getMemDC(), _exitRc.left, _exitRc.top);
-	if (changeScreenAlpha > 0) { _changeScreen->alphaRender(getMemDC(), changeScreenAlpha); }
+	if (_changeScreenAlpha > 0) { _changeScreen->alphaRender(getMemDC(), _changeScreenAlpha); }
 }

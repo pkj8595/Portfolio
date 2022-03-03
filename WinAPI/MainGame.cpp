@@ -6,6 +6,7 @@
 #include "KgyScene.h"
 #include "Lobby.h"
 #include "ShopScene.h"
+#include "EndingScene.h"
 
 
 
@@ -35,8 +36,9 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("kgy", new KgyScene);
 	SCENEMANAGER->addScene("Lobby", new Lobby);
 	SCENEMANAGER->addScene("ShopScene", new ShopScene);
+	SCENEMANAGER->addScene("EndingScene", new EndingScene);
 
-	SCENEMANAGER->changeScene("TitleScene");
+	SCENEMANAGER->changeScene("EndingScene");
 	
 	/*SetMapMode(getHDC(), MM_ISOTROPIC);
 	RECT cameraRc = RectMake(0, 0, 0, 0);

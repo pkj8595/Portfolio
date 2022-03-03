@@ -309,6 +309,9 @@
     <ClCompile Include="EventObject.cpp">
       <Filter>PKJ</Filter>
     </ClCompile>
+    <ClCompile Include="EndingScene.cpp">
+      <Filter>OJH</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -517,6 +520,9 @@
     </ClInclude>
     <ClInclude Include="CameraManager.h">
       <Filter>PKJ</Filter>
+    </ClInclude>
+    <ClInclude Include="EndingScene.h">
+      <Filter>OJH</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

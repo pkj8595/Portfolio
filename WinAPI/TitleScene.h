@@ -17,7 +17,7 @@ private:
 	RECT _exitRc;
 	RECT _crashRc;
 
-	float changeScreenAlpha;
+	float _changeScreenAlpha;
 
 	bool _isStart;
 public:

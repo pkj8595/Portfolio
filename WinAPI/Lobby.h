@@ -16,8 +16,6 @@ private:
 	my::Image* _lobbyColMapImg;
 
 	POINT _basePt;
-
-	Animation* _anim;
 	LobbyPlayer* _player;
 
 	RECT _lobbyMap_rc;

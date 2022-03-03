@@ -37,8 +37,6 @@ HRESULT PlayScene::init(void)
 
 	_enemyManager->setRoketMemoryAddress(_player);
 
-	_itemmanager = new ItemManager;
-	_itemmanager->init();
 
 	return S_OK;
 }
