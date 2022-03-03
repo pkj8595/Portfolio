@@ -61,32 +61,20 @@ void Snake::update(void)
 
 	if (!_deadForOb)
 	{
-		//if (playerCheck())
-		//{
-		//	if (_playerDistance < _attackRange)
-		//	{
-		//		attack();
-		//	}
-		//
-		//	_x += cosf(_angle) * _speed;
-		//	_y += -sinf(_angle) * _speed;
-		//}
-		//else
-		//{
-			//randomPosCreate();
-
-			if (KEYMANAGER->isStayKeyDown(VK_LEFT))
-				_x -= 10;
-
-			if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-				_x += 10;
-
-			if (KEYMANAGER->isStayKeyDown(VK_UP))
-				_y -= 10;
-
-			if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-				_y += 10;
-		//}
+		if (playerCheck())
+		{
+			if (_playerDistance < _attackRange)
+			{
+				attack();
+			}
+		
+			_x += cosf(_angle) * _speed;
+			_y += -sinf(_angle) * _speed;
+		}
+		else
+		{
+			randomPosCreate();
+		}
 	}
 	else
 	{
@@ -196,12 +184,12 @@ void Snake::randomPosCreate()
 
 void Snake::randomMove()
 {
-	if (MONSTER_MOVE_RANGE_LEFT <= _rc.left && _rc.left <= MONSTER_MOVE_RANGE_RIGHT)
+	if (MONSTER_MOVE_RANGE_LEFT < _x  &&  _x < MONSTER_MOVE_RANGE_RIGHT)
 	{
 		_x += _randomX * _speed;
 	}
 
-	if (MONSTER_MOVE_RANGE_UP <= _y && _y <= MONSTER_MOVE_RANGE_DOWN)
+	if (MONSTER_MOVE_RANGE_UP < _y && _y < MONSTER_MOVE_RANGE_DOWN)
 	{
 		_y += _randomY * _speed;
 	}
