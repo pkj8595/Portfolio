@@ -19,7 +19,7 @@ typedef struct tagObservedInfo
 {
 	ObservedType* typeKey;
 	RECT* rc;
-	bool* isActive;	//적이 충돌했을때 
+	bool* isActive;	
 	float* damage;
 	float* angle;
 	int* number;
@@ -37,7 +37,6 @@ typedef struct tagObservedInfo
 	}
 }STObservedData;
 
-//순수 가상 클래스 -> 인터페이스
 class IRectObserved 
 {
 public:

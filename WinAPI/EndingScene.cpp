@@ -21,7 +21,6 @@ void EndingScene::release(void)
 void EndingScene::update(void)
 {
 	_endChangeScreenAlpha -= 3.0f;
-	cout << _endChangeScreenAlpha << endl;
 	if (_endChangeScreenAlpha < 0.0f)
 	{
 		_endChangeScreenAlpha = 0.0f;

@@ -177,7 +177,6 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="mGpImage.cpp" />
-    <ClCompile Include="Minion.cpp" />
     <ClCompile Include="MushMan.cpp" />
     <ClCompile Include="Mushroom.cpp" />
     <ClCompile Include="GameplayManager.cpp" />
@@ -187,12 +186,10 @@
     <ClCompile Include="PlayerWeapon.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
-    <ClCompile Include="CProjectPlayer.cpp" />
     <ClCompile Include="Rafflesia.cpp" />
     <ClCompile Include="RepairMap.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShopMap.cpp" />
-    <ClCompile Include="ShopScene.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GameNode.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -207,11 +204,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TempSoundManager.cpp" />
-    <ClCompile Include="TempSoundTest.cpp" />
     <ClCompile Include="TextDataManager.cpp" />
     <ClCompile Include="TextSystemManager.cpp" />
-    <ClCompile Include="Tilemap.cpp" />
-    <ClCompile Include="TileMapObject.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TitleScene.cpp" />
@@ -254,7 +248,6 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="mGpImage.h" />
-    <ClInclude Include="Minion.h" />
     <ClInclude Include="MushMan.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="Player.h" />
@@ -263,12 +256,10 @@
     <ClInclude Include="PlayerWeapon.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="ProgressBar.h" />
-    <ClInclude Include="CProjectPlayer.h" />
     <ClInclude Include="Rafflesia.h" />
     <ClInclude Include="RepairMap.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShopMap.h" />
-    <ClInclude Include="ShopScene.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="Image.h" />
@@ -285,18 +276,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="TempSoundManager.h" />
-    <ClInclude Include="TempSoundTest.h" />
     <ClInclude Include="TextDataManager.h" />
     <ClInclude Include="TextSystemManager.h" />
-    <ClInclude Include="Tilemap.h" />
-    <ClInclude Include="TileMapObject.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Utils.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Question.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />

@@ -67,12 +67,6 @@
     <Filter Include="GameClass\Observer">
       <UniqueIdentifier>{9db6fb26-f3e7-48b7-89f7-6145c88250c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="API FrameWork\ExampleClasses\ShootingGame\Player">
-      <UniqueIdentifier>{41da0ea2-9d2d-480a-b594-27c5d959d77f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameClass\Tilemap">
-      <UniqueIdentifier>{c2cd7251-33f9-4ea7-80b6-264052853fdf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="OJH">
       <UniqueIdentifier>{c97959c3-a0de-4ea5-a870-7caa1bf8b583}</UniqueIdentifier>
     </Filter>
@@ -132,9 +126,6 @@
     <ClCompile Include="TempSoundManager.cpp">
       <Filter>API FrameWork\Manager\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="TempSoundTest.cpp">
-      <Filter>API FrameWork\Manager\Sound</Filter>
-    </ClCompile>
     <ClCompile Include="mGpImage.cpp">
       <Filter>API FrameWork\Image</Filter>
     </ClCompile>
@@ -147,17 +138,8 @@
     <ClCompile Include="EnemyManager.cpp">
       <Filter>API FrameWork\ExampleClasses\ShootingGame\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Minion.cpp">
-      <Filter>API FrameWork\ExampleClasses\ShootingGame\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Bullets.cpp">
       <Filter>API FrameWork\ExampleClasses\ShootingGame\Bullets</Filter>
-    </ClCompile>
-    <ClCompile Include="Tilemap.cpp">
-      <Filter>GameClass\Tilemap</Filter>
-    </ClCompile>
-    <ClCompile Include="TileMapObject.cpp">
-      <Filter>GameClass\Tilemap</Filter>
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
       <Filter>API FrameWork\Manager\TimeManager</Filter>
@@ -179,9 +161,6 @@
     </ClCompile>
     <ClCompile Include="CEffect.cpp">
       <Filter>API FrameWork\ExampleClasses\ShootingGame\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="CProjectPlayer.cpp">
-      <Filter>API FrameWork\ExampleClasses\ShootingGame\Player</Filter>
     </ClCompile>
     <ClCompile Include="EffectManager.cpp">
       <Filter>API FrameWork\ExampleClasses\ShootingGame\Effect</Filter>
@@ -222,9 +201,6 @@
       <Filter>PKJ</Filter>
     </ClCompile>
     <ClCompile Include="ItemClass.cpp">
-      <Filter>PKJ</Filter>
-    </ClCompile>
-    <ClCompile Include="ShopScene.cpp">
       <Filter>PKJ</Filter>
     </ClCompile>
     <ClCompile Include="ItemManager.cpp">
@@ -347,9 +323,6 @@
     <ClInclude Include="TempSoundManager.h">
       <Filter>API FrameWork\Manager\Sound</Filter>
     </ClInclude>
-    <ClInclude Include="TempSoundTest.h">
-      <Filter>API FrameWork\Manager\Sound</Filter>
-    </ClInclude>
     <ClInclude Include="mGpImage.h">
       <Filter>API FrameWork\Image</Filter>
     </ClInclude>
@@ -362,17 +335,8 @@
     <ClInclude Include="EnemyManager.h">
       <Filter>API FrameWork\ExampleClasses\ShootingGame\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Minion.h">
-      <Filter>API FrameWork\ExampleClasses\ShootingGame\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Bullets.h">
       <Filter>API FrameWork\ExampleClasses\ShootingGame\Bullets</Filter>
-    </ClInclude>
-    <ClInclude Include="Tilemap.h">
-      <Filter>GameClass\Tilemap</Filter>
-    </ClInclude>
-    <ClInclude Include="TileMapObject.h">
-      <Filter>GameClass\Tilemap</Filter>
     </ClInclude>
     <ClInclude Include="TimeManager.h">
       <Filter>API FrameWork\Manager\TimeManager</Filter>
@@ -400,9 +364,6 @@
     </ClInclude>
     <ClInclude Include="CEffect.h">
       <Filter>API FrameWork\ExampleClasses\ShootingGame\Effect</Filter>
-    </ClInclude>
-    <ClInclude Include="CProjectPlayer.h">
-      <Filter>API FrameWork\ExampleClasses\ShootingGame\Player</Filter>
     </ClInclude>
     <ClInclude Include="EffectManager.h">
       <Filter>API FrameWork\ExampleClasses\ShootingGame\Effect</Filter>
@@ -443,9 +404,6 @@
       <Filter>PKJ</Filter>
     </ClInclude>
     <ClInclude Include="ItemClass.h">
-      <Filter>PKJ</Filter>
-    </ClInclude>
-    <ClInclude Include="ShopScene.h">
       <Filter>PKJ</Filter>
     </ClInclude>
     <ClInclude Include="ItemManager.h">
@@ -524,11 +482,6 @@
     <ClInclude Include="EndingScene.h">
       <Filter>OJH</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Question.txt">
-      <Filter>CodingInterview</Filter>
-    </Text>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">

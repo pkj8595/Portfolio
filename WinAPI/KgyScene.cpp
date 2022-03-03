@@ -24,7 +24,7 @@ HRESULT KgyScene::init(void)
 	_playerpos.x = CAMERAMANAGER->getDisplayCenterX() - 200;
 	_playerpos.y = CAMERAMANAGER->getDisplayCenterY();
 
-	_em->setRoketMemoryAddress(_player);
+	_em->setPlayerMemoryAddress(_player);
 	return S_OK;
 }
 

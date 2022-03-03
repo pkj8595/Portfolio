@@ -98,7 +98,6 @@ LRESULT GameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	case WM_PAINT:	
 		hdc = BeginPaint(hWnd, &ps);
 		//this->render();
-		cout << "WM_PAINT" << endl;
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_MOUSEMOVE:

@@ -226,8 +226,8 @@ void CRectObserverManager::getEventFormObserved()
 			{
 				if (KEYMANAGER->isOnceKeyDown('E'))
 				{
-					ItemSpawner::getSingleton()->createChestItem(CAMERAMANAGER->getDisplayCenterX(),
-						CAMERAMANAGER->getDisplayCenterY(),true);
+					ItemSpawner::getSingleton()->createChestItem(554,
+						480,true);
 					(*_viEvent)->collideEventObject(obData);
 					break;
 				}

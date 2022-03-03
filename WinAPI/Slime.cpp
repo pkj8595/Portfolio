@@ -90,7 +90,8 @@ void Slime::update(void)
 		randomPosCreate();
 	}
 
-	_rc = RectMakeCenter(_x + _image->getFrameWidth()/2, _y+_image->getFrameHeight()/2 + 20, _image->getFrameWidth() / 2, _image->getFrameHeight() / 2);
+	//_rc = RectMakeCenter(_x + _image->getFrameWidth()/2, _y+_image->getFrameHeight()/2 + 20, _image->getFrameWidth() / 2, _image->getFrameHeight() / 2);
+	_rc = RectMakeCenter(_x, _y , _image->getFrameWidth()/2, _image->getFrameHeight()/2);
 
 }
 
@@ -113,8 +114,8 @@ void Slime::draw(void)
 {
 	animation();
 	_image->frameRender(getMemDC(),
-		_x - CAMERAMANAGER->getCameraRect().left,
-		_y - CAMERAMANAGER->getCameraRect().top,
+		_x - CAMERAMANAGER->getCameraRect().left - (_image->getFrameWidth() * 0.5),
+		_y - CAMERAMANAGER->getCameraRect().top -30 -(_image->getFrameHeight() * 0.5),
 		_currentFrameX, _currentFrameY);
 	_threeDirectionBullet->render();
 	_circleBullet->render();

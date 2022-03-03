@@ -129,10 +129,9 @@ public:
 	//클리핑
 	void render(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight);
 
-	//알파 렌더(알파값은 BYTE로 사용 크기가 딱 맞음.)
-	void alphaRender(HDC hdc, BYTE alpha);//배경
+	void alphaRender(HDC hdc, BYTE alpha);
 	void alphaRender(HDC hdc,int destX, int destY, BYTE alpha);
-	void alphaRender(HDC hdc,int destX, int destY,int sourX, int sourY, int sourWidth,int sourHeight, BYTE alpha); //클리핑 알파렌더
+	void alphaRender(HDC hdc,int destX, int destY,int sourX, int sourY, int sourWidth,int sourHeight, BYTE alpha);
 	
 	//프레임 렌더
 	void frameRender(HDC hdc, int destX, int destY);

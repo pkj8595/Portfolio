@@ -1,6 +1,5 @@
 #include "Stdafx.h"
 #include "EnemyManager.h"
-#include "Minion.h"
 #include "Player.h"
 #include "Slime.h"
 #include "KingSlime.h"
@@ -30,17 +29,6 @@ EnemyManager::~EnemyManager()
 
 HRESULT EnemyManager::init(void)
 {
-	IMAGEMANAGER->addFrameImage("해파리", "Resource/Images/Rocket/jelly.bmp", 0.0f, 0.0f, 1140, 47, 19, 1, true, RGB(255, 0, 255));
-
-	IMAGEMANAGER->addFrameImage("enemy1", "Resource/Images/Project/enemy1.bmp", 0.0f, 0.0f, 256, 32, 8, 1, true, RGB(15, 15, 15));
-	IMAGEMANAGER->addFrameImage("enemy2", "Resource/Images/Project/enemy2.bmp", 0.0f, 0.0f, 256, 32, 8, 1, true, RGB(15, 15, 15));
-	IMAGEMANAGER->addFrameImage("enemy3", "Resource/Images/Project/enemy3.bmp", 0.0f, 0.0f, 256, 32, 8, 1, true, RGB(15, 15, 15));
-
-	IMAGEMANAGER->addFrameImage("bullet16", "Resource/Images/Project/bullet16.bmp", 0.0f, 0.0f, 256, 16, 16, 1, true, RGB(255, 0, 255));
-	IMAGEMANAGER->addFrameImage("bullet3030", "Resource/Images/Project/bullet3030.bmp", 0.0f, 0.0f, 192, 30, 6, 1, true, RGB(255, 0, 255));
-
-	IMAGEMANAGER->addImage("적 미사일", "Resource/Images/Rocket/bullet.bmp", 7, 7, true, RGB(255, 0, 255));
-
 	IMAGEMANAGER->addFrameImage("Slime", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Slime2.bmp", 288, 2016, 3, 21, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Snake", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Snake.bmp", 144, 624, 3, 13, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Rafflesia", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Rafflesia.bmp", 240, 549, 3, 9, true, RGB(255, 0, 255));
@@ -51,8 +39,6 @@ HRESULT EnemyManager::init(void)
 	IMAGEMANAGER->addFrameImage("KingSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 1080, 7560, 3, 21, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("BigSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 576, 4032, 3, 21, true, RGB(255, 0, 255));
 
-
-	//미니언 생성
 
 	_bullet = new Bullet;
 	_bullet->init("bullet16", 30, 1000);
@@ -88,8 +74,6 @@ void EnemyManager::update(void)
 	checkActive();
 
 	_efm->update();
-	//minionBulletFire();
-	//_bullet->update();
 }
 
 void EnemyManager::render(void)
@@ -99,14 +83,13 @@ void EnemyManager::render(void)
 	{
 		(*_viMinion)->render();
 	}
-	//_bullet->render();
 	_efm->render();
 }
 
 void EnemyManager::setMinion(void)
 {
-	/*int temp = RND->getInt(4);
-	switch (temp)
+	int temp = RND->getInt(4);
+	switch (0)
 	{
 	case 0: {
 		Enemy* slime;
@@ -184,19 +167,19 @@ void EnemyManager::setMinion(void)
 				CAMERAMANAGER->getDisplayCenterY()));
 		_vMinion.push_back(forestFairy);
 	} break;
-	}*/
-	Enemy* forestFairy;
-	forestFairy = new ForestFairy;
-	forestFairy->init("ForestFairy",
-		PointMake(CAMERAMANAGER->getDisplayCenterX() + 70,
-			CAMERAMANAGER->getDisplayCenterY()));
-	_vMinion.push_back(forestFairy);
+	}
+	//Enemy* forestFairy;
+	//forestFairy = new ForestFairy;
+	//forestFairy->init("ForestFairy",
+	//	PointMake(CAMERAMANAGER->getDisplayCenterX() + 70,
+	//		CAMERAMANAGER->getDisplayCenterY()));
+	//_vMinion.push_back(forestFairy);
 
-	Enemy* mushman;
-	mushman = new MushMan;
-	mushman->init("MushMan", PointMake(CAMERAMANAGER->getDisplayCenterX() - 30,
-		CAMERAMANAGER->getDisplayCenterY() + 150));
-	_vMinion.push_back(mushman);
+	//Enemy* mushman;
+	//mushman = new MushMan;
+	//mushman->init("MushMan", PointMake(CAMERAMANAGER->getDisplayCenterX() - 30,
+	//	CAMERAMANAGER->getDisplayCenterY() + 150));
+	//_vMinion.push_back(mushman);
 }
 
 void EnemyManager::setBoss(void)
@@ -246,7 +229,6 @@ void EnemyManager::removeMinion(int arrNum)
 	_vMinion.erase(_vMinion.begin() + arrNum);
 }
 
-//리스너를 사용하는 것이 좋아보이긴한다. 
 void EnemyManager::checkActive(void)
 {
 	_viMinion = _vMinion.begin();

@@ -199,7 +199,7 @@ void Inventory::computeItemTotalAttribute()
 bool Inventory::buyItem(int num)
 {
 	Item* item = _itemManager->getItemIndex(num);
-	if (item->_price < _gold)
+	if (item->_price <= _gold)
 	{
 		_gold -= item->_price;
 		pushItem(item);
@@ -324,7 +324,8 @@ void Inventory::showAbilityItem()
 	{
 		if ((*_viItem).first->_type != EITEM_TYPE::ABILITY)continue;
 
-		_itemManager->getItemInvenImgRender(getMemDC(), (*_viItem).first->_imgNum,
+		_itemManager->getItemInvenImgRender(getMemDC(),
+			(*_viItem).first->_imgNum,
 			ABILITY_IMG_X + (countAbility* ABILITY_IMG_OFFSET),
 			ABILITY_IMG_Y);
 		countAbility++;
@@ -342,7 +343,6 @@ void Inventory::checkMouseEvent(void)
 
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
-				cout << (*_viItem).first->_name << endl;
 				switch ((*_viItem).first->_type)
 				{
 				case EITEM_TYPE::POTION:
@@ -431,7 +431,6 @@ void Inventory::checkMouseEvent(void)
 			{
 				if ((*_viItem).first->_type != EITEM_TYPE::ABILITY)
 				{
-					cout<< (*_viItem).first->_name<<endl;
 					if ((*_viItem).first->_type == EITEM_TYPE::EQUIP_WEAPON_BOW ||
 						(*_viItem).first->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD||
 						(*_viItem).first->_type == EITEM_TYPE::EQUIP_HAT||
@@ -465,8 +464,8 @@ void Inventory::computeRect(void)
 		if ((*_viItem).first->_type == EITEM_TYPE::ABILITY) 
 		{
 			RECT temp = RectMake(
-				(CAMERAMANAGER->getDisplayAreaRight()*0.2) + (_abilutyItemCount* ABILITY_IMG_OFFSET),
-				CAMERAMANAGER->getDisplayAreaBottom()-100,
+				ABILITY_IMG_X + (_abilutyItemCount* ABILITY_IMG_OFFSET),
+				ABILITY_IMG_Y,
 				32, 32);
 			(*_viItem).second = temp;
 			_abilutyItemCount++;
@@ -580,7 +579,6 @@ void Inventory::renderItemInfoWindow()
 	_viItem = _vItem.begin();
 	for (; _viItem != _vItem.end(); ++_viItem)
 	{
-		//인벤토리가 꺼져있고 
 		if (!_isShowInven)
 		{
 			if ((*_viItem).first->_type != EITEM_TYPE::ABILITY) continue;
@@ -775,7 +773,7 @@ void Inventory::decreaseDurability(int dufault)
 
 bool Inventory::repairWeapon(int gold)
 {
-	if (_gold > gold)
+	if (_gold >= gold)
 	{
 		_gold -= gold;
 		_equipWeapon->_durability = _equipWeapon->_maxDurability;

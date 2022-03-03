@@ -14,7 +14,7 @@ ItemManager::~ItemManager()
 HRESULT ItemManager::init(void)
 {
 	_itemImg = IMAGEMANAGER->addFrameImage("ItemImage", "Resource/Images/Lucie/CompleteImg/item/Item_Image.bmp", 320, 256, 10, 8, true, RGB(255, 0, 255));
-	//_itemImg = IMAGEMANAGER->addImage("ItemImage", "Resource/Images/Lucie/CompleteImg/item/Item_Image.bmp", 320, 256,  true, RGB(255, 0, 255));
+
 	_bigItemImg = IMAGEMANAGER->addFrameImage("bigItemImg", "Resource/Images/Lucie/CompleteImg/item/Item_Image.bmp", 640, 512, 10, 8, true, RGB(255, 0, 255));
 
 	vector<string> vData = TEXTDATAMANAGER->loadFstream("Resource/Text/ITEM_DATA.csv");

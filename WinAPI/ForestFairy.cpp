@@ -318,7 +318,6 @@ void ForestFairy::normalBullet()
 		float tempAngle = getAngle(_x, _y, _playerPos.x + 50, _playerPos.y + 50);
 		for (int i = 0; i < 12; i++)
 		{
-			cout << (0.5*tempAngle) * i * PI / 180 << endl;
 			_normalBullet->fire(_x, _y, (tempAngle) + (i * PI / 180), 2.0f, 0);
 		}
 		for (int i = 0; i < 4; i++)

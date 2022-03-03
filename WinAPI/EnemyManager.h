@@ -9,8 +9,6 @@ class ItemSpawner;
 class EnemyManager: public GameNode
 {
 private:
-	//** 더블포인터 패턴과 벡터를 엮을때
-	//*** 프랜드 정보은닉을 무시한다 >> 객체화파괴..?
 	typedef vector<Enemy*> vEnemy;
 	typedef vector<Enemy*>::iterator viEnemy;
 
@@ -38,7 +36,7 @@ public:
 	void minionBulletFire(void);
 
 	Bullet* getBullet(void) { return _bullet; }
-	void setRoketMemoryAddress(Player* rk) { _pPlayer = rk; }
+	void setPlayerMemoryAddress(Player* rk) { _pPlayer = rk; }
 	vEnemy getEnemy() { return _vMinion; }
 	void clearMinion() { _vMinion.clear(); }
 

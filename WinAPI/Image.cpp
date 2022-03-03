@@ -328,14 +328,9 @@ namespace my {
 
 		if (_isTrans)
 		{	
-			//그려지는 순서가 느리다.
-			//이미지 복사 GDI translate >> 복사가 됨 >> 해제 
-			//메모리에 계속 상주하기 때문에 병목현상이 일어날수 있겠다.
-			//폰노이만 아키텍처 (병목현상이 일어....나)
-			//GdiTransparentBlt(): 비트맵을 불러올때 특정 색상을 제외하고 복사해주는 함수
 			GdiTransparentBlt
 			(
-				hdc,					//복사할 장소의 DC(화면에 보여줄))
+				hdc,					
 				0,						//복사될 시작 좌표 X
 				0,						//복사될 시작 좌표 Y
 				_imageInfo->width,		//복사될 이미지 가로 크기
@@ -359,10 +354,9 @@ namespace my {
 	{
 		if (_isTrans)
 		{
-			//GdiTransparentBlt(): 비트맵을 불러올때 특정 색상을 제외하고 복사해주는 함수
 			GdiTransparentBlt
 			(
-				hdc,					//복사할 장소의 DC (화면 DC (화면에 보여줄))
+				hdc,					
 				destX,					//복사될 시작 좌표 X
 				destY,					//복사될 시작 좌표 Y
 				_imageInfo->width,		//복사될 이미지 가로 크기
@@ -378,21 +372,17 @@ namespace my {
 
 		else
 		{
-			//BitBit() : DC간의 영역끼리 서로 고속복사해주는 함수
-			//SRCCOPY : 소스 영역을 대상 영역에 복사한다.
 			BitBlt(hdc, destX, destY, _imageInfo->width, _imageInfo->height, _imageInfo->hMemDc, 0, 0, SRCCOPY);
 		}
 	}
 
-	//클리핑
 	void Image::render(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight)
 	{
 		if (_isTrans)
 		{
-			//GdiTransparentBlt(): 비트맵을 불러올때 특정 색상을 제외하고 복사해주는 함수
 			GdiTransparentBlt
 			(
-				hdc,					//복사할 장소의 DC (화면 DC (화면에 보여줄))
+				hdc,					
 				destX,					//복사될 시작 좌표 X
 				destY,					//복사될 시작 좌표 Y
 				sourWidth,				//복사될 이미지 가로 크기
@@ -609,10 +599,10 @@ namespace my {
 	{
 		if (_isTrans)
 		{
-			//GdiTransparentBlt(): 비트맵을 불러올때 특정 색상을 제외하고 복사해주는 함수
+			
 			GdiTransparentBlt
 			(
-				hdc,					//복사할 장소의 DC (화면 DC (화면에 보여줄))
+				hdc,					
 				destX,					//복사될 시작 좌표 X
 				destY,					//복사될 시작 좌표 Y
 				_imageInfo->frameWidth,		//복사될 이미지 가로 크기
@@ -629,8 +619,6 @@ namespace my {
 
 		else
 		{
-			//BitBit() : DC간의 영역끼리 서로 고속복사해주는 함수
-			//SRCCOPY : 소스 영역을 대상 영역에 복사한다.
 			BitBlt(hdc, destX, destY,
 				_imageInfo->frameWidth,
 				_imageInfo->frameHeight,
@@ -642,7 +630,6 @@ namespace my {
 
 	void Image::frameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY)
 	{
-		//이미지 예외처리
 		_imageInfo->currentFrameX = currentFrameX;
 		_imageInfo->currentFrameY = currentFrameY;
 		if (currentFrameX > _imageInfo->maxFrameX)
@@ -656,7 +643,6 @@ namespace my {
 
 		if (_isTrans)
 		{
-			//GdiTransparentBlt(): 비트맵을 불러올때 특정 색상을 제외하고 복사해주는 함수
 			GdiTransparentBlt
 			(
 				hdc,
@@ -684,6 +670,7 @@ namespace my {
 				_imageInfo->currentFrameY * _imageInfo->frameHeight, SRCCOPY);
 		}
 	}
+
 
 	void Image::loopRender(HDC hdc, const LPRECT drawArea, int offsetX, int offsetY)
 	{

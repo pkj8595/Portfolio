@@ -31,12 +31,6 @@ void TimeManager::render(HDC hdc)
 	SetBkMode(hdc, TRANSPARENT);
 	SetTextColor(hdc, RGB(255, 255, 255));
 
-/*
-_DEBUG
--Release Mode가 아닌 Debug일때만 실행
-ㄴ개발을 하면서 테스트 용도가 강하다.
-##assert >> 세트 디버그 모드가 맞는지 체크
-*/
 #ifdef _DEBUG
 	//assert()
 	if (_timer != nullptr)

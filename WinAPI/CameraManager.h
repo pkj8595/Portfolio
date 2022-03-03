@@ -5,17 +5,15 @@ class Map;
 class CameraManager:public SingletonBase<CameraManager>
 {
 private:
+	Map** _currentMap;
+	RECT _cameraRc;
+	//RECT _clientRect;
+	POINT _computeCameraPt;
 	float* _playerX;
 	float* _playerY;
-	Map** _currentMap;
-
 	int _displayAreaRight;
 	int _displayAreaBottom;
 	int _ratio;
-	RECT _cameraRc;
-	//RECT _clientRect;
-
-	POINT _computeCameraPt;
 
 public:
 	HRESULT init(void);

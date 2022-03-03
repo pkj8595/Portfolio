@@ -2,7 +2,6 @@
 #include "SingletonBase.h"
 #include "Timer.h"
 
-//게임노드와 별개 개체로 사용
 class TimeManager : public SingletonBase<TimeManager>
 {
 private:

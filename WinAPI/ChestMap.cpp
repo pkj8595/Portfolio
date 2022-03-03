@@ -52,8 +52,6 @@ void ChestMap::render(void)
 		- CAMERAMANAGER->getCameraRect().left,
 		-CAMERAMANAGER->getCameraRect().top);
 
-	Rectangle(getMemDC(), _chestEventRc.left, _chestEventRc.top, _chestEventRc.right, _chestEventRc.bottom);
-
 	_chestImage->frameRender(getMemDC(),
 		CAMERAMANAGER->getDisplayCenterX() - _chestImage->getFrameWidth() - CAMERAMANAGER->getCameraRect().left + 65,
 		CAMERAMANAGER->getDisplayCenterY() - _chestImage->getFrameHeight()- CAMERAMANAGER->getCameraRect().top + 210, 0, _frameY);

@@ -35,7 +35,7 @@ HRESULT PlayScene::init(void)
 	_deadAlpha = 0;
 	_deadTimer = 0;
 
-	_enemyManager->setRoketMemoryAddress(_player);
+	_enemyManager->setPlayerMemoryAddress(_player);
 
 
 	return S_OK;

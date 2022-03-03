@@ -1,7 +1,5 @@
 #pragma once
 
-// 필요한 함수는 직접 만들어 추가
-
 inline POINT PointMake(int  x, int y)
 {
 	POINT pt = {x, y};
@@ -16,7 +14,6 @@ inline void LineMake(HDC hdc,int startX,int startY,int endX,int endY)
 	
 inline RECT RectMake(int x, int y, int width, int height) 
 {
-	//todo
 	RECT rc = { x, y,x + width,y + height };
 	return rc;
 }
