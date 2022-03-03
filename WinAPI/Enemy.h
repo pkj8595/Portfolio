@@ -4,10 +4,10 @@
 
 #define MOVECOOLTIME 1
 #define ATTACKCOOLTIME 3
-#define MONSTER_MOVE_RANGE_LEFT CAMERAMANAGER->getDisplayCenterX() -252
+#define MONSTER_MOVE_RANGE_LEFT CAMERAMANAGER->getDisplayCenterX() -260
 #define MONSTER_MOVE_RANGE_RIGHT CAMERAMANAGER->getDisplayCenterX() + 148
-#define MONSTER_MOVE_RANGE_UP CAMERAMANAGER->getDisplayCenterY() - 230
-#define MONSTER_MOVE_RANGE_DOWN CAMERAMANAGER->getDisplayCenterY() + 20
+#define MONSTER_MOVE_RANGE_UP CAMERAMANAGER->getDisplayCenterY() - 10
+#define MONSTER_MOVE_RANGE_DOWN CAMERAMANAGER->getDisplayCenterY() + 250
 
 
 
@@ -73,10 +73,11 @@ public:
 	void setPlayerPos(POINT playerPos) { _playerPos = playerPos; }
 	void setPlayer(Player& player) { _player = &player; }
 
-	void setHpY(int y) { _hpY = y;}
+	void setHpY(int y) { _hpY = y; }
 	float getExp() { return _exp; }
 	float getX() { return _x; }
 	float getY() { return _y; }
+	float getHp() { return _hp; }
 
 	Enemy(void);
 	virtual ~Enemy(void) {}

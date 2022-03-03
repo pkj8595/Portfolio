@@ -24,7 +24,7 @@ HRESULT Enemy::init(const char* imageName, POINT position)
 	_worldTimeCount = TIMEMANAGER->getWorldTime();
 	_rndTimeCount = RND->getFromFloatTo(0.5f, 2.f);
 
-	//_bulletFireCount = TIMEMANAGER->getWorldTime();
+	_bulletFireCount = TIMEMANAGER->getWorldTime();
 	//_rndFireCount = RND->getFromFloatTo(0.5f,4.5f);
 
 	_image = IMAGEMANAGER->findImage(imageName);

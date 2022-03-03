@@ -287,3 +287,32 @@ public:
 	SectorBullet() {}
 	~SectorBullet() {}
 };
+
+//==================================
+// ### Mushroom Bullets ###
+//==================================
+
+class GuidedBullet : public AMissile
+{
+private:
+	int _bulletCount;
+	float _angle;
+	int count = 0;
+
+	//time°ª ÇÊ¿ä
+	//float _moveTime;
+	//float _count;
+	//float _playerX, _playerY;
+
+public:
+	virtual HRESULT init(int bulletMax, float range);
+	virtual void move(void);
+	virtual void fire(float x, float y, float angle, float rotateAngle);
+	virtual void draw(void);
+
+	void setAngle(float angle) { _angle = angle; }
+	//void setPlayerPos(float x, float y) { _playerX = x, _playerY = y; }
+
+	GuidedBullet() {}
+	~GuidedBullet() {}
+};

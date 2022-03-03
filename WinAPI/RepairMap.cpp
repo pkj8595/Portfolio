@@ -22,8 +22,10 @@ HRESULT RepairMap::init(POINT location)
 	_location = location;
 
 	_repairEventObj = new EventObject;
-	_repairEventRc = RectMakeCenter(CAMERAMANAGER->getDisplayCenterX() - 50, CAMERAMANAGER->getDisplayCenterY() - 50, _anvilImage->getFrameWidth() / 2, 32);
+	_repairEventRc = RectMakeCenter(490 - CAMERAMANAGER->getCameraRect().left, 400 - CAMERAMANAGER->getCameraRect().top, _anvilImage->getFrameWidth() - 10, 64);
 	_repairEventObj->init(EventObservedType::ANVIL, _repairEventRc, &_isActive, 0);
+
+	_mapRectSize = RectMake(0, 0, 1008, 670);
 
 	return S_OK;
 }
@@ -34,6 +36,8 @@ void RepairMap::release(void)
 
 void RepairMap::update(void)
 {
+	_outsideRcWidth = { 0, 670 - CAMERAMANAGER->getCameraRect().top, WINSIZE_X, WINSIZE_Y };
+	_outsideRcLength = { 1008 - CAMERAMANAGER->getCameraRect().left, 0, WINSIZE_X, WINSIZE_Y };
 }
 
 void RepairMap::render(void)
@@ -43,19 +47,19 @@ void RepairMap::render(void)
 		-CAMERAMANAGER->getCameraRect().top);
 
 	_anvilImage->frameRender(getMemDC(),
-		CAMERAMANAGER->getDisplayCenterX() - _anvilImage->getFrameWidth() + 20 - CAMERAMANAGER->getCameraRect().left,
-		CAMERAMANAGER->getDisplayCenterY() - _anvilImage->getFrameHeight() - 50 - CAMERAMANAGER->getCameraRect().top, 0, _frameY);
+		CAMERAMANAGER->getDisplayCenterX() - _anvilImage->getFrameWidth() + 90 - CAMERAMANAGER->getCameraRect().left,
+		CAMERAMANAGER->getDisplayCenterY() - _anvilImage->getFrameHeight() + 160 - CAMERAMANAGER->getCameraRect().top, 0, _frameY);
 
 	if (!_connectedMap[0] || !_clear) _leftWall->render(getMemDC(),
 		0 - CAMERAMANAGER->getCameraRect().left,
 		143 - CAMERAMANAGER->getCameraRect().top);
 	if (!_connectedMap[1] || !_clear) _upWall->render(getMemDC(),
-		CAMERAMANAGER->getDisplayCenterX() - 180 - CAMERAMANAGER->getCameraRect().left,
+		CAMERAMANAGER->getDisplayCenterX() - 80 - CAMERAMANAGER->getCameraRect().left,
 		-150 - CAMERAMANAGER->getCameraRect().top);
 	if (!_connectedMap[2] || !_clear) _rightWall->render(getMemDC(),
 		768 - CAMERAMANAGER->getCameraRect().left,
 		143 - CAMERAMANAGER->getCameraRect().top);
 	if (!_connectedMap[3] || !_clear) _downWall->render(getMemDC(),
-		CAMERAMANAGER->getDisplayCenterX() - 170 - CAMERAMANAGER->getCameraRect().left,
+		CAMERAMANAGER->getDisplayCenterX() - 100 - CAMERAMANAGER->getCameraRect().left,
 		_image->getHeight() - 240 - CAMERAMANAGER->getCameraRect().top);
 }

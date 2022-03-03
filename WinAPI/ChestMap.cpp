@@ -25,10 +25,11 @@ HRESULT ChestMap::init(POINT location)
 	_location = location;
 
 	_chestEventObj = new EventObject;
-	_chestEventRc = RectMakeCenter(CAMERAMANAGER->getDisplayCenterX() - 48, CAMERAMANAGER->getDisplayCenterY(), 32, 32);
+	_chestEventRc = RectMake(450 - CAMERAMANAGER->getCameraRect().left, 400 - CAMERAMANAGER->getCameraRect().top,
+		_chestImage->getFrameWidth(), _chestImage->getFrameHeight());
 	_chestEventObj->init(EventObservedType::CHEST, _chestEventRc, &_isActive, 0);
 
-
+	_mapRectSize = RectMake(0, 0, 1008, 768);
 	return S_OK;
 }
 
@@ -39,7 +40,9 @@ void ChestMap::release(void)
 
 void ChestMap::update(void)
 {
-	_chestRC = RectMake(CAMERAMANAGER->getDisplayCenterX() - _chestImage->getFrameWidth(), CAMERAMANAGER->getDisplayCenterY() - _chestImage->getFrameHeight(), _chestImage->getFrameWidth(), _chestImage->getFrameHeight());
+	_outsideRcWidth = { 0, 768 - CAMERAMANAGER->getCameraRect().top, WINSIZE_X, WINSIZE_Y };
+	_outsideRcLength = { 1008 - CAMERAMANAGER->getCameraRect().left, 0, WINSIZE_X, WINSIZE_Y };
+
 	if (_chestEventObj->getIsExcute()) openChest();
 }
 
@@ -49,21 +52,23 @@ void ChestMap::render(void)
 		- CAMERAMANAGER->getCameraRect().left,
 		-CAMERAMANAGER->getCameraRect().top);
 
+	Rectangle(getMemDC(), _chestEventRc.left, _chestEventRc.top, _chestEventRc.right, _chestEventRc.bottom);
+
 	_chestImage->frameRender(getMemDC(),
-		CAMERAMANAGER->getDisplayCenterX() - _chestImage->getFrameWidth() - CAMERAMANAGER->getCameraRect().left,
-		CAMERAMANAGER->getDisplayCenterY() - _chestImage->getFrameHeight()- CAMERAMANAGER->getCameraRect().top, 0, _frameY);
+		CAMERAMANAGER->getDisplayCenterX() - _chestImage->getFrameWidth() - CAMERAMANAGER->getCameraRect().left + 65,
+		CAMERAMANAGER->getDisplayCenterY() - _chestImage->getFrameHeight()- CAMERAMANAGER->getCameraRect().top + 210, 0, _frameY);
 
 	if (!_connectedMap[0] || !_clear) _leftWall->render(getMemDC(),
 		0 - CAMERAMANAGER->getCameraRect().left,
 		52 - CAMERAMANAGER->getCameraRect().top);
 	if (!_connectedMap[1] || !_clear) _upWall->render(getMemDC(),
-		CAMERAMANAGER->getDisplayCenterX() - 180- -CAMERAMANAGER->getCameraRect().left,
+		CAMERAMANAGER->getDisplayCenterX() - 80 - CAMERAMANAGER->getCameraRect().left,
 		-150 -CAMERAMANAGER->getCameraRect().top);
 	if (!_connectedMap[2] || !_clear) _rightWall->render(getMemDC(),
 		728 - CAMERAMANAGER->getCameraRect().left,
 		52 -CAMERAMANAGER->getCameraRect().top);
 	if (!_connectedMap[3] || !_clear) _downWall->render(getMemDC(),
-		CAMERAMANAGER->getDisplayCenterX() - 170 - CAMERAMANAGER->getCameraRect().left,
+		CAMERAMANAGER->getDisplayCenterX() - 92 - CAMERAMANAGER->getCameraRect().left,
 		_image->getHeight() - 240 -CAMERAMANAGER->getCameraRect().top);
 
 }

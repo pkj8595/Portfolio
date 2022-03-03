@@ -8,6 +8,8 @@
 #include "Snake.h"
 #include "Rafflesia.h"
 #include "ForestFairy.h"
+#include "MushMan.h"
+#include "Mushroom.h"
 #include "ItemSpawner.h"
 
 bool EnemyManager::checkClear()
@@ -41,13 +43,12 @@ HRESULT EnemyManager::init(void)
 	IMAGEMANAGER->addFrameImage("Snake", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Snake.bmp", 144, 624, 3, 13, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("Rafflesia", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Rafflesia.bmp", 240, 549, 3, 9, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("ForestFairy", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Forestfairy.bmp", 168, 930, 3, 10, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addFrameImage("MushMan", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Mushman.bmp", 384, 550, 8, 10, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("Mushroom", "Resource/Images/Lucie/CompleteImg/Enemy/Monster/Mushroom.bmp", 13, 13, true, RGB(255, 0, 255));
 
 	IMAGEMANAGER->addFrameImage("KingSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 1080, 7560, 3, 21, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addFrameImage("BigSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 576, 4032, 3, 21, true, RGB(255, 0, 255));
 	
-	
-	
-
 
 	//미니언 생성
 
@@ -102,7 +103,7 @@ void EnemyManager::render(void)
 
 void EnemyManager::setMinion(void)
 {
-	/*int temp = RND->getInt(3);
+	int temp = RND->getInt(4);
 	switch (temp)
 	{
 	case 0: {
@@ -120,6 +121,13 @@ void EnemyManager::setMinion(void)
 		slime2 = new Slime;
 		slime2->init("Slime", PointMake(CAMERAMANAGER->getDisplayCenterX() - 50, CAMERAMANAGER->getDisplayCenterY() - 50));
 		_vMinion.push_back(slime2);
+
+		Enemy* forestFairy;
+		forestFairy = new ForestFairy;
+		forestFairy->init("ForestFairy",
+			PointMake(CAMERAMANAGER->getDisplayCenterX() + 70,
+				CAMERAMANAGER->getDisplayCenterY()));
+		_vMinion.push_back(forestFairy);
 	}break;
 
 	case 1: {
@@ -132,6 +140,13 @@ void EnemyManager::setMinion(void)
 		snake = new Snake;
 		snake->init("Snake", PointMake(CAMERAMANAGER->getDisplayCenterX() - 100, CAMERAMANAGER->getDisplayCenterY()));
 		_vMinion.push_back(snake);
+
+		Enemy* forestFairy;
+		forestFairy = new ForestFairy;
+		forestFairy->init("ForestFairy",
+			PointMake(CAMERAMANAGER->getDisplayCenterX() + 70,
+				CAMERAMANAGER->getDisplayCenterY()));
+		_vMinion.push_back(forestFairy);
 	} break;
 
 	case 2: {
@@ -144,20 +159,30 @@ void EnemyManager::setMinion(void)
 		snake2 = new Snake;
 		snake2->init("Snake", PointMake(CAMERAMANAGER->getDisplayCenterX() - 100, CAMERAMANAGER->getDisplayCenterY()));
 		_vMinion.push_back(snake2);
+
+		Enemy* forestFairy;
+		forestFairy = new ForestFairy;
+		forestFairy->init("ForestFairy",
+			PointMake(CAMERAMANAGER->getDisplayCenterX() + 70,
+				CAMERAMANAGER->getDisplayCenterY()));
+		_vMinion.push_back(forestFairy);
 	} break;
-	}*/
 
-	//Enemy* rafflesia;
-	//rafflesia = new Rafflesia;
-	//rafflesia->init("Rafflesia", PointMake(CAMERAMANAGER->getDisplayCenterX() - 150, CAMERAMANAGER->getDisplayCenterY() + 30));
-	//_vMinion.push_back(rafflesia);
+	case 3: {
+		Enemy* mushman;
+		mushman = new MushMan;
+		mushman->init("MushMan", PointMake(CAMERAMANAGER->getDisplayCenterX() - 30,
+			CAMERAMANAGER->getDisplayCenterY() + 150));
+		_vMinion.push_back(mushman);
 
-	Enemy* forestFairy;
-	forestFairy = new ForestFairy;
-	forestFairy->init("ForestFairy",
-		PointMake(CAMERAMANAGER->getDisplayCenterX(),
-			CAMERAMANAGER->getDisplayCenterY() - 100));
-	_vMinion.push_back(forestFairy);
+		Enemy* forestFairy;
+		forestFairy = new ForestFairy;
+		forestFairy->init("ForestFairy",
+			PointMake(CAMERAMANAGER->getDisplayCenterX() + 70,
+				CAMERAMANAGER->getDisplayCenterY()));
+		_vMinion.push_back(forestFairy);
+	} break;
+	}
 }
 
 void EnemyManager::setBoss(void)
@@ -191,7 +216,6 @@ void EnemyManager::setSlime(int x, int y)
 	slime = new Slime;
 	slime->init("Slime", PointMake(x + 10, y));
 	_vMinion.push_back(slime);
-	Enemy* slime2;
 
 	Enemy* slime3;
 	slime3 = new Slime;

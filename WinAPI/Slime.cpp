@@ -76,7 +76,7 @@ void Slime::update(void)
 	{
 		if (_moveCheck)
 			pursuePlayer();
-
+	
 		//공격 사거리 안으로 들어왔을 경우
 		if (_playerDistance < _attackRange)
 		{
@@ -89,7 +89,6 @@ void Slime::update(void)
 		//랜덤 좌표 생성
 		randomPosCreate();
 	}
-
 
 	_rc = RectMakeCenter(_x + _image->getFrameWidth()/2, _y+_image->getFrameHeight()/2 + 20, _image->getFrameWidth() / 2, _image->getFrameHeight() / 2);
 
@@ -119,7 +118,6 @@ void Slime::draw(void)
 		_currentFrameX, _currentFrameY);
 	_threeDirectionBullet->render();
 	_circleBullet->render();
-	////Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
 }
 
 void Slime::frame()
@@ -166,7 +164,7 @@ void Slime::frame()
 			_currentFrameY = 4;
 			break;
 		}
-		if (!playerCheck())
+		//if (!playerCheck())
 			randomMove();
 		_moveCheck = true;
 		break;
@@ -273,18 +271,6 @@ void Slime::pursuePlayer()
 		_direction = SLIMEDIRECTION::SL_RIGHT;
 	}
 
-	////위
-	//if (_playerPos.y > CAMERAMANAGER->getDisplayCenterY() && _playerPos.y > _y)
-	//{
-	//	_direction = SLIMEDIRECTION::SM_UP;
-	//}
-
-	////아래
-	//if (_playerPos.y < CAMERAMANAGER->getDisplayCenterY() && _playerPos.y < _y)
-	//{
-	//	_direction = SLIMEDIRECTION::SM_DOWN;
-	//}
-
 	//플레이어 방향으로 쫓아간다.
 	//_state = SLIMESTATE::SM_MOVE;
 	_angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
@@ -294,12 +280,12 @@ void Slime::pursuePlayer()
 
 void Slime::randomMove()
 {
-	if (MONSTER_MOVE_RANGE_LEFT < _x &&  _rc.left < MONSTER_MOVE_RANGE_RIGHT)
+	if (MONSTER_MOVE_RANGE_LEFT < _x  &&  _x < MONSTER_MOVE_RANGE_RIGHT)
 	{
-		_x +=  _randomX * _speed;
+		_x += _randomX * _speed;
 	}
 
-	if (MONSTER_MOVE_RANGE_UP < _rc.top && _rc.top < MONSTER_MOVE_RANGE_DOWN)
+	if (MONSTER_MOVE_RANGE_UP < _y && _y < MONSTER_MOVE_RANGE_DOWN)
 	{
 		_y += _randomY * _speed;
 	}

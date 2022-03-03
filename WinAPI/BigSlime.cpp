@@ -79,12 +79,12 @@ void BigSlime::update(void)
 
 void BigSlime::render(void)
 {
-	_image->frameRender(getMemDC(), _rc.left, _rc.top, _frameX, _frameY);
+	_image->frameRender(getMemDC(), _rc.left - CAMERAMANAGER->getCameraRect().left, _rc.top - CAMERAMANAGER->getCameraRect().top, _frameX, _frameY);
 
 	_normalBullet->render();
 	_bubbleBullet->render();
 
-	hpRender(280, 100 + _hpY);
+	hpRender(280, 20 + _hpY);
 }
 
 STObservedData BigSlime::getRectUpdate()

@@ -67,7 +67,7 @@ void Snake::update(void)
 			{
 				attack();
 			}
-
+		
 			_x += cosf(_angle) * _speed;
 			_y += -sinf(_angle) * _speed;
 		}
@@ -103,7 +103,7 @@ void Snake::draw(void)
 		frame();
 		_image->frameRender(getMemDC(),
 			_rc.left - CAMERAMANAGER->getCameraRect().left,
-			_rc.top - CAMERAMANAGER->getCameraRect().left,
+			_rc.top - CAMERAMANAGER->getCameraRect().top,
 			_currentFrameX, _currentFrameY);
 	}
 }
@@ -184,12 +184,12 @@ void Snake::randomPosCreate()
 
 void Snake::randomMove()
 {
-	if (MONSTER_MOVE_RANGE_LEFT <= _x &&  _rc.left <= MONSTER_MOVE_RANGE_RIGHT)
+	if (MONSTER_MOVE_RANGE_LEFT < _x  &&  _x < MONSTER_MOVE_RANGE_RIGHT)
 	{
 		_x += _randomX * _speed;
 	}
 
-	if (MONSTER_MOVE_RANGE_UP <= _rc.top && _rc.top <= MONSTER_MOVE_RANGE_DOWN)
+	if (MONSTER_MOVE_RANGE_UP < _y && _y < MONSTER_MOVE_RANGE_DOWN)
 	{
 		_y += _randomY * _speed;
 	}

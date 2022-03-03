@@ -232,7 +232,7 @@ void Inventory::pushItem(Item* item)
 		}
 		RECT temp = RectMake(
 			ABILITY_IMG_X + (_abilutyItemCount* ABILITY_IMG_OFFSET),
-			ABILITY_IMG_Y,
+			CAMERAMANAGER->getDisplayAreaBottom()-50,
 			32, 32);
 		_vItem.push_back(make_pair(item, temp));
 		updatePushItemMassege(item);
@@ -328,7 +328,7 @@ void Inventory::showAbilityItem()
 
 		_itemManager->getItemImgRender(getMemDC(), (*_viItem).first->_imgNum,
 			ABILITY_IMG_X + (countAbility* ABILITY_IMG_OFFSET),
-			ABILITY_IMG_Y);
+			(CAMERAMANAGER->getDisplayAreaBottom() - 50));
 		countAbility++;
 	}
 }
