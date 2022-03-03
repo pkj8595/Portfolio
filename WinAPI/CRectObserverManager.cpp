@@ -227,12 +227,19 @@ void CRectObserverManager::getEventFormObserved()
 			}
 			else if (*obData.typeKey == EventObservedType::ANVIL)
 			{
-				if (KEYMANAGER->isOnceKeyDown('E'))
+				if (!_textSystemManager->isShowText)
 				{
-					_textSystemManager->AnvilLog(5);
-					_textSystemManager->isShowText = true;
-					_textSystemManager->isAnvilOpen = true;
-					_textSystemManager->isAnvilCol = true;
+					if (KEYMANAGER->isOnceKeyDown('E'))
+					{
+						_textSystemManager->AnvilLog(5);
+						_textSystemManager->isShowText = true;
+						_textSystemManager->isAnvilOpen = true;
+						_textSystemManager->isAnvilCol = true;
+					}
+				}
+				else if (KEYMANAGER->isOnceKeyDown('E'))
+				{
+					//³ª°¡±â
 				}
 				if (_textSystemManager->isrepairbuy)
 				{
@@ -241,12 +248,14 @@ void CRectObserverManager::getEventFormObserved()
 						_textSystemManager->AnvilLog(6);
 						_textSystemManager->isrepairbuy = false;
 						_textSystemManager->isAnvilCol = false;
-
 						break;
+					}
+					else
+					{
+
 					}
 				}
 			}
-
 		}
 	}
 }
