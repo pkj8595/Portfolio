@@ -2,7 +2,7 @@
 #include "MapManager.h"
 HRESULT MapManager::init(int mapAmount, int stage)
 {
-	int i = 0;
+	CAMERAMANAGER->setCurrentMap(&_currentMap);
 	IMAGEMANAGER->addImage("Minimap_Off", "Resource/Images/Lucie/CompleteImg/miniMap/minimap_cell_off.bmp", 30, 30, true, RGB(255, 0, 255));
 	IMAGEMANAGER->addImage("Minimap_Current", "Resource/Images/Lucie/CompleteImg/miniMap/minimap_cell_shop.bmp", 30, 30, true, RGB(255, 0, 255));
 	_currentMap = nullptr;

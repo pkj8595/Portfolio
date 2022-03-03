@@ -54,10 +54,9 @@ void PlayScene::update(void)
 	_enemyManager->update();
 	_player->update();
 	_effectManager->update();
-
 	if (KEYMANAGER->isOnceKeyDown(VK_F7))
 	{
-		_itemSpawner->createItem(CENTER_X, CENTER_Y, true);
+		_itemSpawner->createItem(CAMERAMANAGER->getDisplayCenterX(), CAMERAMANAGER->getDisplayCenterY(), true);
 	}
 
 	pixelCollision();
@@ -67,7 +66,7 @@ void PlayScene::update(void)
 	changeMap();
 	checkPlayerEscapeWithoutClear();
 
-	// 주석 제거 금지
+	// 주석 제거 금지i
 	//if (_showBossEffect)
 	//{
 	//	if (_bossEffectTime + 0.01f < TIMEMANAGER->getWorldTime())
@@ -85,6 +84,7 @@ void PlayScene::update(void)
 	//}
 
 	checkDead();
+	CAMERAMANAGER->update();
 }
 
 void PlayScene::render(void)
@@ -97,7 +97,6 @@ void PlayScene::render(void)
 	_effectManager->render();
 	_mapManager->getCurrentMap()->printOutsideRC();
 
-	//UI
 	if (_mapManager->isMinimapToggle()) _mapManager->printTempMinimap();
 	_player->printUI();
 	_player->printInventory();
@@ -108,6 +107,7 @@ void PlayScene::render(void)
 	if (_fadeoutAlpha > 0) _fadeoutImage->alphaRender(getMemDC(), _fadeoutAlpha);
 	if (_startAlpha > 0) _fadeoutImage->alphaRender(getMemDC(), _startAlpha);
 
+	
 	// 주석 제거 금지
 	//if (_showBossEffect)
 	//{
@@ -122,6 +122,7 @@ void PlayScene::render(void)
 		_gameoverImage->alphaRender(getMemDC(), _deadAlpha);
 	}
 }
+
 
 PlayScene::PlayScene() : _stageNum(0) {
 }

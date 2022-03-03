@@ -12,7 +12,7 @@
 class MainGame : public GameNode
 {
 private:
-
+	inline void addSounds(void);
 public:
 	virtual HRESULT init(void);
 	virtual void release(void);

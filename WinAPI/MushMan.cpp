@@ -50,7 +50,7 @@ void MushMan::update(void)
 	if (!_deadForOb)
 	{
 		// 이미 심어져 있는 경우를 제외하고 10초마다 한번씩 심는다
-		if (3.f + _plantMushroomWorldTime <= TIMEMANAGER->getWorldTime() && !_mushroomCreateCheck)
+		if (10.f + _plantMushroomWorldTime <= TIMEMANAGER->getWorldTime() && !_mushroomCreateCheck)
 		{
 			_plantMushroomWorldTime = TIMEMANAGER->getWorldTime();
 			_state = MUSHMANSTATE::MU_ATTACK;
@@ -76,7 +76,7 @@ void MushMan::update(void)
 				_mushroomCreateCheck = false;
 			}
 			else
-				_mushroom->fire(_playerX ,_playerY,_angle);
+				_mushroom->fire();
 		}
 	}
 	else
@@ -267,7 +267,6 @@ void MushMan::createBullet()
 		_mushroom = new Mushroom;
 		_mushroom->init("Mushroom");
 		_mushroom->setPos(_x, _y + 13);
-		_mushroom->setAngle(getAngle(_mushroom->getX(), _mushroom->getY(), _playerPos.x, _playerPos.y));
 		_mushroomRenderCheck = true;
 		_mushroomCreateCheck = true; //버섯 심음
 	}

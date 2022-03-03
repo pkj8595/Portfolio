@@ -84,6 +84,7 @@ void CRectObserverManager::getRectFromObserved()
 					{
 						if (*obData.magic)
 						{
+							TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/skillhit.wav");
 							_effectManager->createEffect("SkillHit", obDataCompare.rc, 0.01f, -60, -55);
 							_damageManager->createDamage((int)(*obData.damage), true,
 								(*obDataCompare.rc).left + (((*obDataCompare.rc).right - (*obDataCompare.rc).left) / 2),
@@ -91,6 +92,7 @@ void CRectObserverManager::getRectFromObserved()
 						}
 						else
 						{
+							TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/mobhit.wav");
 							_effectManager->createEffect("effect2", (*obDataCompare.rc));
 							_damageManager->createDamage((int)(*obData.damage), false,
 								(*obDataCompare.rc).left + (((*obDataCompare.rc).right - (*obDataCompare.rc).left) / 2),
@@ -217,7 +219,8 @@ void CRectObserverManager::getEventFormObserved()
 			{
 				if (KEYMANAGER->isOnceKeyDown('E'))
 				{
-					ItemSpawner::getSingleton()->createChestItem(CENTER_X, CENTER_Y,true);
+					ItemSpawner::getSingleton()->createChestItem(CAMERAMANAGER->getDisplayCenterX(),
+						CAMERAMANAGER->getDisplayCenterY(),true);
 					(*_viEvent)->collideEventObject(obData);
 					break;
 				}

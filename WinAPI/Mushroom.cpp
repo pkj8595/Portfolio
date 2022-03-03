@@ -21,8 +21,8 @@ HRESULT Mushroom::init(const char* imageName)
 	_deadForOb = false;
 	RECTOBSERVERMANAGER->registerObserved(this);
 
-	_bullet = new GuidedBullet;
-	_bullet->init(20, 200);
+	_bullet = new CircleMissile;
+	_bullet->init(10, 200);
 	
 	return S_OK;
 }
@@ -65,15 +65,13 @@ void Mushroom::animation(void)
 {
 }
 
-void Mushroom::fire(float playerX, float playerY, float angle)
+void Mushroom::fire()
 {
-	//if (3.f + _attackTime <= TIMEMANAGER->getWorldTime())
-	//{
-	//	_attackTime = TIMEMANAGER->getWorldTime();
-	for(int i =0 ; i < 20; i++)
-		_bullet->fire(_x + i * 50, _y, angle,PI /45.f);
-		//_bullet2->fire(_x, _y, angle);
-	//}
+	if (3.f + _attackTime <= TIMEMANAGER->getWorldTime())
+	{
+		_attackTime = TIMEMANAGER->getWorldTime();
+		_bullet->fire(_x, _y);
+	}
 }
 
 STObservedData Mushroom::getRectUpdate()

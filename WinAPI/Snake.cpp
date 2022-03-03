@@ -101,7 +101,10 @@ void Snake::draw(void)
 	if (_isActive)
 	{
 		frame();
-		_image->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX, _currentFrameY);
+		_image->frameRender(getMemDC(),
+			_rc.left - CAMERAMANAGER->getCameraRect().left,
+			_rc.top - CAMERAMANAGER->getCameraRect().left,
+			_currentFrameX, _currentFrameY);
 	}
 }
 

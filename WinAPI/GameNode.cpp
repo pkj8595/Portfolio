@@ -27,24 +27,11 @@ HRESULT GameNode::init(bool managerInit)
 		TEXTDATAMANAGER->init();
 		RECTOBSERVERMANAGER->init();
 		SCENEMANAGER->init();
-
+		CAMERAMANAGER->init();
 	}
 
-	//확대된 이미지
-	LPRECT lpRect = &RectMake(0, 0, 0, 0);
-	SetMapMode(_hdc, MM_ISOTROPIC);
-	SetWindowExtEx(_hdc, 400, 300, NULL);
-	GetClientRect(_hWnd, lpRect);
-	SetViewportExtEx(_hdc, lpRect->right, lpRect->bottom, NULL);
-
-	//원래 이미지 
-	SetMapMode(_hdc, MM_TEXT);
-	GetClientRect(_hWnd, lpRect);
-	SetWindowExtEx(_hdc, lpRect->right, lpRect->bottom, NULL);
-	SetViewportExtEx(_hdc, lpRect->right, lpRect->bottom, NULL);
-
-
-	
+	//CAMERAMANAGER->startMappingMode(getHDC());
+	//CAMERAMANAGER->startMappingMode(_hdc);
 
 
 	return S_OK;
@@ -75,6 +62,9 @@ void GameNode::release(void)
 		RECTOBSERVERMANAGER->releaseSingleton();
 
 		SCENEMANAGER->release();
+
+		CAMERAMANAGER->release();
+		CAMERAMANAGER->releaseSingleton();
 
 	}
 
@@ -108,11 +98,14 @@ LRESULT GameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 	case WM_PAINT:	
 		hdc = BeginPaint(hWnd, &ps);
 		//this->render();
+		cout << "WM_PAINT" << endl;
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_MOUSEMOVE:
 		_ptMouse.x = LOWORD(lParam);
 		_ptMouse.y = HIWORD(lParam);
+		DPtoLP(getHDC(), &_ptMouse, 1);
+
 		break;
 	case WM_LBUTTONDOWN:	
 
@@ -126,6 +119,29 @@ LRESULT GameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 
 		case VK_ESCAPE:		
 			PostMessage(hWnd, WM_DESTROY, 0, 0);
+			break;
+		}
+		break;
+	case WM_COMMAND:
+		switch (wParam)
+		{
+			case 0x0001: 
+			{
+				RECT cameraRc = RectMake(0, 0, 0, 0);
+				GetClientRect(_hWnd, &cameraRc);
+				SetWindowExtEx(getHDC(), 960, 540, NULL);
+				SetViewportExtEx(getHDC(), cameraRc.right, cameraRc.bottom, NULL);
+				break;
+			}
+			case 0x0002: 
+			{
+				RECT cameraRc = RectMake(0, 0, 0, 0);
+				GetClientRect(_hWnd, &cameraRc);
+				SetWindowExtEx(getHDC(), cameraRc.right, cameraRc.bottom, NULL);
+				SetViewportExtEx(getHDC(), cameraRc.right, cameraRc.bottom, NULL);
+				break;
+			}
+		default:
 			break;
 		}
 		break;

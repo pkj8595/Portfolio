@@ -306,6 +306,7 @@
     <ClCompile Include="PlayerAfterImage.cpp">
       <Filter>LHW\Player</Filter>
     </ClCompile>
+    <ClCompile Include="CameraManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommonMacroFunction.h">
@@ -512,6 +513,7 @@
     <ClInclude Include="PlayerAfterImage.h">
       <Filter>LHW\Player</Filter>
     </ClInclude>
+    <ClInclude Include="CameraManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Question.txt">

@@ -25,5 +25,5 @@ void BossMap::update(void)
 
 void BossMap::render(void)
 {
-	_image->render(getMemDC());
+	_image->render(getMemDC(), -CAMERAMANAGER->getCameraRect().left, -CAMERAMANAGER->getCameraRect().top);
 }
