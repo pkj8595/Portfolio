@@ -24,6 +24,29 @@ void DefaultMap::release(void)
 
 void DefaultMap::update(void)
 {
+	switch (_rndMapNum)
+	{
+	case 0: {
+		_outsideRcWidth = { 0, 768 - CAMERAMANAGER->getCameraRect().top, WINSIZE_X, WINSIZE_Y };
+		_outsideRcLength = { 1008 - CAMERAMANAGER->getCameraRect().left, 0, WINSIZE_X, WINSIZE_Y };
+	} break;
+	case 1: {
+		_outsideRcWidth = { 0, 768 - CAMERAMANAGER->getCameraRect().top, WINSIZE_X, WINSIZE_Y };
+		_outsideRcLength = { 1008 - CAMERAMANAGER->getCameraRect().left, 0, WINSIZE_X, WINSIZE_Y };
+	} break;
+	case 2: {
+		_outsideRcWidth = { 0, 768 - CAMERAMANAGER->getCameraRect().top, WINSIZE_X, WINSIZE_Y };
+		_outsideRcLength = { 1008 - CAMERAMANAGER->getCameraRect().left, 0, WINSIZE_X, WINSIZE_Y };
+	} break;
+	case 3: {
+		_outsideRcWidth = { 0, 672 - CAMERAMANAGER->getCameraRect().top, WINSIZE_X, WINSIZE_Y };
+		_outsideRcLength = { 1008 - CAMERAMANAGER->getCameraRect().left, 0, WINSIZE_X, WINSIZE_Y };
+	} break;
+	case 4: {
+		_outsideRcWidth = { 0, 768 - CAMERAMANAGER->getCameraRect().top, WINSIZE_X, WINSIZE_Y };
+		_outsideRcLength = { 1008 - CAMERAMANAGER->getCameraRect().left, 0, WINSIZE_X, WINSIZE_Y };
+	} break;
+	}
 	if (KEYMANAGER->isOnceKeyDown('Z'))
 	{
 		_pixel = !_pixel;
@@ -41,7 +64,7 @@ void DefaultMap::render(void)
 		50 + _leftWallImageFixY -CAMERAMANAGER->getCameraRect().top);
 
 	if(!_connectedMap[1] || !_clear) _upWall->render(getMemDC(),
-		CAMERAMANAGER->getDisplayCenterX() - 180 - CAMERAMANAGER->getCameraRect().left,
+		CAMERAMANAGER->getDisplayCenterX() - 100 - CAMERAMANAGER->getCameraRect().left,
 		-150 - CAMERAMANAGER->getCameraRect().top);
 
 	if (!_connectedMap[2] || !_clear) _rightWall->render(getMemDC(),
@@ -49,7 +72,7 @@ void DefaultMap::render(void)
 		50 + _rightWallImageFixY - CAMERAMANAGER->getCameraRect().top);
 
 	if(!_connectedMap[3] || !_clear) _downWall->render(getMemDC(),
-		CAMERAMANAGER->getDisplayCenterX() - 170 - CAMERAMANAGER->getCameraRect().left,
+		80 + CAMERAMANAGER->getDisplayCenterX() - 170 - CAMERAMANAGER->getCameraRect().left,
 		_image->getHeight() - 240 - CAMERAMANAGER->getCameraRect().top);
 
 	if (_pixel) _pixelCollisionImage->render(getMemDC(),

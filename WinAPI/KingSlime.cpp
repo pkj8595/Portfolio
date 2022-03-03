@@ -85,12 +85,12 @@ void KingSlime::update(void)
 
 void KingSlime::render(void)
 {
-	_image->frameRender(getMemDC(), _rc.left, _rc.top, _frameX, _frameY);
+	_image->frameRender(getMemDC(), _rc.left - CAMERAMANAGER->getCameraRect().left, _rc.top - CAMERAMANAGER->getCameraRect().top, _frameX, _frameY);
 
 	_normalBullet->render();
 	_bubbleBullet->render();
 
-	hpRender(280, 100);
+	hpRender(280, 50);
 	if (_bossNameFadeIn || (!_bossNameFadeIn && _bossNameAlpha > 0))_bossNameImage->alphaRender(getMemDC(), CAMERAMANAGER->getDisplayCenterX() - 75, 50, _bossNameAlpha);
 }
 
