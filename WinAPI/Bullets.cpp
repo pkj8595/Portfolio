@@ -1102,7 +1102,11 @@ void GuidedBullet::draw(void)
 {
 	for (_viBullet = _vBullet.begin(); _viBullet != _vBullet.end(); ++_viBullet)
 	{
-		if ((*_viBullet)->type == ObservedType::MINION_MISSILE) (*_viBullet)->img->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
-		else (*_viBullet)->reflectImg->render(getMemDC(), (*_viBullet)->rc.left, (*_viBullet)->rc.top);
+		if ((*_viBullet)->type == ObservedType::MINION_MISSILE) (*_viBullet)->img->render(getMemDC(), 
+			(*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left, 
+			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
+
+		else (*_viBullet)->reflectImg->render(getMemDC(), (*_viBullet)->rc.left - CAMERAMANAGER->getCameraRect().left, 
+			(*_viBullet)->rc.top - CAMERAMANAGER->getCameraRect().top);
 	}
 }

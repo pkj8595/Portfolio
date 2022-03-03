@@ -103,7 +103,10 @@ void MushMan::move(void)
 
 void MushMan::draw(void)
 {
-	_image->frameRender(getMemDC(), _rc.left, _rc.top, _currentFrameX, _currentFrameY);
+	_image->frameRender(getMemDC(), 
+						_rc.left - CAMERAMANAGER->getCameraRect().left, 
+						_rc.top - CAMERAMANAGER->getCameraRect().top, 
+						_currentFrameX, _currentFrameY);
 }
 
 void MushMan::animation(void)
@@ -118,7 +121,7 @@ void MushMan::animation(void)
 			_currentFrameY = 8;
 			_maxFrame = 3;
 
-			if (6.f + _deadTime < TIMEMANAGER->getWorldTime())
+			if (8.f + _deadTime < TIMEMANAGER->getWorldTime())
 			{
 				_isActive = false;
 			}
@@ -249,12 +252,12 @@ void MushMan::randomPosCreate()
 
 void MushMan::randomMove()
 {
-	if (MONSTER_MOVE_RANGE_LEFT <= _x && _rc.left <= MONSTER_MOVE_RANGE_RIGHT)
+	if (MONSTER_MOVE_RANGE_LEFT <= _x && _x <= MONSTER_MOVE_RANGE_RIGHT)
 	{
 		_x += _randomX * _speed;
 	}
 
-	if (MONSTER_MOVE_RANGE_UP <= _rc.top && _rc.top <= MONSTER_MOVE_RANGE_DOWN)
+	if (MONSTER_MOVE_RANGE_UP <= _y && _y <= MONSTER_MOVE_RANGE_DOWN)
 	{
 		_y += _randomY * _speed;
 	}

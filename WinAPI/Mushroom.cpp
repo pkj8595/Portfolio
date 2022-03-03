@@ -22,7 +22,7 @@ HRESULT Mushroom::init(const char* imageName)
 	RECTOBSERVERMANAGER->registerObserved(this);
 
 	_bullet = new CircleMissile;
-	_bullet->init(10, 200);
+	_bullet->init(11, 500);
 	
 	return S_OK;
 }
@@ -58,7 +58,7 @@ void Mushroom::move(void)
 
 void Mushroom::draw(void)
 {
-	_image->render(getMemDC(), _rc.left, _rc.top);
+	_image->render(getMemDC(), _rc.left - CAMERAMANAGER->getCameraRect().left, _rc.top - CAMERAMANAGER->getCameraRect().top);
 }
 
 void Mushroom::animation(void)
