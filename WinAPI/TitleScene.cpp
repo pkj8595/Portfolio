@@ -34,6 +34,7 @@ void TitleScene::update(void)
 		_start->setFrameY(1);
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
+			TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 			_isStart = true;
 		}
 		
@@ -45,6 +46,8 @@ void TitleScene::update(void)
 		_exit->setFrameY(1);
 		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 		{
+			TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
+			Sleep(500);
 			PostQuitMessage(0);
 		}
 	}

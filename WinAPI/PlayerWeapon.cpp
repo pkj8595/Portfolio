@@ -289,6 +289,7 @@ void BowWeapon::fire(float damage, float x, float y, float angle)
 	weapon->y = weapon->fireY = y;
 	weapon->rc = RectMakeCenter(weapon->x, weapon->y, weapon->img->getWidth(), weapon->img->getHeight());
 	_vWeapon.push_back(weapon);
+	TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/bow.wav");
 	weapon->init();
 }
 

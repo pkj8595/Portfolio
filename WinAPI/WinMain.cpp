@@ -4,7 +4,7 @@
 //=======================
 // # 전역변수 #
 //=======================
-HINSTANCE _hInstance;     
+HINSTANCE _hInstance;
 //윈도우 핸들
 HWND _hWnd;
 POINT _ptMouse = { 0,0 };

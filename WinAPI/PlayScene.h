@@ -20,6 +20,7 @@ private:
 	EffectManager* _effectManager;
 	Player* _player;
 	ItemSpawner* _itemSpawner;
+	ItemManager* _itemmanager;
 	int _stageNum;
 	bool _isChanging;
 

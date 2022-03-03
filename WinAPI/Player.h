@@ -12,7 +12,7 @@ class Player : public GameNode, public IRectObserved
 {
 private:
 	EffectManager* _efm;
-
+	TextSystemManager* _tsm;
 	PlayerAfterImage* _pai;
 	float _afterImageTimer;
 	int _afterImageStartFrame;

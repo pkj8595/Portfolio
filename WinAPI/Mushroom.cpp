@@ -23,7 +23,7 @@ HRESULT Mushroom::init(const char* imageName)
 
 	_bullet = new GuidedBullet;
 	_bullet->init(11, 500);
-	
+
 	return S_OK;
 }
 

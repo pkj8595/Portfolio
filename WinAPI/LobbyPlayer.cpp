@@ -1,6 +1,5 @@
 #include "Stdafx.h"
 #include "LobbyPlayer.h"
-
 #include "Stdafx.h"
 #include "Player.h"
 
@@ -34,8 +33,6 @@ HRESULT LobbyPlayer::init(void)
 	_status._stamina = _status._maxStamina = 100.0f;
 	_totalStatus = _status;
 
-
-
 	_frameTick = TIMEMANAGER->getWorldTime();
 	_startFrame = _endFrame = 4;
 
@@ -51,9 +48,7 @@ HRESULT LobbyPlayer::init(void)
 	_statusUI = new PlayerStatusUI;
 	_statusUI->init(&_totalStatus, &_level);
 
-	_tsm = new TextSystemManager;
-	_tsm->init();
-	_tsm->iscollBox = false;
+	
 
 	_inventory = new Inventory;
 	_inventory->init();
@@ -69,7 +64,6 @@ HRESULT LobbyPlayer::init(void)
 void LobbyPlayer::release(void)
 {
 	_inventory->release();
-	_tsm->release();
 }
 
 void LobbyPlayer::update(void)
@@ -88,7 +82,6 @@ void LobbyPlayer::update(void)
 
 	healStamina();
 
-	_tsm->update();
 	if (!_isTextShow)
 	{
 		move();
@@ -106,7 +99,9 @@ void LobbyPlayer::update(void)
 
 void LobbyPlayer::render(void)
 {
-	_image->frameRender(getMemDC(), _x, _y);
+	_image->frameRender(getMemDC(),
+		_x - CAMERAMANAGER->getCameraRect().left,
+		_y - CAMERAMANAGER->getCameraRect().top);
 	_inventory->render();
 }
 

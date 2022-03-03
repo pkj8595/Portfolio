@@ -76,6 +76,15 @@
     <Filter Include="OJH">
       <UniqueIdentifier>{c97959c3-a0de-4ea5-a870-7caa1bf8b583}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Map">
+      <UniqueIdentifier>{c483dc4f-bec1-4669-b67b-24839a8bdf83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Player">
+      <UniqueIdentifier>{638216ce-a769-4bd9-885c-ec4c909362f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Map\MapType">
+      <UniqueIdentifier>{92d78c0a-56c1-44e0-824e-8f0def7cc963}</UniqueIdentifier>
+    </Filter>
     <Filter Include="PKJ">
       <UniqueIdentifier>{a1134bdf-b905-4b02-a048-ba775e56f202}</UniqueIdentifier>
     </Filter>
@@ -84,6 +93,9 @@
     </Filter>
     <Filter Include="LHW">
       <UniqueIdentifier>{95633ec0-0fc8-4c24-8fd6-b875fb5a1e9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PKJ">
+      <UniqueIdentifier>{a1134bdf-b905-4b02-a048-ba775e56f202}</UniqueIdentifier>
     </Filter>
     <Filter Include="LHW\Map">
       <UniqueIdentifier>{c483dc4f-bec1-4669-b67b-24839a8bdf83}</UniqueIdentifier>

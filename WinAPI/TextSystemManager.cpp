@@ -1,15 +1,17 @@
 #pragma once
 #include "Stdafx.h"
 #include "TextSystemManager.h"
+#include "Player.h"
+#include "LobbyPlayer.h"
 
 
 HRESULT TextSystemManager::init(void)
 {
-	_chatImage = IMAGEMANAGER->addImage("Talkbox","Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 850, 200, true, RGB(255, 0, 255));
-	_BoxchatImage = IMAGEMANAGER->addImage("WP_BoxTextBox", "Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 850, 250, true, RGB(255, 0, 255));
-	_nameImage = IMAGEMANAGER->addImage("Namebox", "Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 125, 65, true, RGB(255, 0, 255));
-	_selImage = IMAGEMANAGER->addImage("SelOne", "Resource/Images/Lucie/CompleteImg/UI/SelectBox.bmp", 180, 50, true, RGB(255, 0, 255));
-	_anvilnameImage = IMAGEMANAGER->addImage("AnvilNamebox", "Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 170, 65, true, RGB(255, 0, 255));
+	_chatImage = IMAGEMANAGER->addImage("Talkbox","Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 700, 170, true, RGB(255, 0, 255));
+	_BoxchatImage = IMAGEMANAGER->addImage("WP_BoxTextBox", "Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 800, 170, true, RGB(255, 0, 255));
+	_nameImage = IMAGEMANAGER->addImage("Namebox", "Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 125, 45, true, RGB(255, 0, 255));
+	_anvilnameImage = IMAGEMANAGER->addImage("AnvilNamebox", "Resource/Images/Lucie/CompleteImg/system/textBox.bmp", 200, 45, true, RGB(255, 0, 255));
+	_selImage = IMAGEMANAGER->addImage("SelOne", "Resource/Images/Lucie/CompleteImg/UI/SelectBox.bmp", 130, 30, true, RGB(255, 0, 255));
 
 	_textBufferCnt = 0;
 	_textindex = 0;
@@ -31,20 +33,22 @@ HRESULT TextSystemManager::init(void)
 	_text[5] = { L"", L"지금 그 무기를 수리할텐가?" };
 	_text[6] = { L"", L"자, 수리가 완료되었네." };
 
-	_chatRc = RectMake(WINSIZE_X*0.08, WINSIZE_Y*0.75, _chatImage->getWidth(), _chatImage->getHeight());
-	_chatWriteRc = RectMake(WINSIZE_X*0.1, WINSIZE_Y*0.77, _chatImage->getWidth(), _chatImage->getHeight());
-	_boxChatRc = RectMake(WINSIZE_X*0.08, WINSIZE_Y*0.72, _chatImage->getWidth(), _chatImage->getHeight());
-	_nameRc = RectMake(WINSIZE_X*0.06, WINSIZE_Y*0.68, _nameImage->getWidth(), _nameImage->getHeight());
-	_anvilNameRc = RectMake(WINSIZE_X*0.06, WINSIZE_Y*0.68, _anvilnameImage->getWidth(), _anvilnameImage->getHeight());
-
-	_shopsel_OneRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.82, _selImage->getWidth(), _selImage->getHeight());
-	_shopsel_TwoRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.88, _selImage->getWidth(), _selImage->getHeight());
-	_select_oneRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.79, _selImage->getWidth(), _selImage->getHeight());
-	_select_TwoRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.84, _selImage->getWidth(), _selImage->getHeight());
-	_select_ThrRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.89, _selImage->getWidth(), _selImage->getHeight());
-	_anvilsel_oneRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.84, _selImage->getWidth(), _selImage->getHeight());
-	_anvilsel_TwoRc = RectMake(WINSIZE_X*0.10, WINSIZE_Y*0.89, _selImage->getWidth(), _selImage->getHeight());
+	_textPosition = PointMake(1000, 550);
 	
+	_chatRc = RectMake(_textPosition.x*0.13, _textPosition.y*0.66, _chatImage->getWidth(), _chatImage->getHeight());
+	_chatWriteRc = RectMake(_textPosition.x*0.14, _textPosition.y*0.68, _chatImage->getWidth(), _chatImage->getHeight());
+	_boxChatRc = RectMake(_textPosition.x*0.08, _textPosition.y*0.66, _chatImage->getWidth(), _chatImage->getHeight());
+	_nameRc = RectMake(_textPosition.x*0.13, _textPosition.y*0.58, _nameImage->getWidth(), _nameImage->getHeight());
+	_anvilNameRc = RectMake(_textPosition.x*0.13, _textPosition.y*0.58, _anvilnameImage->getWidth(), _anvilnameImage->getHeight());
+
+	_shopsel_OneRc = RectMake(_textPosition.x*0.14, _textPosition.y*0.80, _selImage->getWidth(), _selImage->getHeight());
+	_shopsel_TwoRc = RectMake(_textPosition.x*0.14, _textPosition.y*0.86, _selImage->getWidth(), _selImage->getHeight());
+	_select_oneRc = RectMake(_textPosition.x*0.1, _textPosition.y*0.76, _selImage->getWidth(), _selImage->getHeight());
+	_select_TwoRc = RectMake(_textPosition.x*0.1, _textPosition.y*0.82, _selImage->getWidth(), _selImage->getHeight());
+	_select_ThrRc = RectMake(_textPosition.x*0.1, _textPosition.y*0.88, _selImage->getWidth(), _selImage->getHeight());
+	_anvilsel_oneRc = RectMake(_textPosition.x*0.14, _textPosition.y*0.80, _selImage->getWidth(), _selImage->getHeight());
+	_anvilsel_TwoRc = RectMake(_textPosition.x*0.14, _textPosition.y*0.86, _selImage->getWidth(), _selImage->getHeight());
+
 	return S_OK;
 }
 
@@ -103,6 +107,15 @@ void TextSystemManager::update(void)
 		if (PtInRect(&_select_oneRc, _ptMouse))
 		{
 			_selectOneAlpha = 230.0f;
+			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
+				weapon_Selectdata.clear();
+				weapon_Selectdata.push_back(_itoa(21, temp, 10));
+				TEXTDATAMANAGER->save("로비 무기 선택.text", weapon_Selectdata);
+				isShowText = false;
+				iscollBox = false;
+			}
 		}
 		else 
 		{ 
@@ -112,6 +125,15 @@ void TextSystemManager::update(void)
 		if (PtInRect(&_select_TwoRc, _ptMouse))
 		{
 			_selectTwoAlpha = 230.0f;
+			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
+				weapon_Selectdata.clear();
+				weapon_Selectdata.push_back(_itoa(24, temp, 10));
+				TEXTDATAMANAGER->save("로비 무기 선택.text", weapon_Selectdata);
+				isShowText = false;
+				iscollBox = false;
+			}
 		}
 		else
 		{
@@ -121,6 +143,13 @@ void TextSystemManager::update(void)
 		if (PtInRect(&_select_ThrRc, _ptMouse))
 		{
 			_selectThreeAlpha = 230.0f;
+			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
+			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
+				weapon_Selectdata.clear();
+				isShowText = false;
+				iscollBox = false;
+			}
 		}
 		else
 		{
@@ -156,6 +185,7 @@ void TextSystemManager::update(void)
 			// 좌클릭할 경우 3개의 변수가 false가 된다.
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 				isShowText = false;
 				isShopCol = false;
 				isShopOpen = false;
@@ -174,6 +204,7 @@ void TextSystemManager::update(void)
 			_selectOneAlpha = 230.0f;
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 				isrepairbuy = true;
 				isShowText = true;
 			}
@@ -188,6 +219,7 @@ void TextSystemManager::update(void)
 			_selectTwoAlpha = 230.0f;
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
+				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 				isAnvilCol = false;
 				isShowText = false;
 				isAnvilOpen = false;
@@ -237,23 +269,20 @@ void TextSystemManager::ShopLog(string itemName, int price)
 	copy(_shopPriceText.begin(), _shopPriceText.end(), shop_talk2);
 	shop_talk2[_shopPriceText.size()] = '\0';
 
-	//챗 로그 박스 설정, _chatRc의 값을 토대로 렌더함
-	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
-	//챗 이름 박스 설정, _nameRc의 값을 토대로 렌더함
+	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);																																				
 	IMAGEMANAGER->alphaRender("Namebox", getMemDC(), _nameRc.left, _nameRc.top, _textAlpha);
-	//챗 이름박스 안에 텍스트 출력
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "둥근모꼴", 27, 15,
-		L"마리", wcslen(L"마리"), RGB(0, 0, 255));
+	FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.165, _textPosition.y*0.6, "둥근모꼴", 25, 15,
+		L"마리", wcslen(L"마리"), RGB(255, 255, 255));
 
 	// _textindex가 0일때 _chatWriteRc에서부터 문구 출력
 	if (_textindex == 0)
 	{
-		FONTMANAGER->drawText(getMemDC(), _chatWriteRc, "둥근모꼴", 27, 15, shop_talk1, ((_textBufferCnt) > strlen(shop_talk1) ? strlen(shop_talk1) : (_textBufferCnt)), RGB(255, 255, 255));
+		FONTMANAGER->drawText(getMemDC(), _chatWriteRc, "둥근모꼴", 22, 15, shop_talk1, ((_textBufferCnt) > strlen(shop_talk1) ? strlen(shop_talk1) : (_textBufferCnt)), RGB(255, 255, 255));
 	}
 	// _textindex가 1일때 _chatWriteRc에서부터 문구 출력
 	else if (_textindex == 1)
 	{
-		FONTMANAGER->drawText(getMemDC(), _chatWriteRc, "둥근모꼴", 27, 15, shop_talk2, ((_textBufferCnt) > strlen(shop_talk2) ? strlen(shop_talk2) : (_textBufferCnt)), RGB(255, 255, 255));
+		FONTMANAGER->drawText(getMemDC(), _chatWriteRc, "둥근모꼴", 22, 15, shop_talk2, ((_textBufferCnt) > strlen(shop_talk2) ? strlen(shop_talk2) : (_textBufferCnt)), RGB(255, 255, 255));
 	}
 
 	// isShopcol이 true일때 선택 박스 및 선택 박스 안에 들어갈 텍스트 출력
@@ -261,9 +290,9 @@ void TextSystemManager::ShopLog(string itemName, int price)
 	{
 		IMAGEMANAGER->alphaRender("SelOne", getMemDC(), _shopsel_OneRc.left, _shopsel_OneRc.top, _selectOneAlpha);
 		IMAGEMANAGER->alphaRender("SelOne", getMemDC(), _shopsel_TwoRc.left, _shopsel_TwoRc.top, _selectTwoAlpha);
-		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.11, WINSIZE_Y*0.83, "둥근모꼴", 27, 15,
+		FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.15, _textPosition.y*0.80, "둥근모꼴", 22, 15,
 			L"응.", wcslen(L"응."), RGB(255, 255, 255));
-		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.11, WINSIZE_Y*0.89, "둥근모꼴", 27, 15,
+		FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.15, _textPosition.y*0.86, "둥근모꼴", 22, 15,
 			L"아니.", wcslen(L"아니."), RGB(255, 255, 255));
 	}
 	
@@ -278,30 +307,28 @@ void TextSystemManager::EventLog(int arrText)
 	if (!iscollBox) 
 	{
 		IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
-		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "둥근모꼴", 27, 15,
-			_text[arrText].name, wcslen(_text[arrText].name), RGB(0, 0, 255));
+		FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.13, _textPosition.y*0.62, "둥근모꼴", 22, 15,
+			_text[arrText].name, wcslen(_text[arrText].name), RGB(255, 255, 255));
 
-		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.78, "둥근모꼴", 27, 15, _text[arrText].script,
+		FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.14, _textPosition.y*0.69, "둥근모꼴", 22, 15, _text[arrText].script,
 			((_textBufferCnt / 4) > wcslen(_text[arrText].script) ? wcslen(_text[arrText].script) : (_textBufferCnt / 4)), RGB(255, 255, 255));
 	}
 
 	if (iscollBox)
 	{
 		IMAGEMANAGER->alphaRender("WP_BoxTextBox", getMemDC(), _boxChatRc.left, _boxChatRc.top, _textAlpha);
-		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "둥근모꼴", 27, 15,
-			_text[arrText].name, wcslen(_text[arrText].name), RGB(0, 0, 255));
 
-		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.75, "둥근모꼴", 27, 15, _text[arrText].script,
+		FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.1, _textPosition.y*0.69, "둥근모꼴", 22, 15, _text[arrText].script,
 			((_textBufferCnt / 4) > wcslen(_text[arrText].script) ? wcslen(_text[arrText].script) : (_textBufferCnt / 4)), RGB(255, 255, 255));
 
 		IMAGEMANAGER->alphaRender("SelOne", getMemDC(), _select_oneRc.left, _select_oneRc.top, _selectOneAlpha);
 		IMAGEMANAGER->alphaRender("SelOne", getMemDC(), _select_TwoRc.left, _select_TwoRc.top, _selectTwoAlpha);
 		IMAGEMANAGER->alphaRender("SelOne", getMemDC(), _select_ThrRc.left, _select_ThrRc.top, _selectThreeAlpha);
-		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.11, WINSIZE_Y*0.80, "둥근모꼴", 27, 15,
+		FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.1, _textPosition.y*0.77, "둥근모꼴", 22, 15,
 			L"검", wcslen(L"검"), RGB(255, 255, 255));
-		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.11, WINSIZE_Y*0.85, "둥근모꼴", 27, 15,
+		FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.1, _textPosition.y*0.83, "둥근모꼴", 22, 15,
 			L"활", wcslen(L"활"), RGB(255, 255, 255));
-		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.11, WINSIZE_Y*0.90, "둥근모꼴", 27, 15,
+		FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.1, _textPosition.y*0.89, "둥근모꼴", 22, 15,
 			L"안 가져갈래!", wcslen(L"안 가져갈래!"), RGB(255, 255, 255));
 		
 	}
@@ -313,19 +340,19 @@ void TextSystemManager::AnvilLog(int arrText)
 
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
 	IMAGEMANAGER->alphaRender("AnvilNamebox", getMemDC(), _anvilNameRc.left, _anvilNameRc.top, _textAlpha);
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.7, "둥근모꼴", 27, 15,
+	FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.15, _textPosition.y*0.59, "둥근모꼴", 22, 15,
 		L"말하는 모루할배", wcslen(L"말하는 모루할배"), RGB(0, 0, 255));
 
-	FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.1, WINSIZE_Y*0.78, "둥근모꼴", 27, 15, _text[arrText].script,
+	FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.14, _textPosition.y*0.69, "둥근모꼴", 22, 15, _text[arrText].script,
 		((_textBufferCnt / 4) > wcslen(_text[arrText].script) ? wcslen(_text[arrText].script) : (_textBufferCnt / 4)), RGB(255, 255, 255));
 
 	if (isAnvilCol)
 	{
 		IMAGEMANAGER->alphaRender("SelOne", getMemDC(), _anvilsel_oneRc.left, _anvilsel_oneRc.top, _selectOneAlpha);
 		IMAGEMANAGER->alphaRender("SelOne", getMemDC(), _anvilsel_TwoRc.left, _anvilsel_TwoRc.top, _selectTwoAlpha);
-		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.11, WINSIZE_Y*0.85, "둥근모꼴", 27, 15,
+		FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.15, _textPosition.y*0.81, "둥근모꼴", 22, 15,
 			L"수리한다.", wcslen(L"수리한다."), RGB(255, 255, 255));
-		FONTMANAGER->drawText(getMemDC(), WINSIZE_X*0.11, WINSIZE_Y*0.90, "둥근모꼴", 27, 15,
+		FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.15, _textPosition.y*0.87, "둥근모꼴", 22, 15,
 			L"무시한다.", wcslen(L"무시한다."), RGB(255, 255, 255));
 	}
 }

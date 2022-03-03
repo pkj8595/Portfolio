@@ -68,7 +68,7 @@ private:
 	int _currentFrameX;
 
 public:
-	HRESULT init(const char*imageName,int bulletMax, float range);
+	HRESULT init(const char*imageName, int bulletMax, float range);
 	void release(void);
 	void update(void);
 	void render(void);
@@ -79,7 +79,7 @@ public:
 	void CheckFire(void);
 
 	void removeBullet(int arrNum);
-	vector<tagCBullet*> getBullet(void) {return _vBullet;}
+	vector<tagCBullet*> getBullet(void) { return _vBullet; }
 
 	Bullet() {}
 	virtual ~Bullet() {}
@@ -90,7 +90,7 @@ public:
 class LinearMissile : public AMissile
 {
 private:
-	
+
 public:
 	virtual HRESULT init(int bulletMax, float range);
 	virtual void move(void);
@@ -118,10 +118,10 @@ public:
 };
 
 
-class BlackholeMissile : public AMissile 
+class BlackholeMissile : public AMissile
 {
 private:
-	
+
 public:
 	virtual HRESULT init(int bulletMax, float range);
 	virtual void move(void);

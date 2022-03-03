@@ -79,6 +79,7 @@ void ChestMap::openChest(void)
 	static float openTime = TIMEMANAGER->getWorldTime();
 	if (openTime + 0.1f < TIMEMANAGER->getWorldTime())
 	{
+		if (_frameY == 1) { TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/chest.wav"); }
 		_frameY++;
 		openTime = TIMEMANAGER->getWorldTime();
 	}

@@ -7,7 +7,7 @@
 class GuidedBullet;
 //머쉬룸을 부르는 애
 
-enum class MUSHMANSTATE { MU_IDLE, MU_MOVE, MU_ATTACK, MU_DEAD ,MU_END };
+enum class MUSHMANSTATE { MU_IDLE, MU_MOVE, MU_ATTACK, MU_DEAD, MU_END };
 enum class MUSHMANDIRECTION { MU_LEFT, MU_RIGHT, MU_UP, MU_DOWN };
 
 
@@ -22,7 +22,7 @@ private:
 
 	int		_randomX, _randomY;
 	int		_maxFrame;
-	
+
 	float _playerX, _playerY;
 	float _angle;
 	float _speed;				//이동 속도

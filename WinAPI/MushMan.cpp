@@ -26,7 +26,7 @@ HRESULT MushMan::init(const char * imageName, POINT position)
 	_moveWorldTime = TIMEMANAGER->getWorldTime();
 	_plantMushroomWorldTime = TIMEMANAGER->getWorldTime();
 	_mushroomLivingTime = TIMEMANAGER->getWorldTime();
-	_mushroomAttackTime= TIMEMANAGER->getWorldTime();
+	_mushroomAttackTime = TIMEMANAGER->getWorldTime();
 	_deadTime = TIMEMANAGER->getWorldTime();
 
 	_mushroomBullet = new GuidedBullet;
@@ -47,7 +47,7 @@ void MushMan::update(void)
 {
 	Enemy::update();
 
-	if(_mushroomRenderCheck)
+	if (_mushroomRenderCheck)
 		_mushroom->update();
 
 	if (!_deadForOb)
@@ -72,7 +72,7 @@ void MushMan::update(void)
 			{
 				_mushroomLivingTime = TIMEMANAGER->getWorldTime();
 			}
-			
+
 			if (_mushroom->getHp() <= 10)
 			{
 				_mushroomRenderCheck = false;
@@ -106,10 +106,10 @@ void MushMan::move(void)
 
 void MushMan::draw(void)
 {
-	_image->frameRender(getMemDC(), 
-						_rc.left - CAMERAMANAGER->getCameraRect().left, 
-						_rc.top - CAMERAMANAGER->getCameraRect().top, 
-						_currentFrameX, _currentFrameY);
+	_image->frameRender(getMemDC(),
+		_rc.left - CAMERAMANAGER->getCameraRect().left,
+		_rc.top - CAMERAMANAGER->getCameraRect().top,
+		_currentFrameX, _currentFrameY);
 }
 
 void MushMan::animation(void)
@@ -190,7 +190,7 @@ void MushMan::frame()
 		case MUSHMANDIRECTION::MU_DOWN:
 			_currentFrameY = 0;
 			break;
-		}	
+		}
 		_maxFrame = 3;
 		randomMove();
 		break;
