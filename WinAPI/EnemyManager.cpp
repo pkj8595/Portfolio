@@ -89,7 +89,7 @@ void EnemyManager::render(void)
 void EnemyManager::setMinion(void)
 {
 	int temp = RND->getInt(4);
-	switch (0)
+	switch (temp)
 	{
 	case 0: {
 		Enemy* slime;
