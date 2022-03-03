@@ -174,7 +174,7 @@ void Player::render(void)
 	_pai->render();
 	_image->frameRender(getMemDC(),
 		_x - CAMERAMANAGER->getCameraRect().left,
-		_y- CAMERAMANAGER->getCameraRect().top);
+		_y - CAMERAMANAGER->getCameraRect().top);
 	_efm->render();
 	_skillWeapon->render();
 	//Rectangle(getMemDC(), _rc.left, _rc.top, _rc.right, _rc.bottom);
@@ -192,7 +192,7 @@ void Player::showSwordStack()
 	}
 	for (int i = 0; i < _swordStack; i++)
 	{
-		_swordStackImage->render(getMemDC(), _x + fixX + i*14, _y + fixY);
+		_swordStackImage->render(getMemDC(), _x + fixX + i*14 - CAMERAMANAGER->getCameraRect().left, _y + fixY - CAMERAMANAGER->getCameraRect().top);
 	}
 
 }
@@ -211,6 +211,8 @@ void Player::showBowStack()
 	case 5: fixX = 28; break;
 	default: fixX = 42; break;
 	}
+	fixX -= CAMERAMANAGER->getCameraRect().left;
+	fixY -= CAMERAMANAGER->getCameraRect().top;
 	if (_bowStack <= 3)
 	{
 		for (int i = 0; i < _bowStack; i++)
@@ -437,7 +439,7 @@ void Player::setDirectionByKeyInput()
 
 void Player::setDirectionByMouseInput()
 {
-	float angle = MY_UTIL::getAngle(_x, _y, _ptMouse.x, _ptMouse.y) * 180 / PI;
+	float angle = MY_UTIL::getAngle(_x, _y, _ptMouse.x + CAMERAMANAGER->getCameraRect().left, _ptMouse.y+CAMERAMANAGER->getCameraRect().top) * 180 / PI;
 	if ((angle >= 0 && angle < 22.5) || (angle >= 337.5 && angle < 360)) _direction = PLAYER_DIRECTION::RIGHT;
 	else if (angle >= 22.5 && angle < 67.5) _direction = PLAYER_DIRECTION::RIGHTUP;
 	else if (angle >= 67.5 && angle < 112.5) _direction = PLAYER_DIRECTION::UP;
@@ -492,7 +494,7 @@ void Player::setAttack()
 			{
 				if (_attackCount < TIMEMANAGER->getWorldTime() - 0.3f)
 				{
-					float angle = MY_UTIL::getAngle(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight()/2, _ptMouse.x, _ptMouse.y);
+					float angle = MY_UTIL::getAngle(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight()/2, _ptMouse.x+ CAMERAMANAGER->getCameraRect().left, _ptMouse.y+ CAMERAMANAGER->getCameraRect().top);
 					_normal->fire(calculatePhysicalDamage(), _x + 50, _y + 50, angle);
 					_status._stamina -= 5.0f;
 					_attackCount = TIMEMANAGER->getWorldTime();
@@ -502,7 +504,7 @@ void Player::setAttack()
 			{
 				if (_attackCount < TIMEMANAGER->getWorldTime() - 0.3f)
 				{
-					float angle = MY_UTIL::getAngle(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2, _ptMouse.x, _ptMouse.y);
+					float angle = MY_UTIL::getAngle(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2, _ptMouse.x+ CAMERAMANAGER->getCameraRect().left, _ptMouse.y+ CAMERAMANAGER->getCameraRect().top);
 					if (_tripleshot)
 					{
 						_bow->fire(calculatePhysicalDamage(), _x + 50, _y + 50, angle - 15 * PI / 180);
@@ -544,7 +546,7 @@ void Player::setAttack()
 	{
 		if (_skillCoolTime + 10.0f < TIMEMANAGER->getWorldTime() && _status._mana >= 2)
 		{
-			float angle = MY_UTIL::getAngle(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2, _ptMouse.x, _ptMouse.y);
+			float angle = MY_UTIL::getAngle(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2, _ptMouse.x+ CAMERAMANAGER->getCameraRect().left, _ptMouse.y+ CAMERAMANAGER->getCameraRect().top);
 			_skillWeapon->fire(calculateMagicDamage() * 11, _x + 50, _y + 50, angle);
 			_skill = true;
 			_status._mana -= 2;

@@ -642,7 +642,7 @@ void Inventory::renderItemInfoWindow()
 			itemInfo[5].fontSize = 20;
 			itemInfo[5].color = RGB(190, 190, 160);
 
-			_itemManager->getBigItemImgRender(getMemDC(), (*_viItem).first->_imgNum, rcX + 15, rcY + 60);
+			_itemManager->getBigItemInvenImgRender(getMemDC(), (*_viItem).first->_imgNum, rcX + 15, rcY + 60);
 
 			
 
