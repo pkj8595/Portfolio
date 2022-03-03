@@ -19,7 +19,7 @@ HRESULT Inventory::init(void)
 
 	
 	_inventoryGoldIcon.pt = PointMake(_rc.left + 160, _rc.top + 260);
-	_goldRc = RectMake(CAMERAMANAGER->getDisplayAreaRight() - 200, 0, 128, 32);
+	_goldRc = RectMake(CAMERAMANAGER->getDisplayAreaRight() - 100, 0, 128, 32);
 	_inventoryCloseBtn.pt = PointMake(_rc.left + 205, _rc.top + 15);
 	_inventorySlot.pt = PointMake(_rc.left + 25, _rc.top + 50);
 	_inventorySlotB.pt = PointMake(_rc.left + 100, _rc.top + 100);
@@ -53,7 +53,7 @@ HRESULT Inventory::init(void)
 	_isInventoryFull =_againTakeAbilityItem = _isDestroy = _isRepair = _isbuyItemfail = false;
 	_messageWorldTime = TIMEMANAGER->getWorldTime();
 
-	_messageRc = RectMakeCenter(CAMERAMANAGER->getDisplayCenterX(), -(CAMERAMANAGER->getDisplayCenterY()*0.4), 32, 32);
+	_messageRc = RectMakeCenter(CAMERAMANAGER->getDisplayCenterX(),(CAMERAMANAGER->getDisplayCenterY()*0.7), 32, 32);
 
 	return S_OK;
 }
@@ -135,7 +135,7 @@ void Inventory::render(void)
 			{
 				_messageStr = "°¡¹æÀÌ °¡µæ Ã¡¾î.";
 			}
-			inventorydrawText(_messageStr, _messageRc, 50, RGB(255, 255, 255),true);
+			inventorydrawText(_messageStr, _messageRc, 30, RGB(255, 255, 255),true);
 		}
 		else
 		{
@@ -232,7 +232,7 @@ void Inventory::pushItem(Item* item)
 		}
 		RECT temp = RectMake(
 			ABILITY_IMG_X + (_abilutyItemCount* ABILITY_IMG_OFFSET),
-			CAMERAMANAGER->getDisplayAreaBottom()-50,
+			ABILITY_IMG_Y,
 			32, 32);
 		_vItem.push_back(make_pair(item, temp));
 		updatePushItemMassege(item);
@@ -326,9 +326,9 @@ void Inventory::showAbilityItem()
 	{
 		if ((*_viItem).first->_type != EITEM_TYPE::ABILITY)continue;
 
-		_itemManager->getItemImgRender(getMemDC(), (*_viItem).first->_imgNum,
+		_itemManager->getItemInvenImgRender(getMemDC(), (*_viItem).first->_imgNum,
 			ABILITY_IMG_X + (countAbility* ABILITY_IMG_OFFSET),
-			(CAMERAMANAGER->getDisplayAreaBottom() - 50));
+			ABILITY_IMG_Y);
 		countAbility++;
 	}
 }

@@ -3,7 +3,8 @@
 #include "ItemManager.h"
 
 #define	ABILITY_IMG_OFFSET		50
-#define	ABILITY_IMG_X			100
+#define	ABILITY_IMG_X			280
+#define	ABILITY_IMG_Y			500
 
 #define	INVENTORY_IMG_OFFSETX		40
 #define	INVENTORY_IMG_OFFSETY		40
