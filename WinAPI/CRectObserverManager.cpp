@@ -215,6 +215,10 @@ void CRectObserverManager::getEventFormObserved()
 					}
 					else { _textSystemManager->isShopbuy = false; }
 				}
+				else if (!_textSystemManager->isShopOpen)
+				{
+					_player->setIsActiveMove(false);
+				}
 			}
 			else if (*obData.typeKey == EventObservedType::CHEST)
 			{
@@ -245,9 +249,21 @@ void CRectObserverManager::getEventFormObserved()
 						_textSystemManager->isrepairbuy = false;
 						_textSystemManager->isAnvilCol = false;
 						_player->setIsActiveMove(false);
-
 						break;
 					}
+					else
+					{
+						_textSystemManager->isrepairbuy = false;
+						_textSystemManager->isAnvilCol = false;
+						_textSystemManager->isAnvilOpen = false;
+						_textSystemManager->isShowText = false;
+						_player->setIsActiveMove(false);
+
+					}
+				}
+				else if (!_textSystemManager->isAnvilOpen)
+				{
+					_player->setIsActiveMove(false);
 				}
 			}
 

@@ -76,7 +76,7 @@ void TextSystemManager::update(void)
 	
 	
 	// 엔터를 눌렀을 경우
-	if (KEYMANAGER->isOnceKeyDown(VK_RETURN) && isShowText)
+	if (KEYMANAGER->isOnceKeyDown('Z') && isShowText)
 	{
 		// _textBufferCnt과 _text1.size()를 비교했을 때 _text1.size()가 더 크다면
 		if (_textBufferCnt < _shopNameText.size())
@@ -148,6 +148,7 @@ void TextSystemManager::update(void)
 			{
 				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 				weapon_Selectdata.clear();
+				TEXTDATAMANAGER->save("로비 무기 선택.text", weapon_Selectdata);
 				isShowText = false;
 				iscollBox = false;
 			}
