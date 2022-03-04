@@ -40,8 +40,7 @@ HRESULT EnemyManager::init(void)
 	IMAGEMANAGER->addFrameImage("BigSlime", "Resource/Images/Lucie/CompleteImg/Enemy/Boss/KingSlime1.bmp", 576, 4032, 3, 21, true, RGB(255, 0, 255));
 
 
-	_bullet = new Bullet;
-	_bullet->init("bullet16", 30, 1000);
+
 
 	_efm = new EffectManager;
 	_efm->init();
@@ -58,8 +57,6 @@ void EnemyManager::release(void)
 		SAFE_DELETE(*_viMinion);
 	}
 
-	_bullet->release();
-	SAFE_DELETE(_bullet);
 }
 
 void EnemyManager::update(void)
@@ -259,7 +256,10 @@ void EnemyManager::checkActive(void)
 			else
 			{
 				_efm->createEffect("Dead", (*_viMinion)->getRect(), 0.002f);
-				ItemSpawner::getSingleton()->createItem((*_viMinion)->getX(), (*_viMinion)->getY(), true);
+				if (RND->getInt(2) == 0)
+				{
+					ItemSpawner::getSingleton()->createItem((*_viMinion)->getX(), (*_viMinion)->getY(), true);
+				}
 				_pPlayer->addExp((*_viMinion)->getExp());
 				(*_viMinion)->release();
 				SAFE_DELETE(*_viMinion);
