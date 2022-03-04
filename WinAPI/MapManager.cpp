@@ -66,17 +66,6 @@ void MapManager::update(void)
 		}
 	}
 
-	if (KEYMANAGER->isOnceKeyDown('R'))
-	{
-		for (Map* m : _vMap)
-		{
-			if (m->getType() == Map::MAPTYPE::SHOP)
-			{
-				_currentMap = m;
-				_currentMap->setShow(true);
-			}
-		}
-	}
 }
 
 void MapManager::render(void)
