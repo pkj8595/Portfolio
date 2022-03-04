@@ -62,11 +62,12 @@ void BigSlime::update(void)
 	_angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 	_fixRC = RectMake(_x - 80, _y, _image->getFrameWidth() - 100, _image->getFrameHeight() - 100);
+	
+	hpUpdate();
 	if (!_deadForOb)
 	{
 		setDirection();
 		frameUpdate();
-		hpUpdate();
 		move();
 	}
 	else
@@ -213,7 +214,7 @@ void BigSlime::changeState(STATE state)
 	case STATE::WALK:
 	{
 		_alreadyShot = false;
-		_walkRndSet = RND->getFromIntTo(5, 10);
+		_walkRndSet = RND->getFromIntTo(1, 4);
 	} break;
 	case STATE::ATTACK_NORMAL:
 	{
