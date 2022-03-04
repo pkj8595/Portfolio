@@ -1,6 +1,6 @@
 #pragma once
 #include "GameNode.h"
-#define RATE_TIME 10.0f
+#define RATE_TIME 5.0f
 
 class EndingScene : public GameNode
 {

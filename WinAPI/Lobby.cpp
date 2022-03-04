@@ -17,7 +17,7 @@ HRESULT Lobby::init(void)
 
 	_basePt = PointMake(500, 280);
 
-	_lobbyMap_rc = RectMake(CAMERAMANAGER->getCameraRect().left - 50, CAMERAMANAGER->getCameraRect().top - 200, _lobbyMapImg->getWidth(), _lobbyMapImg->getHeight());
+	_lobbyMap_rc = RectMake(0 - 50, 0 - 200, _lobbyMapImg->getWidth(), _lobbyMapImg->getHeight());
 	_lobbyColMap_rc = RectMake(CAMERAMANAGER->getCameraRect().left - 50, CAMERAMANAGER->getCameraRect().top - 200, _lobbyColMapImg->getWidth(), _lobbyColMapImg->getHeight());
 	_Imgbook_rc = RectMake(_basePt.x - 70, _basePt.y + 40, _bookImg->getFrameWidth(), _bookImg->getFrameHeight());
 	_book_rc = RectMake(_basePt.x - 60, _basePt.y + 80, 30, 30);
@@ -50,6 +50,7 @@ HRESULT Lobby::init(void)
 void Lobby::release(void)
 {
 	_tsm->release();
+	SAFE_DELETE(_tsm);
 	_player->release();
 	SAFE_DELETE(_player);
 
@@ -57,7 +58,6 @@ void Lobby::release(void)
 
 void Lobby::update(void)
 {
-
 	_startAlpha -= 3.0f;
 
 	if (_startAlpha < 0.0f)
@@ -91,14 +91,6 @@ void Lobby::render(void)
 	IMAGEMANAGER->render("Lobby", getMemDC(), _lobbyMap_rc.left, _lobbyMap_rc.top);
 
 	_bookImg->frameRender(getMemDC(),_Imgbook_rc.left, _Imgbook_rc.top, _bookImg->getFrameX(), _bookImg->getFrameY());
-
-	/*RectangleMakeToRECT(getMemDC(), _book_rc);
-	RectangleMakeToRECT(getMemDC(), _Imgbook_rc);
-	RectangleMakeToRECT(getMemDC(), _box_rc);
-	RectangleMakeToRECT(getMemDC(), _closet_rc);
-	RectangleMakeToRECT(getMemDC(), _mirror_rc);
-	RectangleMakeToRECT(getMemDC(), _window_rc);
-	RectangleMakeToRECT(getMemDC(), _door_rc);*/
 	
 	_player->render();
 	Collision();
