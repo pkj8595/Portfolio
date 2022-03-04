@@ -18,7 +18,7 @@ HRESULT Lobby::init(void)
 	_basePt = PointMake(500, 280);
 
 	_lobbyMap_rc = RectMake(0 - 50, 0 - 200, _lobbyMapImg->getWidth(), _lobbyMapImg->getHeight());
-	_lobbyColMap_rc = RectMake(CAMERAMANAGER->getCameraRect().left - 50, CAMERAMANAGER->getCameraRect().top - 200, _lobbyColMapImg->getWidth(), _lobbyColMapImg->getHeight());
+	_lobbyColMap_rc = RectMake(0 - 50, 0 - 200, _lobbyColMapImg->getWidth(), _lobbyColMapImg->getHeight());
 	_Imgbook_rc = RectMake(_basePt.x - 70, _basePt.y + 40, _bookImg->getFrameWidth(), _bookImg->getFrameHeight());
 	_book_rc = RectMake(_basePt.x - 60, _basePt.y + 80, 30, 30);
 	_box_rc = RectMake(_basePt.x - 240, _basePt.y + 30, 50, 80);

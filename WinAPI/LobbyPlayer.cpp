@@ -13,8 +13,8 @@ HRESULT LobbyPlayer::init(void)
 	_level = 1;
 	_direction = PLAYER_DIRECTION::DOWN;
 
-	_x = CAMERAMANAGER->getDisplayCenterX();
-	_y = CAMERAMANAGER->getDisplayCenterY();
+	_x = 404;
+	_y = 344;
 
 	_stateFrameCount = 0;
 
@@ -68,6 +68,7 @@ void LobbyPlayer::release(void)
 
 void LobbyPlayer::update(void)
 {
+
 
 	if (_state == PLAYER_STATE::WALK || _state == PLAYER_STATE::STOP)
 	{

@@ -92,7 +92,6 @@ void CRectObserverManager::getRectFromObserved()
 						}
 						else
 						{
-							TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/mobhit.wav");
 							_effectManager->createEffect("effect2", (*obDataCompare.rc));
 							_damageManager->createDamage((int)(*obData.damage), false,
 								(*obDataCompare.rc).left + (((*obDataCompare.rc).right - (*obDataCompare.rc).left) / 2 - CAMERAMANAGER->getCameraRect().left),

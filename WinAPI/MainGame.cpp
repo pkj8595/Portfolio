@@ -18,7 +18,6 @@ inline void MainGame::addSounds(void)
 	TEMPSOUNDMANAGER->addWaveFileWithKey("Sword5", "Resource/Sound/Lucie/sword5.wav");
 	TEMPSOUNDMANAGER->addWaveFileWithKey("Skill", "Resource/Sound/Lucie/skill.wav");
 	TEMPSOUNDMANAGER->addWaveFileWithKey("Skillhit", "Resource/Sound/Lucie/skillhit.wav");
-	TEMPSOUNDMANAGER->addWaveFileWithKey("Mobhit", "Resource/Sound/Lucie/mobhit.wav");
 	
 }
 
