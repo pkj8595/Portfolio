@@ -4,7 +4,7 @@
 HRESULT EndingScene::init(void)
 {
 	_bg = IMAGEMANAGER->addImage("EndImage", "Resource/Images/Lucie/CompleteImg/pitures/end.bmp", 960, 540);
-	_changeScreen = IMAGEMANAGER->addImage("TitleBlackScreen", "Resource/Images/Lucie/CompleteImg/effect/changeScreen.bmp", 1104, 960);
+	_changeScreen = IMAGEMANAGER->addImage("EndingBlackScreen", "Resource/Images/Lucie/CompleteImg/effect/changeScreen.bmp", 1104, 960);
 	_endChangeScreenAlpha = 255.0f;
 
 	_changeSceneTime = TIMEMANAGER->getWorldTime();
@@ -33,7 +33,7 @@ void EndingScene::update(void)
 		
 		if (TIMEMANAGER->getWorldTime() > _changeSceneTime + RATE_TIME)
 		{
-			SCENEMANAGER->changeScene("Lobby");
+			SCENEMANAGER->changeScene("TitleScene");
 		}
 	}
 }
