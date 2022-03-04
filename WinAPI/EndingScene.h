@@ -7,11 +7,13 @@ class EndingScene : public GameNode
 private:
 	my::Image* _bg;
 	my::Image* _changeScreen;
+	my::Image* _titleChangeScreen;
 
 	RECT _bgRc;
 
 	float _changeSceneTime;
 	float _endChangeScreenAlpha;
+	float _titleChangeScreenAlpha;
 
 	bool _isEndStart;
 public:
