@@ -5,7 +5,7 @@
 class Mushroom :public Enemy
 {
 private:
-	GuidedBullet* _bullet;
+	CircleMissile* _bullet;
 
 	float _attackTime;
 	float _angle;
@@ -21,7 +21,7 @@ public:
 	void draw(void);
 	void animation(void);
 
-	void fire(float angle);
+	void fire();
 
 public:
 	void setPos(float x, float y) { _x = x, _y = y; }
