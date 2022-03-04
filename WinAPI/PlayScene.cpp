@@ -47,7 +47,6 @@ void PlayScene::release(void)
 	_enemyManager->release();
 	_mapManager->release();
 	_player->release();
-	_itemSpawner->release();
 
 }
 

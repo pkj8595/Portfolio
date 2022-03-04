@@ -28,10 +28,11 @@ HRESULT MapManager::init(int mapAmount, int stage)
 
 void MapManager::release(void)
 {
+	_itemSpawner->release();
 	for (Map* m : _vMap)
 	{
 		m->release();
-		//SAFE_DELETE(m);
+		SAFE_DELETE(m);
 	}
 }
 

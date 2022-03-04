@@ -107,6 +107,19 @@ void Player::release(void)
 {
 	RECTOBSERVERMANAGER->removeObserved(this);
 	_inventory->release();
+	SAFE_DELETE(_inventory);
+	_skillWeapon->release();
+	SAFE_DELETE(_skillWeapon);
+	_statusUI->release();
+	SAFE_DELETE(_statusUI);
+	_normal->release();
+	SAFE_DELETE(_normal);
+	_bow->release();
+	SAFE_DELETE(_bow);
+	_efm->release();
+	SAFE_DELETE(_efm);
+	_pai->release();
+	SAFE_DELETE(_pai);
 }
 
 void Player::update(void)

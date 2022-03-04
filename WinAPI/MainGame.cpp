@@ -43,12 +43,12 @@ HRESULT MainGame::init(void)
 
 void MainGame::release(void)
 {
+	GameNode::release();
 	ItemManager::getSingleton()->release();
 	ItemManager::getSingleton()->releaseSingleton();
 	ItemSpawner::getSingleton()->release();
 	ItemSpawner::getSingleton()->releaseSingleton();
 	
-	GameNode::release();
 
 }
 

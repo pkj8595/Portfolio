@@ -204,6 +204,7 @@ void CRectObserverManager::getEventFormObserved()
 					_textSystemManager->isShopOpen = true;
 					_textSystemManager->isShowText = true;
 					_player->setIsActiveMove(true);
+					_player->getInventory()->setIsShowInven(true);
 				}
 				if (_textSystemManager->isShopbuy)
 				{
@@ -211,13 +212,18 @@ void CRectObserverManager::getEventFormObserved()
 					{
 						(*_viEvent)->collideEventObject(obData);
 						_textSystemManager->isShopbuy = false;
+						_player->getInventory()->setIsShowInven(false);
 						_player->setIsActiveMove(false);
 						break;
 					}
-					else { _textSystemManager->isShopbuy = false; }
+					else 
+					{
+						_textSystemManager->isShopbuy = false; 
+					}
 				}
 				else if (!_textSystemManager->isShopOpen)
 				{
+					_player->getInventory()->setIsShowInven(false);
 					_player->setIsActiveMove(false);
 				}
 			}
@@ -242,7 +248,7 @@ void CRectObserverManager::getEventFormObserved()
 						_textSystemManager->isAnvilOpen = true;
 						_textSystemManager->isAnvilCol = true;
 						_player->setIsActiveMove(true);
-
+						_player->getInventory()->setIsShowInven(true);
 					}
 				}
 				if (_textSystemManager->isrepairbuy)
@@ -253,6 +259,7 @@ void CRectObserverManager::getEventFormObserved()
 						_textSystemManager->isrepairbuy = false;
 						_textSystemManager->isAnvilCol = false;
 						_player->setIsActiveMove(false);
+						_player->getInventory()->setIsShowInven(false);
 						break;
 					}
 					else
@@ -262,11 +269,15 @@ void CRectObserverManager::getEventFormObserved()
 						_textSystemManager->isAnvilOpen = false;
 						_textSystemManager->isShowText = false;
 						_player->setIsActiveMove(false);
+						_player->getInventory()->setIsShowInven(false);
+						break;
 					}
 				}
 				else if (!_textSystemManager->isAnvilOpen)
 				{
 					_player->setIsActiveMove(false);
+					_player->getInventory()->setIsShowInven(false);
+					break;
 				}
 			}
 		}

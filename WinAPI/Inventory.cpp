@@ -62,6 +62,23 @@ void Inventory::release(void)
 {
 	SAFE_DELETE(_emptyItem);
 
+	_viItem = _vItem.begin();
+	for (; _viItem != _vItem.end(); ++_viItem)
+	{
+		if ((*_viItem).first->_type != EITEM_TYPE::ABILITY)
+		{
+			if ((*_viItem).first->_type == EITEM_TYPE::EQUIP_WEAPON_BOW ||
+				(*_viItem).first->_type == EITEM_TYPE::EQUIP_WEAPON_SWORD ||
+				(*_viItem).first->_type == EITEM_TYPE::EQUIP_HAT ||
+				(*_viItem).first->_type == EITEM_TYPE::EQUIP_ARMOR ||
+				(*_viItem).first->_type == EITEM_TYPE::EQUIP_SHOES)
+			{
+				SAFE_DELETE((*_viItem).first);
+			}
+		}
+	}
+	_vItem.clear();
+
 }
 
 void Inventory::update(void)
