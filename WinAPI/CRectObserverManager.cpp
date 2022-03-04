@@ -22,6 +22,7 @@ HRESULT CRectObserverManager::init()
 void CRectObserverManager::release(void)
 {
 	_vRect.clear();
+	_vEvent.clear();
 }
 
 void CRectObserverManager::update(void)

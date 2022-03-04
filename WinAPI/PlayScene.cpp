@@ -47,6 +47,7 @@ void PlayScene::release(void)
 	_enemyManager->release();
 	_mapManager->release();
 	_player->release();
+	_itemSpawner->release();
 
 }
 
@@ -87,7 +88,9 @@ void PlayScene::update(void)
 		}
 		if (_bossClearAlpha < 0)
 		{
+			release();
 			SCENEMANAGER->changeScene("EndingScene");
+			return;
 		}
 	}
 

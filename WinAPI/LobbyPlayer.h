@@ -33,24 +33,16 @@ private:
 	//Item, UI
 	CPlayer_Attribute _status;
 	CPlayer_Attribute _totalStatus;
-	Item** _equipItem;
 
 	int _beforeItemSize;
 	int _currentItemSize;
 
-	SwordWeapon* _sword;
-	NormalWeapon* _normal;
-	BowWeapon* _bow;
-	PlayerStatusUI* _statusUI;
-
-	Inventory* _inventory;
 
 public:
 	HRESULT init(void);
 	void release(void);
 	void update(void);
 	void render(void);
-	virtual STObservedData getRectUpdate();
 
 	void setFrame();
 	void changeState();
@@ -65,8 +57,6 @@ public:
 
 	void setCollision();
 
-	//TotalAttribute 합산
-	void computeTotalAttribute();
 
 public:
 	//접근자, 지정자
@@ -94,7 +84,6 @@ public:
 		_y = y;
 	}
 	PLAYER_STATE getState() { return _state; }
-	void printUI() { _statusUI->render(); }
 
 	bool isDead() { return _dead; }
 };

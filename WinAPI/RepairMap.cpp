@@ -15,17 +15,18 @@ HRESULT RepairMap::init(POINT location)
 	_downWall = IMAGEMANAGER->addImage("DownWall1", "Resource/Images/Lucie/CompleteImg/ground/wall/downWall1.bmp", 240, 240, true, RGB(255, 0, 255));
 	
 	_anvilImage = IMAGEMANAGER->addFrameImage("Anvil", "Resource/Images/Lucie/CompleteImg/event/Anvil.bmp", 144, 384, 1, 4, true, RGB(255, 0, 255));
-	
+	_frameY = 0;
 	_mapRC = { 200, 50, 700, 600 };
 	_outsideRcWidth = { 0, 670, WINSIZE_X, WINSIZE_Y };
 	_outsideRcLength = { 1008, 0, WINSIZE_X, WINSIZE_Y };
 	_location = location;
 
 	_repairEventObj = new EventObject;
-	_repairEventRc = RectMakeCenter(490 - CAMERAMANAGER->getCameraRect().left, 400 - CAMERAMANAGER->getCameraRect().top, _anvilImage->getFrameWidth() - 10, 64);
+	_repairEventRc = RectMakeCenter(500, 420, _anvilImage->getFrameWidth() - 30, 80);
 	_repairEventObj->init(EventObservedType::ANVIL, _repairEventRc, &_isActive, 0);
 
 	_mapRectSize = RectMake(0, 0, 1008, 670);
+	_anvilFrameTime = TIMEMANAGER->getWorldTime();
 
 	return S_OK;
 }
@@ -40,17 +41,21 @@ void RepairMap::update(void)
 {
 	_outsideRcWidth = { 0, 670 - CAMERAMANAGER->getCameraRect().top, WINSIZE_X, WINSIZE_Y };
 	_outsideRcLength = { 1008 - CAMERAMANAGER->getCameraRect().left, 0, WINSIZE_X, WINSIZE_Y };
+
+	
 }
 
 void RepairMap::render(void)
 {
+
 	_image->render(getMemDC(),
 		-CAMERAMANAGER->getCameraRect().left,
 		-CAMERAMANAGER->getCameraRect().top);
-
+	
 	_anvilImage->frameRender(getMemDC(),
 		CAMERAMANAGER->getDisplayCenterX() - _anvilImage->getFrameWidth() + 90 - CAMERAMANAGER->getCameraRect().left,
 		CAMERAMANAGER->getDisplayCenterY() - _anvilImage->getFrameHeight() + 160 - CAMERAMANAGER->getCameraRect().top, 0, _frameY);
+	
 
 	if (!_connectedMap[0] || !_clear) _leftWall->render(getMemDC(),
 		0 - CAMERAMANAGER->getCameraRect().left,

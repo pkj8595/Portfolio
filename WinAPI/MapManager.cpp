@@ -62,7 +62,19 @@ void MapManager::update(void)
 	{
 		for (Map* m : _vMap)
 		{
-			if (m->getType() == Map::MAPTYPE::SHOP)
+			if (m->getType() == Map::MAPTYPE::TREASURE)
+			{
+				_currentMap = m;
+				_currentMap->setShow(true);
+			}
+		}
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('R'))
+	{
+		for (Map* m : _vMap)
+		{
+			if (m->getType() == Map::MAPTYPE::REPAIR)
 			{
 				_currentMap = m;
 				_currentMap->setShow(true);

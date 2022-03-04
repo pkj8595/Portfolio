@@ -4,8 +4,6 @@
 
 HRESULT Lobby::init(void)
 {
-	
-
 	_lobbyMapImg = IMAGEMANAGER->addImage("Lobby", "Resource/Images/Lucie/CompleteImg/ground/map/ground12.bmp", 1008, 1065);
 	_lobbyColMapImg = IMAGEMANAGER->addImage("col_Lobby", "Resource/Images/Lucie/CompleteImg/ground/pixelmap/!m12_1.bmp", 1008, 1065);
 	_WhitefadeOutImg = IMAGEMANAGER->addImage("WhiteScreen", "Resource/Images/Lucie/CompleteImg/effect/BookchangeScreen.bmp", 1104, 960);
@@ -14,7 +12,7 @@ HRESULT Lobby::init(void)
 	
 	_player = new LobbyPlayer;
 	_player->init();
-
+	cout << "LobbyPlayer address"<< &_player << endl;
 	_basePt = PointMake(500, 280);
 
 	_lobbyMap_rc = RectMake(0 - 50, 0 - 200, _lobbyMapImg->getWidth(), _lobbyMapImg->getHeight());
@@ -47,7 +45,6 @@ void Lobby::release(void)
 	SAFE_DELETE(_tsm);
 	_player->release();
 	SAFE_DELETE(_player);
-
 }
 
 void Lobby::update(void)
@@ -67,7 +64,12 @@ void Lobby::update(void)
 	if (_fadeOutBlackAlpha > 252)
 	{
 		_fadeOutBlackAlpha = 252;
+		_player->setX(404);
+		_player->setY(344);
+		release();
+		_bookImg->setFrameX(0);
 		SCENEMANAGER->changeScene("PlayScene");
+		return;
 	}
 
 	_tsm->update();

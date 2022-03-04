@@ -27,7 +27,7 @@ HRESULT MainGame::init(void)
 	ItemManager::getSingleton()->init();
 	ItemSpawner::getSingleton()->init();
 	//addSounds();
-	IMAGEMANAGER->addImage("MousePointer", "Resource/Images/Lucie/CompleteImg/UI/Pointer.bmp",32, 32, true, RGB(255, 0, 255));
+	IMAGEMANAGER->addImage("MousePointer", "Resource/Images/Lucie/CompleteImg/UI/Pointer.bmp",16, 16, true, RGB(255, 0, 255));
 
 	SCENEMANAGER->addScene("TitleScene", new TitleScene);
 	SCENEMANAGER->addScene("PlayScene", new PlayScene);

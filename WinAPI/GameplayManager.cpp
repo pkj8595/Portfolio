@@ -192,5 +192,6 @@ void PlayScene::checkDead()
 	{
 		release();
 		SCENEMANAGER->changeScene("Lobby");
+		return;
 	}
 }
