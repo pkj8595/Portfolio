@@ -10,6 +10,7 @@ private:
 	my::Image* _continue;
 	my::Image* _exit;
 	my::Image* _changeScreen;
+	my::Image* _startBlackScreen;
 
 	RECT _bgRc;
 	RECT _startRc;
@@ -18,6 +19,7 @@ private:
 	RECT _crashRc;
 
 	float _changeScreenAlpha;
+	float _startScreenAlpha;
 
 	bool _isStart;
 public:
