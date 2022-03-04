@@ -32,7 +32,7 @@ HRESULT KingSlime::init(const char * imageName, POINT position)
 
 	_stopSet = 6;
 	_stopSet = 2;
-	_walkRndSet = RND->getFromIntTo(3, 6);
+	_walkRndSet = RND->getFromIntTo(1, 3);
 	_attackSet = 0;
 
 	_boss = true;
