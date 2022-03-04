@@ -147,7 +147,7 @@ public:
 	string changeItemTypeToStr(EITEM_TYPE type);
 	string changeAttributeToStr(CPlayer_Attribute attri);
 
-	void decreaseDurability(int dufault = 30);
+	void decreaseDurability(int dufault = 10);
 	bool repairWeapon(int gold);
 
 	//==========================
