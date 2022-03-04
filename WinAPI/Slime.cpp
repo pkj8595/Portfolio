@@ -350,7 +350,7 @@ void Slime::attackParttern()
 	{
 		_attacWorldTime = TIMEMANAGER->getWorldTime();
 		_state = SLIMESTATE::SL_ATTACK;
-		_attackParttern = SLIMEATTACK::SL_PARTTERN2;//static_cast<SLIMEATTACK>(RND->getInt(2));	
+		_attackParttern = static_cast<SLIMEATTACK>(RND->getInt(2));	
 	}
 
 	if (_playerPos.x < _x || _playerPos.x < _x && _playerPos.y > _y || _playerPos.x < _x && _playerPos.y < _y)
@@ -376,7 +376,7 @@ void Slime::threeDirectionBullet()
 {
 	if (_attackParttern == SLIMEATTACK::SL_PARTTERN2 && _image->getMaxFrameX() == _currentFrameX)
 	{
-		float angle = getAngle(_rc.left + (_rc.right - _rc.left) / 2, _rc.top + (_rc.bottom - _rc.top) / 2, _playerPos.x, _playerPos.y);
+		float angle = getAngle(_rc.left + (_rc.right - _rc.left) / 2, _rc.top + (_rc.bottom - _rc.top) / 2, _playerPos.x + 50, _playerPos.y + 50);
 		_threeDirectionBullet->fire(_rc.left + (_rc.right - _rc.left) / 2, _rc.top + (_rc.bottom - _rc.top) / 2, angle);
 	}
 }

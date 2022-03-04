@@ -393,7 +393,6 @@ HRESULT ThreeDirectionMissile::init(int bulletMax, float range)
 {
 	AMissile::init(bulletMax, range);
 	_bulletCount = 0;
-	//_firstAngle = (PI / 2) + (static_cast<float>(bulletMax / 2)*_offsetAngle);
 
 	return S_OK;
 }
@@ -538,7 +537,6 @@ HRESULT TwoDirectionMissile::init(int bulletMax, float range)
 {
 	AMissile::init(bulletMax, range);
 	_bulletCount = 0;
-	//_firstAngle = (PI / 2) + (static_cast<float>(bulletMax / 2)*_offsetAngle);
 
 	return S_OK;
 }

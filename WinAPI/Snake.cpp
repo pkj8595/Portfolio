@@ -216,7 +216,7 @@ void Snake::attack()
 	{
 		_attackMoveWorldTime = TIMEMANAGER->getWorldTime();
 		_state = SNAKESTATE::SN_ATTACK;
-		_angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
+		_angle = getAngle(_x, _y, _playerPos.x + 50, _playerPos.y + 50);
 
 		if (_playerPos.x < _x || _playerPos.x < _x && _playerPos.y > _y || _playerPos.x < _x && _playerPos.y < _y)
 		{
