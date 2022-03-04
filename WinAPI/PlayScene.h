@@ -10,11 +10,10 @@ class PlayScene : public GameNode
 {
 private:
 	my::Image* _fadeoutImage;
-	my::Image* _clearBossImage;
 	my::Image* _gameoverImage;
-	// 주석 제거 금지
-	//my::Image* _clearBossImage2;
-	//my::Image* _clearBossImage3;
+	my::Image* _clearBossImage;
+	my::Image* _clearBossImage2;
+	my::Image* _clearBossImage3;
 	MapManager* _mapManager;
 	EnemyManager* _enemyManager;
 	EffectManager* _effectManager;

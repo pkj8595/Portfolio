@@ -224,7 +224,7 @@ int ItemSpawner::createItem(int x, int y, bool isCollider, int itemIndex)
 int ItemSpawner::createChestItem(int x, int y, bool isCollider)
 {
 	ItemObject* itemObj = new ItemObject;
-	itemObj->initChest(x, y, isCollider, RND->getFromIntTo(14,34));
+	itemObj->initChest(x, y, isCollider, RND->getFromIntTo(15,33));
 	itemObj->setMap(*_currentMap);
 	_vItemObj.push_back(itemObj);
 	return itemObj->getItemIndex();
