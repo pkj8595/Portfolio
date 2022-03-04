@@ -34,7 +34,7 @@ HRESULT MainGame::init(void)
 	SCENEMANAGER->addScene("Lobby", new Lobby);
 	SCENEMANAGER->addScene("EndingScene", new EndingScene);
 
-	SCENEMANAGER->changeScene("EndingScene");
+	SCENEMANAGER->changeScene("TitleScene");
 
 	ShowCursor(false);
 
