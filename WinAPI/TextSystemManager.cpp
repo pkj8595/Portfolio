@@ -30,8 +30,8 @@ HRESULT TextSystemManager::init(void)
 	_text[2] = { L"", L"거울같이 생겼는데, 불투명해." };
 	_text[3] = { L"", L"...지금은 보고 싶지 않아." };
 	_text[4] = { L"", L"잠겨있어." };
-	_text[5] = { L"", L"지금 그 무기를 수리할텐가?" };
-	_text[6] = { L"", L"자, 수리가 완료되었네." };
+	_text[5] = { L"말하는 모루할배", L"지금 그 무기를 수리할텐가?" };
+	_text[6] = { L"말하는 모루할배", L"자, 수리가 완료되었네." };
 
 	_textPosition = PointMake(1000, 550);
 	
@@ -113,6 +113,7 @@ void TextSystemManager::update(void)
 				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 				weapon_Selectdata.clear();
 				weapon_Selectdata.push_back(_itoa(20, temp, 10));
+				weapon_Selectdata.push_back(_itoa(1, temp, 10));
 				TEXTDATAMANAGER->save("로비 무기 선택.text", weapon_Selectdata);
 				isShowText = false;
 				iscollBox = false;
@@ -131,6 +132,7 @@ void TextSystemManager::update(void)
 				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 				weapon_Selectdata.clear();
 				weapon_Selectdata.push_back(_itoa(23, temp, 10));
+				weapon_Selectdata.push_back(_itoa(1, temp, 10));
 				TEXTDATAMANAGER->save("로비 무기 선택.text", weapon_Selectdata);
 				isShowText = false;
 				iscollBox = false;
@@ -148,6 +150,8 @@ void TextSystemManager::update(void)
 			{
 				TEMPSOUNDMANAGER->playEffectSoundWave("Resource/Sound/Lucie/ui_ok.wav");
 				weapon_Selectdata.clear();
+				weapon_Selectdata.push_back(_itoa(100, temp, 10));
+				weapon_Selectdata.push_back(_itoa(0, temp, 10));
 				TEXTDATAMANAGER->save("로비 무기 선택.text", weapon_Selectdata);
 				isShowText = false;
 				iscollBox = false;
@@ -274,7 +278,7 @@ void TextSystemManager::ShopLog(string itemName, int price)
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);																																				
 	IMAGEMANAGER->alphaRender("Namebox", getMemDC(), _nameRc.left, _nameRc.top, _textAlpha);
 	FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.165, _textPosition.y*0.6, "둥근모꼴", 25, 15,
-		L"마리", wcslen(L"마리"), RGB(255, 255, 255));
+		L"마리", wcslen(L"마리"), RGB(255, 255, 142));
 
 	// _textindex가 0일때 _chatWriteRc에서부터 문구 출력
 	if (_textindex == 0)
@@ -310,7 +314,7 @@ void TextSystemManager::EventLog(int arrText)
 	{
 		IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
 		FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.13, _textPosition.y*0.62, "둥근모꼴", 22, 15,
-			_text[arrText].name, wcslen(_text[arrText].name), RGB(255, 255, 255));
+			_text[arrText].name, wcslen(_text[arrText].name), RGB(255, 255, 142));
 
 		FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.14, _textPosition.y*0.69, "둥근모꼴", 22, 15, _text[arrText].script,
 			((_textBufferCnt / 4) > wcslen(_text[arrText].script) ? wcslen(_text[arrText].script) : (_textBufferCnt / 4)), RGB(255, 255, 255));
@@ -342,8 +346,8 @@ void TextSystemManager::AnvilLog(int arrText)
 
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);
 	IMAGEMANAGER->alphaRender("AnvilNamebox", getMemDC(), _anvilNameRc.left, _anvilNameRc.top, _textAlpha);
-	FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.15, _textPosition.y*0.59, "둥근모꼴", 22, 15,
-		L"말하는 모루할배", wcslen(L"말하는 모루할배"), RGB(0, 0, 255));
+	FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.15, _textPosition.y*0.60, "둥근모꼴", 22, 15,
+		_text[arrText].name, wcslen(_text[arrText].name), RGB(255, 255, 142));
 
 	FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.14, _textPosition.y*0.69, "둥근모꼴", 22, 15, _text[arrText].script,
 		((_textBufferCnt / 4) > wcslen(_text[arrText].script) ? wcslen(_text[arrText].script) : (_textBufferCnt / 4)), RGB(255, 255, 255));

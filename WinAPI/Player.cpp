@@ -92,11 +92,13 @@ HRESULT Player::init(void)
 	_equipItem = _inventory->getEquipWeapon();
 
 	vector<string> vtemp = TEXTDATAMANAGER->load("로비 무기 선택.text");
-	if (vtemp[0].c_str() != "")
+	_isWeapon = atoi(vtemp[1].c_str());
+
+	if (_isWeapon)
 	{
 		_inventory->pushItem(atoi(vtemp[0].c_str()));
+		vtemp.clear();
 	}
-	
 
 	return S_OK;
 }

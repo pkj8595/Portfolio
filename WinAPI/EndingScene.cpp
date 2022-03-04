@@ -3,7 +3,7 @@
 
 HRESULT EndingScene::init(void)
 {
-	_bg = IMAGEMANAGER->addImage("TitleBG", "Resource/Images/Lucie/CompleteImg/pitures/end.bmp", 960, 540);
+	_bg = IMAGEMANAGER->addImage("EndImage", "Resource/Images/Lucie/CompleteImg/pitures/end.bmp", 960, 540);
 	_changeScreen = IMAGEMANAGER->addImage("TitleBlackScreen", "Resource/Images/Lucie/CompleteImg/effect/changeScreen.bmp", 1104, 960);
 	_endChangeScreenAlpha = 255.0f;
 

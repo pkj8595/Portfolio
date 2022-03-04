@@ -252,26 +252,21 @@ void ForestFairy::randomPosCreate()
 		_randomY = RND->getInt(3) - 1;
 	}
 
-	//좌표에 따라 모션 변경
-	//왼쪽 || 왼쪽 아래 || 왼쪽 위
 	if (_randomX == -1 || _randomX == -1 && _randomY == -1 || _randomX == -1 && _randomY == 1)
 	{
 		_direction = FAIRYDIRECTION::FA_LEFT;
 	}
 
-	//오른쪽 || 오른쪽 아래 || 오른쪽 위
 	if (_randomX == 1 || _randomX == 1 && _randomY == -1 || _randomX == 1 && _randomY == 1)
 	{
 		_direction = FAIRYDIRECTION::FA_RIGHT;
 	}
 
-	//위
 	if (_randomY == -1 && _randomX == 0)
 	{
 		_direction = FAIRYDIRECTION::FA_UP;
 	}
 
-	//아래
 	if (_randomY == 1 && _randomX == 0)
 	{
 		_direction = FAIRYDIRECTION::FA_DOWN;
@@ -315,6 +310,7 @@ void ForestFairy::normalBullet()
 	if (_attackParttern == FAIRYATTACK::FA_NORMAL&&_image->getMaxFrameX() - 1 == _currentFrameX)
 	{
 		float tempAngle = getAngle(_x, _y, _playerPos.x + 50, _playerPos.y + 50);
+
 		for (int i = 0; i < 12; i++)
 		{
 			_normalBullet->fire(_x, _y, (tempAngle)+(2 * i * PI / 180), 3.0f, 0);
@@ -336,7 +332,7 @@ void ForestFairy::normalBullet()
 			_normalBullet->fire(_x, _y, (tempAngle)+(20 * i * PI / 180), 2.84f, 0);
 		}
 
-		_attackCoolTime = 200;
+		_attackCoolTime = 180;
 
 	}
 }
@@ -368,7 +364,6 @@ void ForestFairy::bubbleBullet()
 			_attackCoolTime = 300;
 		}
 	}
-
 }
 
 STObservedData ForestFairy::getRectUpdate()
@@ -388,7 +383,6 @@ void ForestFairy::collideObject(STObservedData obData)
 	{
 		if (_hp <= (*obData.damage))
 		{
-			//나중에 죽는 애니메이션 넣는걸로 바꿀 것. isActive를 false로 바꾸는 작업은 죽은 애니메이션 전부 실행 뒤 바꿔주는 것으로 변경	
 			_deadForOb = true;
 		}
 		else
