@@ -165,18 +165,6 @@ void EnemyManager::setMinion(void)
 		_vMinion.push_back(forestFairy);
 	} break;
 	}
-	//Enemy* forestFairy;
-	//forestFairy = new ForestFairy;
-	//forestFairy->init("ForestFairy",
-	//	PointMake(CAMERAMANAGER->getDisplayCenterX() + 70,
-	//		CAMERAMANAGER->getDisplayCenterY()));
-	//_vMinion.push_back(forestFairy);
-
-	//Enemy* mushman;
-	//mushman = new MushMan;
-	//mushman->init("MushMan", PointMake(CAMERAMANAGER->getDisplayCenterX() - 30,
-	//	CAMERAMANAGER->getDisplayCenterY() + 150));
-	//_vMinion.push_back(mushman);
 }
 
 void EnemyManager::setBoss(void)
