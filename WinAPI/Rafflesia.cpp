@@ -14,7 +14,7 @@ HRESULT Rafflesia::init(const char * imageName, POINT position)
 	Enemy::init(imageName, position);
 	_x = position.x;
 	_y = position.y;
-	_hp = 100;
+	_hp = 50.0f;
 	_range = 250;
 	_deadForOb = false;
 	_state = RAFFLESIASTATE::RA_IDLE;

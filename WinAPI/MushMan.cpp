@@ -65,8 +65,6 @@ void MushMan::update(void)
 		//滚几 积己
 		if (_mushroomCreateCheck)
 		{
-			_angle = getAngle(_mushroom->getX(), _mushroom->getY(), _playerPos.x, _playerPos.y);
-
 			//滚几 积粮矫埃
 			if (10.f + _mushroomLivingTime <= TIMEMANAGER->getWorldTime())
 			{
@@ -79,7 +77,7 @@ void MushMan::update(void)
 				_mushroomCreateCheck = false;
 			}
 			else
-				_mushroom->fire(_angle);
+				_mushroom->fire();
 		}
 	}
 	else
@@ -138,7 +136,6 @@ void MushMan::animation(void)
 					_currentFrameX = 6;
 					_state = MUSHMANSTATE::MU_MOVE;
 				}
-				//else
 				_currentFrameX = 0;
 			}
 		}
@@ -295,7 +292,6 @@ void MushMan::collideObject(STObservedData obData)
 	{
 		if (_hp <= (*obData.damage))
 		{
-				
 			_deadForOb = true;
 		}
 		else

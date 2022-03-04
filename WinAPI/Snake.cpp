@@ -14,7 +14,7 @@ HRESULT Snake::init(const char * imageName, POINT position)
 	Enemy::init(imageName, position);
 	_x = position.x;
 	_y = position.y;
-	_hp = 100.0f;
+	_hp = 50.0f;
 	_moveWorldTime = TIMEMANAGER->getWorldTime();
 	_attacWorldTime = TIMEMANAGER->getWorldTime();
 	_attackMoveWorldTime = TIMEMANAGER->getWorldTime();

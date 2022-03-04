@@ -278,7 +278,7 @@ void TextSystemManager::ShopLog(string itemName, int price)
 	IMAGEMANAGER->alphaRender("Talkbox", getMemDC(), _chatRc.left, _chatRc.top, _textAlpha);																																				
 	IMAGEMANAGER->alphaRender("Namebox", getMemDC(), _nameRc.left, _nameRc.top, _textAlpha);
 	FONTMANAGER->drawText(getMemDC(), _textPosition.x*0.165, _textPosition.y*0.6, "둥근모꼴", 25, 15,
-		L"마리", wcslen(L"마리"), RGB(255, 255, 142));
+		L"마리", wcslen(L"마리"), RGB(255, 255, 141));
 
 	// _textindex가 0일때 _chatWriteRc에서부터 문구 출력
 	if (_textindex == 0)
