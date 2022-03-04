@@ -60,4 +60,3 @@ public:
 	ForestFairy();
 	virtual ~ForestFairy();
 };
-
