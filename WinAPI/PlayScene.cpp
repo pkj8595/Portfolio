@@ -80,6 +80,10 @@ void PlayScene::update(void)
 				_bossEffectTime = TIMEMANAGER->getWorldTime();
 			}
 		}
+		if (_bossClearAlpha < 0)
+		{
+			SCENEMANAGER->changeScene("EndingScene");
+		}
 	}
 
 	checkDead();
@@ -110,9 +114,13 @@ void PlayScene::render(void)
 	// 주석 제거 금지
 	if (_showBossEffect)
 	{
-		if(_frameCount < 100) _clearBossImage->frameRender(getMemDC(), -100, - 200, (_frameCount % 5), (_frameCount / 5));
-		else if (_frameCount < 200) _clearBossImage2->frameRender(getMemDC(), -100, -200, (_frameCount % 5), ((_frameCount-100) / 5));
-		else if (_bossClearAlpha > 0) _clearBossImage3->alphaRender(getMemDC(), _bossClearAlpha);
+		if(_frameCount < 100) _clearBossImage->frameRender(getMemDC(), -80, - 200, (_frameCount % 5), (_frameCount / 5));
+		else if (_frameCount < 200) _clearBossImage2->frameRender(getMemDC(), -80, -200, (_frameCount % 5), ((_frameCount-100) / 5));
+		else if (_bossClearAlpha > 0)
+		{
+			_fadeoutImage->render(getMemDC());
+			_clearBossImage3->alphaRender(getMemDC(), _bossClearAlpha);
+		}
 	}
 
 	if (_player->isDead())
