@@ -68,11 +68,12 @@ void KingSlime::update(void)
 	_angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
 	_rc = RectMakeCenter(_x, _y, _image->getFrameWidth(), _image->getFrameHeight());
 	_fixRC = RectMake(_x - 80, _y, _image->getFrameWidth() - 200, _image->getFrameHeight() - 200);
+	
+	hpUpdate();
 	if (!_deadForOb)
 	{
 		setDirection();
 		frameUpdate();
-		hpUpdate();
 		move();
 	}
 	else
@@ -239,7 +240,7 @@ void KingSlime::changeState(STATE state)
 	case STATE::WALK:
 	{
 		_alreadyShot = false;
-		_walkRndSet = RND->getFromIntTo(5, 10);
+		_walkRndSet = RND->getFromIntTo(1, 3);
 	} break;
 	case STATE::ATTACK_NORMAL:
 	{
