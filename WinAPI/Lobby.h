@@ -34,6 +34,8 @@ private:
 	float _worldTimeCount;
 	float _frameSpeed;
 	float _index;
+	
+	char temp[32];
 
 	bool _isbookOpen;
 

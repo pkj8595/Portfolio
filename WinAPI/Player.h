@@ -51,6 +51,7 @@ private:
 	int _endFrame;
 
 	bool _dead;
+	bool _isWeapon;
 	bool _isActiveMove;
 private:
 	//Item, UI
