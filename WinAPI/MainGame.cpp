@@ -44,7 +44,7 @@ void MainGame::release(void)
 	ItemManager::getSingleton()->releaseSingleton();
 	ItemSpawner::getSingleton()->release();
 	ItemSpawner::getSingleton()->releaseSingleton();
-
+	
 	GameNode::release();
 }
 

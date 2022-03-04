@@ -32,6 +32,8 @@ HRESULT RepairMap::init(POINT location)
 
 void RepairMap::release(void)
 {
+	_repairEventObj->release();
+	SAFE_DELETE(_repairEventObj);
 }
 
 void RepairMap::update(void)

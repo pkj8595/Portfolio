@@ -35,6 +35,7 @@ HRESULT ChestMap::init(POINT location)
 
 void ChestMap::release(void)
 {
+	_chestEventObj->release();
 	SAFE_DELETE(_chestEventObj);
 }
 
