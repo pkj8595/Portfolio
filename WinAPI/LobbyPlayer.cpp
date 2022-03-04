@@ -6,7 +6,7 @@
 
 HRESULT LobbyPlayer::init(void)
 {
-	_type = ObservedType::ROCKET;
+	_type = ObservedType::PLAYER;
 	_image = IMAGEMANAGER->addFrameImage("Player", "Resource/Images/Lucie/CompleteImg/Player/Player.bmp", 600, 4100, 6, 41, true, RGB(255, 0, 255));
 
 	_state = PLAYER_STATE::STOP;

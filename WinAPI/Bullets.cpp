@@ -227,7 +227,7 @@ void LinearMissile::fire(float x, float y)
 	if (_bulletMax <= _vBullet.size())return;
 	tagCBullet* bullet = new tagCBullet;
 	bullet->img = new my::Image;
-	bullet->type = ObservedType::ROCKET_MISSILE;
+	bullet->type = ObservedType::PLAYER_MISSILE;
 	bullet->img->init("Resource/Images/Project/playerBullet3.bmp", 14, 18, true, RGB(255, 0, 255));
 	bullet->speed = 15.0f;
 	bullet->x = bullet->fireX = x;
@@ -282,7 +282,7 @@ void CaseShotMissile::fire(float x, float y)
 		tagCBullet* bullet = new tagCBullet;
 		bullet->img = new my::Image;
 		bullet->img->init("Resource/Images/Project/playerBullet1.bmp", 14, 15, true, RGB(255, 0, 255));
-		bullet->type = ObservedType::ROCKET_MISSILE;
+		bullet->type = ObservedType::PLAYER_MISSILE;
 		bullet->speed = 4.0f;
 		bullet->x = bullet->fireX = x;
 		bullet->y = bullet->fireY = y;
@@ -335,7 +335,7 @@ void BlackholeMissile::fire(float x, float y)
 
 	//메모리 블록 크기 만큼 
 	tagCBullet* bullet = new tagCBullet;
-	bullet->type = ObservedType::ROCKET_MISSILE;
+	bullet->type = ObservedType::PLAYER_MISSILE;
 	bullet->img = new my::Image;
 	bullet->img->init("Resource/Images/Rocket/Missile.BMP", 0.0f, 0.0f, 416, 64, 13, 1, true, RGB(255, 0, 255));
 	bullet->speed = 4.0f;
@@ -376,12 +376,12 @@ STObservedData tagCBullet::getRectUpdate()
 
 void tagCBullet::collideObject(STObservedData obData)
 {
-	if ((*obData.typeKey) == ObservedType::ROCKET) fire = false;
+	if ((*obData.typeKey) == ObservedType::PLAYER) fire = false;
 	else if ((*obData.typeKey) == ObservedType::PLAYER_SWORD)
 	{
 		//반격, 공격반사 처리
 		angle = (*obData.angle);
-		type = ObservedType::ROCKET_MISSILE;
+		type = ObservedType::PLAYER_MISSILE;
 	}
 }
 

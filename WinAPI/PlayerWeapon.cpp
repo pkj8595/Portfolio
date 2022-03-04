@@ -67,7 +67,7 @@ void NormalWeapon::fire(float damage, float x, float y, float angle)
 {
 	if (_bulletMax <= _vWeapon.size()) return;
 	tagWeapon* weapon = new tagWeapon;
-	weapon->type = ObservedType::ROCKET_MISSILE;
+	weapon->type = ObservedType::PLAYER_MISSILE;
 	weapon->img = new my::Image;
 	weapon->img->init("Resource/Images/Lucie/CompleteImg/effect/NormalBullet_effect.bmp", 50, 50, true, RGB(255, 0, 255));
 	weapon->fire = true;
@@ -277,7 +277,7 @@ void BowWeapon::fire(float damage, float x, float y, float angle)
 {
 	if (_bulletMax <= _vWeapon.size()) return;
 	tagWeapon* weapon = new tagWeapon;
-	weapon->type = ObservedType::ROCKET_MISSILE;
+	weapon->type = ObservedType::PLAYER_MISSILE;
 	weapon->img = new my::Image;
 	weapon->img->init("Resource/Images/Lucie/CompleteImg/effect/bow_effect.bmp", 20, 20, true, RGB(255, 0, 255));
 	weapon->fire = true;
@@ -393,7 +393,7 @@ void Skill::fire(float damage, float x, float y, float angle)
 {
 	if (_bulletMax <= _vWeapon.size()) return;
 	tagWeapon* weapon = new tagWeapon;
-	weapon->type = ObservedType::ROCKET_MISSILE;
+	weapon->type = ObservedType::PLAYER_MISSILE;
 	weapon->img = new my::Image;
 	weapon->img->init("Resource/Images/Lucie/CompleteImg/effect/skillBullet.bmp", 53, 53, true, RGB(255, 0, 255));
 	weapon->fire = true;

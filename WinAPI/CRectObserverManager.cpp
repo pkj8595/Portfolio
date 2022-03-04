@@ -74,7 +74,7 @@ void CRectObserverManager::getRectFromObserved()
 			if ((*obData.typeKey) == (*obDataCompare.typeKey)) continue;
 
 			//적 피격 (obData : 내 총알, Compare : 적)
-			if (((*obData.typeKey) == ObservedType::ROCKET_MISSILE || (*obData.typeKey) == ObservedType::PLAYER_SWORD) &&
+			if (((*obData.typeKey) == ObservedType::PLAYER_MISSILE || (*obData.typeKey) == ObservedType::PLAYER_SWORD) &&
 				(*obDataCompare.typeKey) == ObservedType::MINION && !(*obDataCompare.isActive))
 			{
 				RECT collisionRect;
@@ -109,7 +109,7 @@ void CRectObserverManager::getRectFromObserved()
 
 			//플레이어 피격 (obData : 적 총알, Compare : 플레이어)
 			if ((*obData.typeKey) == ObservedType::MINION_MISSILE &&
-				(*obDataCompare.typeKey) == ObservedType::ROCKET)
+				(*obDataCompare.typeKey) == ObservedType::PLAYER)
 			{
 				RECT collisionRect;
 				if (IntersectRect(&collisionRect, obData.rc, obDataCompare.rc))
@@ -137,7 +137,7 @@ void CRectObserverManager::getRectFromObserved()
 
 			//아이템 충돌 (obData : 아이템, Compare : 플레이어)
 			if ((*obData.typeKey) == ObservedType::ITEM &&
-				(*obDataCompare.typeKey) == ObservedType::ROCKET)
+				(*obDataCompare.typeKey) == ObservedType::PLAYER)
 			{
 				// obData.magic >> itemobject -> isCurrentMap
 				if (!*obData.magic) continue;
