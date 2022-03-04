@@ -26,7 +26,7 @@ HRESULT BigSlime::init(const char * imageName, POINT position)
 	_frameSet = 0;
 
 	_stopSet = 0;
-	_walkRndSet = RND->getFromIntTo(3, 6);
+	_walkRndSet = RND->getFromIntTo(1, 3);
 	_attackSet = 0;
 
 	_boss = false;
