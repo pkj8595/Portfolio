@@ -7,8 +7,8 @@
 //=====================================
 enum class ObservedType
 {
-	ROCKET = 0,
-	ROCKET_MISSILE,
+	PLAYER = 0,
+	PLAYER_MISSILE,
 	MINION,
 	MINION_MISSILE,
 	PLAYER_SWORD,

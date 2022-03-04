@@ -287,7 +287,7 @@ STObservedData MushMan::getRectUpdate()
 
 void MushMan::collideObject(STObservedData obData)
 {
-	if (((*obData.typeKey) == ObservedType::ROCKET_MISSILE || (*obData.typeKey) == ObservedType::PLAYER_SWORD)
+	if (((*obData.typeKey) == ObservedType::PLAYER_MISSILE || (*obData.typeKey) == ObservedType::PLAYER_SWORD)
 		&& (*obData.isActive))
 	{
 		if (_hp <= (*obData.damage))
@@ -297,7 +297,7 @@ void MushMan::collideObject(STObservedData obData)
 		else
 		{
 			_hp -= (*obData.damage);
-			if ((*obData.typeKey) != ObservedType::ROCKET_MISSILE)
+			if ((*obData.typeKey) != ObservedType::PLAYER_MISSILE)
 			{
 				_x += cos(*obData.angle) * 7;
 				_y += -sin(*obData.angle) * 7;

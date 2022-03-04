@@ -7,7 +7,7 @@ HRESULT Player::init(void)
 	RECTOBSERVERMANAGER->registerPlayer(this);
 	CAMERAMANAGER->setPlayerPosition(&_x, &_y);
 
-	_type = ObservedType::ROCKET;
+	_type = ObservedType::PLAYER;
 	_image = IMAGEMANAGER->addFrameImage("Player", "Resource/Images/Lucie/CompleteImg/Player/Player.bmp", 600, 4100, 6, 41, true, RGB(255, 0, 255));
 	_swordStackImage = IMAGEMANAGER->addImage("SwordStack", "Resource/Images/Lucie/CompleteImg/system/ruby.bmp", 13, 14, true, RGB(255, 0, 255));
 	_bowStackImage = IMAGEMANAGER->addImage("BowStack", "Resource/Images/Lucie/CompleteImg/system/emerald.bmp", 16, 13, true, RGB(255, 0, 255));

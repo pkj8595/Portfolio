@@ -86,7 +86,7 @@ STObservedData Mushroom::getRectUpdate()
 
 void Mushroom::collideObject(STObservedData obData)
 {
-	if (((*obData.typeKey) == ObservedType::ROCKET_MISSILE || (*obData.typeKey) == ObservedType::PLAYER_SWORD)
+	if (((*obData.typeKey) == ObservedType::PLAYER_MISSILE || (*obData.typeKey) == ObservedType::PLAYER_SWORD)
 		&& (*obData.isActive))
 	{
 		if (_hp <= (*obData.damage))

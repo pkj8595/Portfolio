@@ -30,12 +30,6 @@ HRESULT Lobby::init(void)
 	_tsm = new TextSystemManager;
 	_tsm->init();
 
-	vector<string> playerSetting;
-	playerSetting.clear();
-	playerSetting.push_back(_itoa(100, temp, 10));
-	playerSetting.push_back(_itoa(0, temp, 10));
-	TEXTDATAMANAGER->save("로비 무기 선택.text", playerSetting);
-
 	_worldTimeCount = TIMEMANAGER->getWorldTime();
 	_frameSpeed = 0.1f;
 	_fadeOutWhiteAlpha = 0;
