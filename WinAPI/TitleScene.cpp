@@ -9,6 +9,7 @@ HRESULT TitleScene::init(void)
 	_continue = IMAGEMANAGER->addFrameImage("Continue", "Resource/Images/Lucie/CompleteImg/title/Command_1.bmp", 130, 60, 1, 2, true, RGB(255, 0, 255));
 	_exit = IMAGEMANAGER->addFrameImage("Exit", "Resource/Images/Lucie/CompleteImg/title/Command_3.bmp", 130, 60, 1, 2, true, RGB(255, 0, 255));
 	_changeScreen = IMAGEMANAGER->addImage("TitleBlackScreen", "Resource/Images/Lucie/CompleteImg/effect/changeScreen.bmp", 1104, 960);
+	_startBlackScreen = IMAGEMANAGER->addImage("TitleBlackScreen", "Resource/Images/Lucie/CompleteImg/effect/changeScreen.bmp", 1104, 960);
 
 	_bgRc = RectMake(0, 0, _bg->getWidth(), _bg->getHeight());
 	_startRc = RectMake(CAMERAMANAGER->getDisplayCenterX() - 100,
@@ -17,7 +18,7 @@ HRESULT TitleScene::init(void)
 	_exitRc = RectMake(CAMERAMANAGER->getDisplayCenterX() - 100, CAMERAMANAGER->getDisplayCenterY() + 100, _exit->getFrameWidth(), _exit->getFrameHeight());
 
 	_changeScreenAlpha = 0.0f;
-
+	_startScreenAlpha = 255.0f;
 	_isStart = false;
 
 	return S_OK;
@@ -29,6 +30,13 @@ void TitleScene::release(void)
 
 void TitleScene::update(void)
 {
+
+	_startScreenAlpha -= 3.0f;
+
+	if (_startScreenAlpha < 0.0f)
+	{
+		_startScreenAlpha = 0.0f;
+	}
 
 	if (PtInRect(&_startRc, _ptMouse))
 	{
@@ -74,5 +82,6 @@ void TitleScene::render(void)
 	_gameName->render(getMemDC());
 	_start->frameRender(getMemDC(), _startRc.left, _startRc.top);
 	_exit->frameRender(getMemDC(), _exitRc.left, _exitRc.top);
+	if (_startScreenAlpha > 0) { _startBlackScreen->alphaRender(getMemDC(), _startScreenAlpha); }
 	if (_changeScreenAlpha > 0) { _changeScreen->alphaRender(getMemDC(), _changeScreenAlpha); }
 }
