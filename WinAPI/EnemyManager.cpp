@@ -85,7 +85,7 @@ void EnemyManager::render(void)
 
 void EnemyManager::setMinion(void)
 {
-	int temp = RND->getInt(6);
+	/*int temp = RND->getInt(6);
 	switch (temp)
 	{
 	case 0: {
@@ -190,7 +190,12 @@ void EnemyManager::setMinion(void)
 		mushman->init("MushMan", PointMake(CAMERAMANAGER->getDisplayCenterX() - 30, CAMERAMANAGER->getDisplayCenterY() + 150));
 		_vMinion.push_back(mushman);
 	} break;
-	}
+	}*/
+
+	Enemy* slime;
+		slime = new Slime;
+		slime->init("Slime", PointMake(CAMERAMANAGER->getDisplayCenterX(), CAMERAMANAGER->getDisplayCenterY()));
+		_vMinion.push_back(slime);
 }
 
 void EnemyManager::setBoss(void)
