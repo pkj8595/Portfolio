@@ -32,7 +32,7 @@ private:
 	int	  _maxFrameX;
 	int	  _frameX, _frameY;
 
-	bool  _deadForOb;		//사망 여부 [Enemy의 isActive는 몹 삭제 전용, deadForOb는 체력 0 여부]
+	bool  _deadForOb;	
 
 public:
 	HRESULT init(const char* imageName, POINT position);
@@ -48,7 +48,7 @@ public:
 	void randomPosCreate();
 	void randomMove();
 	void attack();
-	bool playerCheck(); //플레이어 감지함수
+	bool playerCheck(); 
 	void normalBullet();
 	void fariyBullet();
 	void bubbleBullet();
