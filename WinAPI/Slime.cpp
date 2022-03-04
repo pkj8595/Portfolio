@@ -61,7 +61,6 @@ void Slime::update(void)
 	//플레이어 추적 범위에 들어왔을 경우
 	if (_deadTimeCount < TIMEMANAGER->getWorldTime() - 0.5f)
 	{
-		//_frameY = 1;
 		_state = SLIMESTATE::SL_IDLE;
 		_isActive = false;
 	}
@@ -89,15 +88,12 @@ void Slime::update(void)
 		//랜덤 좌표 생성
 		randomPosCreate();
 	}
-
-	//_rc = RectMakeCenter(_x + _image->getFrameWidth()/2, _y+_image->getFrameHeight()/2 + 20, _image->getFrameWidth() / 2, _image->getFrameHeight() / 2);
 	_rc = RectMakeCenter(_x, _y , _image->getFrameWidth()/2, _image->getFrameHeight()/2);
 
 }
 
 void Slime::render(void)
 {
-	//Enemy::render();
 	if (_isActive)
 	{
 		frame();
@@ -235,7 +231,6 @@ void Slime::animation()
 	if (_frameSpeed + _worldTimeCount <= TIMEMANAGER->getWorldTime())
 	{
 		_worldTimeCount = TIMEMANAGER->getWorldTime();
-		//_image->setFrameY(_frameY);
 		_currentFrameX++;
 
 		if (_currentFrameX > _image->getMaxFrameX())
@@ -273,7 +268,6 @@ void Slime::pursuePlayer()
 	}
 
 	//플레이어 방향으로 쫓아간다.
-	//_state = SLIMESTATE::SM_MOVE;
 	_angle = getAngle(_x, _y, _playerPos.x, _playerPos.y);
 	_x += cosf(_angle) * _speed;
 	_y += -sinf(_angle) * _speed;
@@ -404,7 +398,6 @@ void Slime::collideObject(STObservedData obData)
 	{
 		if (_hp <= (*obData.damage))
 		{
-			//나중에 죽는 애니메이션 넣는걸로 바꿀 것. isActive를 false로 바꾸는 작업은 죽은 애니메이션 전부 실행 뒤 바꿔주는 것으로 변경	
 			_state = SLIMESTATE::SL_DEAD;
 			_deadForOb = true;
 		}

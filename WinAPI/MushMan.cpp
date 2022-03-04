@@ -138,7 +138,6 @@ void MushMan::animation(void)
 					_currentFrameX = 6;
 					_state = MUSHMANSTATE::MU_MOVE;
 				}
-				//else
 				_currentFrameX = 0;
 			}
 		}
@@ -295,7 +294,6 @@ void MushMan::collideObject(STObservedData obData)
 	{
 		if (_hp <= (*obData.damage))
 		{
-			//나중에 죽는 애니메이션 넣는걸로 바꿀 것. isActive를 false로 바꾸는 작업은 죽은 애니메이션 전부 실행 뒤 바꿔주는 것으로 변경	
 			_deadForOb = true;
 		}
 		else
