@@ -290,20 +290,16 @@ void ForestFairy::normalBullet()
 		{
 			_normalBullet->fire(_x, _y, (tempAngle)+(3 * i * PI / 180), 2.95f, 0);
 		}
-		for (int i = 0; i < 4; i++)
-		{
-			_normalBullet->fire(_x, _y, (tempAngle)+(5 * i * PI / 180), 2.90f, 0);
-		}
 		for (int i = 0; i < 6; i++)
 		{
-			_normalBullet->fire(_x, _y, (tempAngle)+(4 * i * PI / 180), 2.87f, 0);
+			_normalBullet->fire(_x, _y, (tempAngle)+(4 * i * PI / 180), 2.90, 0);
 		}
 		for (int i = 0; i < 2; i++)
 		{
-			_normalBullet->fire(_x, _y, (tempAngle)+(20 * i * PI / 180), 2.84f, 0);
+			_normalBullet->fire(_x, _y, (tempAngle)+(20 * i * PI / 180), 2.86f, 0);
 		}
 
-		_attackCoolTime = 200;
+		_attackCoolTime = 250;
 	}
 }
 
