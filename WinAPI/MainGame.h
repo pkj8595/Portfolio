@@ -4,6 +4,7 @@
 class MainGame : public GameNode
 {
 private:
+	my::Image* _mouseImg;
 	inline void addSounds(void);
 public:
 	virtual HRESULT init(void);

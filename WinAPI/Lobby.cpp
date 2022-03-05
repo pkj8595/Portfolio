@@ -9,10 +9,10 @@ HRESULT Lobby::init(void)
 	_WhitefadeOutImg = IMAGEMANAGER->addImage("WhiteScreen", "Resource/Images/Lucie/CompleteImg/effect/BookchangeScreen.bmp", 1104, 960);
 	_BlackfadeOutImg = IMAGEMANAGER->addImage("BlackScreen", "Resource/Images/Lucie/CompleteImg/effect/changeScreen.bmp", 1104, 960);
 	_bookImg = IMAGEMANAGER->addFrameImage("Book", "Resource/Images/Lucie/CompleteImg/1stScene/diary_open.bmp", 384, 36, 8, 1, true, RGB(255, 0, 255));
-	
+	_bookImg->setFrameX(0);
+
 	_player = new LobbyPlayer;
 	_player->init();
-	cout << "LobbyPlayer address"<< &_player << endl;
 	_basePt = PointMake(500, 280);
 
 	_lobbyMap_rc = RectMake(0 - 50, 0 - 200, _lobbyMapImg->getWidth(), _lobbyMapImg->getHeight());
@@ -64,10 +64,8 @@ void Lobby::update(void)
 	if (_fadeOutBlackAlpha > 252)
 	{
 		_fadeOutBlackAlpha = 252;
-		_player->setX(404);
-		_player->setY(344);
+
 		release();
-		_bookImg->setFrameX(0);
 		SCENEMANAGER->changeScene("PlayScene");
 		return;
 	}

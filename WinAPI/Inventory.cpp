@@ -12,21 +12,20 @@ HRESULT Inventory::init(void)
 	_inventorySlotB.img = IMAGEMANAGER->addFrameImage("inventorySlotB", "Resource/Images/Lucie/CompleteImg/inventory/inventorySlotB.bmp", 76, 38, 2, 1, true, RGB(255, 0, 255));
 	_itemInfoWindow.img = IMAGEMANAGER->addImage("ItemInfoWindow", "Resource/Images/Lucie/CompleteImg/inventory/ItemInfoWindow.bmp", 300,210);
 
-	_x = CAMERAMANAGER->getDisplayAreaRight() - _inventoryBackground->getWidth()-30;
+	_x = CAMERAMANAGER->getDisplayAreaRight() - _inventoryBackground->getWidth();
 	_y = CAMERAMANAGER->getDisplayAreaBottom() * 0.5 - 200;
 
-	_rc = RectMake(_x, _y, _inventoryBackground->getWidth(), _inventoryBackground->getHeight());
-
+	_baseRc = RectMake(_x, _y, _inventoryBackground->getWidth(), _inventoryBackground->getHeight());
 	
-	_inventoryGoldIcon.pt = PointMake(_rc.left + 160, _rc.top + 260);
+	_inventoryGoldIcon.pt = PointMake(_baseRc.left + 160, _baseRc.top + 260);
 	_goldRc = RectMake(CAMERAMANAGER->getDisplayAreaRight() - 100, 0, 128, 32);
-	_inventoryCloseBtn.pt = PointMake(_rc.left + 205, _rc.top + 15);
-	_inventorySlot.pt = PointMake(_rc.left + 25, _rc.top + 50);
-	_inventorySlotB.pt = PointMake(_rc.left + 100, _rc.top + 100);
+	_inventoryCloseBtn.pt = PointMake(_baseRc.left + 205, _baseRc.top + 15);
+	_inventorySlot.pt = PointMake(_baseRc.left + 25, _baseRc.top + 50);
+	_inventorySlotB.pt = PointMake(_baseRc.left + 100, _baseRc.top + 100);
 
-	_statusTextPos = PointMake(_rc.left + 25 , _rc.top+170);
+	_statusTextPos = PointMake(_baseRc.left + 25 , _baseRc.top+170);
 
-	_rcCloseBtn = RectMake(_inventoryCloseBtn.pt.x, _inventoryCloseBtn.pt.y, _inventoryCloseBtn.img->getFrameWidth(), _inventoryCloseBtn.img->getFrameHeight());
+	_inventoryCloseBtn.rc = RectMake(_inventoryCloseBtn.pt.x, _inventoryCloseBtn.pt.y, _inventoryCloseBtn.img->getFrameWidth(), _inventoryCloseBtn.img->getFrameHeight());
 
 	_emptyItem = new Item;
 	_equipWeapon= _emptyItem;
@@ -103,16 +102,21 @@ void Inventory::render(void)
 		showInventoryItem();
 		renderInvenAttributeText();
 
-		RECT goldRc = RectMakeCenter(_rc.left + 198, _rc.top + 276, 32, 32);
+		RECT goldRc = RectMakeCenter(_baseRc.left + 198, _baseRc.top + 276, 32, 32);
 		string goldStr = to_string(_gold);
 		inventorydrawText(goldStr, goldRc, 20, RGB(0, 0, 0),false);
 
-		if (PtInRect(&_rcCloseBtn, _ptMouse))
+		if (PtInRect(&_inventoryCloseBtn.rc, _ptMouse))
 		{
+			_inventoryCloseBtn.frameX = 0;
 			if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 			{
 				_isShowInven = false;
 			}
+		}
+		else
+		{
+			_inventoryCloseBtn.frameX = 1;
 		}
 	}
 
@@ -174,22 +178,31 @@ void Inventory::render(void)
 
 void Inventory::renderInventoryBase()
 {
-	_inventoryBackground->render(getMemDC(), _rc.left, _rc.top);
+	_inventoryBackground->render(getMemDC(), _baseRc.left, _baseRc.top);
 	_inventoryGoldIcon.img->render(getMemDC(), _inventoryGoldIcon.pt.x, _inventoryGoldIcon.pt.y);
 	
-	_inventoryCloseBtn.img->frameRender(getMemDC(), _inventoryCloseBtn.pt.x, _inventoryCloseBtn.pt.y, 1, 1);
+	_inventoryCloseBtn.img->frameRender(getMemDC(), _inventoryCloseBtn.pt.x, _inventoryCloseBtn.pt.y, _inventoryCloseBtn.frameX, 1);
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 5; j++)
 		{
-			_inventorySlot.img->frameRender(getMemDC(),
-				_inventorySlot.pt.x+ INVENTORY_IMG_OFFSETX *j,
-				_inventorySlot.pt.y+ INVENTORY_IMG_OFFSETY *i, 1, 1);
+			RECT slotRc = RectMake(
+				_inventorySlot.pt.x + INVENTORY_IMG_OFFSETX * j,
+				_inventorySlot.pt.y + INVENTORY_IMG_OFFSETY * i,
+				32, 32);
+			if (PtInRect(&slotRc, _ptMouse))
+			{
+				_inventorySlot.img->frameRender(getMemDC(),slotRc.left,slotRc.top, 0, 1);
+			}
+			else
+			{
+				_inventorySlot.img->frameRender(getMemDC(),slotRc.left,slotRc.top, 1, 1);
+			}
 		}
 	}
 	
 	char str[32] = "인벤토리";
-	FONTMANAGER->drawText(getMemDC(), _rc.left +98, _rc.top + 18, "야놀자 야체 Regular", 20, 200, str, strlen(str), RGB(255, 255, 255));
+	FONTMANAGER->drawText(getMemDC(), _baseRc.left +98, _baseRc.top + 18, "야놀자 야체 Regular", 20, 200, str, strlen(str), RGB(255, 255, 255));
 	
 }
 
@@ -585,7 +598,14 @@ void Inventory::equipRender(void)
 			(*_viItem).first == _equipShoes||
 			(*_viItem).first == _equipHat)
 		{
-			_inventorySlotB.img->frameRender(getMemDC(), (*_viItem).second.left-3, (*_viItem).second.top-3, 1, 1);
+			if (PtInRect(&(*_viItem).second, _ptMouse))
+			{
+				_inventorySlotB.img->frameRender(getMemDC(), (*_viItem).second.left-3, (*_viItem).second.top-3, 0, 1);
+			}
+			else
+			{
+				_inventorySlotB.img->frameRender(getMemDC(), (*_viItem).second.left - 3, (*_viItem).second.top - 3, 1, 1);
+			}
 		}
 	}
 

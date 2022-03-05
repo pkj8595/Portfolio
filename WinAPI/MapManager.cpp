@@ -70,17 +70,6 @@ void MapManager::update(void)
 		}
 	}
 
-	if (KEYMANAGER->isOnceKeyDown('R'))
-	{
-		for (Map* m : _vMap)
-		{
-			if (m->getType() == Map::MAPTYPE::REPAIR)
-			{
-				_currentMap = m;
-				_currentMap->setShow(true);
-			}
-		}
-	}
 
 }
 
