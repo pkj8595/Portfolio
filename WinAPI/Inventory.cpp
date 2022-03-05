@@ -519,15 +519,9 @@ void Inventory::renderPushItemMassege()
 	int y = ((_showGetItemImgNum - 1) / 10) * 64;
 
 	string str;
-	_viItem = _vItem.begin();
-	for (; _viItem != _vItem.end(); ++_viItem)
-	{
-		if ((*_viItem).first->_imgNum == _showGetItemImgNum)
-		{
-			str = (*_viItem).first->_name.c_str();
-			break;
-		}
-	}
+	
+	str = ItemManager::getSingleton()->getItem(_showGetItemImgNum)->_name;
+
 	RECT massageRc = RectMakeCenter(CAMERAMANAGER->getDisplayCenterX(), CAMERAMANAGER->getDisplayCenterY() - (CAMERAMANAGER->getDisplayCenterY()*0.4), str.size()*17,100);
 
 	inventorydrawText(str, massageRc,50,RGB(255,255,255),true);
