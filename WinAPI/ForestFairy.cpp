@@ -31,10 +31,8 @@ HRESULT ForestFairy::init(const char * imageName, POINT position)
 
 	_normalBullet = new NormalBullet;
 	_normalBullet->init(10, WINSIZE_X * 2 / 3);
-	_fairyBullet = new FairyBullet;
-	_fairyBullet->init(1, WINSIZE_X / 3);
 	_bubbleBullet = new BubbleBullet;
-	_bubbleBullet->init(30, WINSIZE_X / 3);
+	_bubbleBullet->init(1, WINSIZE_X / 3);
 
 	return S_OK;
 }
@@ -43,9 +41,6 @@ void ForestFairy::release(void)
 {
 	_normalBullet->release();
 	SAFE_DELETE(_normalBullet);
-
-	_fairyBullet->release();
-	SAFE_DELETE(_fairyBullet);
 
 	_bubbleBullet->release();
 	SAFE_DELETE(_bubbleBullet);
@@ -58,7 +53,6 @@ void ForestFairy::update(void)
 {
 	Enemy::update();
 	_normalBullet->update();
-	_fairyBullet->update();
 	_bubbleBullet->update();
 
 	if (!_deadForOb)
@@ -98,7 +92,6 @@ void ForestFairy::draw(void)
 {
 	_image->frameRender(getMemDC(), _rc.left - CAMERAMANAGER->getCameraRect().left, _rc.top - CAMERAMANAGER->getCameraRect().top, _currentFrameX, _currentFrameY);
 	_normalBullet->render();
-	_fairyBullet->render();
 	_bubbleBullet->render();
 }
 
@@ -185,28 +178,6 @@ void ForestFairy::frame()
 				break;
 			}
 			normalBullet();
-			break;
-
-		case FAIRYATTACK::FA_FAIRY:
-			switch (_direction)
-			{
-			case FAIRYDIRECTION::FA_LEFT:
-				_currentFrameY = 5;
-				break;
-
-			case FAIRYDIRECTION::FA_RIGHT:
-				_currentFrameY = 6;
-				break;
-
-			case FAIRYDIRECTION::FA_UP:
-				_currentFrameY = 7;
-				break;
-
-			case FAIRYDIRECTION::FA_DOWN:
-				_currentFrameY = 4;
-				break;
-			}
-			fariyBullet();
 			break;
 
 		case FAIRYATTACK::FA_BUBBLE:
@@ -319,37 +290,23 @@ void ForestFairy::normalBullet()
 		{
 			_normalBullet->fire(_x, _y, (tempAngle)+(3 * i * PI / 180), 2.95f, 0);
 		}
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 4; i++)
 		{
-			_normalBullet->fire(_x, _y, (tempAngle)+(20 * i * PI / 180), 2.90f, 0);
+			_normalBullet->fire(_x, _y, (tempAngle)+(5 * i * PI / 180), 2.90f, 0);
 		}
 		for (int i = 0; i < 6; i++)
 		{
-			_normalBullet->fire(_x, _y, (tempAngle)+(3.5 * i * PI / 180), 2.87f, 0);
+			_normalBullet->fire(_x, _y, (tempAngle)+(4 * i * PI / 180), 2.87f, 0);
 		}
 		for (int i = 0; i < 2; i++)
 		{
 			_normalBullet->fire(_x, _y, (tempAngle)+(20 * i * PI / 180), 2.84f, 0);
 		}
 
-		_attackCoolTime = 180;
-
+		_attackCoolTime = 200;
 	}
 }
 
-void ForestFairy::fariyBullet()
-{
-
-	if (_attackParttern == FAIRYATTACK::FA_FAIRY&&_image->getMaxFrameX() - 1 == _currentFrameX)
-	{
-		float tempAngle = getAngle(_x, _y, _playerPos.x + 50, _playerPos.y + 50);
-
-		_fairyBullet->fire(_x, _y, tempAngle);
-
-		_attackCoolTime = 100;
-
-	}
-}
 
 void ForestFairy::bubbleBullet()
 {
@@ -357,11 +314,11 @@ void ForestFairy::bubbleBullet()
 	{
 		float tempAngle = getAngle(_x, _y, _playerPos.x + 50, _playerPos.y + 50);
 
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 25; i++)
 		{
-			_bubbleBullet->fire(_x, _y, tempAngle, 2.0f, 30 * i * PI / 180);
-
-			_attackCoolTime = 300;
+			_bubbleBullet->fire(_x, _y, tempAngle, 2.5f, 15 * i * PI / 180);
+			
+			_attackCoolTime = 500;
 		}
 	}
 }
@@ -388,7 +345,6 @@ void ForestFairy::collideObject(STObservedData obData)
 		else
 		{
 			_hp -= (*obData.damage);
-
 		}
 		(*obData.isActive) = false;
 	}

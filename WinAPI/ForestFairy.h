@@ -4,13 +4,12 @@
 
 enum class FAIRYSTATE { FA_MOVE, FA_ATTACK, FA_DEAD, FA_END };
 enum class FAIRYDIRECTION { FA_LEFT, FA_RIGHT, FA_UP, FA_DOWN };
-enum class FAIRYATTACK { FA_NORMAL, FA_FAIRY, FA_BUBBLE };
+enum class FAIRYATTACK { FA_NORMAL, FA_BUBBLE };
 
 class ForestFairy :public Enemy
 {
 private:
 	NormalBullet* _normalBullet;
-	FairyBullet* _fairyBullet;
 	BubbleBullet* _bubbleBullet;
 
 	FAIRYSTATE _state;
@@ -24,7 +23,6 @@ private:
 	float _attackDistance;
 	float _frameSpeed;
 	float _deadTimeCount;
-
 	float _attackCoolTime;
 
 	int   _randomX, _randomY;
@@ -50,8 +48,8 @@ public:
 	void attack();
 	bool playerCheck(); 
 	void normalBullet();
-	void fariyBullet();
 	void bubbleBullet();
+
 public:
 	virtual STObservedData getRectUpdate();
 	virtual void collideObject(STObservedData obData);
