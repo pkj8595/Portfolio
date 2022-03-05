@@ -6,6 +6,7 @@ class RepairMap : public Map
 private:
 	my::Image* _anvilImage;
 	int _frameY;
+	int _anvilFrameTime;
 
 	EventObject* _repairEventObj;
 	RECT _repairEventRc;

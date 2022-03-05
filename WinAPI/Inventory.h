@@ -55,14 +55,14 @@ class Inventory : public GameNode
 		}
 	}InfoWindowText;
 
+private:
 	ItemManager* _itemManager;
 	my::Image* _inventoryBackground;
-	RECT _rc;
+	RECT _baseRc;
 	int _x, _y;
 	
 	InvenPos _inventoryGoldIcon;
 	InvenPosBtn _inventoryCloseBtn;
-	RECT _rcCloseBtn;
 	InvenPos _inventorySlot;
 	InvenPos _inventorySlotA;
 	InvenPos _inventorySlotB;
@@ -98,7 +98,6 @@ class Inventory : public GameNode
 	float _enchantSuccessWorldTime;
 	string _enchantStr;
 
-	//todo
 	int _gold;
 	RECT _goldRc;
 	string _goldStr;

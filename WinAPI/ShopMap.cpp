@@ -47,9 +47,10 @@ HRESULT ShopMap::init(POINT location)
 
 void ShopMap::release(void)
 {
-	
+	_viObj = _vObj.begin();
 	for (; _viObj != _vObj.end(); ++_viObj)
 	{
+		(*_viObj).eventObj->release();
 		SAFE_DELETE((*_viObj).eventObj);
 	}
 }

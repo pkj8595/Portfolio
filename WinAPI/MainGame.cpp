@@ -27,7 +27,7 @@ HRESULT MainGame::init(void)
 	ItemManager::getSingleton()->init();
 	ItemSpawner::getSingleton()->init();
 	//addSounds();
-	IMAGEMANAGER->addImage("MousePointer", "Resource/Images/Lucie/CompleteImg/UI/Pointer.bmp",32, 32, true, RGB(255, 0, 255));
+	_mouseImg =IMAGEMANAGER->addImage("MousePointer", "Resource/Images/Lucie/CompleteImg/UI/Pointer2.bmp",14, 14, true, RGB(255, 0, 255));
 
 	SCENEMANAGER->addScene("TitleScene", new TitleScene);
 	SCENEMANAGER->addScene("PlayScene", new PlayScene);
@@ -43,12 +43,12 @@ HRESULT MainGame::init(void)
 
 void MainGame::release(void)
 {
+	GameNode::release();
 	ItemManager::getSingleton()->release();
 	ItemManager::getSingleton()->releaseSingleton();
 	ItemSpawner::getSingleton()->release();
 	ItemSpawner::getSingleton()->releaseSingleton();
-
-	GameNode::release();
+	
 
 }
 
@@ -63,7 +63,7 @@ void MainGame::render(void)
 
 	SCENEMANAGER->render();
 	TIMEMANAGER->render(getMemDC());
-	IMAGEMANAGER->render("MousePointer", getMemDC(), _ptMouse.x, _ptMouse.y);
+	_mouseImg->render(getMemDC(), _ptMouse.x, _ptMouse.y);
 
 	this->getBackBuffer()->render(getHDC());
 }

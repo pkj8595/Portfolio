@@ -56,6 +56,7 @@ void EnemyManager::release(void)
 		(*_viMinion)->release();
 		SAFE_DELETE(*_viMinion);
 	}
+	_vMinion.clear();
 
 }
 

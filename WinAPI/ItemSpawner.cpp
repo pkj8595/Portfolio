@@ -134,12 +134,10 @@ void ItemObject::collideObject(STObservedData obData)
 
 ItemSpawner::ItemSpawner()
 {
-	init();
 }
 
 ItemSpawner::~ItemSpawner()
 {
-	release();
 }
 
 
@@ -155,6 +153,8 @@ void ItemSpawner::release(void)
 	for (; _viItemObj != _vItemObj.end(); ++_viItemObj)
 	{
 		(*_viItemObj)->release();
+		SAFE_DELETE(*_viItemObj);
+		//_vItemObj.erase(_viItemObj);
 	}
 	_vItemObj.clear();
 }
@@ -171,6 +171,7 @@ void ItemSpawner::update(void)
 			if (!(*_viItemObj)->getIsActive())
 			{
 				(*_viItemObj)->release();
+				SAFE_DELETE(*_viItemObj);
 				_vItemObj.erase(_viItemObj);
 				break;
 			}
@@ -200,6 +201,7 @@ void ItemSpawner::clearItem(void)
 	for (; _viItemObj != _vItemObj.end(); ++_viItemObj)
 	{
 		(*_viItemObj)->release();
+		SAFE_DELETE(*_viItemObj);
 	}
 	_vItemObj.clear();
 }
@@ -248,7 +250,7 @@ ItemObject* ItemSpawner::createItemMapInit(int x, int y, bool isCollider)
 	return itemObj;
 }
 
-void ItemSpawner::removeItem(ItemObject * itemObject)
+void ItemSpawner::removeItem(ItemObject* itemObject)
 {
 }
 

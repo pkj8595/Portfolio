@@ -25,7 +25,7 @@ HRESULT ChestMap::init(POINT location)
 	_location = location;
 
 	_chestEventObj = new EventObject;
-	_chestEventRc = RectMake(450 - CAMERAMANAGER->getCameraRect().left, 400 - CAMERAMANAGER->getCameraRect().top,
+	_chestEventRc = RectMake(450, 400,
 		_chestImage->getFrameWidth(), _chestImage->getFrameHeight());
 	_chestEventObj->init(EventObservedType::CHEST, _chestEventRc, &_isActive, 0);
 
@@ -35,6 +35,7 @@ HRESULT ChestMap::init(POINT location)
 
 void ChestMap::release(void)
 {
+	_chestEventObj->release();
 	SAFE_DELETE(_chestEventObj);
 }
 

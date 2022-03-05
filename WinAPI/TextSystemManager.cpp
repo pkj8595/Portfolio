@@ -75,32 +75,6 @@ void TextSystemManager::update(void)
 	if (_textAlpha >= 230.0f) { _textAlpha = 230.0f; }
 	
 	
-	// 엔터를 눌렀을 경우
-	if (KEYMANAGER->isOnceKeyDown(VK_RETURN) && isShowText)
-	{
-		// _textBufferCnt과 _text1.size()를 비교했을 때 _text1.size()가 더 크다면
-		if (_textBufferCnt < _shopNameText.size())
-		{
-			// bufferCnt은 _text1.size의 값과 같은 값을 가지게 된다.
-			_textBufferCnt = _shopNameText.size();
-		}
-		// 저 조건에 충족하지 않는다면 _textindex를 1로 고정하고 버튼 렌더에 필요한 isShopcol을 호출한다.
-		else
-		{
-			if (isShopOpen)
-			{
-				_textindex = 1;
-				isShopCol = true;
-			}
-
-			if (isAnvilOpen)
-			{
-				isShowText = false;
-				isAnvilOpen = false;
-				isrepairbuy = false;
-			}
-		}
-	}
 
 	// 버튼 렉트 박스에 충돌했을 경우 알파값을 230.0f로 고정, 아닐 경우 0으로 초기화
 	if (iscollBox)
@@ -236,6 +210,37 @@ void TextSystemManager::update(void)
 			_selectTwoAlpha = 0.0f;
 		}
 	}
+
+	if (isShowText)
+	{
+		// 엔터를 눌렀을 경우
+		if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON) )
+		{
+			// _textBufferCnt과 _text1.size()를 비교했을 때 _text1.size()가 더 크다면
+			if (_textBufferCnt < _shopNameText.size())
+			{
+				// bufferCnt은 _text1.size의 값과 같은 값을 가지게 된다.
+				_textBufferCnt = _shopNameText.size();
+			}
+			// 저 조건에 충족하지 않는다면 _textindex를 1로 고정하고 버튼 렌더에 필요한 isShopcol을 호출한다.
+			else
+			{
+				if (isShopOpen)
+				{
+					_textindex = 1;
+					isShopCol = true;
+				}
+
+				if (isAnvilOpen)
+				{
+					isShowText = false;
+					isAnvilOpen = false;
+					isrepairbuy = false;
+				}
+			}
+		}
+	}
+	
 }
 
 void TextSystemManager::render(void)

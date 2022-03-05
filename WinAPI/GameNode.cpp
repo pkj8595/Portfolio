@@ -62,6 +62,7 @@ void GameNode::release(void)
 		RECTOBSERVERMANAGER->releaseSingleton();
 
 		SCENEMANAGER->release();
+		SCENEMANAGER->releaseSingleton();
 
 		CAMERAMANAGER->release();
 		CAMERAMANAGER->releaseSingleton();

@@ -36,40 +36,15 @@ HRESULT LobbyPlayer::init(void)
 	_frameTick = TIMEMANAGER->getWorldTime();
 	_startFrame = _endFrame = 4;
 
-	_sword = new SwordWeapon;
-	_sword->init(&_x, &_y);
-
-	_normal = new NormalWeapon;
-	_normal->init(5, WINSIZE_X / 3 * 2);
-
-	_bow = new BowWeapon;
-	_bow->init(15, WINSIZE_X / 3 * 2);
-
-	_statusUI = new PlayerStatusUI;
-	_statusUI->init(&_totalStatus, &_level);
-
-	
-
-	_inventory = new Inventory;
-	_inventory->init();
-	_inventory->setPTotalattribute(&_totalStatus);
-	_inventory->setPlayerAttribute(&_status);
-
-
-	_equipItem = _inventory->getEquipWeapon();
-
 	return S_OK;
 }
 
 void LobbyPlayer::release(void)
 {
-	_inventory->release();
 }
 
 void LobbyPlayer::update(void)
 {
-
-
 	if (_state == PLAYER_STATE::WALK || _state == PLAYER_STATE::STOP)
 	{
 		setDirectionByKeyInput();
@@ -87,12 +62,7 @@ void LobbyPlayer::update(void)
 	{
 		move();
 	}
-	computeTotalAttribute(); // гу╩Й
-	_sword->update();
-	_normal->update();
-	_bow->update();
-	_statusUI->update();
-	_inventory->update();
+
 
 	_rc = RectMakeCenter(_x + _image->getFrameWidth() / 2, _y + _image->getFrameHeight() / 2 + 20, 8, 5);
 
@@ -101,19 +71,11 @@ void LobbyPlayer::update(void)
 void LobbyPlayer::render(void)
 {
 	_image->frameRender(getMemDC(),
-		_x - CAMERAMANAGER->getCameraRect().left,
-		_y - CAMERAMANAGER->getCameraRect().top);
-	_inventory->render();
+		_x,
+		_y);
 }
 
-STObservedData LobbyPlayer::getRectUpdate()
-{
-	STObservedData temp;
 
-	temp.rc = &_rc;
-	temp.typeKey = &_type;
-	return temp;
-}
 
 void LobbyPlayer::setFrame()
 {
@@ -205,7 +167,6 @@ void LobbyPlayer::move()
 {
 
 	if (_state != PLAYER_STATE::WALK) return;
-	else if (_bow->isFiring()) setDirectionByKeyInput();
 	switch (_direction)
 	{
 	case PLAYER_DIRECTION::LEFT:
@@ -306,18 +267,5 @@ void LobbyPlayer::setCollision()
 			_y += _totalStatus._speed;
 		}
 	} break;
-	}
-}
-
-void LobbyPlayer::computeTotalAttribute()
-{
-	_totalStatus = _status + _inventory->getItemTotalAttribute();
-	if (_totalStatus._maxHp < _status._hp)
-	{
-		_status._hp = _totalStatus._maxHp;
-	}
-	if (_totalStatus._maxMana < _status._mana)
-	{
-		_status._mana = _totalStatus._maxMana;
 	}
 }
