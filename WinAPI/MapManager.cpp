@@ -53,16 +53,16 @@ void MapManager::update(void)
 		m->checkActiveMap();
 	}
 
-	if (KEYMANAGER->isOnceKeyDown('E'))
+	/*if (KEYMANAGER->isOnceKeyDown('E'))
 	{
 		_currentMap->setClear(true);
-	}
+	}*/
 
 	if (KEYMANAGER->isOnceKeyDown('Q'))
 	{
 		for (Map* m : _vMap)
 		{
-			if (m->getType() == Map::MAPTYPE::TREASURE)
+			if (m->getType() == Map::MAPTYPE::SHOP)
 			{
 				_currentMap = m;
 				_currentMap->setShow(true);

@@ -70,6 +70,7 @@ public:
 	int createChestItem(int x, int y, bool isCollider);
 
 	ItemObject* createItemMapInit(int x, int y, bool isCollider, Map* map);
+	ItemObject* createItemMapInit(int x, int y, bool isCollider, int itemIndex, Map* map);
 	ItemObject* createItemMapInit(int x, int y, bool isCollider);
 	void removeItem(ItemObject* itemObject);
 

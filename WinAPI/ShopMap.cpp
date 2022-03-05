@@ -34,7 +34,14 @@ HRESULT ShopMap::init(POINT location)
 		int y = 190;
 
 		ShopEventObj eventObj;
-		eventObj.itemObj =_itemSpawner->createItemMapInit(x, y, false,this);
+		if (i == 4)
+		{
+			eventObj.itemObj = _itemSpawner->createItemMapInit(x, y, false,6, this);
+		}
+		else
+		{
+			eventObj.itemObj =_itemSpawner->createItemMapInit(x, y, false,this);
+		}
 		eventObj.eventObj = new EventObject;
 		eventObj.eventObj->init(EventObservedType::SHOP, RectMakeCenter(x, y+60, 32, 32),&_isActive, eventObj.itemObj->getItemIndex());
 		_rcEvent[i] = RectMakeCenter(x, y + 60, 32, 32);
