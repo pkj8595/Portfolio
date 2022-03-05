@@ -283,7 +283,7 @@ void Inventory::pushItem(Item* item)
 			_inventorySlot.pt.y + 3 + (INVENTORY_IMG_OFFSETY * (_invenItemCount / 5)),
 			32, 32);
 		_vItem.push_back(make_pair(copyItem, tempRc));
-		updatePushItemMassege(item);
+		updatePushItemMassege(copyItem);
 		_invenItemCount++;
 	}
 	else
